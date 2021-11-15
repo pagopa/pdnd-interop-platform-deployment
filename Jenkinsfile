@@ -13,7 +13,6 @@ pipeline {
         steps {
             // DELETE ME. Just for testing
             sh 'env'
-            sh 'printenv'
         }
       }
     // stage('Initializing build') {
