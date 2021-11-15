@@ -1,2 +1,3 @@
 resources:
 - compiled.deployment.yaml
+- compiled.service.yaml
