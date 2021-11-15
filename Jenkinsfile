@@ -5,8 +5,7 @@ pipeline {
 
   environment {
       AWS_SECRET_ACCESS = credentials('jenkins-aws')
-      BRANCH_NAME = "${env.CHANGE_BRANCH}"
-      BRANCH_NAME2 = "${env.GIT_BRANCH}" // In the form of origin/branch_name
+      BRANCH_NAME = "${env.GIT_LOCAL_BRANCH}"
   }
 
   stages {
@@ -35,48 +34,48 @@ pipeline {
     //   }
     // }
 
-    // withKubeConfig([credentialsId: 'kube-config']) {
-    //     stage('Create namespace') {
-    //         steps {
-    //             applyKubeFile('namespace.yaml')
-    //         }
-    //     }
-    //     stage('Create ingresses') {
-    //         steps {
-    //             applyKubeFile('ingress.yaml')
-    //         }
-    //     }
-    //     stage('Create roles') {
-    //         steps {
-    //             applyKubeFile('roles.yaml')
-    //         }
-    //     }
-    //     stage('Load ConfigMap') {
-    //         steps {
-    //             applyKubeFile('configmap.yaml')
-    //         }
-    //     }
-    //     stage('Load Secrets') {
-    //         steps {
-    //             sh'''
-    //             # TODO This could be avoided when using public repository
-    //             kubectl get secret regcred -n default --export -o yaml | kubectl apply -n $NAMESPACE -f -
+    withKubeConfig([credentialsId: 'kube-config']) {
+        stage('Create namespace') {
+            steps {
+                applyKubeFile('namespace.yaml')
+            }
+        }
+        // stage('Create ingresses') {
+        //     steps {
+        //         applyKubeFile('ingress.yaml')
+        //     }
+        // }
+        // stage('Create roles') {
+        //     steps {
+        //         applyKubeFile('roles.yaml')
+        //     }
+        // }
+        // stage('Load ConfigMap') {
+        //     steps {
+        //         applyKubeFile('configmap.yaml')
+        //     }
+        // }
+        // stage('Load Secrets') {
+        //     steps {
+        //         sh'''
+        //         # TODO This could be avoided when using public repository
+        //         kubectl get secret regcred -n default --export -o yaml | kubectl apply -n $NAMESPACE -f -
 
-    //             kubectl create secret generic aws --from-literal=AWS_ACCESS_KEY_ID=$AWS_SECRET_ACCESS_USR --from-literal=AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_PSW -n $NAMESPACE
-    //             '''
-    //         }
-    //     }
-    //     stage('Deploy services') {
-    //         parallel {
-    //             stage('Party Management') {
-    //                 steps {
-    //                     applyKustomizeToDir('kubernetes/overlays/party-management', getServiceNameFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
-    //                 }
-    //             }
-    //         }
+        //         kubectl create secret generic aws --from-literal=AWS_ACCESS_KEY_ID=$AWS_SECRET_ACCESS_USR --from-literal=AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_PSW -n $NAMESPACE
+        //         '''
+        //     }
+        // }
+        // stage('Deploy services') {
+        //     parallel {
+        //         stage('Party Management') {
+        //             steps {
+        //                 applyKustomizeToDir('kubernetes/overlays/party-management', getServiceNameFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
+        //             }
+        //         }
+        //     }
 
-    //     }
-    // }
+        // }
+    }
   }
 }
 
