@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{SERVICE_NAME}}
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  replicas: {{REPLICAS}}
+  selector:
+    matchLabels:
+      app: {{SERVICE_NAME}}
+  template:
+    metadata:
+      labels:
+        app: {{SERVICE_NAME}}
+        actorSystemName: {{SERVICE_NAME}}
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      volumes:
+        - name: application-conf
+          secret:
+            secretName: application.conf
+            defaultMode: 420
+      containers:
+        - name: {{SERVICE_NAME}}
+          command: ["bin/{{SERVICE_NAME}}"]
+          args: ["-Dconfig.file=etc/application.conf", "-Dconfig.override_with_env_vars=true"]
+          imagePullPolicy: Always
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: management
+            periodSeconds: 10
+            failureThreshold: 5
+            initialDelaySeconds: 30
+          livenessProbe:
+            httpGet:
+              path: "/alive"
+              port: management
+            periodSeconds: 10
+            failureThreshold: 5
+            initialDelaySeconds: 30
+          ports:
+            - name: management
+              containerPort: 8558
+              protocol: TCP
+            - name: http
+              containerPort: 8088
+              protocol: TCP
+            - name: monitoring
+              containerPort: 9095
+              protocol: TCP
+          securityContext:
+            runAsUser: 1001
+            allowPrivilegeEscalation: false
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: REQUIRED_CONTACT_POINT_NR
+              value: "1"
+          volumeMounts:
+            - name: application-conf
+              mountPath: /opt/docker/etc
