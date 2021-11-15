@@ -1,13 +1,19 @@
 pipeline {
+// TODO Can configs be loaded just once globally?
 
   agent none
 
   environment {
       AWS_SECRET_ACCESS = credentials('jenkins-aws')
       BRANCH_NAME = env.CHANGE_BRANCH
+      BRANCH_NAME2 = env.GIT_BRANCH // In the form of origin/branch_name
   }
 
   stages {
+      steps {
+          // DELETE ME. Just for testing
+          sh 'env'
+      }
     // stage('Initializing build') {
     //   agent { label 'sbt-template' }
     //   environment {
@@ -60,17 +66,22 @@ pipeline {
         stage('Deploy services') {
             parallel {
                 stage('Party Management') {
-                    stage('Deployment') {
-                        steps {
-                            applyKubeFile('deployment-party-management.yaml')
-                        }
-                    }
-                    stage('Service') {
-                        steps {
-                            applyKubeFile('service-party-management.yaml')
-                        }
+                    steps {
+                        applyKustomizeToDir('kubernetes/overlays/party-management', getServiceNameFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
                     }
                 }
+                // stage('Party Management') {
+                //     stage('Deployment') {
+                //         steps {
+                //             applyKubeFile('deployment-party-management.yaml')
+                //         }
+                //     }
+                //     stage('Service') {
+                //         steps {
+                //             applyKubeFile('service-party-management.yaml')
+                //         }
+                //     }
+                // }
                 // stage('Agreement Management') {
                 //     stage('Deployment') {
                 //         steps {
@@ -110,17 +121,66 @@ pipeline {
   }
 }
 
-void applyKubeFile(String fileName) {
+void applyKubeFile(String fileName, String serviceName) {
   echo "Apply file ${fileName} on Kubernetes"
 
-// TODO Can configs be loaded just once?
   echo "Compiling file ${fileName}"
   sh './kubernetes/templater.sh ./kubernetes/${fileName} -s -f ./kubernetes/config > ./kubernetes/compiled.${fileName}'
   echo "File ${fileName} compiled"
   
-  echo "Apply file ${fileName}"
+  echo "Applying file ${fileName}"
   sh 'kubectl apply -f ./kubernetes/compiled.${fileName}'
   echo "File ${fileName} applied"
 
 }
 
+// dirPath starting from kubernetes folder (e.g. overlays/party-management)
+void applyKustomizeToDir(String dirPath, String serviceName) {
+
+  echo "Apply directory ${dirPath} on Kubernetes"
+
+  sh 'mkdir ${serviceName}'
+
+  echo "Compiling base files"
+  compileDir("./kubernetes/base", serviceName)
+  echo "Base files compiled"
+
+  echo "Compiling directory ${dirPath}"
+  compileDir(dirPath, serviceName)
+  echo "Directory ${dirPath} compiled"
+  
+  echo "Applying Kustomization for ${serviceName}"
+  sh '''
+  DIR_NAME=$(basename ${dirPath})
+  kubectl kustomize ${serviceName}/$DIR_NAME > ${serviceName}/full.${serviceName}.yaml
+  '''
+  echo "Kustomization for ${serviceName} applied"
+
+  echo "Applying files for ${serviceName}"
+  sh 'kubectl apply -f ${serviceName}/full.${serviceName}'
+  echo "Files for ${serviceName} applied"
+
+  echo "Removing folder"
+  sh 'rm -rf ${serviceName}'
+  echo "Folder removed"
+
+}
+
+void compileDir(String dirPath, String serviceName) {
+  sh 'cp -rf ${dirPath} ./${serviceName}'
+  sh '''
+  DIR_NAME=$(basename ${dirPath})
+  BASE_FILES_PATH="${serviceName}/$DIR_NAME"
+  for f in $BASE_FILES_PATH/*
+  do
+      if [ ! $(basename $f) = "kustomization.yaml" ]
+        then
+          SERVICE_NAME=${serviceName} ./kubernetes/templater.sh $f -s -f ./kubernetes/config > ./${serviceName}/$DIR_NAME/compiled.$(basename $f)
+      fi
+  done
+  '''
+}
+
+String getServiceNameFromConf(String variableName) {
+  return sh (returnStdout: true, script: './kubernetes/config && echo $${variableName}').trim()
+}

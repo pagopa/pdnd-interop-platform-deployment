@@ -1,4 +1,4 @@
 bases:
 - ../base
 patchesStrategicMerge:
-- deployment-party-management.compiled.yaml
+- compiled.deployment-party-management.yaml
