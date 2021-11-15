@@ -32,92 +32,48 @@ pipeline {
     //   }
     // }
 
-    withKubeConfig([credentialsId: 'kube-config']) {
-        stage('Create namespace') {
-            steps {
-                applyKubeFile('namespace.yaml')
-            }
-        }
-        stage('Create ingresses') {
-            steps {
-                applyKubeFile('ingress.yaml')
-            }
-        }
-        stage('Create roles') {
-            steps {
-                applyKubeFile('roles.yaml')
-            }
-        }
-        stage('Load ConfigMap') {
-            steps {
-                applyKubeFile('configmap.yaml')
-            }
-        }
-        stage('Load Secrets') {
-            steps {
-                sh'''
-                # TODO This could be avoided when using public repository
-                kubectl get secret regcred -n default --export -o yaml | kubectl apply -n $NAMESPACE -f -
+    // withKubeConfig([credentialsId: 'kube-config']) {
+    //     stage('Create namespace') {
+    //         steps {
+    //             applyKubeFile('namespace.yaml')
+    //         }
+    //     }
+    //     stage('Create ingresses') {
+    //         steps {
+    //             applyKubeFile('ingress.yaml')
+    //         }
+    //     }
+    //     stage('Create roles') {
+    //         steps {
+    //             applyKubeFile('roles.yaml')
+    //         }
+    //     }
+    //     stage('Load ConfigMap') {
+    //         steps {
+    //             applyKubeFile('configmap.yaml')
+    //         }
+    //     }
+    //     stage('Load Secrets') {
+    //         steps {
+    //             sh'''
+    //             # TODO This could be avoided when using public repository
+    //             kubectl get secret regcred -n default --export -o yaml | kubectl apply -n $NAMESPACE -f -
 
-                kubectl create secret generic aws --from-literal=AWS_ACCESS_KEY_ID=$AWS_SECRET_ACCESS_USR --from-literal=AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_PSW -n $NAMESPACE
-                '''
-            }
-        }
-        stage('Deploy services') {
-            parallel {
-                stage('Party Management') {
-                    steps {
-                        applyKustomizeToDir('kubernetes/overlays/party-management', getServiceNameFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
-                    }
-                }
-                // stage('Party Management') {
-                //     stage('Deployment') {
-                //         steps {
-                //             applyKubeFile('deployment-party-management.yaml')
-                //         }
-                //     }
-                //     stage('Service') {
-                //         steps {
-                //             applyKubeFile('service-party-management.yaml')
-                //         }
-                //     }
-                // }
-                // stage('Agreement Management') {
-                //     stage('Deployment') {
-                //         steps {
-                //             applyKubeFile('deployment-agreement-management.yaml')
-                //         }
-                //     }
-                //     stage('Service') {
-                //         steps {
-                //             applyKubeFile('service-agreement-management.yaml')
-                //         }
-                //     }
-                // }
-            }
-            
+    //             kubectl create secret generic aws --from-literal=AWS_ACCESS_KEY_ID=$AWS_SECRET_ACCESS_USR --from-literal=AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_PSW -n $NAMESPACE
+    //             '''
+    //         }
+    //     }
+    //     stage('Deploy services') {
+    //         parallel {
+    //             stage('Party Management') {
+    //                 steps {
+    //                     applyKustomizeToDir('kubernetes/overlays/party-management', getServiceNameFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
+    //                 }
+    //             }
+    //         }
 
-        //   agent { label 'sbt-template' }
-        //   environment {
-        //     DOCKER_REPO = 'gateway.interop.pdnd.dev'
-        //     AWS_SECRET_ACCESS = credentials('jenkins-aws')
-        //     REPLICAS_NR = 3
-        //   }
-        //   steps {
-        //     container('sbt-container') {
-        //       withKubeConfig([credentialsId: 'kube-config']) {
-        //         sh '''
-        //           cd kubernetes
-        //           chmod u+x undeploy.sh
-        //           chmod u+x deploy.sh
-        //           ./undeploy.sh
-        //           ./deploy.sh
-        //         '''
-        //       }
-        //     }
-        //   }
-        }
-    }
+    //     }
+    // }
   }
 }
 
