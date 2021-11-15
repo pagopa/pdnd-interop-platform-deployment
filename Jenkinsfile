@@ -1,7 +1,7 @@
 pipeline {
 // TODO Can configs be loaded just once globally?
 
-  agent none
+  agent any
 
   environment {
       AWS_SECRET_ACCESS = credentials('jenkins-aws')
