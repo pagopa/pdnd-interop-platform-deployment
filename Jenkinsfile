@@ -5,14 +5,17 @@ pipeline {
 
   environment {
       AWS_SECRET_ACCESS = credentials('jenkins-aws')
-      BRANCH_NAME = env.CHANGE_BRANCH
-      BRANCH_NAME2 = env.GIT_BRANCH // In the form of origin/branch_name
+      BRANCH_NAME = "${env.CHANGE_BRANCH}"
+      BRANCH_NAME2 = "${env.GIT_BRANCH}" // In the form of origin/branch_name
   }
 
   stages {
-      steps {
-          // DELETE ME. Just for testing
-          sh 'env'
+      stage('Debug') {
+        steps {
+            // DELETE ME. Just for testing
+            sh 'env'
+            sh 'printenv'
+        }
       }
     // stage('Initializing build') {
     //   agent { label 'sbt-template' }
@@ -90,7 +93,7 @@ void applyKubeFile(String fileName, String serviceName) {
 
 }
 
-// dirPath starting from kubernetes folder (e.g. overlays/party-management)
+// dirPath starting from kubernetes folder (e.g. kubernetes/overlays/party-management)
 void applyKustomizeToDir(String dirPath, String serviceName) {
 
   echo "Apply directory ${dirPath} on Kubernetes"
