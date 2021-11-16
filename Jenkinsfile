@@ -139,7 +139,7 @@ sh"cat ${serviceName}/party-management/compiled.deployment.yaml"
       echo "Kustomization for ${serviceName} applied"
 
       echo "Applying files for ${serviceName}"
-      sh "kubectl apply -f ${serviceName}/full.${serviceName}"
+      sh "kubectl apply -f ${serviceName}/full.${serviceName}.yaml"
       echo "Files for ${serviceName} applied"
 
       echo "Removing folder"
