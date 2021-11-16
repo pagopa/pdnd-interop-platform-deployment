@@ -4,8 +4,8 @@ pipeline {
   agent any
 
   environment {
-      AWS_SECRET_ACCESS = credentials('jenkins-aws')
-      NAMESPACE = "${env.GIT_LOCAL_BRANCH}"
+    AWS_SECRET_ACCESS = credentials('jenkins-aws')
+    NAMESPACE = "${env.GIT_LOCAL_BRANCH}"
   }
 
   stages {
@@ -41,39 +41,38 @@ pipeline {
         }
         
         stage('Create namespace') {
-
-            steps {
-                applyKubeFile('namespace.yaml')
-            }
+          steps {
+              applyKubeFile('namespace.yaml')
+          }
         }
         stage('Create ingresses') {
-            steps {
-                applyKubeFile('ingress.yaml')
-            }
+          steps {
+              applyKubeFile('ingress.yaml')
+          }
         }
         stage('Create roles') {
-            steps {
-                applyKubeFile('roles.yaml')
-            }
+          steps {
+              applyKubeFile('roles.yaml')
+          }
         }
         stage('Load ConfigMap') {
-            steps {
-                applyKubeFile('configmap.yaml')
-            }
+          steps {
+              applyKubeFile('configmap.yaml')
+          }
         }
         stage('Load Secrets') {
-            steps {
-                loadSecrets()
-            }
+          steps {
+              loadSecrets()
+          }
         }
         stage('Deploy services') {
-            parallel {
-                stage('Party Management') {
-                    steps {
-                        applyKustomizeToDir('kubernetes/overlays/party-management', getServiceNameFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
-                    }
+          parallel {
+            stage('Party Management') {
+                steps {
+                    applyKustomizeToDir('kubernetes/overlays/party-management', getServiceNameFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
                 }
             }
+          }
         }
       }
     }
