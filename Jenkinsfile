@@ -77,7 +77,6 @@ pipeline {
 }
 
 void applyKubeFile(String fileName) {
-  agent { label 'sbt-template' }
   container('sbt-container') {
     withKubeConfig([credentialsId: 'kube-config']) {
 
