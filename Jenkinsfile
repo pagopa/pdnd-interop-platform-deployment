@@ -134,6 +134,7 @@ void applyKustomizeToDir(String dirPath, String serviceName) {
 
 void compileDir(String dirPath, String serviceName) {
   sh "cp -rf ${dirPath} ./${serviceName}"
+  // Compile each file in the directory (skipping kustomization.yaml)
   sh '''
   DIR_NAME=$(basename ''' + dirPath + ''')
   BASE_FILES_PATH="''' + serviceName + '''/$DIR_NAME"
@@ -155,13 +156,10 @@ void loadSecrets() {
   container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
     withKubeConfig([credentialsId: 'kube-config']) {
       sh'''
-        chmod +x ./kubernetes/config
-        ./kubernetes/config
-
         # TODO This could be avoided when using public repository
-        kubectl -n default get secret regcred -o yaml | kubectl apply -n $NAMESPACE -f -
+        kubectl -n default get secret regcred -o yaml | kubectl apply -n $BRANCH_NAME -f -
 
-        kubectl create secret generic aws --from-literal=AWS_ACCESS_KEY_ID=$AWS_SECRET_ACCESS_USR --from-literal=AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_PSW -n $NAMESPACE
+        kubectl create secret generic aws --from-literal=AWS_ACCESS_KEY_ID=$AWS_SECRET_ACCESS_USR --from-literal=AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_PSW -n $BRANCH_NAME
       '''
     }
   }
