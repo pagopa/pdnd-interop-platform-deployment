@@ -5,7 +5,7 @@ pipeline {
 
   environment {
       AWS_SECRET_ACCESS = credentials('jenkins-aws')
-      NAMESPACE = "${env.GIT_LOCAL_BRANCH}"
+      BRANCH_NAME = "${env.GIT_LOCAL_BRANCH}"
   }
 
   stages {
@@ -64,6 +64,7 @@ pipeline {
         stage('Load Secrets') {
             steps {
                 sh'''
+                chmod +x ./kubernetes/config
                 ./kubernetes/config
 
                 # TODO This could be avoided when using public repository
