@@ -82,11 +82,11 @@ void applyKubeFile(String fileName) {
     echo "Apply file ${fileName} on Kubernetes"
 
     echo "Compiling file ${fileName}"
-    sh './kubernetes/templater.sh ./kubernetes/${fileName} -s -f ./kubernetes/config > ./kubernetes/compiled.${fileName}'
+    sh "./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ./kubernetes/config > ./kubernetes/compiled.${fileName}"
     echo "File ${fileName} compiled"
     
     echo "Applying file ${fileName}"
-    sh 'kubectl apply -f ./kubernetes/compiled.${fileName}'
+    sh "kubectl apply -f ./kubernetes/compiled.${fileName}"
     echo "File ${fileName} applied"
   
   }
