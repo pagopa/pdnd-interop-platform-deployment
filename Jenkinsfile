@@ -34,9 +34,11 @@ pipeline {
       stages {
 
         stage('Debug') {
+          // DELETE ME. Just for testing
           steps {
-              // DELETE ME. Just for testing
+            withEnv([sh'chmod +x ./kubernetes/config && ./kubernetes/config']) {
               sh 'env'
+            }
           }
         }
         
@@ -147,12 +149,12 @@ void compileDir(String dirPath, String serviceName) {
 }
 
 String getVariableFromConf(String variableName) {
-  sh'''
-  #!/bin/bash
-  chmod +x ./kubernetes/config
-  ./kubernetes/config 
-  env
-  '''
+  // sh'''
+  // #!/bin/bash
+  // chmod +x ./kubernetes/config
+  // ./kubernetes/config 
+  // env
+  // '''
   return sh (returnStdout: true, script: 'chmod +x ./kubernetes/config && ./kubernetes/config && echo $' + variableName).trim()
 }
 
