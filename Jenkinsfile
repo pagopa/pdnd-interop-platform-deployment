@@ -63,15 +63,7 @@ pipeline {
         }
         stage('Load Secrets') {
             steps {
-                sh'''
-                chmod +x ./kubernetes/config
-                ./kubernetes/config
-
-                # TODO This could be avoided when using public repository
-                kubectl -n default get secret regcred -o yaml | kubectl apply -n $NAMESPACE -f -
-
-                kubectl create secret generic aws --from-literal=AWS_ACCESS_KEY_ID=$AWS_SECRET_ACCESS_USR --from-literal=AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_PSW -n $NAMESPACE
-                '''
+                loadSecrets()
             }
         }
         // stage('Deploy services') {
@@ -157,4 +149,20 @@ void compileDir(String dirPath, String serviceName) {
 
 String getServiceNameFromConf(String variableName) {
   return sh (returnStdout: true, script: './kubernetes/config && echo $' + variableName).trim()
+}
+
+void loadSecrets() {
+  container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
+    withKubeConfig([credentialsId: 'kube-config']) {
+      sh'''
+        chmod +x ./kubernetes/config
+        ./kubernetes/config
+
+        # TODO This could be avoided when using public repository
+        kubectl -n default get secret regcred -o yaml | kubectl apply -n $NAMESPACE -f -
+
+        kubectl create secret generic aws --from-literal=AWS_ACCESS_KEY_ID=$AWS_SECRET_ACCESS_USR --from-literal=AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_PSW -n $NAMESPACE
+      '''
+    }
+  }
 }
