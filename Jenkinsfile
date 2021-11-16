@@ -5,6 +5,7 @@ pipeline {
 
   environment {
     AWS_SECRET_ACCESS = credentials('jenkins-aws')
+    POSTGRES_CREDENTIALS = credentials('postgres-db')
     NAMESPACE = "${env.GIT_LOCAL_BRANCH}"
   }
 
@@ -126,12 +127,6 @@ void applyKustomizeToDir(String dirPath, String serviceName) {
       compileDir(dirPath, serviceName)
       echo "Directory ${dirPath} compiled"
       
-// DEBUG
-sh"ls -R ${serviceName}"
-sh"cat ${serviceName}/base/compiled.deployment.yaml"
-sh"cat ${serviceName}/party-management/compiled.deployment.yaml"
-// END DEBUG
-
       echo "Applying Kustomization for ${serviceName}"
       sh '''
       DIR_NAME=$(basename ''' + dirPath + ''')
@@ -141,6 +136,9 @@ sh"cat ${serviceName}/party-management/compiled.deployment.yaml"
       echo "Applying files for ${serviceName}"
       sh "kubectl apply -f ${serviceName}/full.${serviceName}.yaml"
       echo "Files for ${serviceName} applied"
+
+      // DEBUG
+      sh 'cat ${serviceName}/full.${serviceName}.yaml'
 
       echo "Removing folder"
       sh "rm -rf ${serviceName}"
@@ -185,6 +183,13 @@ void loadSecrets() {
           --dry-run=client \
           --from-literal=AWS_ACCESS_KEY_ID=$AWS_SECRET_ACCESS_USR \
           --from-literal=AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_PSW \
+          -o yaml | kubectl apply -f -
+
+        kubectl -n $NAMESPACE create secret generic postgres \
+          --save-config \
+          --dry-run=client \
+          --from-literal=POSTGRES_USR=$POSTGRES_CREDENTIALS_USR \
+          --from-literal=POSTGRES_PSW=$POSTGRES_CREDENTIALS_PSW \
           -o yaml | kubectl apply -f -
       '''
     }
