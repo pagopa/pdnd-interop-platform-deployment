@@ -77,18 +77,21 @@ pipeline {
 }
 
 void applyKubeFile(String fileName) {
-  withKubeConfig([credentialsId: 'kube-config']) {
+  agent { label 'sbt-template' }
+  container('sbt-container') {
+    withKubeConfig([credentialsId: 'kube-config']) {
 
-    echo "Apply file ${fileName} on Kubernetes"
+      echo "Apply file ${fileName} on Kubernetes"
 
-    echo "Compiling file ${fileName}"
-    sh "./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ./kubernetes/config > ./kubernetes/compiled.${fileName}"
-    echo "File ${fileName} compiled"
+      echo "Compiling file ${fileName}"
+      sh "./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ./kubernetes/config > ./kubernetes/compiled.${fileName}"
+      echo "File ${fileName} compiled"
+      
+      echo "Applying file ${fileName}"
+      sh "kubectl apply -f ./kubernetes/compiled.${fileName}"
+      echo "File ${fileName} applied"
     
-    echo "Applying file ${fileName}"
-    sh "kubectl apply -f ./kubernetes/compiled.${fileName}"
-    echo "File ${fileName} applied"
-  
+    }
   }
 }
 
