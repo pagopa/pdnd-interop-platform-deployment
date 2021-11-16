@@ -36,9 +36,16 @@ pipeline {
         stage('Debug') {
           // DELETE ME. Just for testing
           steps {
-            withEnv(readFile('./kubernetes/config').split('\n') as List) {
-              sh 'env'
-            }
+            // withEnv(readFile('./kubernetes/config').split('\n') as List) {
+            //   sh 'env'
+            // }
+            sh'''
+            chmod +x ./kubernetes/config
+            ./kubernetes/config
+            echo "VARIABLE:"
+            echo $PARTY_MANAGEMENT_SERVICE_NAME
+            pwd
+            '''
           }
         }
         
