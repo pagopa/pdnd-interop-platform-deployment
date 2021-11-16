@@ -9,6 +9,9 @@ pipeline {
   }
 
   stages {
+      // This is required only for kubectl command (we do not need sbt)
+      agent { label 'sbt-template' }
+
       stage('Debug') {
         steps {
             // DELETE ME. Just for testing
@@ -34,12 +37,9 @@ pipeline {
     // }
 
     stage('Create namespace') {
-        agent { label 'sbt-template' }
 
         steps {
-            // container('sbt-container') {
-              applyKubeFile('namespace.yaml')
-            // }
+            applyKubeFile('namespace.yaml')
         }
     }
     // stage('Create ingresses') {
@@ -81,7 +81,7 @@ pipeline {
 }
 
 void applyKubeFile(String fileName) {
-  container('sbt-container') { // This contains kubectl command, we could use a specific kube container
+  container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Apply file ${fileName} on Kubernetes"
