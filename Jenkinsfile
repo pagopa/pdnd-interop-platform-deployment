@@ -11,13 +11,8 @@ pipeline {
   stages {
     stage('Platform') {
       // This is required only for kubectl command (we do not need sbt)
-      agent { label 'sbt-template' }
-
-      stage('Debug') {
-        steps {
-            // DELETE ME. Just for testing
-            sh 'env'
-        }
+      agent { 
+        label 'sbt-template' 
       }
       // stage('Initializing build') {
       //   agent { label 'sbt-template' }
@@ -37,6 +32,14 @@ pipeline {
       //   }
       // }
       stages {
+
+        stage('Debug') {
+          steps {
+              // DELETE ME. Just for testing
+              sh 'env'
+          }
+        }
+        
         stage('Create namespace') {
 
             steps {
