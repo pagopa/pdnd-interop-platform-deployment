@@ -5,7 +5,7 @@ pipeline {
 
   environment {
       AWS_SECRET_ACCESS = credentials('jenkins-aws')
-      BRANCH_NAME = "${env.GIT_LOCAL_BRANCH}"
+      NAMESPACE = "${env.GIT_LOCAL_BRANCH}"
   }
 
   stages {
@@ -157,9 +157,9 @@ void loadSecrets() {
     withKubeConfig([credentialsId: 'kube-config']) {
       sh'''
         # TODO This could be avoided when using public repository
-        kubectl -n default get secret regcred -o yaml | sed s/"namespace: default"/"namespace: $BRANCH_NAME"/ |  kubectl apply -n $BRANCH_NAME -f -
+        kubectl -n default get secret regcred -o yaml | sed s/"namespace: default"/"namespace: $NAMESPACE"/ |  kubectl apply -n $NAMESPACE -f -
 
-        kubectl create secret generic aws --from-literal=AWS_ACCESS_KEY_ID=$AWS_SECRET_ACCESS_USR --from-literal=AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_PSW -n $BRANCH_NAME
+        kubectl create secret generic aws --from-literal=AWS_ACCESS_KEY_ID=$AWS_SECRET_ACCESS_USR --from-literal=AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_PSW -n $NAMESPACE
       '''
     }
   }
