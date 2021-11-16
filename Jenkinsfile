@@ -76,7 +76,7 @@ pipeline {
   }
 }
 
-void applyKubeFile(String fileName, String serviceName) {
+def applyKubeFile(String fileName, String serviceName) {
   withKubeConfig([credentialsId: 'kube-config']) {
 
     echo "Apply file ${fileName} on Kubernetes"
@@ -93,7 +93,7 @@ void applyKubeFile(String fileName, String serviceName) {
 }
 
 // dirPath starting from kubernetes folder (e.g. kubernetes/overlays/party-management)
-void applyKustomizeToDir(String dirPath, String serviceName) {
+def applyKustomizeToDir(String dirPath, String serviceName) {
   withKubeConfig([credentialsId: 'kube-config']) {
 
     echo "Apply directory ${dirPath} on Kubernetes"
@@ -126,7 +126,7 @@ void applyKustomizeToDir(String dirPath, String serviceName) {
 
 }
 
-void compileDir(String dirPath, String serviceName) {
+def compileDir(String dirPath, String serviceName) {
   sh 'cp -rf ${dirPath} ./${serviceName}'
   sh '''
   DIR_NAME=$(basename ${dirPath})
