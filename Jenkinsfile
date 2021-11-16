@@ -36,7 +36,7 @@ pipeline {
         stage('Debug') {
           // DELETE ME. Just for testing
           steps {
-            withEnv(sh'chmod +x ./kubernetes/config && ./kubernetes/config') {
+            withEnv(readFile('./kubernetes/config').split('\n') as List) {
               sh 'env'
             }
           }
