@@ -133,7 +133,7 @@ void applyKustomizeToDir(String dirPath, String serviceName) {
       echo "Files for ${serviceName} applied"
 
       // DEBUG
-      sh 'cat ${serviceName}/full.${serviceName}.yaml'
+      sh "cat ${serviceName}/full.${serviceName}.yaml"
 
       echo "Removing folder"
       sh "rm -rf ${serviceName}"
