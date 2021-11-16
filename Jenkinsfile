@@ -19,65 +19,66 @@ pipeline {
             sh 'env'
         }
       }
-    // stage('Initializing build') {
-    //   agent { label 'sbt-template' }
-    //   environment {
-    //     PDND_TRUST_STORE_PSW = credentials('pdnd-interop-trust-psw')
-    //   }
-    //   steps {
-    //     withCredentials([file(credentialsId: 'pdnd-interop-trust-cert', variable: 'pdnd_certificate')]) {
-    //       sh '''
-    //         cat \$pdnd_certificate > pdnd_certificate.cer
-    //         keytool -import -file pdnd_certificate.cer -alias pdnd-interop-gateway -keystore PDNDTrustStore -storepass ${PDND_TRUST_STORE_PSW} -noprompt
-    //         cp $JAVA_HOME/jre/lib/security/cacerts main_certs
-    //         keytool -importkeystore -srckeystore main_certs -destkeystore PDNDTrustStore -srcstorepass ${PDND_TRUST_STORE_PSW} -deststorepass ${PDND_TRUST_STORE_PSW}
-    //       '''
-    //       stash includes: "PDNDTrustStore", name: "pdnd_trust_store"
-    //     }
-    //   }
-    // }
+      // stage('Initializing build') {
+      //   agent { label 'sbt-template' }
+      //   environment {
+      //     PDND_TRUST_STORE_PSW = credentials('pdnd-interop-trust-psw')
+      //   }
+      //   steps {
+      //     withCredentials([file(credentialsId: 'pdnd-interop-trust-cert', variable: 'pdnd_certificate')]) {
+      //       sh '''
+      //         cat \$pdnd_certificate > pdnd_certificate.cer
+      //         keytool -import -file pdnd_certificate.cer -alias pdnd-interop-gateway -keystore PDNDTrustStore -storepass ${PDND_TRUST_STORE_PSW} -noprompt
+      //         cp $JAVA_HOME/jre/lib/security/cacerts main_certs
+      //         keytool -importkeystore -srckeystore main_certs -destkeystore PDNDTrustStore -srcstorepass ${PDND_TRUST_STORE_PSW} -deststorepass ${PDND_TRUST_STORE_PSW}
+      //       '''
+      //       stash includes: "PDNDTrustStore", name: "pdnd_trust_store"
+      //     }
+      //   }
+      // }
+      stages {
+        stage('Create namespace') {
 
-    stage('Create namespace') {
-
-        steps {
-            applyKubeFile('namespace.yaml')
+            steps {
+                applyKubeFile('namespace.yaml')
+            }
         }
-    }
-    // stage('Create ingresses') {
-    //     steps {
-    //         applyKubeFile('ingress.yaml')
-    //     }
-    // }
-    // stage('Create roles') {
-    //     steps {
-    //         applyKubeFile('roles.yaml')
-    //     }
-    // }
-    // stage('Load ConfigMap') {
-    //     steps {
-    //         applyKubeFile('configmap.yaml')
-    //     }
-    // }
-    // stage('Load Secrets') {
-    //     steps {
-    //         sh'''
-    //         # TODO This could be avoided when using public repository
-    //         kubectl get secret regcred -n default --export -o yaml | kubectl apply -n $NAMESPACE -f -
+        // stage('Create ingresses') {
+        //     steps {
+        //         applyKubeFile('ingress.yaml')
+        //     }
+        // }
+        // stage('Create roles') {
+        //     steps {
+        //         applyKubeFile('roles.yaml')
+        //     }
+        // }
+        // stage('Load ConfigMap') {
+        //     steps {
+        //         applyKubeFile('configmap.yaml')
+        //     }
+        // }
+        // stage('Load Secrets') {
+        //     steps {
+        //         sh'''
+        //         # TODO This could be avoided when using public repository
+        //         kubectl get secret regcred -n default --export -o yaml | kubectl apply -n $NAMESPACE -f -
 
-    //         kubectl create secret generic aws --from-literal=AWS_ACCESS_KEY_ID=$AWS_SECRET_ACCESS_USR --from-literal=AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_PSW -n $NAMESPACE
-    //         '''
-    //     }
-    // }
-    // stage('Deploy services') {
-    //     parallel {
-    //         stage('Party Management') {
-    //             steps {
-    //                 applyKustomizeToDir('kubernetes/overlays/party-management', getServiceNameFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
-    //             }
-    //         }
-    //     }
+        //         kubectl create secret generic aws --from-literal=AWS_ACCESS_KEY_ID=$AWS_SECRET_ACCESS_USR --from-literal=AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_PSW -n $NAMESPACE
+        //         '''
+        //     }
+        // }
+        // stage('Deploy services') {
+        //     parallel {
+        //         stage('Party Management') {
+        //             steps {
+        //                 applyKustomizeToDir('kubernetes/overlays/party-management', getServiceNameFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
+        //             }
+        //         }
+        //     }
 
-    // }
+        // }
+      }
     }
   }
 }
