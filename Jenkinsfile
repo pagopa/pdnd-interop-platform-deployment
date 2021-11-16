@@ -147,11 +147,11 @@ void compileDir(String dirPath, String serviceName) {
 }
 
 String getServiceNameFromConf(String variableName) {
-  return sh (returnStdout: true, script: './kubernetes/config && echo $' + variableName).trim()
+  return sh (returnStdout: true, script: 'chmod +x ./kubernetes/config && ./kubernetes/config && echo $' + variableName).trim()
 }
 
 void loadSecrets() {
-  container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
+  container('sbt-container') { // This is required only for kubectl command (sbt is not needed)
     withKubeConfig([credentialsId: 'kube-config']) {
       sh'''
         
