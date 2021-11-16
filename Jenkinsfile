@@ -154,6 +154,9 @@ void loadSecrets() {
   container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
     withKubeConfig([credentialsId: 'kube-config']) {
       sh'''
+        # Cleanup
+        kubectl -n $NAMESPACE delete secrets regcred
+
         # TODO This could be avoided when using public repository
         kubectl -n default get secret regcred -o yaml | sed s/"namespace: default"/"namespace: $NAMESPACE"/ |  kubectl apply -n $NAMESPACE -f -
 
