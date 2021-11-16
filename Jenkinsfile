@@ -111,35 +111,36 @@ void applyKubeFile(String fileName) {
 
 // dirPath starting from kubernetes folder (e.g. kubernetes/overlays/party-management)
 void applyKustomizeToDir(String dirPath, String serviceName) {
-  withKubeConfig([credentialsId: 'kube-config']) {
+  container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
+    withKubeConfig([credentialsId: 'kube-config']) {
 
-    echo "Apply directory ${dirPath} on Kubernetes"
+      echo "Apply directory ${dirPath} on Kubernetes"
 
-    sh "mkdir ${serviceName}"
+      sh "mkdir ${serviceName}"
 
-    echo "Compiling base files"
-    compileDir("./kubernetes/base", serviceName)
-    echo "Base files compiled"
+      echo "Compiling base files"
+      compileDir("./kubernetes/base", serviceName)
+      echo "Base files compiled"
 
-    echo "Compiling directory ${dirPath}"
-    compileDir(dirPath, serviceName)
-    echo "Directory ${dirPath} compiled"
-    
-    echo "Applying Kustomization for ${serviceName}"
-    sh '''
-    DIR_NAME=$(basename ''' + dirPath + ''')
-    kubectl kustomize ''' + serviceName + '/$DIR_NAME > ' + serviceName + '/full.' + serviceName + '.yaml'
-    echo "Kustomization for ${serviceName} applied"
+      echo "Compiling directory ${dirPath}"
+      compileDir(dirPath, serviceName)
+      echo "Directory ${dirPath} compiled"
+      
+      echo "Applying Kustomization for ${serviceName}"
+      sh '''
+      DIR_NAME=$(basename ''' + dirPath + ''')
+      kubectl kustomize ''' + serviceName + '/$DIR_NAME > ' + serviceName + '/full.' + serviceName + '.yaml'
+      echo "Kustomization for ${serviceName} applied"
 
-    echo "Applying files for ${serviceName}"
-    sh "kubectl apply -f ${serviceName}/full.${serviceName}"
-    echo "Files for ${serviceName} applied"
+      echo "Applying files for ${serviceName}"
+      sh "kubectl apply -f ${serviceName}/full.${serviceName}"
+      echo "Files for ${serviceName} applied"
 
-    echo "Removing folder"
-    sh "rm -rf ${serviceName}"
-    echo "Folder removed"
+      echo "Removing folder"
+      sh "rm -rf ${serviceName}"
+      echo "Folder removed"
+    }
   }
-
 }
 
 void compileDir(String dirPath, String serviceName) {
