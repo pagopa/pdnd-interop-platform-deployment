@@ -66,16 +66,15 @@ pipeline {
                 loadSecrets()
             }
         }
-        // stage('Deploy services') {
-        //     parallel {
-        //         stage('Party Management') {
-        //             steps {
-        //                 applyKustomizeToDir('kubernetes/overlays/party-management', getServiceNameFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
-        //             }
-        //         }
-        //     }
-
-        // }
+        stage('Deploy services') {
+            parallel {
+                stage('Party Management') {
+                    steps {
+                        applyKustomizeToDir('kubernetes/overlays/party-management', getServiceNameFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
+                    }
+                }
+            }
+        }
       }
     }
   }
