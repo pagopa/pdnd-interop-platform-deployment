@@ -9,6 +9,7 @@ pipeline {
   }
 
   stages {
+    stage('Platform') {
       // This is required only for kubectl command (we do not need sbt)
       agent { label 'sbt-template' }
 
@@ -77,6 +78,7 @@ pipeline {
     //     }
 
     // }
+    }
   }
 }
 
@@ -104,7 +106,7 @@ void applyKustomizeToDir(String dirPath, String serviceName) {
 
     echo "Apply directory ${dirPath} on Kubernetes"
 
-    sh 'mkdir ${serviceName}'
+    sh "mkdir ${serviceName}"
 
     echo "Compiling base files"
     compileDir("./kubernetes/base", serviceName)
