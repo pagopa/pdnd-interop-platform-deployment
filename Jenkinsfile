@@ -79,7 +79,8 @@ pipeline {
           parallel {
             stage('Party Management') {
                 steps {
-                    applyKustomizeToDir('kubernetes/overlays/party-management', getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
+                    // applyKustomizeToDir('kubernetes/overlays/party-management', getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
+                    applyKustomizeToDir('kubernetes/overlays/party-management', 'pdnd-interop-uservice-party-management')
                 }
             }
           }
