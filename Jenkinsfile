@@ -37,9 +37,9 @@ pipeline {
         agent { label 'sbt-template' }
 
         steps {
-            container('sbt-container') {
+            // container('sbt-container') {
               applyKubeFile('namespace.yaml')
-            }
+            // }
         }
     }
     // stage('Create ingresses') {
@@ -81,7 +81,7 @@ pipeline {
 }
 
 void applyKubeFile(String fileName) {
-  // container('sbt-container') { // This contains kubectl command, we could use a specific kube container
+  container('sbt-container') { // This contains kubectl command, we could use a specific kube container
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Apply file ${fileName} on Kubernetes"
@@ -95,7 +95,7 @@ void applyKubeFile(String fileName) {
       echo "File ${fileName} applied"
     
     }
-  // }
+  }
 }
 
 // dirPath starting from kubernetes folder (e.g. kubernetes/overlays/party-management)
