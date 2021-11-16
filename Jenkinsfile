@@ -39,14 +39,15 @@ pipeline {
             // withEnv(readFile('./kubernetes/config').split('\n') as List) {
             //   sh 'env'
             // }
-            sh"""
-            #!/bin/bash
-            chmod +x ./kubernetes/config
-            ./kubernetes/config
-            echo "VARIABLE:"
-            echo \$PARTY_MANAGEMENT_SERVICE_NAME
-            env
-            """
+            // sh"""
+            // #!/bin/bash
+            // chmod +x ./kubernetes/config
+            // ./kubernetes/config
+            // echo "VARIABLE:"
+            // echo \$PARTY_MANAGEMENT_SERVICE_NAME
+            // env
+            // """
+            sh'env'
           }
         }
         
