@@ -79,10 +79,10 @@ pipeline {
         stage('Deploy Services') {
           parallel {
             stage('Party Management') {
-                steps {
-                    // applyKustomizeToDir('kubernetes/overlays/party-management', getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
-                    applyKustomizeToDir('kubernetes/overlays/party-management', 'pdnd-interop-uservice-party-management')
-                }
+              steps {
+                  // applyKustomizeToDir('kubernetes/overlays/party-management', getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
+                  applyKustomizeToDir('kubernetes/overlays/party-management', 'pdnd-interop-uservice-party-management')
+              }
             }
           }
         }
@@ -126,6 +126,12 @@ void applyKustomizeToDir(String dirPath, String serviceName) {
       compileDir(dirPath, serviceName)
       echo "Directory ${dirPath} compiled"
       
+// DEBUG
+sh"ls -R ${serviceName}"
+sh"cat ${serviceName}/base/compiled.deployment.yaml"
+sh"cat ${serviceName}/party-management/compiled.deployment.yaml"
+// END DEBUG
+
       echo "Applying Kustomization for ${serviceName}"
       sh '''
       DIR_NAME=$(basename ''' + dirPath + ''')
