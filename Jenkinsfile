@@ -154,13 +154,19 @@ void loadSecrets() {
   container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
     withKubeConfig([credentialsId: 'kube-config']) {
       sh'''
+        
+        # TODO This could be avoided when using public repository
         # Cleanup
         kubectl -n $NAMESPACE delete secrets regcred
-
-        # TODO This could be avoided when using public repository
         kubectl -n default get secret regcred -o yaml | sed s/"namespace: default"/"namespace: $NAMESPACE"/ |  kubectl apply -n $NAMESPACE -f -
 
-        kubectl create secret generic aws --from-literal=AWS_ACCESS_KEY_ID=$AWS_SECRET_ACCESS_USR --from-literal=AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_PSW -n $NAMESPACE
+        # It allows to update secret if already exists
+        kubectl -n $NAMESPACE create secret generic aws \
+          --save-config 
+          --dry-run=client
+          --from-literal=AWS_ACCESS_KEY_ID=$AWS_SECRET_ACCESS_USR \
+          --from-literal=AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_PSW \
+          -o yaml | kubectl apply -f -
       '''
     }
   }
