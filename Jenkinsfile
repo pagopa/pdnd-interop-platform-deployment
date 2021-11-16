@@ -14,23 +14,6 @@ pipeline {
       agent { 
         label 'sbt-template' 
       }
-      // stage('Initializing build') {
-      //   agent { label 'sbt-template' }
-      //   environment {
-      //     PDND_TRUST_STORE_PSW = credentials('pdnd-interop-trust-psw')
-      //   }
-      //   steps {
-      //     withCredentials([file(credentialsId: 'pdnd-interop-trust-cert', variable: 'pdnd_certificate')]) {
-      //       sh '''
-      //         cat \$pdnd_certificate > pdnd_certificate.cer
-      //         keytool -import -file pdnd_certificate.cer -alias pdnd-interop-gateway -keystore PDNDTrustStore -storepass ${PDND_TRUST_STORE_PSW} -noprompt
-      //         cp $JAVA_HOME/jre/lib/security/cacerts main_certs
-      //         keytool -importkeystore -srckeystore main_certs -destkeystore PDNDTrustStore -srcstorepass ${PDND_TRUST_STORE_PSW} -deststorepass ${PDND_TRUST_STORE_PSW}
-      //       '''
-      //       stash includes: "PDNDTrustStore", name: "pdnd_trust_store"
-      //     }
-      //   }
-      // }
       stages {
 
         stage('Debug') {
@@ -48,6 +31,23 @@ pipeline {
             // env
             // """
             sh'env'
+          }
+        }
+
+        stage('Initializing build') {
+          environment {
+            PDND_TRUST_STORE_PSW = credentials('pdnd-interop-trust-psw')
+          }
+          steps {
+            withCredentials([file(credentialsId: 'pdnd-interop-trust-cert', variable: 'pdnd_certificate')]) {
+              sh '''
+                cat \$pdnd_certificate > pdnd_certificate.cer
+                keytool -import -file pdnd_certificate.cer -alias pdnd-interop-gateway -keystore PDNDTrustStore -storepass ${PDND_TRUST_STORE_PSW} -noprompt
+                cp $JAVA_HOME/jre/lib/security/cacerts main_certs
+                keytool -importkeystore -srckeystore main_certs -destkeystore PDNDTrustStore -srcstorepass ${PDND_TRUST_STORE_PSW} -deststorepass ${PDND_TRUST_STORE_PSW}
+              '''
+              stash includes: "PDNDTrustStore", name: "pdnd_trust_store"
+            }
           }
         }
         
