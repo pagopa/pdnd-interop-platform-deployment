@@ -61,16 +61,18 @@ pipeline {
                 applyKubeFile('configmap.yaml')
             }
         }
-        // stage('Load Secrets') {
-        //     steps {
-        //         sh'''
-        //         # TODO This could be avoided when using public repository
-        //         kubectl get secret regcred -n default --export -o yaml | kubectl apply -n $NAMESPACE -f -
+        stage('Load Secrets') {
+            steps {
+                sh'''
+                ./kubernetes/config
 
-        //         kubectl create secret generic aws --from-literal=AWS_ACCESS_KEY_ID=$AWS_SECRET_ACCESS_USR --from-literal=AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_PSW -n $NAMESPACE
-        //         '''
-        //     }
-        // }
+                # TODO This could be avoided when using public repository
+                kubectl -n default get secret regcred -o yaml | kubectl apply -n $NAMESPACE -f -
+
+                kubectl create secret generic aws --from-literal=AWS_ACCESS_KEY_ID=$AWS_SECRET_ACCESS_USR --from-literal=AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_PSW -n $NAMESPACE
+                '''
+            }
+        }
         // stage('Deploy services') {
         //     parallel {
         //         stage('Party Management') {
