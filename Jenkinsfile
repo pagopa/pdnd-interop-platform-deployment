@@ -123,10 +123,9 @@ void applyKustomizeToDir(String dirPath, String serviceName) {
     echo "Directory ${dirPath} compiled"
     
     echo "Applying Kustomization for ${serviceName}"
-    sh """
-    DIR_NAME=$(basename ${dirPath})
-    kubectl kustomize ${serviceName}/$DIR_NAME > ${serviceName}/full.${serviceName}.yaml
-    """
+    sh '''
+    DIR_NAME=$(basename ''' + dirPath + ''')
+    kubectl kustomize ''' + serviceName + '/$DIR_NAME > ' + serviceName + '/full.' + serviceName + '.yaml'
     echo "Kustomization for ${serviceName} applied"
 
     echo "Applying files for ${serviceName}"
@@ -142,19 +141,19 @@ void applyKustomizeToDir(String dirPath, String serviceName) {
 
 void compileDir(String dirPath, String serviceName) {
   sh "cp -rf ${dirPath} ./${serviceName}"
-  sh """
-  DIR_NAME=$(basename ${dirPath})
-  BASE_FILES_PATH="${serviceName}/$DIR_NAME"
+  sh '''
+  DIR_NAME=$(basename ''' + dirPath + ''')
+  BASE_FILES_PATH="''' + serviceName + '''/$DIR_NAME"
   for f in $BASE_FILES_PATH/*
   do
       if [ ! $(basename $f) = "kustomization.yaml" ]
         then
-          SERVICE_NAME=${serviceName} ./kubernetes/templater.sh $f -s -f ./kubernetes/config > ./${serviceName}/$DIR_NAME/compiled.$(basename $f)
+          SERVICE_NAME=''' + serviceName + ' ./kubernetes/templater.sh $f -s -f ./kubernetes/config > ./' + serviceName + '''/$DIR_NAME/compiled.$(basename $f)
       fi
   done
-  """
+  '''
 }
 
 String getServiceNameFromConf(String variableName) {
-  return sh (returnStdout: true, script: "./kubernetes/config && echo $${variableName}").trim()
+  return sh (returnStdout: true, script: './kubernetes/config && echo $' + variableName).trim()
 }
