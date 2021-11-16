@@ -67,11 +67,6 @@ pipeline {
               applyKubeFile('roles.yaml')
           }
         }
-        stage('Load ConfigMap') {
-          steps {
-              applyKubeFile('configmap.yaml')
-          }
-        }
         stage('Load Secrets') {
           steps {
               loadSecrets()

@@ -12,7 +12,7 @@ spec:
           env:
             - name: POSTGRES_HOST
               valueFrom:
-                secretKeyRef:
+                configMapKeyRef:
                   name: postgres
                   key: POSTGRES_HOST
             - name: POSTGRES_USR
@@ -28,18 +28,18 @@ spec:
             - name: STORAGE_TYPE
               valueFrom:
                 configMapKeyRef:
-                  name: pdnd-interop-platform
+                  name: {{SERVICE_NAME}}
                   key: PARTY_MANAGEMENT_STORAGE_TYPE
             - name: STORAGE_CONTAINER
               valueFrom:
-                  configMapKeyRef:
-                    name: pdnd-interop-platform
-                    key: PARTY_MANAGEMENT_STORAGE_CONTAINER
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PARTY_MANAGEMENT_STORAGE_CONTAINER
             - name: STORAGE_ENDPOINT
               valueFrom:
-                  configMapKeyRef:
-                    name: pdnd-interop-platform
-                    key: PARTY_MANAGEMENT_STORAGE_ENDPOINT
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PARTY_MANAGEMENT_STORAGE_ENDPOINT
             - name: STORAGE_APPLICATION_ID
               valueFrom:
                 secretKeyRef:
