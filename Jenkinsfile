@@ -35,7 +35,7 @@ pipeline {
           }
         }
 
-        stage('Initializing build') {
+        stage('Setup Trust Store') {
           environment {
             PDND_TRUST_STORE_PSW = credentials('pdnd-interop-trust-psw')
           }
@@ -185,6 +185,14 @@ void loadSecrets() {
           --dry-run=client \
           --from-literal=POSTGRES_USR=$POSTGRES_CREDENTIALS_USR \
           --from-literal=POSTGRES_PSW=$POSTGRES_CREDENTIALS_PSW \
+          -o yaml | kubectl apply -f -
+
+# TODO This is temporary. No existing storage credentials yet
+        kubectl -n $NAMESPACE create secret generic storage \
+          --save-config \
+          --dry-run=client \
+          --from-literal=STORAGE_USR=user_placeholder \
+          --from-literal=STORAGE_PSW=password_placeholder \
           -o yaml | kubectl apply -f -
       '''
     }
