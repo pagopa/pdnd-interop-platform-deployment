@@ -147,7 +147,7 @@ void compileDir(String dirPath, String serviceName) {
 }
 
 String getVariableFromConf(String variableName) {
-  sh'source ./kubernetes/config && env'
+  sh'chmod +x ./kubernetes/config && ./kubernetes/config && env'
   return sh (returnStdout: true, script: 'chmod +x ./kubernetes/config && ./kubernetes/config && echo $' + variableName).trim()
 }
 
