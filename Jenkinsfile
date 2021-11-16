@@ -46,21 +46,21 @@ pipeline {
                 applyKubeFile('namespace.yaml')
             }
         }
-        // stage('Create ingresses') {
-        //     steps {
-        //         applyKubeFile('ingress.yaml')
-        //     }
-        // }
-        // stage('Create roles') {
-        //     steps {
-        //         applyKubeFile('roles.yaml')
-        //     }
-        // }
-        // stage('Load ConfigMap') {
-        //     steps {
-        //         applyKubeFile('configmap.yaml')
-        //     }
-        // }
+        stage('Create ingresses') {
+            steps {
+                applyKubeFile('ingress.yaml')
+            }
+        }
+        stage('Create roles') {
+            steps {
+                applyKubeFile('roles.yaml')
+            }
+        }
+        stage('Load ConfigMap') {
+            steps {
+                applyKubeFile('configmap.yaml')
+            }
+        }
         // stage('Load Secrets') {
         //     steps {
         //         sh'''
