@@ -36,3 +36,7 @@ export AGREEMENT_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-agreement-manage
 export ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-attribute-registry-management"
 export CATALOG_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-catalog-management"
 export PARTY_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-party-management"
+
+
+echo "script variables"
+env
