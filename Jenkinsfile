@@ -162,8 +162,8 @@ void loadSecrets() {
 
         # It allows to update secret if already exists
         kubectl -n $NAMESPACE create secret generic aws \
-          --save-config 
-          --dry-run=client
+          --save-config \
+          --dry-run=client \
           --from-literal=AWS_ACCESS_KEY_ID=$AWS_SECRET_ACCESS_USR \
           --from-literal=AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_PSW \
           -o yaml | kubectl apply -f -
