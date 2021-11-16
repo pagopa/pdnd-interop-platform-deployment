@@ -5,7 +5,7 @@ pipeline {
 
   environment {
       AWS_SECRET_ACCESS = credentials('jenkins-aws')
-      BRANCH_NAME = "${env.GIT_LOCAL_BRANCH}"
+      NAMESPACE = "${env.GIT_LOCAL_BRANCH}"
   }
 
   stages {
