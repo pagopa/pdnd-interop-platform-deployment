@@ -40,17 +40,17 @@ pipeline {
           }
         }
         
-        stage('Create namespace') {
+        stage('Create Namespace') {
           steps {
               applyKubeFile('namespace.yaml')
           }
         }
-        stage('Create ingresses') {
+        stage('Create Ingress') {
           steps {
               applyKubeFile('ingress.yaml')
           }
         }
-        stage('Create roles') {
+        stage('Create Roles') {
           steps {
               applyKubeFile('roles.yaml')
           }
@@ -65,7 +65,7 @@ pipeline {
               loadSecrets()
           }
         }
-        stage('Deploy services') {
+        stage('Deploy Services') {
           parallel {
             stage('Party Management') {
                 steps {
@@ -147,6 +147,7 @@ void compileDir(String dirPath, String serviceName) {
 }
 
 String getServiceNameFromConf(String variableName) {
+  echo 'chmod +x ./kubernetes/config && ./kubernetes/config && echo $' + variableName
   return sh (returnStdout: true, script: 'chmod +x ./kubernetes/config && ./kubernetes/config && echo $' + variableName).trim()
 }
 
