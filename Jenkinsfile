@@ -69,7 +69,7 @@ pipeline {
           parallel {
             stage('Party Management') {
                 steps {
-                    applyKustomizeToDir('kubernetes/overlays/party-management', getServiceNameFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
+                    applyKustomizeToDir('kubernetes/overlays/party-management', getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
                 }
             }
           }
@@ -146,8 +146,9 @@ void compileDir(String dirPath, String serviceName) {
   '''
 }
 
-String getServiceNameFromConf(String variableName) {
-  echo 'chmod +x ./kubernetes/config && ./kubernetes/config && echo $' + variableName
+String getVariableFromConf(String variableName) {
+  sh'chmod +x ./kubernetes/config && ./kubernetes/config && echo $' + variableName
+  sh'env'
   return sh (returnStdout: true, script: 'chmod +x ./kubernetes/config && ./kubernetes/config && echo $' + variableName).trim()
 }
 
