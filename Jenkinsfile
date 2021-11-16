@@ -41,7 +41,7 @@ pipeline {
             // }
             sh"""
             #!/bin/bash
-            source "./kubernetes/config"
+            ./kubernetes/config
             echo "VARIABLE:"
             echo \$PARTY_MANAGEMENT_SERVICE_NAME
             env
