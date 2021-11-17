@@ -5,11 +5,11 @@ pipeline {
 
   environment {
     // STAGE variable should be set as Global Properties
-    STAGE = "${env.STAGE}"
+    STAGE = env.STAGE
     AWS_SECRET_ACCESS = credentials('jenkins-aws')
     // TODO Create one set of credentials for each service for production
     POSTGRES_CREDENTIALS = credentials('postgres-db')
-    NAMESPACE = "${env.GIT_LOCAL_BRANCH}"
+    NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH)
     CONFIG_FILE = getConfigFileFromStage(STAGE)
   }
 
@@ -187,6 +187,13 @@ String getConfigFileFromStage(String stage) {
    default:
      error "Stage not valid: ${stage}"
   } 
+}
+
+String normalizeNamespaceName(String namespace) {
+  return namespace
+     .replace('_', '-')
+     .replace('.', '-')
+     .toLowerCase()
 }
 
 void loadSecrets() {
