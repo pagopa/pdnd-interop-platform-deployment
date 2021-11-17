@@ -132,12 +132,12 @@ void applyKustomizeToDir(String dirPath, String serviceName) {
       kubectl kustomize ''' + serviceName + '/$DIR_NAME > ' + serviceName + '/full.' + serviceName + '.yaml'
       echo "Kustomization for ${serviceName} applied"
 
+      // DEBUG
+      sh "cat ${serviceName}/full.${serviceName}.yaml"
+
       echo "Applying files for ${serviceName}"
       sh "kubectl apply -f ${serviceName}/full.${serviceName}.yaml"
       echo "Files for ${serviceName} applied"
-
-      // DEBUG
-      sh "cat ${serviceName}/full.${serviceName}.yaml"
 
       // TODO Uncomment this when ready
       // echo "Waiting for completion of ${fileName}..."
