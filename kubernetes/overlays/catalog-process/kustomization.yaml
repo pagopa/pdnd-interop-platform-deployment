@@ -2,4 +2,3 @@ bases:
 - ../base
 patchesStrategicMerge:
 - compiled.deployment.yaml
-- compiled.configmap.yaml
