@@ -5,7 +5,7 @@ pipeline {
 
   environment {
     // STAGE variable should be set as Global Properties
-    STAGE = env.STAGE
+    STAGE = "${env.STAGE}"
     AWS_SECRET_ACCESS = credentials('jenkins-aws')
     // TODO Create one set of credentials for each service for production
     POSTGRES_CREDENTIALS = credentials('postgres-db')
