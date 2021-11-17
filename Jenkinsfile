@@ -97,11 +97,11 @@ void applyKubeFile(String fileName) {
       echo "Apply file ${fileName} on Kubernetes"
 
       echo "Compiling file ${fileName}"
-      sh '/kubernetes/templater.sh ./kubernetes/' + fileName + ' -s -f ${env.CONFIG_FILE} > ./kubernetes/compiled.' + fileName
+      sh "/kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/compiled.${fileName}"
       echo "File ${fileName} compiled"
       
       echo "Applying file ${fileName}"
-      sh 'kubectl apply -f ./kubernetes/compiled.' + fileName
+      sh "kubectl apply -f ./kubernetes/compiled.${fileName}"
       echo "File ${fileName} applied"
 
       // TODO Uncomment this when ready
@@ -165,14 +165,14 @@ void compileDir(String dirPath, String serviceName) {
   do
       if [ ! $(basename $f) = "kustomization.yaml" ]
         then
-          SERVICE_NAME=''' + serviceName + ' ./kubernetes/templater.sh $f -s -f ${env.CONFIG_FILE} > ./' + serviceName + '''/$DIR_NAME/compiled.$(basename $f)
+          SERVICE_NAME=''' + serviceName + ' ./kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ./' + serviceName + '''/$DIR_NAME/compiled.$(basename $f)
       fi
   done
   '''
 }
 
 // String getVariableFromConf(String variableName) {
-//   return sh (returnStdout: true, script: 'chmod +x ${env.CONFIG_FILE} && ${env.CONFIG_FILE} && echo $' + variableName).trim()
+//   return sh (returnStdout: true, script: "chmod +x ${env.CONFIG_FILE} && ${env.CONFIG_FILE} && echo $" + variableName).trim()
 // }
 
 String getConfigFileFromStage(String stage) {
