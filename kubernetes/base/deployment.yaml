@@ -18,15 +18,9 @@ spec:
     spec:
       imagePullSecrets:
         - name: regcred
-      # volumes:
-      #   - name: application-conf
-      #     secret:
-      #       secretName: application.conf
-      #       defaultMode: 420
       containers:
         - name: {{SERVICE_NAME}}
           command: ["bin/{{SERVICE_NAME}}"]
-          # args: ["-Dconfig.file=etc/application.conf", "-Dconfig.override_with_env_vars=true"]
           args: ["-Dconfig.override_with_env_vars=true"]
           imagePullPolicy: Always
           readinessProbe:
@@ -63,6 +57,3 @@ spec:
                   fieldPath: metadata.namespace
             - name: REQUIRED_CONTACT_POINT_NR
               value: "1"
-          # volumeMounts:
-          #   - name: application-conf
-          #     mountPath: /opt/docker/etc
