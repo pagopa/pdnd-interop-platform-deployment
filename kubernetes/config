@@ -23,7 +23,8 @@ USER_REGISTRY_MANAGEMENT_IMAGE_VERSION="v0.1.1-SNAPSHOT"
 
 # Common
 INGRESS_HOST="gateway.interop.pdnd.dev"
-REPOSITORY='gateway.interop.pdnd.dev'
+REPOSITORY="gateway.interop.pdnd.dev"
+POSTGRES_HOST="pdnd-interop-dev-rds.c9zr6t2swdpb.eu-central-1.rds.amazonaws.com"
 NAMESPACE=$NAMESPACE
 REPLICAS=1
 

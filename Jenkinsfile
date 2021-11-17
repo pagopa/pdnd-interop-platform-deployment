@@ -5,6 +5,7 @@ pipeline {
 
   environment {
     AWS_SECRET_ACCESS = credentials('jenkins-aws')
+    // TODO Create one set of credentials for each service for production
     POSTGRES_CREDENTIALS = credentials('postgres-db')
     NAMESPACE = "${env.GIT_LOCAL_BRANCH}"
   }
