@@ -3,7 +3,7 @@
 # Functions
 # TODO Take version from image label
 function shortVersion() {
-  echo ${1%.*}
+  echo $1 | grep -oE '\d+\.\d+'
 }
 
 # Services Versions
