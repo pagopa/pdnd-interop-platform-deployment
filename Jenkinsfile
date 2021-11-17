@@ -100,6 +100,11 @@ void applyKubeFile(String fileName) {
       echo "Applying file ${fileName}"
       sh "kubectl apply -f ./kubernetes/compiled.${fileName}"
       echo "File ${fileName} applied"
+
+      // TODO Uncomment this when ready
+      // echo "Waiting for completion of ${fileName}..."
+      // sh "kubectl wait -f ./kubernetes/compiled.${fileName} --for condition=Ready --timeout=60s" // TODO Use parameter
+      // echo "Apply of ${fileName} completed"
     
     }
   }
@@ -134,6 +139,11 @@ void applyKustomizeToDir(String dirPath, String serviceName) {
 
       // DEBUG
       sh "cat ${serviceName}/full.${serviceName}.yaml"
+
+      // TODO Uncomment this when ready
+      // echo "Waiting for completion of ${fileName}..."
+      // sh "kubectl wait -f ./kubernetes/compiled.${fileName} --for condition=Ready --timeout=60s" // TODO Use parameter
+      // echo "Apply of ${fileName} completed"
 
       echo "Removing folder"
       sh "rm -rf ${serviceName}"
