@@ -8,10 +8,13 @@ metadata:
   namespace: {{NAMESPACE}}
 spec:
   rules:
-    - host: {{NAMESPACE}}.{{INGRESS_HOST}}
+    - host: "{{NAMESPACE}}.{{INGRESS_HOST}}"
       http:
         paths:
-          - path: /{{SERVICE_NAME}}
+          - path: "/{{SERVICE_NAME}}"
+            pathType: Prefix
             backend:
-              serviceName: {{SERVICE_NAME}}
-              servicePort: 8088
+              service:
+                name: {{SERVICE_NAME}}
+                port: 
+                  number: 8088
