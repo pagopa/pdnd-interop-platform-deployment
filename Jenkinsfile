@@ -61,11 +61,6 @@ pipeline {
               applyKubeFile('namespace.yaml')
           }
         }
-        stage('Create Ingress') {
-          steps {
-              applyKubeFile('ingress.yaml')
-          }
-        }
         stage('Create Roles') {
           steps {
               applyKubeFile('roles.yaml')
