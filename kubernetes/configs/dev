@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 # Functions
 # TODO Take version from image label
 function shortVersion() {
