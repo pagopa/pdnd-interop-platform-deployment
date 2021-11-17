@@ -38,23 +38,6 @@ pipeline {
             sh'env'
           }
         }
-
-        stage('Setup Trust Store') {
-          environment {
-            PDND_TRUST_STORE_PSW = credentials('pdnd-interop-trust-psw')
-          }
-          steps {
-            withCredentials([file(credentialsId: 'pdnd-interop-trust-cert', variable: 'pdnd_certificate')]) {
-              sh '''
-                cat \$pdnd_certificate > pdnd_certificate.cer
-                keytool -import -file pdnd_certificate.cer -alias pdnd-interop-gateway -keystore PDNDTrustStore -storepass ${PDND_TRUST_STORE_PSW} -noprompt
-                cp $JAVA_HOME/jre/lib/security/cacerts main_certs
-                keytool -importkeystore -srckeystore main_certs -destkeystore PDNDTrustStore -srcstorepass ${PDND_TRUST_STORE_PSW} -deststorepass ${PDND_TRUST_STORE_PSW}
-              '''
-              stash includes: "PDNDTrustStore", name: "pdnd_trust_store"
-            }
-          }
-        }
         
         stage('Create Namespace') {
           steps {
@@ -100,11 +83,6 @@ void applyKubeFile(String fileName) {
       sh "kubectl apply -f ./kubernetes/compiled.${fileName}"
       echo "File ${fileName} applied"
 
-      // TODO Uncomment this when ready
-      // echo "Waiting for completion of ${fileName}..."
-      // sh "kubectl wait -f ./kubernetes/compiled.${fileName} --for condition=Ready --timeout=60s" // TODO Use parameter
-      // echo "Apply of ${fileName} completed"
-    
     }
   }
 }
