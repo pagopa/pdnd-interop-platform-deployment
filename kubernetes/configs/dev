@@ -1,11 +1,9 @@
 #!/bin/bash
 
-set -x
-
 # Functions
 # TODO Take version from image label
 function shortVersion() {
-  echo $1 | grep -oE '\d+\.\d+'
+  echo $1 | grep -oE '[0-9]+\.[0-9]+'
 }
 
 # Services Versions
