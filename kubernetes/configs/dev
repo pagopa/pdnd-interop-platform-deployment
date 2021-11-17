@@ -37,3 +37,8 @@ AGREEMENT_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-agreement-management"
 ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-attribute-registry-management"
 CATALOG_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-catalog-management"
 PARTY_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-party-management"
+
+# Party Management
+PARTY_MANAGEMENT_STORAGE_TYPE="something"
+PARTY_MANAGEMENT_STORAGE_CONTAINER="something"
+PARTY_MANAGEMENT_STORAGE_ENDPOINT="something"
