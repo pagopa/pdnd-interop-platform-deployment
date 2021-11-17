@@ -62,6 +62,12 @@ pipeline {
                   applyKustomizeToDir('kubernetes/overlays/party-management', 'pdnd-interop-uservice-party-management')
               }
             }
+            stage('Catalog Process') {
+              steps {
+                  // applyKustomizeToDir('kubernetes/overlays/catalog-process', getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"))
+                  applyKustomizeToDir('kubernetes/overlays/catalog-process', 'pdnd-interop-uservice-catalog-process')
+              }
+            }
           }
         }
       }
