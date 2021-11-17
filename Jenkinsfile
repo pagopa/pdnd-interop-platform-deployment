@@ -203,7 +203,7 @@ void loadSecrets() {
         
         # TODO This could be avoided when using public repository
         # Cleanup
-        kubectl -n $NAMESPACE delete secrets regcred
+        kubectl -n $NAMESPACE delete secrets regcred --ignore-not-found
         kubectl -n default get secret regcred -o yaml | sed s/"namespace: default"/"namespace: $NAMESPACE"/ |  kubectl apply -n $NAMESPACE -f -
 
         # It allows to update secret if already exists
