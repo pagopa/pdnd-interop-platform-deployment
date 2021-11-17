@@ -4,10 +4,12 @@ pipeline {
   agent any
 
   environment {
+    // STAGE variable should be set as Global Properties
+    STAGE = "${env.STAGE}"
     AWS_SECRET_ACCESS = credentials('jenkins-aws')
     // TODO Create one set of credentials for each service for production
     POSTGRES_CREDENTIALS = credentials('postgres-db')
-    NAMESPACE = "${env.GIT_LOCAL_BRANCH}"
+    NAMESPACE = getConfigFileFromStage(STAGE)
   }
 
   stages {
@@ -171,6 +173,19 @@ void compileDir(String dirPath, String serviceName) {
 
 String getVariableFromConf(String variableName) {
   return sh (returnStdout: true, script: 'chmod +x ./kubernetes/config && ./kubernetes/config && echo $' + variableName).trim()
+}
+
+String getConfigFileFromStage(String stage) {
+  switch(stage) { 
+   case 'DEV': 
+     return './kubernetes/configs/dev'
+   case 'TEST': 
+     return './kubernetes/configs/test'
+   case 'PROD': 
+     return './kubernetes/configs/prod'
+   default:
+     error "Stage not valid: ${stage}"
+  } 
 }
 
 void loadSecrets() {
