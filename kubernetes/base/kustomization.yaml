@@ -2,3 +2,4 @@ resources:
 - compiled.deployment.yaml
 - compiled.service.yaml
 - compiled.configmap.yaml
+- compiled.ingress.yaml
