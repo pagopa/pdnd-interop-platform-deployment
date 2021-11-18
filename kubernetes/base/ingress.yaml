@@ -4,6 +4,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
   name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 spec:
@@ -11,7 +12,7 @@ spec:
     - host: "{{INGRESS_HOST}}"
       http:
         paths:
-          - path: "/{{NAMESPACE}}/{{SERVICE_NAME}}"
+          - path: "/{{NAMESPACE}}/({{SERVICE_NAME}}.*)"
             pathType: Prefix
             backend:
               service:
