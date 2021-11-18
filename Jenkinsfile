@@ -68,6 +68,27 @@ pipeline {
                   applyKustomizeToDir('kubernetes/overlays/catalog-process', 'pdnd-interop-uservice-catalog-process')
               }
             }
+
+            stage('Spid') {
+              parallel {
+                stage('Login') {
+                  steps {
+                    applyKubeFile('spid/login/ingress.yaml')
+                    applyKubeFile('spid/login/configmap.yaml')
+                    applyKubeFile('spid/login/deployment.yaml')
+                    applyKubeFile('spid/login/service.yaml')
+                  }
+                }
+
+                stage('Redis') {
+                  steps {
+                    applyKubeFile('spid/login/configmap.yaml')
+                    applyKubeFile('spid/login/deployment.yaml')
+                    applyKubeFile('spid/login/service.yaml')
+                  }
+                }
+              
+            }
           }
         }
       }

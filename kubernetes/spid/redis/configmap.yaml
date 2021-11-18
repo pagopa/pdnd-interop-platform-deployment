@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+data:
+  REDIS_TIMEOUT: 300
+  REDIS_TCP_KEEPALIVE: 60
+  REDIS_MAXMEMORY: "182m"
