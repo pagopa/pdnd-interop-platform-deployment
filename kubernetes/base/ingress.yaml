@@ -8,10 +8,10 @@ metadata:
   namespace: {{NAMESPACE}}
 spec:
   rules:
-    - host: "{{NAMESPACE}}.{{INGRESS_HOST}}"
+    - host: "{{INGRESS_HOST}}"
       http:
         paths:
-          - path: "/{{SERVICE_NAME}}"
+          - path: "/{{NAMESPACE}}/{{SERVICE_NAME}}"
             pathType: Prefix
             backend:
               service:
