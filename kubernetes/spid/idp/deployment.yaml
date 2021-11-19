@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{SERVICE_NAME}}
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{SERVICE_NAME}}
+  template:
+    metadata:
+      labels:
+        app: {{SERVICE_NAME}}
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          image: italia/spid-testenv2:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8088
+              protocol: TCP
+          volumeMounts:
+            - name: configs
+              mountPath: "/app/conf"
+              readOnly: true
+            - name: spMetadata
+              mountPath: "/app/conf"
+              readOnly: true
+            - name: users
+              mountPath: "/app/conf"
+            - name: idpSamlCerts
+              mountPath: "/app/conf"
+              readOnly: true
+            - name: idpHttpCerts
+              mountPath: "/app/certs"
+              readOnly: true
+      volumes:
+        - name: configs
+          configMap:
+            name: {{SERVICE_NAME}}
+            items:
+              - key: config.yaml
+                path: config.yaml
+        - name: users
+          configMap:
+            name: {{SERVICE_NAME}}
+            items:
+              - key: users.json
+                path: users.json
+        - name: idpSamlCerts
+          secret:
+            secretName: idp-saml-certs
+        - name: idpHttpCerts
+          secret:
+            secretName: idp-http-certs
+        

@@ -42,4 +42,3 @@ spec:
                 secretKeyRef:
                   name: spid-login
                   key: JWT_TOKEN_PRIVATE_KEY
-                  

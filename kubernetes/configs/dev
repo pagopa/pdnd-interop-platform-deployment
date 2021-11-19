@@ -44,3 +44,8 @@ PARTY_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-party-management"
 PARTY_MANAGEMENT_STORAGE_TYPE="something"
 PARTY_MANAGEMENT_STORAGE_CONTAINER="something"
 PARTY_MANAGEMENT_STORAGE_ENDPOINT="something"
+
+
+# SPID
+SPID_LOGIN_URL="hub-spid-login-ms"
+IDP_SERVICE_URL="spid-testenv2"
