@@ -126,7 +126,7 @@ void applyKubeFile(String fileName) {
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Apply file ${fileName} on Kubernetes"
-      outputFile=sh (returnStdout: true, script: "echo $(dirname ${fileName})/compiled.$(basename ${fileName})").trim()
+      outputFile=sh (returnStdout: true, script: 'echo $(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')').trim()
 
       echo "Compiling file ${fileName}"
       sh "./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/${outputFile}"
