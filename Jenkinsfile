@@ -267,9 +267,9 @@ void loadSpidSecrets() {
         kubectl -n $NAMESPACE create secret generic spid-login \
           --save-config \
           --dry-run=client \
-          --from-literal=METADATA_PUBLIC_CERT=$SPID_LOGIN_METADATA_PUBLIC_CERT \
-          --from-literal=METADATA_PRIVATE_CERT=$SPID_LOGIN_METADATA_PRIVATE_KEY \
-          --from-literal=JWT_TOKEN_PRIVATE_KEY=$SPID_LOGIN_JWT_PRIVATE_KEY \
+          --from-literal=METADATA_PUBLIC_CERT="$SPID_LOGIN_METADATA_PUBLIC_CERT" \
+          --from-literal=METADATA_PRIVATE_CERT="$SPID_LOGIN_METADATA_PRIVATE_KEY" \
+          --from-literal=JWT_TOKEN_PRIVATE_KEY="$SPID_LOGIN_JWT_PRIVATE_KEY" \
           -o yaml | kubectl apply -f -
 
         kubectl -n $NAMESPACE create secret generic idp-saml-certs \
