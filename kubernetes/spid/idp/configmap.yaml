@@ -28,7 +28,7 @@ data:
     # cfr. https://pysaml2.readthedocs.io/en/latest/howto/config.html#metadata
     metadata:
       remote:
-        - "{{SPID_LOGIN_URL}}:9090/metadata"
+        - "http://{{SPID_LOGIN_URL}}:9090/metadata"
 
     # CONFIGURAZIONE TESTENV WEB SERVER
 
