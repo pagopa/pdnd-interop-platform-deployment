@@ -21,9 +21,8 @@ data:
   ENDPOINT_METADATA: "/metadata"
   ENDPOINT_LOGOUT: "/logout"
 
-
   SPID_VALIDATOR_URL: "http://localhost"
-  SPID_TESTENV_URL: "https://{{IDP_SERVICE_URL}}" # IdP
+  SPID_TESTENV_URL: "https://{{IDP_SERVICE_URL}}:8088" # IdP
 
   REDIS_URL: "{{REDIS_URL}}"
   REDIS_TLS_ENABLED: "false"
@@ -33,6 +32,9 @@ data:
 
   TOKEN_EXPIRATION: "3600"
   JWT_TOKEN_ISSUER: "SPID"
+
+  ENABLE_USER_REGISTRY: "false"
+  USER_REGISTRY_URL: "https://{{USER_REGISTRY_MANAGEMENT_SERVICE_NAME}}"
 
   ENABLE_ADE_AA: "false"
   ADE_AA_API_ENDPOINT: "http://ade-aa-ms-mock:3000" # ADE Mock to authorize user and enrich jwt
