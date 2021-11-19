@@ -89,27 +89,27 @@ pipeline {
                 }
                 stage('Login') {
                   steps {
-                    applyKubeFile('spid/login/ingress.yaml')
-                    applyKubeFile('spid/login/configmap.yaml')
-                    applyKubeFile('spid/login/deployment.yaml')
-                    applyKubeFile('spid/login/service.yaml')
+                    applyKubeFile('spid/login/ingress.yaml', "hub-spid-login-ms")
+                    applyKubeFile('spid/login/configmap.yaml', "hub-spid-login-ms")
+                    applyKubeFile('spid/login/deployment.yaml', "hub-spid-login-ms")
+                    applyKubeFile('spid/login/service.yaml', "hub-spid-login-ms")
                   }
                 }
 
                 stage('IdP') {
                   steps {
-                    applyKubeFile('spid/idp/ingress.yaml')
-                    applyKubeFile('spid/idp/configmap.yaml')
-                    applyKubeFile('spid/idp/deployment.yaml')
-                    applyKubeFile('spid/idp/service.yaml')
+                    applyKubeFile('spid/idp/ingress.yaml', "spid-testenv2")
+                    applyKubeFile('spid/idp/configmap.yaml', "spid-testenv2")
+                    applyKubeFile('spid/idp/deployment.yaml', "spid-testenv2")
+                    applyKubeFile('spid/idp/service.yaml', "spid-testenv2")
                   }
                 }
 
                 stage('Redis') {
                   steps {
-                    applyKubeFile('spid/redis/configmap.yaml')
-                    applyKubeFile('spid/redis/deployment.yaml')
-                    applyKubeFile('spid/redis/service.yaml')
+                    applyKubeFile('spid/redis/configmap.yaml', "redis")
+                    applyKubeFile('spid/redis/deployment.yaml', "redis")
+                    applyKubeFile('spid/redis/service.yaml', "redis")
                   }
                 }
               }
@@ -121,7 +121,7 @@ pipeline {
   }
 }
 
-void applyKubeFile(String fileName) {
+void applyKubeFile(String fileName, String serviceName = null) {
   container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
     withKubeConfig([credentialsId: 'kube-config']) {
 
@@ -129,7 +129,7 @@ void applyKubeFile(String fileName) {
       outputFile=sh (returnStdout: true, script: 'echo $(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')').trim()
 
       echo "Compiling file ${fileName}"
-      sh "./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/${outputFile}"
+      sh "SERVICE_NAME=" + serviceName + " ./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/${outputFile}"
       echo "File ${fileName} compiled"
       
       echo "Applying file ${fileName}"
