@@ -80,10 +80,13 @@ pipeline {
                 SPID_LOGIN_METADATA_PRIVATE_KEY = credentials('spid-login-metadata-private-key')
                 SPID_LOGIN_JWT_PRIVATE_KEY = credentials('spid-login-jwt-private-key')
               }
-              steps {
-                loadSpidSecrets()
-              }
+              
               stages {
+                stage('Secrets') {
+                  steps {
+                    loadSpidSecrets()
+                  }
+                }
                 stage('Login') {
                   steps {
                     applyKubeFile('spid/login/ingress.yaml')
