@@ -24,30 +24,46 @@ spec:
               containerPort: 8088
               protocol: TCP
           volumeMounts:
-            - name: configs
+            - name: conf
               mountPath: "/app/conf"
-              readOnly: true
-            - name: users
-              mountPath: "/app/conf"
+            # - name: configs
+            #   mountPath: "/app/conf"
+            #   readOnly: true
+            # - name: users
+            #   mountPath: "/app/conf"
             - name: idp-saml-certs
-              mountPath: "/app/conf"
+              mountPath: "/app/certs"
               readOnly: true
             - name: idp-http-certs
               mountPath: "/app/certs"
               readOnly: true
       volumes:
-        - name: configs
-          configMap:
-            name: {{SERVICE_NAME}}
-            items:
-              - key: config.yaml
-                path: config.yaml
-        - name: users
-          configMap:
-            name: {{SERVICE_NAME}}
-            items:
-              - key: users.json
-                path: users.json
+        - name: conf
+          projected:
+            sources:
+              - configMap:
+                  name: {{SERVICE_NAME}}
+                  items:
+                    - key: config.yaml
+                      path: config.yaml
+              - configMap:
+                  name: {{SERVICE_NAME}}
+                  items:
+                    - key: users.json
+                      path: users.json
+
+        # - name: configs
+        #   configMap:
+        #     name: {{SERVICE_NAME}}
+        #     items:
+        #       - key: config.yaml
+        #         path: config.yaml
+        # - name: users
+        #   configMap:
+        #     name: {{SERVICE_NAME}}
+        #     items:
+        #       - key: users.json
+        #         path: users.json
         - name: idp-saml-certs
           secret:
             secretName: idp-saml-certs
