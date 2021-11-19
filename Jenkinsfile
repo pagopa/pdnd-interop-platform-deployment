@@ -276,12 +276,12 @@ void loadSpidSecrets() {
           --from-literal=JWT_TOKEN_PRIVATE_KEY="$SPID_LOGIN_JWT_PRIVATE_KEY" \
           -o yaml | kubectl apply -f -
 
-        kubectl -n $NAMESPACE create secret generic idp-saml-certs \
-          --save-config \
-          --dry-run=client \
-          --from-file=idp.crt=$IDP_SAML_CERT \
-          --from-file=idp.key=$IDP_SAML_KEY \
-          -o yaml | kubectl apply -f -
+        #kubectl -n $NAMESPACE create secret generic idp-saml-certs \
+        #  --save-config \
+        #  --dry-run=client \
+        #  --from-file=idp.crt=$IDP_SAML_CERT \
+        #  --from-file=idp.key=$IDP_SAML_KEY \
+        #  -o yaml | kubectl apply -f -
 
         kubectl -n $NAMESPACE create secret generic idp-http-certs \
           --save-config \
