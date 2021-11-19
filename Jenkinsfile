@@ -109,7 +109,7 @@ pipeline {
                     applyKubeFile('spid/login/service.yaml')
                   }
                 }
-              
+              }
             }
           }
         }
@@ -243,7 +243,7 @@ void loadSecrets() {
           --from-literal=POSTGRES_PSW=$POSTGRES_CREDENTIALS_PSW \
           -o yaml | kubectl apply -f -
 
-# TODO This is temporary. No existing storage credentials yet
+       # TODO This is temporary. No existing storage credentials yet
         kubectl -n $NAMESPACE create secret generic storage \
           --save-config \
           --dry-run=client \
