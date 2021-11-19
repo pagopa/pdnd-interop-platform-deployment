@@ -132,6 +132,9 @@ void applyKubeFile(String fileName, String serviceName = null) {
       sh "SERVICE_NAME=" + serviceName + " ./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/${outputFile}"
       echo "File ${fileName} compiled"
       
+      // DEBUG
+      sh "cat ${serviceName}/full.${serviceName}.yaml"
+
       echo "Applying file ${fileName}"
       sh "kubectl apply -f ./kubernetes/${outputFile}"
       echo "File ${fileName} applied"
