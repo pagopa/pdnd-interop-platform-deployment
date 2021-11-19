@@ -27,15 +27,12 @@ spec:
             - name: configs
               mountPath: "/app/conf"
               readOnly: true
-            - name: spMetadata
-              mountPath: "/app/conf"
-              readOnly: true
             - name: users
               mountPath: "/app/conf"
-            - name: idpSamlCerts
+            - name: idp-saml-certs
               mountPath: "/app/conf"
               readOnly: true
-            - name: idpHttpCerts
+            - name: idp-http-certs
               mountPath: "/app/certs"
               readOnly: true
       volumes:
@@ -51,10 +48,10 @@ spec:
             items:
               - key: users.json
                 path: users.json
-        - name: idpSamlCerts
+        - name: idp-saml-certs
           secret:
             secretName: idp-saml-certs
-        - name: idpHttpCerts
+        - name: idp-http-certs
           secret:
             secretName: idp-http-certs
         
