@@ -275,15 +275,15 @@ void loadSpidSecrets() {
         kubectl -n $NAMESPACE create secret generic idp-saml-certs \
           --save-config \
           --dry-run=client \
-          --from-file=idp.crt=$IDP_SAML_CERT
-          --from-file=idp.key=$IDP_SAML_KEY
+          --from-file=idp.crt=$IDP_SAML_CERT \
+          --from-file=idp.key=$IDP_SAML_KEY \
           -o yaml | kubectl apply -f -
 
         kubectl -n $NAMESPACE create secret generic idp-http-certs \
           --save-config \
           --dry-run=client \
-          --from-file=certificate.crt=$IDP_HTTP_CERT
-          --from-file=certificate.pem=$IDP_HTTP_KEY
+          --from-file=certificate.crt=$IDP_HTTP_CERT \
+          --from-file=certificate.pem=$IDP_HTTP_KEY \
           -o yaml | kubectl apply -f -
 
       '''
