@@ -14,8 +14,8 @@ data:
     base_url: "{{SERVICE_NAME}}:8088"
 
     # Chiave e certificato necessari per la firma dei messaggi SAML
-    key_file: "samlConf/idp.key"
-    cert_file: "samlConf/idp.crt"
+    key_file: "conf/idp.key"
+    cert_file: "conf/idp.crt"
 
 
     # CONFIGURAZIONE SERVICE PROVIDER
