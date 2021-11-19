@@ -83,7 +83,7 @@ pipeline {
               steps {
                 loadSpidSecrets()
               }
-              parallel {
+              // parallel {
                 stage('Login') {
                   steps {
                     applyKubeFile('spid/login/ingress.yaml')
@@ -109,7 +109,7 @@ pipeline {
                     applyKubeFile('spid/login/service.yaml')
                   }
                 }
-              }
+              // }
             }
           }
         }
