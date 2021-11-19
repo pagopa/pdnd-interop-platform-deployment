@@ -58,9 +58,9 @@ spec:
           projected:
             sources:
               - secret:
-                  secretName: idp-saml-certs
+                  name: idp-saml-certs
               - secret:
-                  secretName: idp-http-certs
+                  name: idp-http-certs
               
         # - name: configs
         #   configMap:
