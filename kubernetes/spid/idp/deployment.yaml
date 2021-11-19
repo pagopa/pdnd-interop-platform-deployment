@@ -26,17 +26,20 @@ spec:
           volumeMounts:
             - name: conf
               mountPath: "/app/conf"
+            - name: certs
+              mountPath: "/app/certs"
+              readOnly: true
             # - name: configs
             #   mountPath: "/app/conf"
             #   readOnly: true
             # - name: users
             #   mountPath: "/app/conf"
-            - name: idp-saml-certs
-              mountPath: "/app/certs"
-              readOnly: true
-            - name: idp-http-certs
-              mountPath: "/app/certs"
-              readOnly: true
+            # - name: idp-saml-certs
+            #   mountPath: "/app/certs"
+            #   readOnly: true
+            # - name: idp-http-certs
+            #   mountPath: "/app/certs"
+            #   readOnly: true
       volumes:
         - name: conf
           projected:
@@ -51,7 +54,14 @@ spec:
                   items:
                     - key: users.json
                       path: users.json
-
+        - name: certs
+          projected:
+            sources:
+              - secret:
+                  secretName: idp-saml-certs
+              - secret:
+                  secretName: idp-http-certs
+              
         # - name: configs
         #   configMap:
         #     name: {{SERVICE_NAME}}
@@ -64,10 +74,10 @@ spec:
         #     items:
         #       - key: users.json
         #         path: users.json
-        - name: idp-saml-certs
-          secret:
-            secretName: idp-saml-certs
-        - name: idp-http-certs
-          secret:
-            secretName: idp-http-certs
+        # - name: idp-saml-certs
+        #   secret:
+        #     secretName: idp-saml-certs
+        # - name: idp-http-certs
+        #   secret:
+        #     secretName: idp-http-certs
         
