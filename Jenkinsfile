@@ -98,18 +98,18 @@ pipeline {
 
                 stage('IdP') {
                   steps {
-                    applyKubeFile('spid/login/ingress.yaml')
-                    applyKubeFile('spid/login/configmap.yaml')
-                    applyKubeFile('spid/login/deployment.yaml')
-                    applyKubeFile('spid/login/service.yaml')
+                    applyKubeFile('spid/idp/ingress.yaml')
+                    applyKubeFile('spid/idp/configmap.yaml')
+                    applyKubeFile('spid/idp/deployment.yaml')
+                    applyKubeFile('spid/idp/service.yaml')
                   }
                 }
 
                 stage('Redis') {
                   steps {
-                    applyKubeFile('spid/login/configmap.yaml')
-                    applyKubeFile('spid/login/deployment.yaml')
-                    applyKubeFile('spid/login/service.yaml')
+                    applyKubeFile('spid/redis/configmap.yaml')
+                    applyKubeFile('spid/redis/deployment.yaml')
+                    applyKubeFile('spid/redis/service.yaml')
                   }
                 }
               }
@@ -126,13 +126,14 @@ void applyKubeFile(String fileName) {
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Apply file ${fileName} on Kubernetes"
+      outputFile=sh (returnStdout: true, script: "echo $(dirname ${fileName})/compiled.$(basename ${fileName})").trim()
 
       echo "Compiling file ${fileName}"
-      sh "./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/compiled.${fileName}"
+      sh "./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/${outputFile}"
       echo "File ${fileName} compiled"
       
       echo "Applying file ${fileName}"
-      sh "kubectl apply -f ./kubernetes/compiled.${fileName}"
+      sh "kubectl apply -f ./kubernetes/${outputFile}"
       echo "File ${fileName} applied"
 
     }
