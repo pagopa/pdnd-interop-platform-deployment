@@ -133,7 +133,7 @@ void applyKubeFile(String fileName, String serviceName = null) {
       echo "File ${fileName} compiled"
       
       // DEBUG
-      sh "cat ${serviceName}/full.${serviceName}.yaml"
+      sh "cat ./kubernetes/${outputFile}"
 
       echo "Applying file ${fileName}"
       sh "kubectl apply -f ./kubernetes/${outputFile}"
