@@ -43,7 +43,7 @@ spec:
       initContainers:
         - name: rw-conf-directory
           image: busybox:1.34
-          command: ['sh', '-c', "cp -R /temp/app/conf /app/conf"]
+          command: ['sh', '-c', "cp -rf /temp/app/conf /app"]
           volumeMounts:
             - name: conf-tmp
               mountPath: "/temp/app/conf"
