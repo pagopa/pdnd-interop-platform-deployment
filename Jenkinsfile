@@ -269,13 +269,15 @@ void loadSecrets() {
 void loadSpidSecrets() {
   container('sbt-container') { // This is required only for kubectl command (sbt is not needed)
     withKubeConfig([credentialsId: 'kube-config']) {
+      // #  --from-literal=METADATA_PUBLIC_CERT="$SPID_LOGIN_METADATA_PUBLIC_CERT" \
+      //   #  --from-literal=METADATA_PRIVATE_CERT="$SPID_LOGIN_METADATA_PRIVATE_KEY" \
+        
+      
       sh'''
         
         kubectl -n $NAMESPACE create secret generic spid-login \
           --save-config \
           --dry-run=client \
-        #  --from-literal=METADATA_PUBLIC_CERT="$SPID_LOGIN_METADATA_PUBLIC_CERT" \
-        #  --from-literal=METADATA_PRIVATE_CERT="$SPID_LOGIN_METADATA_PRIVATE_KEY" \
           --from-file=METADATA_PUBLIC_CERT="$SPID_LOGIN_SAML_CERT" \
           --from-file=METADATA_PRIVATE_CERT="$SPID_LOGIN_SAML_KEY" \
           --from-literal=JWT_TOKEN_PRIVATE_KEY="$SPID_LOGIN_JWT_PRIVATE_KEY" \

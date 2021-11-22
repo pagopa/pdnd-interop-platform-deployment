@@ -41,6 +41,9 @@ spec:
               mountPath: "/app/certs"
               readOnly: true
       initContainers:
+      # Volumes loaded from secrets are read only
+      # The application needs to write in the same folder
+      # This init container is used as workaround to load secrets and copy them to a new read-write volume
         - name: rw-conf-directory
           image: busybox:1.34
           command: ['sh', '-c', "cp -rf /temp/app/conf /app"]
