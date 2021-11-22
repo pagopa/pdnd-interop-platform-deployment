@@ -78,10 +78,11 @@ pipeline {
                 
                 SPID_LOGIN_SAML_CERT = credentials('spid-login-saml-cert')
                 SPID_LOGIN_SAML_KEY = credentials('spid-login-saml-key')
+                SPID_LOGIN_JWT_PRIVATE_KEY = credentials('spid-login-jwt-private-key')
 
                 // SPID_LOGIN_METADATA_PUBLIC_CERT = credentials('spid-login-metadata-public-cert')
                 // SPID_LOGIN_METADATA_PRIVATE_KEY = credentials('spid-login-metadata-private-key')
-                SPID_LOGIN_JWT_PRIVATE_KEY = credentials('spid-login-jwt-private-key')
+                // SPID_LOGIN_JWT_PRIVATE_KEY = credentials('spid-login-jwt-private-key')
               }
               
               stages {
@@ -280,7 +281,7 @@ void loadSpidSecrets() {
           --dry-run=client \
           --from-file=METADATA_PUBLIC_CERT="$SPID_LOGIN_SAML_CERT" \
           --from-file=METADATA_PRIVATE_CERT="$SPID_LOGIN_SAML_KEY" \
-          --from-literal=JWT_TOKEN_PRIVATE_KEY="$SPID_LOGIN_JWT_PRIVATE_KEY" \
+          --from-file=JWT_TOKEN_PRIVATE_KEY="$SPID_LOGIN_JWT_PRIVATE_KEY" \
           -o yaml | kubectl apply -f -
 
         #kubectl -n $NAMESPACE create secret generic idp-saml-certs \
