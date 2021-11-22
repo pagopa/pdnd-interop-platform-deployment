@@ -296,6 +296,8 @@ void loadSpidSecrets() {
           --dry-run=client \
           --from-file=certificate.crt=$IDP_HTTP_CERT \
           --from-file=certificate.pem=$IDP_HTTP_KEY \
+          --from-file=cert.pem=$SPID_LOGIN_SAML_CERT \
+          --from-file=key.pem=$SPID_LOGIN_SAML_KEY \
           -o yaml | kubectl apply -f -
 
       '''
