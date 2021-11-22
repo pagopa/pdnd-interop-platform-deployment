@@ -22,7 +22,7 @@ data:
   ENDPOINT_LOGOUT: "/logout"
 
   SPID_VALIDATOR_URL: "http://localhost"
-  SPID_TESTENV_URL: "https://{{IDP_SERVICE_URL}}:8088" # IdP
+  SPID_TESTENV_URL: "http://{{IDP_SERVICE_URL}}:8088" # IdP
 
   REDIS_URL: "{{REDIS_URL}}"
   REDIS_TLS_ENABLED: "false"
