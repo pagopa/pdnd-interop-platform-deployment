@@ -11,7 +11,7 @@ data:
     # Hostname da usare per generare l'entityID dell'IdP e gli URL degli endpoint
     # SAML indicati nel metadata dell'IdP
     hostname: "localhost"
-    base_url: "https://{{SERVICE_NAME}}:8088"
+    base_url: "http://{{SERVICE_NAME}}:8088"
 
     # Chiave e certificato necessari per la firma dei messaggi SAML
     key_file: "conf/idp.key"
@@ -41,7 +41,7 @@ data:
     port: 8088
 
     # Abilita (true) o disabilita (false) la modalità HTTPS per l'IdP
-    https: true
+    https: false
 
     # Se si abilita HTTPS è necessario specificare chiave e certificato
     # (indipendenti da chiave e certificato SAML)
