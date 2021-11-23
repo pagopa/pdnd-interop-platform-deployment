@@ -91,6 +91,15 @@ pipeline {
                     loadSpidSecrets()
                   }
                 }
+
+                stage('Redis') {
+                  steps {
+                    applyKubeFile('spid/redis/configmap.yaml', "redis")
+                    applyKubeFile('spid/redis/deployment.yaml', "redis")
+                    applyKubeFile('spid/redis/service.yaml', "redis")
+                  }
+                }
+
                 stage('Login') {
                   steps {
                     applyKubeFile('spid/login/ingress.yaml', "hub-spid-login-ms")
@@ -106,14 +115,6 @@ pipeline {
                     applyKubeFile('spid/idp/configmap.yaml', "spid-testenv2")
                     applyKubeFile('spid/idp/deployment.yaml', "spid-testenv2")
                     applyKubeFile('spid/idp/service.yaml', "spid-testenv2")
-                  }
-                }
-
-                stage('Redis') {
-                  steps {
-                    applyKubeFile('spid/redis/configmap.yaml', "redis")
-                    applyKubeFile('spid/redis/deployment.yaml', "redis")
-                    applyKubeFile('spid/redis/service.yaml', "redis")
                   }
                 }
               }
