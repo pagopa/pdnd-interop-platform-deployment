@@ -10,7 +10,7 @@ data:
 
     # Hostname da usare per generare l'entityID dell'IdP e gli URL degli endpoint
     # SAML indicati nel metadata dell'IdP
-    hostname: "localhost"
+    # hostname: "localhost"
     base_url: "http://{{SERVICE_NAME}}:8088"
     # base_url: "https://{{INGRESS_HOST}}/{{NAMESPACE}}/{{SERVICE_NAME}}"
 
