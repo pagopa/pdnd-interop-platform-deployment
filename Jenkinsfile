@@ -6,9 +6,9 @@ pipeline {
   environment {
     // STAGE variable should be set as Global Properties
     STAGE = "${env.STAGE}"
-    AWS_SECRET_ACCESS = credentials('jenkins-aws')
+    // AWS_SECRET_ACCESS = credentials('jenkins-aws')
     // TODO Create one set of credentials for each service for production
-    POSTGRES_CREDENTIALS = credentials('postgres-db')
+    // POSTGRES_CREDENTIALS = credentials('postgres-db')
     NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH)
     CONFIG_FILE = getConfigFileFromStage(STAGE)
   }
@@ -49,32 +49,32 @@ pipeline {
               applyKubeFile('roles.yaml')
           }
         }
-        stage('Load Secrets') {
-          steps {
-              loadSecrets()
-          }
-        }
+        // stage('Load Secrets') {
+        //   steps {
+        //       loadSecrets()
+        //   }
+        // }
         stage('Deploy Services') {
           parallel {
-            stage('Party Management') {
-              steps {
-                  // applyKustomizeToDir('kubernetes/overlays/party-management', getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
-                  applyKustomizeToDir('kubernetes/overlays/party-management', 'pdnd-interop-uservice-party-management')
-              }
-            }
-            stage('Catalog Process') {
-              steps {
-                  // applyKustomizeToDir('kubernetes/overlays/catalog-process', getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"))
-                  applyKustomizeToDir('kubernetes/overlays/catalog-process', 'pdnd-interop-uservice-catalog-process')
-              }
-            }
+            // stage('Party Management') {
+            //   steps {
+            //       // applyKustomizeToDir('kubernetes/overlays/party-management', getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
+            //       applyKustomizeToDir('kubernetes/overlays/party-management', 'pdnd-interop-uservice-party-management')
+            //   }
+            // }
+            // stage('Catalog Process') {
+            //   steps {
+            //       // applyKustomizeToDir('kubernetes/overlays/catalog-process', getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"))
+            //       applyKustomizeToDir('kubernetes/overlays/catalog-process', 'pdnd-interop-uservice-catalog-process')
+            //   }
+            // }
 
             stage('Spid') {
               environment {
                 // IDP_SAML_CERT = credentials('idp-saml-cert')
                 // IDP_SAML_KEY = credentials('idp-saml-key')
-                IDP_HTTP_CERT = credentials('idp-http-cert')
-                IDP_HTTP_KEY = credentials('idp-http-key')
+                // IDP_HTTP_CERT = credentials('idp-http-cert')
+                // IDP_HTTP_KEY = credentials('idp-http-key')
                 
                 SPID_LOGIN_SAML_CERT = credentials('spid-login-saml-cert')
                 SPID_LOGIN_SAML_KEY = credentials('spid-login-saml-key')
@@ -292,11 +292,12 @@ void loadSpidSecrets() {
         #  --from-file=idp.key=$IDP_SAML_KEY \
         #  -o yaml | kubectl apply -f -
 
+        #  --from-file=certificate.crt=$IDP_HTTP_CERT \
+        #  --from-file=certificate.pem=$IDP_HTTP_KEY \
+          
         kubectl -n $NAMESPACE create secret generic idp-http-certs \
           --save-config \
           --dry-run=client \
-          --from-file=certificate.crt=$IDP_HTTP_CERT \
-          --from-file=certificate.pem=$IDP_HTTP_KEY \
           --from-file=cert.pem=$SPID_LOGIN_SAML_CERT \
           --from-file=key.pem=$SPID_LOGIN_SAML_KEY \
           -o yaml | kubectl apply -f -
