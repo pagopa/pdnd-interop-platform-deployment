@@ -17,7 +17,7 @@ pipeline {
     stage('Platform') {
       // This is required only for kubectl command (we do not need sbt)
       agent { 
-        label 'kubectl-template' 
+        label 'sbt-template' 
       }
       stages {
 
@@ -127,7 +127,7 @@ pipeline {
 }
 
 void applyKubeFile(String fileName, String serviceName = null) {
-  container('kubectl-container') { // This is required only for kubectl command (we do not need sbt)
+  container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Apply file ${fileName} on Kubernetes"
@@ -150,7 +150,7 @@ void applyKubeFile(String fileName, String serviceName = null) {
 
 // dirPath starting from kubernetes folder (e.g. kubernetes/overlays/party-management)
 void applyKustomizeToDir(String dirPath, String serviceName) {
-  container('kubectl-container') { // This is required only for kubectl command (we do not need sbt)
+  container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Apply directory ${dirPath} on Kubernetes"
@@ -231,7 +231,7 @@ String normalizeNamespaceName(String namespace) {
 }
 
 void loadSecrets() {
-  container('kubectl-container') { // This is required only for kubectl command (sbt is not needed)
+  container('sbt-container') { // This is required only for kubectl command (sbt is not needed)
     withKubeConfig([credentialsId: 'kube-config']) {
       sh'''
         
@@ -269,7 +269,7 @@ void loadSecrets() {
 
 
 void loadSpidSecrets() {
-  container('kubectl-container') { // This is required only for kubectl command (sbt is not needed)
+  container('sbt-container') { // This is required only for kubectl command (sbt is not needed)
     withKubeConfig([credentialsId: 'kube-config']) {
       // #  --from-literal=METADATA_PUBLIC_CERT="$SPID_LOGIN_METADATA_PUBLIC_CERT" \
       //   #  --from-literal=METADATA_PRIVATE_CERT="$SPID_LOGIN_METADATA_PRIVATE_KEY" \
