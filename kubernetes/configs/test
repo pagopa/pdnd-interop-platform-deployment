@@ -25,6 +25,8 @@ SPID_LOGIN_MODULE_IMAGE_VERSION="1.5.1-release"
 
 # Common
 INGRESS_HOST="gateway-private.test.pdnd-interop.pagopa.it"
+INTERNAL_INGRESS_CLASS="nginx-internal"
+EXTERNAL_INGRESS_CLASS="nginx"
 REPOSITORY="gateway-private.test.pdnd-interop.pagopa.it"
 # POSTGRES_HOST="pdnd-interop-dev-rds.c9zr6t2swdpb.eu-central-1.rds.amazonaws.com"
 NAMESPACE=$NAMESPACE
