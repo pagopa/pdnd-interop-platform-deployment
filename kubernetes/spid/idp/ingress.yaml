@@ -14,7 +14,7 @@ spec:
   tls:
     - hosts:
         - {{INGRESS_HOST}}
-      secretName: gateway-private
+      secretName: gateway
   rules:
     - host: "{{INGRESS_HOST}}"
       http:
