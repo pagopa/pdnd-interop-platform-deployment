@@ -15,6 +15,8 @@ spec:
       labels:
         app: {{SERVICE_NAME}}
     spec:
+      imagePullSecrets:
+        - name: regcred
       containers:
         - name: {{SERVICE_NAME}}
           # image: ghcr.io/pagopa/hub-spid-login-ms:{{SPID_LOGIN_MODULE_IMAGE_VERSION}}

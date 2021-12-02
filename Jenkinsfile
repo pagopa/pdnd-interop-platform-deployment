@@ -276,7 +276,11 @@ void loadSpidSecrets() {
         
       
       sh'''
-        
+        # TODO This could be avoided when using public repository
+        # Cleanup
+        kubectl -n $NAMESPACE delete secrets regcred --ignore-not-found
+        kubectl -n default get secret regcred -o yaml | sed s/"namespace: default"/"namespace: $NAMESPACE"/ |  kubectl apply -n $NAMESPACE -f -
+
         kubectl -n $NAMESPACE create secret generic spid-login \
           --save-config \
           --dry-run=client \
