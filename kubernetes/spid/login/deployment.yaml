@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
         - name: {{SERVICE_NAME}}
-          image: ghcr.io/pagopa/hub-spid-login-ms:{{SPID_LOGIN_MODULE_IMAGE_VERSION}}
+          # image: ghcr.io/pagopa/hub-spid-login-ms:{{SPID_LOGIN_MODULE_IMAGE_VERSION}}
+          image: {{REPOSITORY}}/pagopa/hub-spid-login-ms:{{SPID_LOGIN_MODULE_IMAGE_VERSION}}
           imagePullPolicy: IfNotPresent
           ports:
             - name: spid-login
