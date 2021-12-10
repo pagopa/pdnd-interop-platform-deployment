@@ -17,7 +17,7 @@ data:
   ENDPOINT_ACS: "/acs"
   ENDPOINT_ERROR: "/error"
   ENDPOINT_SUCCESS: "/success"
-  ENDPOINT_LOGIN: "/login"
+  ENDPOINT_LOGIN: "/{{NAMESPACE}}/{{IDP_SERVICE_URL}}/login"
   ENDPOINT_METADATA: "/metadata"
   ENDPOINT_LOGOUT: "/logout"
 
