@@ -26,6 +26,7 @@ SPID_LOGIN_MODULE_IMAGE_VERSION="	10.24.1-alpine3.11"
 
 # Common
 INGRESS_HOST="gateway-private.test.pdnd-interop.pagopa.it"
+EXTERNAL_INGRESS_HOST="gateway.test.pdnd-interop.pagopa.it"
 INTERNAL_INGRESS_CLASS="nginx-internal"
 EXTERNAL_INGRESS_CLASS="nginx"
 REPOSITORY="gateway-private.test.pdnd-interop.pagopa.it"
