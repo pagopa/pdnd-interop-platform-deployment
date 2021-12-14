@@ -6,9 +6,6 @@ metadata:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$1
     external-dns.alpha.kubernetes.io/hostname: {{INGRESS_HOST}}
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-       rewrite /{{NAMESPACE}}/{{SERVICE_NAME}}/{{NAMESPACE}}/{{SERVICE_NAME}}$ /{{NAMESPACE}}/{{SERVICE_NAME}} permanent;
-       rewrite /{{NAMESPACE}}/{{SERVICE_NAME}}/{{NAMESPACE}}/{{SERVICE_NAME}}/(.*) /{{NAMESPACE}}/{{SERVICE_NAME}}/$1 permanent;
   name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 spec:
@@ -19,14 +16,14 @@ spec:
     - host: "{{INGRESS_HOST}}"
       http:
         paths:
-          - path: "/{{NAMESPACE}}/{{SERVICE_NAME}}/(.*)"
+          - path: "/(.*)"
             pathType: Prefix
             backend:
               service:
                 name: {{SERVICE_NAME}}
                 port: 
                   number: 8088
-          - path: "/{{NAMESPACE}}/{{SERVICE_NAME}}"
+          - path: "/"
             pathType: Prefix
             backend:
               service:

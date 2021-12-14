@@ -13,7 +13,7 @@ data:
     # hostname: "localhost"
     # base_url: "http://{{SERVICE_NAME}}:8088"
     # base_url: "https://{{EXTERNAL_INGRESS_HOST}}/{{NAMESPACE}}/{{SERVICE_NAME}}"
-    base_url: "https://{{INGRESS_HOST}}/{{NAMESPACE}}/{{SERVICE_NAME}}"
+    base_url: "https://{{INGRESS_HOST}}"
 
     # Chiave e certificato necessari per la firma dei messaggi SAML
     key_file: "conf/idp.key"
