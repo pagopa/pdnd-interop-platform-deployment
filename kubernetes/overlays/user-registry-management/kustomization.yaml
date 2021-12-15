@@ -1,0 +1,6 @@
+bases:
+- ../base
+patchesStrategicMerge:
+- compiled.deployment.yaml
+- compiled.configmap.yaml
+- compiled.ingress.yaml

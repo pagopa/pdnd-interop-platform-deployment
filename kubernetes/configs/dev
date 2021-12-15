@@ -29,6 +29,7 @@ INTERNAL_INGRESS_CLASS="nginx"
 EXTERNAL_INGRESS_CLASS="nginx"
 REPOSITORY="gateway.interop.pdnd.dev"
 POSTGRES_HOST="pdnd-interop-dev-rds.c9zr6t2swdpb.eu-central-1.rds.amazonaws.com"
+POSTGRES_PORT="5432"
 NAMESPACE=$NAMESPACE
 REPLICAS=1
 

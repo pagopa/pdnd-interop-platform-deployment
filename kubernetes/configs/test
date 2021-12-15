@@ -31,6 +31,7 @@ INTERNAL_INGRESS_CLASS="nginx-internal"
 EXTERNAL_INGRESS_CLASS="nginx"
 REPOSITORY="gateway-private.test.pdnd-interop.pagopa.it"
 # POSTGRES_HOST="pdnd-interop-dev-rds.c9zr6t2swdpb.eu-central-1.rds.amazonaws.com"
+POSTGRES_PORT="5432"
 NAMESPACE=$NAMESPACE
 REPLICAS=1
 
