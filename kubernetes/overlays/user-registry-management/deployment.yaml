@@ -26,6 +26,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: POSTGRES_DB
+            - name: POSTGRES_SCHEMA
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: POSTGRES_SCHEMA
             - name: POSTGRES_USR
               value: root
               # valueFrom:
