@@ -1,0 +1,25 @@
+# TODO Temporary, just until we have test rds configured
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    prometheus: "true"
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8088
+      targetPort: http
+      protocol: TCP
+      name: http
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+      name: postgres
+    - port: 9095
+      targetPort: monitoring
+      protocol: TCP
+      name: monitoring
+  selector:
+    app: {{SERVICE_NAME}}

@@ -4,3 +4,4 @@ patchesStrategicMerge:
 - compiled.deployment.yaml
 - compiled.configmap.yaml
 - compiled.ingress.yaml
+- compiled.service.yaml
