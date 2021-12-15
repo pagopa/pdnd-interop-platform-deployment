@@ -1,10 +1,9 @@
-# TODO Temporary, just until we have test rds configured
 apiVersion: v1
 kind: Service
 metadata:
   labels:
     prometheus: "true"
-  name: postgres
+  name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 spec:
   type: ClusterIP
@@ -14,4 +13,4 @@ spec:
       protocol: TCP
       name: postgres
   selector:
-    app: postgres
+    app: {{SERVICE_NAME}}

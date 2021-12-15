@@ -38,17 +38,4 @@ spec:
               #   secretKeyRef:
               #     name: postgres
               #     key: POSTGRES_PSW
-        # TODO Temporary, just until we have test rds configured
-        - name: postgres
-          image: postgres:10.6
-          env:
-            - name: POSTGRES_USER
-              value: root
-            - name: POSTGRES_DB
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: POSTGRES_DB
-            - name: POSTGRES_PASSWORD
-              value: super-secret-password
   

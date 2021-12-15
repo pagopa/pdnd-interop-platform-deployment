@@ -1,0 +1,34 @@
+# TODO Temporary, just until we have test rds configured
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{SERVICE_NAME}}
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{SERVICE_NAME}}
+  template:
+    metadata:
+      labels:
+        app: {{SERVICE_NAME}}
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: {{SERVICE_NAME}}
+          image: postgres:10.6
+          env:
+            - name: POSTGRES_USER
+              value: root
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: POSTGRES_DB
+            - name: POSTGRES_PASSWORD
+              value: super-secret-password
+  

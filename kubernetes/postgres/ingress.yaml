@@ -19,14 +19,4 @@ spec:
               service:
                 name: {{SERVICE_NAME}}
                 port: 
-                  number: 8088
-    - host: "{{INGRESS_HOST}}"
-      http:
-        paths:
-          - path: "/{{NAMESPACE}}/persistence/user-registry"
-            pathType: Prefix
-            backend:
-              service:
-                name: postgres
-                port: 
                   number: 5432
