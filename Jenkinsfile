@@ -73,7 +73,6 @@ pipeline {
                   // applyKustomizeToDir('kubernetes/overlays/user-registry-management', getVariableFromConf("USER_REGISTRY_MANAGEMENT_SERVICE_NAME"))
                   applyKustomizeToDir('kubernetes/overlays/user-registry-management', 'pdnd-interop-uservice-user-registry-management')
                   
-                  applyKubeFile('postgres/ingress.yaml', "postgres")
                   applyKubeFile('postgres/configmap.yaml', "postgres")
                   applyKubeFile('postgres/deployment.yaml', "postgres")
                   applyKubeFile('postgres/service.yaml', "postgres")
