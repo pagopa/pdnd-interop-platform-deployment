@@ -71,7 +71,7 @@ pipeline {
             stage('User Registry Management') {
               steps {
                   // applyKustomizeToDir('kubernetes/overlays/user-registry-management', getVariableFromConf("USER_REGISTRY_MANAGEMENT_SERVICE_NAME"))
-                  applyKustomizeToDir('kubernetes/overlays/user-registry-management', 'pdnd-interop-uservice-user-registry-management')
+                  applyKustomizeToDir('overlays/user-registry-management', 'pdnd-interop-uservice-user-registry-management')
                   
                   // TODO Temporary, just until we have test rds configured
                   applyKubeFile('postgres/configmap.yaml', "postgres")
@@ -166,18 +166,18 @@ void applyKustomizeToDir(String dirPath, String serviceName) {
 
       echo "Apply directory ${dirPath} on Kubernetes"
 
-      // sh "mkdir ${serviceName}"
+      def kubeDirPath = 'kubernetes/' + dirPath
 
       echo "Compiling base files"
       compileDir("kubernetes/base", serviceName)
       echo "Base files compiled"
 
       echo "Compiling directory ${dirPath}"
-      compileDir(dirPath, serviceName)
+      compileDir(kubeDirPath, serviceName)
       echo "Directory ${dirPath} compiled"
       
       echo "Applying Kustomization for ${serviceName}"
-      sh 'kubectl kustomize ' + serviceName + '/' + dirPath + ' > ' + serviceName + '/full.' + serviceName + '.yaml'
+      sh 'kubectl kustomize ' + serviceName + '/' + kubeDirPath + ' > ' + serviceName + '/full.' + serviceName + '.yaml'
       echo "Kustomization for ${serviceName} applied"
 
       // DEBUG
