@@ -177,7 +177,7 @@ void applyKustomizeToDir(String dirPath, String serviceName) {
       echo "Directory ${dirPath} compiled"
       
       echo "Applying Kustomization for ${serviceName}"
-      sh 'kubectl kustomize ''' + serviceName + '/' + dirPath + ' > ' + serviceName + '/full.' + serviceName + '.yaml'
+      sh 'kubectl kustomize ' + serviceName + '/' + dirPath + ' > ' + serviceName + '/full.' + serviceName + '.yaml'
       echo "Kustomization for ${serviceName} applied"
 
       // DEBUG
