@@ -58,19 +58,19 @@ pipeline {
           parallel {
             // stage('Party Management') {
             //   steps {
-            //       // applyKustomizeToDir('kubernetes/overlays/party-management', getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
-            //       applyKustomizeToDir('kubernetes/overlays/party-management', 'pdnd-interop-uservice-party-management')
+            //       // applyKustomizeToDir('overlays/party-management', getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
+            //       applyKustomizeToDir('overlays/party-management', 'pdnd-interop-uservice-party-management')
             //   }
             // }
             // stage('Catalog Process') {
             //   steps {
-            //       // applyKustomizeToDir('kubernetes/overlays/catalog-process', getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"))
-            //       applyKustomizeToDir('kubernetes/overlays/catalog-process', 'pdnd-interop-uservice-catalog-process')
+            //       // applyKustomizeToDir('overlays/catalog-process', getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"))
+            //       applyKustomizeToDir('overlays/catalog-process', 'pdnd-interop-uservice-catalog-process')
             //   }
             // }
             stage('User Registry Management') {
               steps {
-                  // applyKustomizeToDir('kubernetes/overlays/user-registry-management', getVariableFromConf("USER_REGISTRY_MANAGEMENT_SERVICE_NAME"))
+                  // applyKustomizeToDir('overlays/user-registry-management', getVariableFromConf("USER_REGISTRY_MANAGEMENT_SERVICE_NAME"))
                   applyKustomizeToDir('overlays/user-registry-management', 'pdnd-interop-uservice-user-registry-management')
                   
                   // TODO Temporary, just until we have test rds configured
