@@ -122,7 +122,7 @@ pipeline {
 
                 stage('IdP') {
                   steps {
-                    // applyKubeFile('spid/idp/ingress.yaml', "spid-testenv2")
+                    applyKubeFile('spid/idp/ingress.yaml', "spid-testenv2")
                     applyKubeFile('spid/idp/configmap.yaml', "spid-testenv2")
                     applyKubeFile('spid/idp/deployment.yaml', "spid-testenv2")
                     applyKubeFile('spid/idp/service.yaml', "spid-testenv2")

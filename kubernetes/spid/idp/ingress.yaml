@@ -5,7 +5,7 @@ metadata:
     kubernetes.io/ingress.class: {{INTERNAL_INGRESS_CLASS}}
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$1
-    # external-dns.alpha.kubernetes.io/hostname: {{INGRESS_HOST}}
+    external-dns.alpha.kubernetes.io/hostname: {{NAMESPACE}}.idp.{{INGRESS_HOST}}
   name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 spec:
@@ -13,7 +13,7 @@ spec:
     - hosts:
         - {{INGRESS_HOST}}
   rules:
-    - host: "{{INGRESS_HOST}}"
+    - host: "{{NAMESPACE}}.idp.{{INGRESS_HOST}}"
       http:
         paths:
           - path: "/(.*)"
