@@ -36,6 +36,8 @@ pipeline {
             // env
             // """
             sh'env'
+
+            echo getVariableFromConf("AGREEMENT_MANAGEMENT_IMAGE_VERSION")
           }
         }
         
@@ -70,8 +72,8 @@ pipeline {
             // }
             stage('User Registry Management') {
               steps {
-                  // applyKustomizeToDir('overlays/user-registry-management', getVariableFromConf("USER_REGISTRY_MANAGEMENT_SERVICE_NAME"))
-                  applyKustomizeToDir('overlays/user-registry-management', 'pdnd-interop-uservice-user-registry-management')
+                  applyKustomizeToDir('overlays/user-registry-management', getVariableFromConf("USER_REGISTRY_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("INTERNAL_APPLICATION_HOST"))
+                  // applyKustomizeToDir('overlays/user-registry-management', 'pdnd-interop-uservice-user-registry-management')
                   
                   // TODO Temporary, just until we have test rds configured
                   applyKubeFile('postgres/configmap.yaml', "postgres")
@@ -160,7 +162,7 @@ void applyKubeFile(String fileName, String serviceName = null) {
 }
 
 // dirPath starting from kubernetes folder (e.g. kubernetes/overlays/party-management)
-void applyKustomizeToDir(String dirPath, String serviceName) {
+void applyKustomizeToDir(String dirPath, String serviceName, String hostname) {
   container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
     withKubeConfig([credentialsId: 'kube-config']) {
 
@@ -169,11 +171,11 @@ void applyKustomizeToDir(String dirPath, String serviceName) {
       def kubeDirPath = 'kubernetes/' + dirPath
 
       echo "Compiling base files"
-      compileDir("kubernetes/base", serviceName)
+      compileDir("kubernetes/base", serviceName, hostname)
       echo "Base files compiled"
 
       echo "Compiling directory ${dirPath}"
-      compileDir(kubeDirPath, serviceName)
+      compileDir(kubeDirPath, serviceName, hostname)
       echo "Directory ${dirPath} compiled"
       
       echo "Applying Kustomization for ${serviceName}"
@@ -199,41 +201,24 @@ void applyKustomizeToDir(String dirPath, String serviceName) {
   }
 }
 
-void compileDir(String dirPath, String serviceName) {
-  // Compile each file in the directory (skipping kustomization.yaml)
+/*
+ * Compile each file in the directory replacing placeholders with actual values.
+ * Note: kustomization.yaml is skipped because does not have placeholders
+ */ 
+void compileDir(String dirPath, String serviceName, String hostname) {
   sh '''
   for f in ''' + dirPath + '''/*
   do
       if [ ! $(basename $f) = "kustomization.yaml" ]
         then
           mkdir -p ''' + serviceName + '/' + dirPath + '''
-          SERVICE_NAME=''' + serviceName + ' kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ' + serviceName + '''/$f
+          SERVICE_NAME=''' + serviceName + ' APPLICATION_HOST=' + hostname + ' kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ' + serviceName + '''/$f
         else
           cp $f ''' + serviceName + '''/$f
       fi
   done
   '''
 }
-
-// void compileDir(String dirPath, String serviceName) {
-//   sh "cp -rf ${dirPath} ./${serviceName}"
-//   // Compile each file in the directory (skipping kustomization.yaml)
-//   sh '''
-//   DIR_NAME=$(basename ''' + dirPath + ''')
-//   BASE_FILES_PATH="''' + serviceName + '''/$DIR_NAME"
-//   for f in $BASE_FILES_PATH/*
-//   do
-//       if [ ! $(basename $f) = "kustomization.yaml" ]
-//         then
-//           SERVICE_NAME=''' + serviceName + ' ./kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ./' + serviceName + '''/$DIR_NAME/compiled.$(basename $f)
-//       fi
-//   done
-//   '''
-// }
-
-// String getVariableFromConf(String variableName) {
-//   return sh (returnStdout: true, script: "chmod +x ${env.CONFIG_FILE} && ${env.CONFIG_FILE} && echo $" + variableName).trim()
-// }
 
 String getConfigFileFromStage(String stage) {
   switch(stage) { 
@@ -334,4 +319,8 @@ void loadSpidSecrets() {
       '''
     }
   }
+}
+
+String getVariableFromConf(String variableName) {
+  return sh (returnStdout: true, script: "chmod +x ${env.CONFIG_FILE} && ${env.CONFIG_FILE} && echo \$" + variableName).trim()
 }
