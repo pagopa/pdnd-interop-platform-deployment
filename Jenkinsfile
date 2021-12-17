@@ -324,5 +324,5 @@ void loadSpidSecrets() {
 String getVariableFromConf(String variableName) {
   def configFile = getConfigFileFromStage(env.STAGE)
   echo configFile
-  return sh (returnStdout: true, script: "chmod +x ${configFile} && ${configFile} && echo \$" + variableName).trim()
+  return sh (returnStdout: true, script: '. ' + configFile + ' && echo $' + variableName).trim()
 }
