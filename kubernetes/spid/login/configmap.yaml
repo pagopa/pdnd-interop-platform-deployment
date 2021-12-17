@@ -24,7 +24,7 @@ data:
   SPID_VALIDATOR_URL: "http://localhost"
   # SPID_TESTENV_URL: "http://{{IDP_SERVICE_URL}}:8088" # IdP
   # SPID_TESTENV_URL: "https://{{EXTERNAL_INGRESS_HOST}}/{{NAMESPACE}}/{{IDP_SERVICE_URL}}" # IdP
-  SPID_TESTENV_URL: "https://{{INGRESS_HOST}}" # IdP
+  SPID_TESTENV_URL: "https://{{NAMESPACE}}.idp.{{INGRESS_HOST}}" # IdP
 
   REDIS_URL: "{{REDIS_URL}}"
   REDIS_TLS_ENABLED: "false"
