@@ -26,17 +26,6 @@ spec:
           volumeMounts:
             - name: conf
               mountPath: "/app/conf"
-            # - name: certs
-            #   mountPath: "/app/certs"
-            #   readOnly: true
-            # - name: configs
-            #   mountPath: "/app/conf"
-            #   readOnly: true
-            # - name: users
-            #   mountPath: "/app/conf"
-            # - name: idp-saml-certs
-            #   mountPath: "/app/certs"
-            #   readOnly: true
             - name: idp-http-certs
               mountPath: "/app/certs"
               readOnly: true
