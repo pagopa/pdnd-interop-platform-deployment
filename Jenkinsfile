@@ -1,5 +1,5 @@
 pipeline {
-// TODO Can configs be loaded just once globally?
+// TODO Change required apps to external ingress
 
   agent any
 
@@ -24,20 +24,7 @@ pipeline {
         stage('Debug') {
           // DELETE ME. Just for testing
           steps {
-            // withEnv(readFile('./kubernetes/config').split('\n') as List) {
-            //   sh 'env'
-            // }
-            // sh"""
-            // #!/bin/bash
-            // chmod +x ./kubernetes/config
-            // ./kubernetes/config
-            // echo "VARIABLE:"
-            // echo \$PARTY_MANAGEMENT_SERVICE_NAME
-            // env
-            // """
             sh'env'
-
-            echo getVariableFromConf("AGREEMENT_MANAGEMENT_IMAGE_VERSION")
           }
         }
         
@@ -60,20 +47,17 @@ pipeline {
           parallel {
             // stage('Party Management') {
             //   steps {
-            //       // applyKustomizeToDir('overlays/party-management', getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
-            //       applyKustomizeToDir('overlays/party-management', 'pdnd-interop-uservice-party-management')
+            //       applyKustomizeToDir('overlays/party-management', getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("INTERNAL_APPLICATION_HOST"))
             //   }
             // }
             // stage('Catalog Process') {
             //   steps {
-            //       // applyKustomizeToDir('overlays/catalog-process', getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"))
-            //       applyKustomizeToDir('overlays/catalog-process', 'pdnd-interop-uservice-catalog-process')
+            //       applyKustomizeToDir('overlays/catalog-process', getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"), getVariableFromConf("INTERNAL_APPLICATION_HOST"))
             //   }
             // }
             stage('User Registry Management') {
               steps {
                   applyKustomizeToDir('overlays/user-registry-management', getVariableFromConf("USER_REGISTRY_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("INTERNAL_APPLICATION_HOST"))
-                  // applyKustomizeToDir('overlays/user-registry-management', 'pdnd-interop-uservice-user-registry-management')
                   
                   // TODO Temporary, just until we have test rds configured
                   applyKubeFile('postgres/configmap.yaml', "postgres")
