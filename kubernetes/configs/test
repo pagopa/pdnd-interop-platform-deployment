@@ -2,7 +2,7 @@
 
 # Functions
 # TODO Take version from image label
-function shortVersion() {
+shortVersion() {
   echo $1 | grep -oE '[0-9]+\.[0-9]+'
 }
 
