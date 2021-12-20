@@ -298,5 +298,5 @@ void loadSpidSecrets() {
 
 String getVariableFromConf(String variableName) {
   def configFile = getConfigFileFromStage(env.STAGE)
-  return sh (returnStdout: true, script: '. ' + configFile + ' && echo $' + variableName).trim()
+  return sh (returnStdout: true, script: 'set +x && . ' + configFile + ' && set -x && echo $' + variableName).trim()
 }
