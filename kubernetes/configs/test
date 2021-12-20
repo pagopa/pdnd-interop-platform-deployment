@@ -27,15 +27,22 @@ SPID_LOGIN_MODULE_IMAGE_VERSION="2.1.1-10.24.1-alpine3.11"
 # Common
 NAMESPACE=$NAMESPACE
 INTERNAL_INGRESS_HOST="gateway-private.test.pdnd-interop.pagopa.it"
-EXTERNAL_INGRESS_HOST="gateway.test.pdnd-interop.pagopa.it"
 INTERNAL_INGRESS_CLASS="nginx-internal"
-EXTERNAL_INGRESS_CLASS="nginx"
 INTERNAL_APPLICATION_HOST=$NAMESPACE.$INTERNAL_INGRESS_HOST
+
 # TODO Enable this when ready
+# EXTERNAL_INGRESS_HOST="gateway.test.pdnd-interop.pagopa.it"
+# EXTERNAL_INGRESS_CLASS="nginx"
 # EXTERNAL_APPLICATION_HOST=$NAMESPACE.$EXTERNAL_INGRESS_HOST
+EXTERNAL_INGRESS_HOST="gateway-private.test.pdnd-interop.pagopa.it"
+EXTERNAL_INGRESS_CLASS="nginx-internal"
 EXTERNAL_APPLICATION_HOST=$NAMESPACE.$INTERNAL_INGRESS_HOST
+### End TODO
+
 REPOSITORY="gateway-private.test.pdnd-interop.pagopa.it"
+# TODO Update when test db is ready
 # POSTGRES_HOST="pdnd-interop-dev-rds.c9zr6t2swdpb.eu-central-1.rds.amazonaws.com"
+POSTGRES_HOST="postgres"
 POSTGRES_PORT="5432"
 REPLICAS=1
 

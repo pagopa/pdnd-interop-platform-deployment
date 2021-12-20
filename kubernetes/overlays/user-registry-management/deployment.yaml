@@ -11,11 +11,10 @@ spec:
           image: {{REPOSITORY}}/services/{{SERVICE_NAME}}:{{USER_REGISTRY_MANAGEMENT_IMAGE_VERSION}}
           env:
             - name: POSTGRES_HOST
-              value: postgres
-              # valueFrom:
-              #   configMapKeyRef:
-              #     name: {{SERVICE_NAME}}
-              #     key: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: POSTGRES_HOST
             - name: POSTGRES_PORT
               valueFrom:
                 configMapKeyRef:
@@ -32,15 +31,13 @@ spec:
                   name: {{SERVICE_NAME}}
                   key: POSTGRES_SCHEMA
             - name: POSTGRES_USR
-              value: root
-              # valueFrom:
-              #   secretKeyRef:
-              #     name: postgres
-              #     key: POSTGRES_USR
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: POSTGRES_USR
             - name: POSTGRES_PSW
-              value: super-secret-password
-              # valueFrom:
-              #   secretKeyRef:
-              #     name: postgres
-              #     key: POSTGRES_PSW
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: POSTGRES_PSW
   

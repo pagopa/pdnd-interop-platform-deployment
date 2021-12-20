@@ -22,13 +22,19 @@ spec:
         - name: {{SERVICE_NAME}}
           image: postgres:10.6
           env:
-            - name: POSTGRES_USER
-              value: root
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: POSTGRES_DB
-            - name: POSTGRES_PASSWORD
-              value: super-secret-password
+            - name: POSTGRES_USR
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: POSTGRES_USR
+            - name: POSTGRES_PSW
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: POSTGRES_PSW
   

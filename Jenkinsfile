@@ -5,9 +5,10 @@ pipeline {
   environment {
     // STAGE variable should be set as Global Properties
     STAGE = "${env.STAGE}"
+    // TODO Create one set of credentials for each service
     // AWS_SECRET_ACCESS = credentials('jenkins-aws')
-    // TODO Create one set of credentials for each service for production
-    // POSTGRES_CREDENTIALS = credentials('postgres-db')
+    POSTGRES_CREDENTIALS = credentials('postgres-db')
+    //
     NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH)
     CONFIG_FILE = getConfigFileFromStage(STAGE)
   }
@@ -37,11 +38,11 @@ pipeline {
               applyKubeFile('roles.yaml')
           }
         }
-        // stage('Load Secrets') {
-        //   steps {
-        //       loadSecrets()
-        //   }
-        // }
+        stage('Load Secrets') {
+          steps {
+              loadSecrets()
+          }
+        }
         stage('Deploy Services') {
           parallel {
             // stage('Party Management') {
@@ -127,17 +128,16 @@ void applyKubeFile(String fileName, String serviceName = null) {
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Apply file ${fileName} on Kubernetes"
-      outputFile=sh (returnStdout: true, script: 'echo $(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')').trim()
 
       echo "Compiling file ${fileName}"
-      sh "SERVICE_NAME=" + serviceName + " ./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/${outputFile}"
+      sh "SERVICE_NAME=" + serviceName + " ./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
       echo "File ${fileName} compiled"
       
       // DEBUG
-      sh "cat ./kubernetes/${outputFile}"
+      sh "cat ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
 
       echo "Applying file ${fileName}"
-      sh "kubectl apply -f ./kubernetes/${outputFile}"
+      sh "kubectl apply -f ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
       echo "File ${fileName} applied"
 
     }
@@ -223,30 +223,26 @@ String normalizeNamespaceName(String namespace) {
      .toLowerCase()
 }
 
+void loadCredentials(String secretName, String userSecret, String userVar, String passwordSecret, String passwordVar) {
+  sh'''
+    # Allow to update secret if already exists
+    kubectl -n $NAMESPACE create secret generic ''' + secretName + ''' \
+      --save-config \
+      --dry-run=client \
+      --from-literal=''' + userSecret + '=$' + userVar + ''' \
+      --from-literal=''' + passwordSecret + '=$' + passwordVar + ''' \
+      -o yaml | kubectl apply -f -
+  '''
+}
+
 void loadSecrets() {
   container('sbt-container') { // This is required only for kubectl command (sbt is not needed)
     withKubeConfig([credentialsId: 'kube-config']) {
       sh'''
         
-        # TODO This could be avoided when using public repository
         # Cleanup
         kubectl -n $NAMESPACE delete secrets regcred --ignore-not-found
         kubectl -n default get secret regcred -o yaml | sed s/"namespace: default"/"namespace: $NAMESPACE"/ |  kubectl apply -n $NAMESPACE -f -
-
-        # It allows to update secret if already exists
-        kubectl -n $NAMESPACE create secret generic aws \
-          --save-config \
-          --dry-run=client \
-          --from-literal=AWS_ACCESS_KEY_ID=$AWS_SECRET_ACCESS_USR \
-          --from-literal=AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_PSW \
-          -o yaml | kubectl apply -f -
-
-        kubectl -n $NAMESPACE create secret generic postgres \
-          --save-config \
-          --dry-run=client \
-          --from-literal=POSTGRES_USR=$POSTGRES_CREDENTIALS_USR \
-          --from-literal=POSTGRES_PSW=$POSTGRES_CREDENTIALS_PSW \
-          -o yaml | kubectl apply -f -
 
        # TODO This is temporary. No existing storage credentials yet
         kubectl -n $NAMESPACE create secret generic storage \
@@ -256,6 +252,9 @@ void loadSecrets() {
           --from-literal=STORAGE_PSW=password_placeholder \
           -o yaml | kubectl apply -f -
       '''
+
+      // loadCredentials('aws', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_USR', 'AWS_SECRET_ACCESS_KEY', 'AWS_SECRET_ACCESS_PSW')
+      loadCredentials('postgres', 'POSTGRES_USR', 'POSTGRES_CREDENTIALS_USR', 'POSTGRES_PSW', 'POSTGRES_CREDENTIALS_PSW')
     }
   }
 }
@@ -264,9 +263,6 @@ void loadSecrets() {
 void loadSpidSecrets() {
   container('sbt-container') { // This is required only for kubectl command (sbt is not needed)
     withKubeConfig([credentialsId: 'kube-config']) {
-      // #  --from-literal=METADATA_PUBLIC_CERT="$SPID_LOGIN_METADATA_PUBLIC_CERT" \
-      //   #  --from-literal=METADATA_PRIVATE_CERT="$SPID_LOGIN_METADATA_PRIVATE_KEY" \
-        
       
       sh'''
         # TODO This could be avoided when using public repository
@@ -282,16 +278,6 @@ void loadSpidSecrets() {
           --from-file=JWT_TOKEN_PRIVATE_KEY="$SPID_LOGIN_JWT_PRIVATE_KEY" \
           -o yaml | kubectl apply -f -
 
-        #kubectl -n $NAMESPACE create secret generic idp-saml-certs \
-        #  --save-config \
-        #  --dry-run=client \
-        #  --from-file=idp.crt=$IDP_SAML_CERT \
-        #  --from-file=idp.key=$IDP_SAML_KEY \
-        #  -o yaml | kubectl apply -f -
-
-        #  --from-file=certificate.crt=$IDP_HTTP_CERT \
-        #  --from-file=certificate.pem=$IDP_HTTP_KEY \
-          
         kubectl -n $NAMESPACE create secret generic idp-http-certs \
           --save-config \
           --dry-run=client \
