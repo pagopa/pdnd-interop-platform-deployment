@@ -1,5 +1,4 @@
 pipeline {
-// TODO Change required apps to external ingress
 
   agent any
 
@@ -47,12 +46,12 @@ pipeline {
           parallel {
             // stage('Party Management') {
             //   steps {
-            //       applyKustomizeToDir('overlays/party-management', getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("INTERNAL_APPLICATION_HOST"))
+            //       applyKustomizeToDir('overlays/party-management', getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("EXTERNAL_APPLICATION_HOST"))
             //   }
             // }
             // stage('Catalog Process') {
             //   steps {
-            //       applyKustomizeToDir('overlays/catalog-process', getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"), getVariableFromConf("INTERNAL_APPLICATION_HOST"))
+            //       applyKustomizeToDir('overlays/catalog-process', getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"), getVariableFromConf("EXTERNAL_APPLICATION_HOST"))
             //   }
             // }
             stage('User Registry Management') {
