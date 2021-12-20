@@ -68,10 +68,10 @@ pipeline {
             stage('User Registry Management') {
               steps {
                   applyKustomizeToDir(
-                    dirPath: 'overlays/user-registry-management', 
-                    serviceName: getVariableFromConf("USER_REGISTRY_MANAGEMENT_SERVICE_NAME"), 
-                    hostname: getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-                    ingressClass: getVariableFromConf("INTERNAL_INGRESS_CLASS")
+                    'overlays/user-registry-management', 
+                    getVariableFromConf("USER_REGISTRY_MANAGEMENT_SERVICE_NAME"), 
+                    getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+                    getVariableFromConf("INTERNAL_INGRESS_CLASS")
                   )
                   
                   // TODO Temporary, just until we have test rds configured
