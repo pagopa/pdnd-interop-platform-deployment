@@ -128,17 +128,16 @@ void applyKubeFile(String fileName, String serviceName = null) {
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Apply file ${fileName} on Kubernetes"
-      outputFile=sh (returnStdout: true, script: 'echo $(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')').trim()
 
       echo "Compiling file ${fileName}"
-      sh "SERVICE_NAME=" + serviceName + " ./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/${outputFile}"
+      sh "SERVICE_NAME=" + serviceName + " ./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
       echo "File ${fileName} compiled"
       
       // DEBUG
-      sh "cat ./kubernetes/${outputFile}"
+      sh "cat ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
 
       echo "Applying file ${fileName}"
-      sh "kubectl apply -f ./kubernetes/${outputFile}"
+      sh "kubectl apply -f ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
       echo "File ${fileName} applied"
 
     }
