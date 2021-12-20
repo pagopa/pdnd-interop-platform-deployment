@@ -24,7 +24,7 @@ data:
   SPID_VALIDATOR_URL: "http://localhost"
   SPID_TESTENV_URL: "https://{{IDP_SERVICE_URL}}" # IdP
 
-  REDIS_URL: "{{REDIS_URL}}"
+  REDIS_URL: "{{REDIS_SERVICE_NAME}}"
   REDIS_TLS_ENABLED: "false"
 
   ENABLE_JWT: "true"
