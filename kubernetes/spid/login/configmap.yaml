@@ -6,7 +6,7 @@ metadata:
 data:
   ORG_ISSUER: "https://spid.agid.gov.it/cd"
   ORG_URL: "https://pagopa.gov.it"
-  ACS_BASE_URL: "https://{{NAMESPACE}}.{{INTERNAL_INGRESS_HOST}}/{{SERVICE_NAME}}"
+  ACS_BASE_URL: "https://{{NAMESPACE}}.{{EXTERNAL_INGRESS_HOST}}/{{SERVICE_NAME}}"
   ORG_DISPLAY_NAME: "Organization display name"
   ORG_NAME: "Organization name"
 
