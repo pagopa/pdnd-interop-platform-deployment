@@ -224,10 +224,10 @@ String normalizeNamespaceName(String namespace) {
      .toLowerCase()
 }
 
-void loadCredentials(String userSecret, String userVar, String passwordSecret, String passwordVar) {
+void loadCredentials(String secretName, String userSecret, String userVar, String passwordSecret, String passwordVar) {
   sh'''
     # Allow to update secret if already exists
-    kubectl -n $NAMESPACE create secret generic aws \
+    kubectl -n $NAMESPACE create secret generic ''' + secretName + ''' \
       --save-config \
       --dry-run=client \
       --from-literal=''' + userSecret + '=$' + userVar + ''' \
