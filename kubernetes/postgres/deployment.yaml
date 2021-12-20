@@ -27,12 +27,12 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: POSTGRES_DB
-            - name: POSTGRES_USR
+            - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
                   name: postgres
                   key: POSTGRES_USR
-            - name: POSTGRES_PSW
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: postgres
