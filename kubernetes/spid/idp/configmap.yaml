@@ -11,7 +11,7 @@ data:
     # Hostname da usare per generare l'entityID dell'IdP e gli URL degli endpoint
     # SAML indicati nel metadata dell'IdP
     # hostname: "localhost"
-    base_url: "https://{{NAMESPACE}}-idp.{{INTERNAL_INGRESS_HOST}}"
+    base_url: "https://{{IDP_SERVICE_URL}}"
 
     # Chiave e certificato necessari per la firma dei messaggi SAML
     key_file: "conf/idp.key"

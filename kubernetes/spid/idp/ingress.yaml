@@ -6,16 +6,16 @@ metadata:
     kubernetes.io/ingress.class: {{INTERNAL_INGRESS_CLASS}}
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$1
-    external-dns.alpha.kubernetes.io/hostname: {{NAMESPACE}}-idp.{{INTERNAL_INGRESS_HOST}}
+    external-dns.alpha.kubernetes.io/hostname: {{IDP_SERVICE_URL}}
     kubernetes.io/tls-acme: "true"
   name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 spec:
   tls:
     - hosts:
-        - {{NAMESPACE}}-idp.{{INTERNAL_INGRESS_HOST}}
+        - {{IDP_SERVICE_URL}}
   rules:
-    - host: "{{NAMESPACE}}-idp.{{INTERNAL_INGRESS_HOST}}"
+    - host: "{{IDP_SERVICE_URL}}"
       http:
         paths:
           - path: "/(.*)"
