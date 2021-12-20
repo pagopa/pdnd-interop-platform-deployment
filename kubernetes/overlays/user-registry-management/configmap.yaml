@@ -4,5 +4,5 @@ metadata:
   name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 data:
-  POSTGRES_DB: "user_registry_management"
+  POSTGRES_DB: "persistence_management"
   POSTGRES_SCHEMA: "user_registry"
