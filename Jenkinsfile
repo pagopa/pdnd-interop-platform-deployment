@@ -48,20 +48,20 @@ pipeline {
             // stage('Party Management') {
             //   steps {
             //     applyKustomizeToDir(
-            //       dirPath: 'overlays/party-management', 
-            //       serviceName: getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"), 
-            //       hostname: getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-            //       ingressClass: getVariableFromConf("INTERNAL_INGRESS_CLASS")
+            //       'overlays/party-management', 
+            //       getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"), 
+            //       getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+            //       getVariableFromConf("INTERNAL_INGRESS_CLASS")
             //     )
             //   }
             // }
             // stage('Catalog Process') {
             //   steps {
             //     applyKustomizeToDir(
-            //       dirPath: 'overlays/catalog-process', 
-            //       serviceName: getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"), 
-            //       hostname: getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
-            //       ingressClass: getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+            //       'overlays/catalog-process', 
+            //       getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"), 
+            //       getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
+            //       getVariableFromConf("EXTERNAL_INGRESS_CLASS")
             //     )
             //   }
             // }
