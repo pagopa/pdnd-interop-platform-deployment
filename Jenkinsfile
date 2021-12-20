@@ -47,17 +47,32 @@ pipeline {
           parallel {
             // stage('Party Management') {
             //   steps {
-            //       applyKustomizeToDir('overlays/party-management', getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("EXTERNAL_APPLICATION_HOST"))
+            //     applyKustomizeToDir(
+            //       dirPath: 'overlays/party-management', 
+            //       serviceName: getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"), 
+            //       hostname: getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+            //       ingressClass: getVariableFromConf("INTERNAL_INGRESS_CLASS")
+            //     )
             //   }
             // }
             // stage('Catalog Process') {
             //   steps {
-            //       applyKustomizeToDir('overlays/catalog-process', getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"), getVariableFromConf("EXTERNAL_APPLICATION_HOST"))
+            //     applyKustomizeToDir(
+            //       dirPath: 'overlays/catalog-process', 
+            //       serviceName: getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"), 
+            //       hostname: getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
+            //       ingressClass: getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+            //     )
             //   }
             // }
             stage('User Registry Management') {
               steps {
-                  applyKustomizeToDir('overlays/user-registry-management', getVariableFromConf("USER_REGISTRY_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("INTERNAL_APPLICATION_HOST"))
+                  applyKustomizeToDir(
+                    dirPath: 'overlays/user-registry-management', 
+                    serviceName: getVariableFromConf("USER_REGISTRY_MANAGEMENT_SERVICE_NAME"), 
+                    hostname: getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+                    ingressClass: getVariableFromConf("INTERNAL_INGRESS_CLASS")
+                  )
                   
                   // TODO Temporary, just until we have test rds configured
                   applyKubeFile('postgres/configmap.yaml', "postgres")
@@ -145,7 +160,7 @@ void applyKubeFile(String fileName, String serviceName = null) {
 }
 
 // dirPath starting from kubernetes folder (e.g. kubernetes/overlays/party-management)
-void applyKustomizeToDir(String dirPath, String serviceName, String hostname) {
+void applyKustomizeToDir(String dirPath, String serviceName, String hostname, String ingressClass) {
   container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
     withKubeConfig([credentialsId: 'kube-config']) {
 
@@ -154,11 +169,11 @@ void applyKustomizeToDir(String dirPath, String serviceName, String hostname) {
       def kubeDirPath = 'kubernetes/' + dirPath
 
       echo "Compiling base files"
-      compileDir("kubernetes/base", serviceName, hostname)
+      compileDir("kubernetes/base", serviceName, hostname, ingressClass)
       echo "Base files compiled"
 
       echo "Compiling directory ${dirPath}"
-      compileDir(kubeDirPath, serviceName, hostname)
+      compileDir(kubeDirPath, serviceName, hostname, ingressClass)
       echo "Directory ${dirPath} compiled"
       
       echo "Applying Kustomization for ${serviceName}"
@@ -188,14 +203,14 @@ void applyKustomizeToDir(String dirPath, String serviceName, String hostname) {
  * Compile each file in the directory replacing placeholders with actual values.
  * Note: kustomization.yaml is skipped because does not have placeholders
  */ 
-void compileDir(String dirPath, String serviceName, String hostname) {
+void compileDir(String dirPath, String serviceName, String hostname, String ingressClass) {
   sh '''
   for f in ''' + dirPath + '''/*
   do
       if [ ! $(basename $f) = "kustomization.yaml" ]
         then
           mkdir -p ''' + serviceName + '/' + dirPath + '''
-          SERVICE_NAME=''' + serviceName + ' APPLICATION_HOST=' + hostname + ' kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ' + serviceName + '''/$f
+          SERVICE_NAME=''' + serviceName + ' APPLICATION_HOST=' + hostname + ' INGRESS_CLASS=' + ingressClass + ' kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ' + serviceName + '''/$f
         else
           cp $f ''' + serviceName + '''/$f
       fi
