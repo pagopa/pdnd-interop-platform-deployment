@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  template:
+    spec:
+      initContainers:
+        - name: migrate-db
+          image: flyway/flyway:8.2.3
+          envFrom:
+          - configMapRef:
+              name: {{SERVICE_NAME}}
+          env:
+            - name: FLYWAY_URL
+              value: jdbc:postgresql:$(POSTGRES_DB)
+            - name: FLYWAY_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: POSTGRES_USR
+            - name: FLYWAY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: POSTGRES_PSW
+          volumeMounts:
+            - name: migrations-files
+              mountPath: "/flyway/sql"
+      volumes:
+        - name: migrations-files
+          hostPath:
+            path: {{PWD}}/db/migrations
+            type: DirectoryOrCreate

@@ -3,3 +3,4 @@ bases:
 patchesStrategicMerge:
 - deployment.yaml
 - configmap.yaml
+- db.yaml
