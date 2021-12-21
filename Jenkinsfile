@@ -6,7 +6,7 @@ pipeline {
     // STAGE variable should be set as Global Properties
     STAGE = "${env.STAGE}"
     // TODO Create one set of credentials for each service
-    // AWS_SECRET_ACCESS = credentials('jenkins-aws')
+    AWS_SECRET_ACCESS = credentials('aws-credentials')
     POSTGRES_CREDENTIALS = credentials('postgres-db')
     //
     NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH)
@@ -278,7 +278,7 @@ void loadSecrets() {
           -o yaml | kubectl apply -f -
       '''
 
-      // loadCredentials('aws', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_USR', 'AWS_SECRET_ACCESS_KEY', 'AWS_SECRET_ACCESS_PSW')
+      loadCredentials('aws', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_USR', 'AWS_SECRET_ACCESS_KEY', 'AWS_SECRET_ACCESS_PSW')
       loadCredentials('postgres', 'POSTGRES_USR', 'POSTGRES_CREDENTIALS_USR', 'POSTGRES_PSW', 'POSTGRES_CREDENTIALS_PSW')
     }
   }
