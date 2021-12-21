@@ -173,9 +173,7 @@ void applyKustomizeToDir(String dirPath, String serviceName, String hostname, St
       sh "kubectl apply -f ${serviceName}/full.${serviceName}.yaml"
       echo "Files for ${serviceName} applied"
 
-      echo "Waiting for completion of ${serviceName}..."
-      sh "kubectl wait --for condition=Ready pod -l app=${serviceName} --timeout=60s" // TODO Use parameter
-      echo "Apply of ${fileName} completed"
+      // waitForServiceReady(serviceName)
 
       echo "Removing folder"
       sh "rm -rf ${serviceName}"
@@ -183,6 +181,17 @@ void applyKustomizeToDir(String dirPath, String serviceName, String hostname, St
     }
   }
 }
+
+// void waitForServiceReady(String serviceName) {
+
+//   echo "Waiting for completion of ${serviceName}..."
+//   // TODO Pod waiting
+//   // The wait command fails if the resource has not been created yet
+//   // See https://github.com/kubernetes/kubernetes/issues/83242
+//   sh "kubectl wait --for condition=Ready pod -l app=${serviceName} --namespace=\$NAMESPACE --timeout=60s" // TODO Use parameter
+//   echo "Apply of ${serviceName} completed"
+
+// }
 
 /*
  * Compile each file in the directory replacing placeholders with actual values.
