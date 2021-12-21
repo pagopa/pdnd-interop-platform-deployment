@@ -38,4 +38,4 @@ spec:
         - name: migrations-files
           hostPath:
             path: {{PWD}}/db/migrations
-            type: DirectoryOrCreate
+            type: Directory
