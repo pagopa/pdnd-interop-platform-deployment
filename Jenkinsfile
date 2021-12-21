@@ -173,10 +173,9 @@ void applyKustomizeToDir(String dirPath, String serviceName, String hostname, St
       sh "kubectl apply -f ${serviceName}/full.${serviceName}.yaml"
       echo "Files for ${serviceName} applied"
 
-      // TODO Uncomment this when ready
-      // echo "Waiting for completion of ${fileName}..."
-      // sh "kubectl wait -f ./kubernetes/compiled.${fileName} --for condition=Ready --timeout=60s" // TODO Use parameter
-      // echo "Apply of ${fileName} completed"
+      echo "Waiting for completion of ${serviceName}..."
+      sh "kubectl wait --for condition=Ready -l app=${serviceName} --timeout=60s" // TODO Use parameter
+      echo "Apply of ${fileName} completed"
 
       echo "Removing folder"
       sh "rm -rf ${serviceName}"
