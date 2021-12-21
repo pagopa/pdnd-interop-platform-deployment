@@ -173,7 +173,7 @@ void applyKustomizeToDir(String dirPath, String serviceName, String hostname, St
       sh "kubectl apply -f ${serviceName}/full.${serviceName}.yaml"
       echo "Files for ${serviceName} applied"
 
-      // waitForServiceReady(serviceName)
+      waitForServiceReady(serviceName)
 
       echo "Removing folder"
       sh "rm -rf ${serviceName}"
@@ -182,16 +182,32 @@ void applyKustomizeToDir(String dirPath, String serviceName, String hostname, St
   }
 }
 
-// void waitForServiceReady(String serviceName) {
+void waitForServiceReady(String serviceName) {
 
-//   echo "Waiting for completion of ${serviceName}..."
-//   // TODO Pod waiting
-//   // The wait command fails if the resource has not been created yet
-//   // See https://github.com/kubernetes/kubernetes/issues/83242
-//   sh "kubectl wait --for condition=Ready pod -l app=${serviceName} --namespace=\$NAMESPACE --timeout=60s" // TODO Use parameter
-//   echo "Apply of ${serviceName} completed"
+  echo "Waiting for completion of ${serviceName}..."
+  // TODO Pod waiting
+  // Not ideal, but the wait command fails if the resource has not been created yet
+  // See https://github.com/kubernetes/kubernetes/issues/83242
 
-// }
+  // Wait for pod creation
+  sh'''
+    retry=0
+    result=0
+    maxRetries=10
+    while [[ "$result" -lt 1 && "$retry" -lt "$maxRetries" ]] ; do
+      echo "Waiting for pod creation of service ${serviceName}..."
+      sleep 3
+      result=$(kubectl --namespace=\$NAMESPACE get pod -l app=''' + serviceName + ' 2>/dev/null  | grep ' + serviceName + ''' | wc -l)
+      retry=$((retry+1))
+    done
+  '''
+
+  // Wait for pod readiness
+  sh "kubectl wait --for condition=Ready pod -l app=${serviceName} --namespace=\$NAMESPACE --timeout=60s" // TODO Use parameter
+
+  echo "Apply of ${serviceName} completed"
+
+}
 
 /*
  * Compile each file in the directory replacing placeholders with actual values.
