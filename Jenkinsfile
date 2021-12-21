@@ -55,16 +55,16 @@ pipeline {
                   )
               }
             }
-            // stage('Party Management') {
-            //   steps {
-            //     applyKustomizeToDir(
-            //       'overlays/party-management', 
-            //       getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"), 
-            //       getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-            //       getVariableFromConf("INTERNAL_INGRESS_CLASS")
-            //     )
-            //   }
-            // }
+            stage('Party Management') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/party-management', 
+                  getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"), 
+                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
+                )
+              }
+            }
             stage('Catalog Process') {
               steps {
                 applyKustomizeToDir(
