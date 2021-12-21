@@ -9,6 +9,7 @@ spec:
       initContainers:
         - name: migrate-db
           image: flyway/flyway:8.2.3
+          command: -connectRetries=60 migrate
           envFrom:
           - configMapRef:
               name: {{SERVICE_NAME}}
