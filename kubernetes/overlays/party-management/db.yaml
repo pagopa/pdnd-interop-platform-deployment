@@ -9,14 +9,14 @@ spec:
       initContainers:
         - name: migrate-db
           image: flyway/flyway:8.2.3
-          command: 
-            - -connectRetries=60 migrate
+          args: 
+            - migrate
           envFrom:
-          - configMapRef:
-              name: {{SERVICE_NAME}}
+            - configMapRef:
+                name: {{SERVICE_NAME}}
           env:
             - name: FLYWAY_URL
-              value: jdbc:postgresql:$(POSTGRES_DB)
+              value: jdbc:postgresql://{{POSTGRES_HOST}}:{{POSTGRES_PORT}}/$(POSTGRES_DB)
             - name: FLYWAY_USER
               valueFrom:
                 secretKeyRef:
@@ -27,6 +27,10 @@ spec:
                 secretKeyRef:
                   name: postgres
                   key: POSTGRES_PSW
+            - name: FLYWAY_PLACEHOLDER_REPLACEMENT
+              value: "true"
+            - name: FLYWAY_PLACEHOLDERS_APPLICATIONSCHEMA
+              value: {{NAMESPACE}}_$(POSTGRES_SCHEMA)
           volumeMounts:
             - name: migrations-files
               mountPath: "/flyway/sql"

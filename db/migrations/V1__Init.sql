@@ -1,6 +1,6 @@
-CREATE SCHEMA IF NOT EXISTS NAMESPACE_POSTGRES_SCHEMA;
+CREATE SCHEMA IF NOT EXISTS ${applicationSchema};
 
-CREATE TABLE IF NOT EXISTS NAMESPACE_POSTGRES_SCHEMA.event_journal(
+CREATE TABLE IF NOT EXISTS ${applicationSchema}.event_journal(
   ordering BIGSERIAL,
   persistence_id VARCHAR(255) NOT NULL,
   sequence_number BIGINT NOT NULL,
@@ -21,19 +21,19 @@ CREATE TABLE IF NOT EXISTS NAMESPACE_POSTGRES_SCHEMA.event_journal(
   PRIMARY KEY(persistence_id, sequence_number)
 );
 
-CREATE UNIQUE INDEX event_journal_ordering_idx ON NAMESPACE_POSTGRES_SCHEMA.event_journal(ordering);
+CREATE UNIQUE INDEX event_journal_ordering_idx ON ${applicationSchema}.event_journal(ordering);
 
-CREATE TABLE IF NOT EXISTS NAMESPACE_POSTGRES_SCHEMA.event_tag(
+CREATE TABLE IF NOT EXISTS ${applicationSchema}.event_tag(
     event_id BIGINT,
     tag VARCHAR(256),
     PRIMARY KEY(event_id, tag),
     CONSTRAINT fk_event_journal
       FOREIGN KEY(event_id)
-      REFERENCES NAMESPACE_POSTGRES_SCHEMA.event_journal(ordering)
+      REFERENCES ${applicationSchema}.event_journal(ordering)
       ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS NAMESPACE_POSTGRES_SCHEMA.snapshot (
+CREATE TABLE IF NOT EXISTS ${applicationSchema}.snapshot (
   persistence_id VARCHAR(255) NOT NULL,
   sequence_number BIGINT NOT NULL,
   created BIGINT NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS NAMESPACE_POSTGRES_SCHEMA.snapshot (
   PRIMARY KEY(persistence_id, sequence_number)
 );
 
-CREATE TABLE IF NOT EXISTS NAMESPACE_POSTGRES_SCHEMA.akka_projection_offset_store (
+CREATE TABLE IF NOT EXISTS ${applicationSchema}.akka_projection_offset_store (
   projection_name VARCHAR(255) NOT NULL,
   projection_key VARCHAR(255) NOT NULL,
   current_offset VARCHAR(255) NOT NULL,
@@ -59,9 +59,9 @@ CREATE TABLE IF NOT EXISTS NAMESPACE_POSTGRES_SCHEMA.akka_projection_offset_stor
   PRIMARY KEY(projection_name, projection_key)
 );
 
-CREATE INDEX IF NOT EXISTS projection_name_index ON NAMESPACE_POSTGRES_SCHEMA.akka_projection_offset_store (projection_name);
+CREATE INDEX IF NOT EXISTS projection_name_index ON ${applicationSchema}.akka_projection_offset_store (projection_name);
 
-CREATE TABLE IF NOT EXISTS NAMESPACE_POSTGRES_SCHEMA.akka_projection_management (
+CREATE TABLE IF NOT EXISTS ${applicationSchema}.akka_projection_management (
   projection_name VARCHAR(255) NOT NULL,
   projection_key VARCHAR(255) NOT NULL,
   paused BOOLEAN NOT NULL,
