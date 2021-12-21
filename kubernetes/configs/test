@@ -40,9 +40,7 @@ EXTERNAL_APPLICATION_HOST=$NAMESPACE.$INTERNAL_INGRESS_HOST
 ### End TODO
 
 REPOSITORY="gateway-private.test.pdnd-interop.pagopa.it"
-# TODO Update when test db is ready
-# POSTGRES_HOST="pdnd-interop-dev-rds.c9zr6t2swdpb.eu-central-1.rds.amazonaws.com"
-POSTGRES_HOST="postgres"
+POSTGRES_HOST="pdnd-interop-test-rds.cfx5ud7lsyvt.eu-central-1.rds.amazonaws.com"
 POSTGRES_PORT="5432"
 REPLICAS=1
 

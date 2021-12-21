@@ -73,11 +73,6 @@ pipeline {
                     getVariableFromConf("INTERNAL_APPLICATION_HOST"),
                     getVariableFromConf("INTERNAL_INGRESS_CLASS")
                   )
-                  
-                  // TODO Temporary, just until we have test rds configured
-                  applyKubeFile('postgres/configmap.yaml', "postgres")
-                  applyKubeFile('postgres/deployment.yaml', "postgres")
-                  applyKubeFile('postgres/service.yaml', "postgres")
               }
             }
 
