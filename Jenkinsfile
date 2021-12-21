@@ -194,7 +194,7 @@ void waitForServiceReady(String serviceName) {
     retry=0
     result=0
     maxRetries=10
-    while [[ "$result" -lt 1 && "$retry" -lt "$maxRetries" ]] ; do
+    while [ "$result" -lt 1 -a "$retry" -lt "$maxRetries" ] ; do
       echo "Waiting for pod creation of service ${serviceName}..."
       sleep 3
       result=$(kubectl --namespace=\$NAMESPACE get pod -l app=''' + serviceName + ' 2>/dev/null  | grep ' + serviceName + ''' | wc -l)
