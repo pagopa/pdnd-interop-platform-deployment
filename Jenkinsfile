@@ -174,7 +174,7 @@ void applyKustomizeToDir(String dirPath, String serviceName, String hostname, St
       echo "Files for ${serviceName} applied"
 
       echo "Waiting for completion of ${serviceName}..."
-      sh "kubectl wait --for condition=Ready -l app=${serviceName} --timeout=60s" // TODO Use parameter
+      sh "kubectl wait --for condition=Ready pod -l app=${serviceName} --timeout=60s" // TODO Use parameter
       echo "Apply of ${fileName} completed"
 
       echo "Removing folder"
