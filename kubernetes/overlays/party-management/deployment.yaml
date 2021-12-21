@@ -44,17 +44,17 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: PARTY_MANAGEMENT_STORAGE_TYPE
+                  key: STORAGE_TYPE
             - name: STORAGE_CONTAINER
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: PARTY_MANAGEMENT_STORAGE_CONTAINER
+                  key: STORAGE_CONTAINER
             - name: STORAGE_ENDPOINT
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: PARTY_MANAGEMENT_STORAGE_ENDPOINT
+                  key: STORAGE_ENDPOINT
             - name: STORAGE_APPLICATION_ID
               valueFrom:
                 secretKeyRef:
