@@ -52,10 +52,10 @@ pipeline {
           parallel {
             stage('Front End') {
               steps {
-                  applyKubeFile('frontend/ingress.yaml', "frontend")
-                  applyKubeFile('frontend/configmap.yaml', "frontend")
-                  applyKubeFile('frontend/deployment.yaml', "frontend")
-                  applyKubeFile('frontend/service.yaml', "frontend")
+                  applyKubeFile('frontend/ingress.yaml', getVariableFromConf("FRONTEND_SERVICE_NAME"))
+                  applyKubeFile('frontend/configmap.yaml', getVariableFromConf("FRONTEND_SERVICE_NAME"))
+                  applyKubeFile('frontend/deployment.yaml', getVariableFromConf("FRONTEND_SERVICE_NAME"))
+                  applyKubeFile('frontend/service.yaml', getVariableFromConf("FRONTEND_SERVICE_NAME"))
               }
             }
             stage('User Registry Management') {
