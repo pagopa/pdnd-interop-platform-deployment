@@ -34,4 +34,4 @@ spec:
         - configMap:
             defaultMode: 420
             name: default-conf
-          name: default-conf
+          name: {{SERVICE_NAME}}
