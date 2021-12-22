@@ -273,20 +273,12 @@ void loadSecrets() {
   container('sbt-container') { // This is required only for kubectl command (sbt is not needed)
     withKubeConfig([credentialsId: 'kube-config']) {
       sh'''
-        
         # Cleanup
         kubectl -n $NAMESPACE delete secrets regcred --ignore-not-found
         kubectl -n default get secret regcred -o yaml | sed s/"namespace: default"/"namespace: $NAMESPACE"/ |  kubectl apply -n $NAMESPACE -f -
-
-       # TODO This is temporary. No existing storage credentials yet
-        kubectl -n $NAMESPACE create secret generic storage \
-          --save-config \
-          --dry-run=client \
-          --from-literal=STORAGE_USR=user_placeholder \
-          --from-literal=STORAGE_PSW=password_placeholder \
-          -o yaml | kubectl apply -f -
       '''
 
+      loadCredentials('storage', 'STORAGE_USR', 'AWS_SECRET_ACCESS_USR', 'STORAGE_PSW', 'AWS_SECRET_ACCESS_PSW')
       loadCredentials('aws', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_USR', 'AWS_SECRET_ACCESS_KEY', 'AWS_SECRET_ACCESS_PSW')
       loadCredentials('postgres', 'POSTGRES_USR', 'POSTGRES_CREDENTIALS_USR', 'POSTGRES_PSW', 'POSTGRES_CREDENTIALS_PSW')
     }
