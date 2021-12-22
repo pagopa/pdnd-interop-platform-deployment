@@ -43,6 +43,11 @@ pipeline {
               loadSecrets()
           }
         }
+        stage('Load ConfigMaps') {
+          steps {
+              prepareDbMigrations()
+          }
+        }
         stage('Deploy Services') {
           parallel {
             stage('User Registry Management') {
@@ -158,12 +163,16 @@ void applyKustomizeToDir(String dirPath, String serviceName, String hostname, St
       compileDir("kubernetes/base", serviceName, hostname, ingressClass)
       echo "Base files compiled"
 
+      echo "Compiling common files"
+      compileDir("kubernetes/commons/database", serviceName, hostname, ingressClass)
+      echo "Common files compiled"
+
       echo "Compiling directory ${dirPath}"
       compileDir(kubeDirPath, serviceName, hostname, ingressClass)
       echo "Directory ${dirPath} compiled"
       
       echo "Applying Kustomization for ${serviceName}"
-      sh 'kubectl kustomize ' + serviceName + '/' + kubeDirPath + ' > ' + serviceName + '/full.' + serviceName + '.yaml'
+      sh 'kubectl kustomize --load-restrictor LoadRestrictionsNone ' + serviceName + '/' + kubeDirPath + ' > ' + serviceName + '/full.' + serviceName + '.yaml'
       echo "Kustomization for ${serviceName} applied"
 
       // DEBUG
@@ -313,4 +322,19 @@ void loadSpidSecrets() {
 String getVariableFromConf(String variableName) {
   def configFile = getConfigFileFromStage(env.STAGE)
   return sh (returnStdout: true, script: 'set +x && . ' + configFile + ' && set -x && echo $' + variableName).trim()
+}
+
+void prepareDbMigrations() {
+  container('sbt-container') { // This is required only for kubectl command (sbt is not needed)
+    withKubeConfig([credentialsId: 'kube-config']) {
+      echo 'Creating migrations configmap...'
+      sh'''kubectl \
+         create configmap common-db-migrations \
+         --namespace $NAMESPACE \
+         --from-file=db/migrations/ \
+         --dry-run \
+         -o yaml | kubectl apply -f -'''
+      echo 'Migrations configmap created'
+    }
+  }
 }

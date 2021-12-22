@@ -5,4 +5,4 @@ metadata:
   namespace: {{NAMESPACE}}
 data:
   POSTGRES_DB: "persistence_management"
-  POSTGRES_SCHEMA: "user_registry"
+  POSTGRES_SCHEMA: "{{NAMESPACE}}_user_registry"
