@@ -172,7 +172,7 @@ void applyKustomizeToDir(String dirPath, String serviceName, String hostname, St
       echo "Directory ${dirPath} compiled"
       
       echo "Applying Kustomization for ${serviceName}"
-      sh 'kubectl kustomize ' + serviceName + '/' + kubeDirPath + ' > ' + serviceName + '/full.' + serviceName + '.yaml'
+      sh 'kubectl kustomize --load-restrictor LoadRestrictionsNone ' + serviceName + '/' + kubeDirPath + ' > ' + serviceName + '/full.' + serviceName + '.yaml'
       echo "Kustomization for ${serviceName} applied"
 
       // DEBUG
