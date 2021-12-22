@@ -1,5 +1,3 @@
-CREATE SCHEMA IF NOT EXISTS "${applicationSchema}";
-
 CREATE TABLE IF NOT EXISTS "${applicationSchema}".event_journal(
   ordering BIGSERIAL,
   persistence_id VARCHAR(255) NOT NULL,

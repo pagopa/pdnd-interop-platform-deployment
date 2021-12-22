@@ -27,6 +27,13 @@ spec:
                 secretKeyRef:
                   name: postgres
                   key: POSTGRES_PSW
+            - name: FLYWAY_CREATE_SCHEMAS
+              value: "true"
+            - name: FLYWAY_SCHEMAS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: POSTGRES_SCHEMA
             - name: FLYWAY_PLACEHOLDER_REPLACEMENT
               value: "true"
             - name: FLYWAY_PLACEHOLDERS_APPLICATIONSCHEMA
