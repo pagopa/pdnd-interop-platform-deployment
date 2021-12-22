@@ -328,6 +328,7 @@ void prepareDbMigrations() {
          create configmap common-db-migrations \
          --namespace $NAMESPACE \
          --from-file=db/migrations/ \
+         --dry-run \
          -o yaml | kubectl apply -f -'''
       echo 'Migrations configmap created'
     }
