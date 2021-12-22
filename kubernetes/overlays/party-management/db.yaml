@@ -36,6 +36,7 @@ spec:
               mountPath: "/flyway/sql"
       volumes:
         - name: migrations-files
-          hostPath:
-            path: {{PWD}}/db/migrations
-            type: Directory
+          projected:
+            sources:
+              - configMap:
+                  name: common-db-migrations

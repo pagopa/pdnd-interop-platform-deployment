@@ -43,6 +43,11 @@ pipeline {
               loadSecrets()
           }
         }
+        stage('Load ConfigMaps') {
+          steps {
+              prepareDbMigrations()
+          }
+        }
         stage('Deploy Services') {
           parallel {
             stage('User Registry Management') {
@@ -313,4 +318,10 @@ void loadSpidSecrets() {
 String getVariableFromConf(String variableName) {
   def configFile = getConfigFileFromStage(env.STAGE)
   return sh (returnStdout: true, script: 'set +x && . ' + configFile + ' && set -x && echo $' + variableName).trim()
+}
+
+void prepareDbMigrations() {
+  echo 'Creating migrations configmap...'
+  sh'kubectl --namespace $NAMESPACE create configmap common-db-migrations --from-file=' + PWD + '/db/migrations/ -o yaml'
+  echo 'Migrations configmap created'
 }
