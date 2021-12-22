@@ -4,7 +4,6 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: {{EXTERNAL_INGRESS_CLASS}}
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
     external-dns.alpha.kubernetes.io/hostname: {{EXTERNAL_APPLICATION_HOST}}
     kubernetes.io/tls-acme: "true"
   name: {{SERVICE_NAME}}
@@ -17,17 +16,8 @@ spec:
     - host: "{{EXTERNAL_APPLICATION_HOST}}"
       http:
         paths:
-          - path: "/(ui/.*)"
+          - backend:
+              serviceName: nginx-ui
+              servicePort: 80
+            path: /ui
             pathType: Prefix
-            backend:
-              service:
-                name: {{SERVICE_NAME}}
-                port: 
-                  number: 80
-          - path: "/(ui)"
-            pathType: Prefix
-            backend:
-              service:
-                name: {{SERVICE_NAME}}
-                port: 
-                  number: 80
