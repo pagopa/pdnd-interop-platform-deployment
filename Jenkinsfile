@@ -321,7 +321,11 @@ String getVariableFromConf(String variableName) {
 }
 
 void prepareDbMigrations() {
-  echo 'Creating migrations configmap...'
-  sh'kubectl --namespace $NAMESPACE create configmap common-db-migrations --from-file=' + PWD + '/db/migrations/ -o yaml'
-  echo 'Migrations configmap created'
+  container('sbt-container') { // This is required only for kubectl command (sbt is not needed)
+    withKubeConfig([credentialsId: 'kube-config']) {
+      echo 'Creating migrations configmap...'
+      sh'kubectl --namespace $NAMESPACE create configmap common-db-migrations --from-file=' + PWD + '/db/migrations/ -o yaml'
+      echo 'Migrations configmap created'
+    }
+  }
 }
