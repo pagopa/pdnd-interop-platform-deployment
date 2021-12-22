@@ -30,7 +30,10 @@ spec:
             - name: FLYWAY_PLACEHOLDER_REPLACEMENT
               value: "true"
             - name: FLYWAY_PLACEHOLDERS_APPLICATIONSCHEMA
-              value: {{NAMESPACE}}_$(POSTGRES_SCHEMA)
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: POSTGRES_SCHEMA
           volumeMounts:
             - name: migrations-files
               mountPath: "/flyway/sql"
