@@ -324,7 +324,11 @@ void prepareDbMigrations() {
   container('sbt-container') { // This is required only for kubectl command (sbt is not needed)
     withKubeConfig([credentialsId: 'kube-config']) {
       echo 'Creating migrations configmap...'
-      sh'kubectl --namespace $NAMESPACE create configmap common-db-migrations --from-file=db/migrations/ -o yaml'
+      sh'''kubectl \
+         create configmap common-db-migrations \
+         --namespace $NAMESPACE \
+         --from-file=db/migrations/ \
+         -o yaml | kubectl apply -f -'''
       echo 'Migrations configmap created'
     }
   }
