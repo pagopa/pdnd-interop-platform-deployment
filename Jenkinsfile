@@ -50,6 +50,14 @@ pipeline {
         }
         stage('Deploy Services') {
           parallel {
+            stage('Front End') {
+              steps {
+                  applyKubeFile('frontend/ingress.yaml', "frontend")
+                  applyKubeFile('frontend/configmap.yaml', "frontend")
+                  applyKubeFile('frontend/deployment.yaml', "frontend")
+                  applyKubeFile('frontend/service.yaml', "frontend")
+              }
+            }
             stage('User Registry Management') {
               steps {
                   applyKustomizeToDir(
