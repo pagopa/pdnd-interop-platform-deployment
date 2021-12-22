@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+data:
+  ORG_ISSUER: "https://spid.agid.gov.it/cd"
+  ORG_URL: "https://pagopa.gov.it"
+  ACS_BASE_URL: "https://{{NAMESPACE}}.{{EXTERNAL_INGRESS_HOST}}/{{SERVICE_NAME}}"
+  ORG_DISPLAY_NAME: "Organization display name"
+  ORG_NAME: "Organization name"
+
+  AUTH_N_CONTEXT: "https://www.spid.gov.it/SpidL2"
+
+  SPID_ATTRIBUTES: "address,email,name,familyName,fiscalNumber,mobilePhone"
+
+  ENDPOINT_ACS: "/acs"
+  ENDPOINT_ERROR: "/error"
+  ENDPOINT_SUCCESS: "/success"
+  ENDPOINT_LOGIN: "/login"
+  ENDPOINT_METADATA: "/metadata"
+  ENDPOINT_LOGOUT: "/logout"
+
+  SPID_VALIDATOR_URL: "http://localhost"
+  SPID_TESTENV_URL: "https://{{IDP_SERVICE_URL}}" # IdP
+
+  REDIS_URL: "{{REDIS_SERVICE_NAME}}"
+  REDIS_TLS_ENABLED: "false"
+
+  ENABLE_JWT: "true"
+  INCLUDE_SPID_USER_ON_INTROSPECTION: "true"
+
+  TOKEN_EXPIRATION: "3600"
+  JWT_TOKEN_ISSUER: "SPID"
+  JWT_TOKEN_KID: "f26e03db-f8b3-499e-8f32-072c93ecf761"
+
+  ENABLE_USER_REGISTRY: "true"
+  USER_REGISTRY_URL: "{{USER_REGISTRY_MANAGEMENT_URL}}"
+  USER_REGISTRY_API_KEY: "afakesecretapimkey"
+
+  ENABLE_ADE_AA: "false"
+  ADE_AA_API_ENDPOINT: "http://ade-aa-ms-mock:3000" # ADE Mock to authorize user and enrich jwt
+  ENDPOINT_L1_SUCCESS: "/success/l1"
+  L1_TOKEN_EXPIRATION: "60"
+  L1_TOKEN_HEADER_NAME: "x-token"
+  L2_TOKEN_EXPIRATION: "3600"
+  APPINSIGHTS_INSTRUMENTATIONKEY: "foo" #?
+  REQUIRED_ATTRIBUTES_SERVICE_NAME: "Service Name"
+
+  ENABLE_FULL_OPERATOR_METADATA: "true"
+  COMPANY_EMAIL: "company@email.com"
+  COMPANY_FISCAL_CODE: "12312312311"
+  COMPANY_IPA_CODE: "IPA_CODE"
+  COMPANY_NAME: "Company S.r.l"
+  COMPANY_VAT_NUMBER: "12312312311"
+
+  ENABLE_SPID_ACCESS_LOGS: "false"
+  SPID_LOGS_STORAGE_CONTAINER_NAME: "spidassertions"
+  SPID_LOGS_STORAGE_CONNECTION_STRING: "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://storage:10000/devstoreaccount1;QueueEndpoint=http://storage:10001/devstoreaccount1;"
+  SPID_LOGS_PUBLIC_KEY: "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCh2U9uNjj06HglAlkXuCaAuGmB\ntWE9svolLzczQePuiVk41U8ALUto3FzpRDYKBdMawBo6ySsJSeNxBI8o/WPmEOsi\n0eXGlgiJvY/ily43l2xOOjPIJgCfHapBYEQPDv5thLehVi9nCHUynwDzxTpWshPM\nBOFhmaKZB2tgERXagwIDAQAB\n-----END PUBLIC KEY-----"
+
+  SERVER_PORT: "9090"

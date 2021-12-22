@@ -2,22 +2,29 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    kubernetes.io/ingress.class: {{INGRESS_CLASS}}
+    kubernetes.io/ingress.class: {{EXTERNAL_INGRESS_CLASS}}
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$1
-    external-dns.alpha.kubernetes.io/hostname: {{APPLICATION_HOST}}
+    external-dns.alpha.kubernetes.io/hostname: {{IDP_SERVICE_URL}}
     kubernetes.io/tls-acme: "true"
   name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 spec:
   tls:
     - hosts:
-        - {{APPLICATION_HOST}}
+        - {{IDP_SERVICE_URL}}
   rules:
-    - host: "{{APPLICATION_HOST}}"
+    - host: "{{IDP_SERVICE_URL}}"
       http:
         paths:
-          - path: "/({{SERVICE_NAME}}.*)"
+          - path: "/(.*)"
+            pathType: Prefix
+            backend:
+              service:
+                name: {{SERVICE_NAME}}
+                port: 
+                  number: 8088
+          - path: "/"
             pathType: Prefix
             backend:
               service:

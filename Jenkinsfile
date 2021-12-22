@@ -1,14 +1,14 @@
 pipeline {
-// TODO Can configs be loaded just once globally?
 
   agent any
 
   environment {
     // STAGE variable should be set as Global Properties
     STAGE = "${env.STAGE}"
-    AWS_SECRET_ACCESS = credentials('jenkins-aws')
-    // TODO Create one set of credentials for each service for production
+    // TODO Create one set of credentials for each service
+    AWS_SECRET_ACCESS = credentials('aws-credentials')
     POSTGRES_CREDENTIALS = credentials('postgres-db')
+    //
     NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH)
     CONFIG_FILE = getConfigFileFromStage(STAGE)
   }
@@ -24,17 +24,6 @@ pipeline {
         stage('Debug') {
           // DELETE ME. Just for testing
           steps {
-            // withEnv(readFile('./kubernetes/config').split('\n') as List) {
-            //   sh 'env'
-            // }
-            // sh"""
-            // #!/bin/bash
-            // chmod +x ./kubernetes/config
-            // ./kubernetes/config
-            // echo "VARIABLE:"
-            // echo \$PARTY_MANAGEMENT_SERVICE_NAME
-            // env
-            // """
             sh'env'
           }
         }
@@ -56,16 +45,76 @@ pipeline {
         }
         stage('Deploy Services') {
           parallel {
+            stage('User Registry Management') {
+              steps {
+                  applyKustomizeToDir(
+                    'overlays/user-registry-management', 
+                    getVariableFromConf("USER_REGISTRY_MANAGEMENT_SERVICE_NAME"), 
+                    getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+                    getVariableFromConf("INTERNAL_INGRESS_CLASS")
+                  )
+              }
+            }
             stage('Party Management') {
               steps {
-                  // applyKustomizeToDir('kubernetes/overlays/party-management', getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"))
-                  applyKustomizeToDir('kubernetes/overlays/party-management', 'pdnd-interop-uservice-party-management')
+                applyKustomizeToDir(
+                  'overlays/party-management', 
+                  getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"), 
+                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
+                )
               }
             }
             stage('Catalog Process') {
               steps {
-                  // applyKustomizeToDir('kubernetes/overlays/catalog-process', getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"))
-                  applyKustomizeToDir('kubernetes/overlays/catalog-process', 'pdnd-interop-uservice-catalog-process')
+                applyKustomizeToDir(
+                  'overlays/catalog-process', 
+                  getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"), 
+                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
+                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+                )
+              }
+            }
+            
+            stage('Spid') {
+              environment {
+                SPID_LOGIN_SAML_CERT = credentials('spid-login-saml-cert')
+                SPID_LOGIN_SAML_KEY = credentials('spid-login-saml-key')
+                SPID_LOGIN_JWT_PRIVATE_KEY = credentials('spid-login-jwt-private-key')
+              }
+              
+              stages {
+                stage('Secrets') {
+                  steps {
+                    loadSpidSecrets()
+                  }
+                }
+
+                stage('Redis') {
+                  steps {
+                    applyKubeFile('spid/redis/configmap.yaml', "redis")
+                    applyKubeFile('spid/redis/deployment.yaml', "redis")
+                    applyKubeFile('spid/redis/service.yaml', "redis")
+                  }
+                }
+
+                stage('Login') {
+                  steps {
+                    applyKubeFile('spid/login/ingress.yaml', "hub-spid-login-ms")
+                    applyKubeFile('spid/login/configmap.yaml', "hub-spid-login-ms")
+                    applyKubeFile('spid/login/deployment.yaml', "hub-spid-login-ms")
+                    applyKubeFile('spid/login/service.yaml', "hub-spid-login-ms")
+                  }
+                }
+
+                stage('IdP') {
+                  steps {
+                    applyKubeFile('spid/idp/ingress.yaml', "spid-testenv2")
+                    applyKubeFile('spid/idp/configmap.yaml', "spid-testenv2")
+                    applyKubeFile('spid/idp/deployment.yaml', "spid-testenv2")
+                    applyKubeFile('spid/idp/service.yaml', "spid-testenv2")
+                  }
+                }
               }
             }
           }
@@ -75,18 +124,21 @@ pipeline {
   }
 }
 
-void applyKubeFile(String fileName) {
+void applyKubeFile(String fileName, String serviceName = null) {
   container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Apply file ${fileName} on Kubernetes"
 
       echo "Compiling file ${fileName}"
-      sh "./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/compiled.${fileName}"
+      sh "SERVICE_NAME=" + serviceName + " ./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
       echo "File ${fileName} compiled"
       
+      // DEBUG
+      sh "cat ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
+
       echo "Applying file ${fileName}"
-      sh "kubectl apply -f ./kubernetes/compiled.${fileName}"
+      sh "kubectl apply -f ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
       echo "File ${fileName} applied"
 
     }
@@ -94,26 +146,24 @@ void applyKubeFile(String fileName) {
 }
 
 // dirPath starting from kubernetes folder (e.g. kubernetes/overlays/party-management)
-void applyKustomizeToDir(String dirPath, String serviceName) {
+void applyKustomizeToDir(String dirPath, String serviceName, String hostname, String ingressClass) {
   container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Apply directory ${dirPath} on Kubernetes"
 
-      sh "mkdir ${serviceName}"
+      def kubeDirPath = 'kubernetes/' + dirPath
 
       echo "Compiling base files"
-      compileDir("./kubernetes/base", serviceName)
+      compileDir("kubernetes/base", serviceName, hostname, ingressClass)
       echo "Base files compiled"
 
       echo "Compiling directory ${dirPath}"
-      compileDir(dirPath, serviceName)
+      compileDir(kubeDirPath, serviceName, hostname, ingressClass)
       echo "Directory ${dirPath} compiled"
       
       echo "Applying Kustomization for ${serviceName}"
-      sh '''
-      DIR_NAME=$(basename ''' + dirPath + ''')
-      kubectl kustomize ''' + serviceName + '/$DIR_NAME > ' + serviceName + '/full.' + serviceName + '.yaml'
+      sh 'kubectl kustomize ' + serviceName + '/' + kubeDirPath + ' > ' + serviceName + '/full.' + serviceName + '.yaml'
       echo "Kustomization for ${serviceName} applied"
 
       // DEBUG
@@ -123,10 +173,7 @@ void applyKustomizeToDir(String dirPath, String serviceName) {
       sh "kubectl apply -f ${serviceName}/full.${serviceName}.yaml"
       echo "Files for ${serviceName} applied"
 
-      // TODO Uncomment this when ready
-      // echo "Waiting for completion of ${fileName}..."
-      // sh "kubectl wait -f ./kubernetes/compiled.${fileName} --for condition=Ready --timeout=60s" // TODO Use parameter
-      // echo "Apply of ${fileName} completed"
+      waitForServiceReady(serviceName)
 
       echo "Removing folder"
       sh "rm -rf ${serviceName}"
@@ -135,25 +182,51 @@ void applyKustomizeToDir(String dirPath, String serviceName) {
   }
 }
 
-void compileDir(String dirPath, String serviceName) {
-  sh "cp -rf ${dirPath} ./${serviceName}"
-  // Compile each file in the directory (skipping kustomization.yaml)
+void waitForServiceReady(String serviceName) {
+
+  echo "Waiting for completion of ${serviceName}..."
+  // TODO Pod waiting
+  // Not ideal, but the wait command fails if the resource has not been created yet
+  // See https://github.com/kubernetes/kubernetes/issues/83242
+
+  // Wait for pod creation
+  sh'''
+    retry=0
+    result=0
+    maxRetries=10
+    while [ "$result" -lt 1 -a "$retry" -lt "$maxRetries" ] ; do
+      echo "Waiting for pod creation of service ${serviceName}..."
+      sleep 3
+      result=$(kubectl --namespace=\$NAMESPACE get pod -l app=''' + serviceName + ' 2>/dev/null  | grep ' + serviceName + ''' | wc -l)
+      retry=$((retry+1))
+    done
+  '''
+
+  // Wait for pod readiness
+  sh "kubectl wait --for condition=Ready pod -l app=${serviceName} --namespace=\$NAMESPACE --timeout=60s"
+
+  echo "Apply of ${serviceName} completed"
+
+}
+
+/*
+ * Compile each file in the directory replacing placeholders with actual values.
+ * Note: kustomization.yaml is skipped because does not have placeholders
+ */ 
+void compileDir(String dirPath, String serviceName, String hostname, String ingressClass) {
   sh '''
-  DIR_NAME=$(basename ''' + dirPath + ''')
-  BASE_FILES_PATH="''' + serviceName + '''/$DIR_NAME"
-  for f in $BASE_FILES_PATH/*
+  for f in ''' + dirPath + '''/*
   do
       if [ ! $(basename $f) = "kustomization.yaml" ]
         then
-          SERVICE_NAME=''' + serviceName + ' ./kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ./' + serviceName + '''/$DIR_NAME/compiled.$(basename $f)
+          mkdir -p ''' + serviceName + '/' + dirPath + '''
+          SERVICE_NAME=''' + serviceName + ' APPLICATION_HOST=' + hostname + ' INGRESS_CLASS=' + ingressClass + ' kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ' + serviceName + '''/$f
+        else
+          cp $f ''' + serviceName + '''/$f
       fi
   done
   '''
 }
-
-// String getVariableFromConf(String variableName) {
-//   return sh (returnStdout: true, script: "chmod +x ${env.CONFIG_FILE} && ${env.CONFIG_FILE} && echo $" + variableName).trim()
-// }
 
 String getConfigFileFromStage(String stage) {
   switch(stage) { 
@@ -175,32 +248,28 @@ String normalizeNamespaceName(String namespace) {
      .toLowerCase()
 }
 
+void loadCredentials(String secretName, String userSecret, String userVar, String passwordSecret, String passwordVar) {
+  sh'''
+    # Allow to update secret if already exists
+    kubectl -n $NAMESPACE create secret generic ''' + secretName + ''' \
+      --save-config \
+      --dry-run=client \
+      --from-literal=''' + userSecret + '=$' + userVar + ''' \
+      --from-literal=''' + passwordSecret + '=$' + passwordVar + ''' \
+      -o yaml | kubectl apply -f -
+  '''
+}
+
 void loadSecrets() {
   container('sbt-container') { // This is required only for kubectl command (sbt is not needed)
     withKubeConfig([credentialsId: 'kube-config']) {
       sh'''
         
-        # TODO This could be avoided when using public repository
         # Cleanup
         kubectl -n $NAMESPACE delete secrets regcred --ignore-not-found
         kubectl -n default get secret regcred -o yaml | sed s/"namespace: default"/"namespace: $NAMESPACE"/ |  kubectl apply -n $NAMESPACE -f -
 
-        # It allows to update secret if already exists
-        kubectl -n $NAMESPACE create secret generic aws \
-          --save-config \
-          --dry-run=client \
-          --from-literal=AWS_ACCESS_KEY_ID=$AWS_SECRET_ACCESS_USR \
-          --from-literal=AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_PSW \
-          -o yaml | kubectl apply -f -
-
-        kubectl -n $NAMESPACE create secret generic postgres \
-          --save-config \
-          --dry-run=client \
-          --from-literal=POSTGRES_USR=$POSTGRES_CREDENTIALS_USR \
-          --from-literal=POSTGRES_PSW=$POSTGRES_CREDENTIALS_PSW \
-          -o yaml | kubectl apply -f -
-
-# TODO This is temporary. No existing storage credentials yet
+       # TODO This is temporary. No existing storage credentials yet
         kubectl -n $NAMESPACE create secret generic storage \
           --save-config \
           --dry-run=client \
@@ -208,6 +277,40 @@ void loadSecrets() {
           --from-literal=STORAGE_PSW=password_placeholder \
           -o yaml | kubectl apply -f -
       '''
+
+      loadCredentials('aws', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_USR', 'AWS_SECRET_ACCESS_KEY', 'AWS_SECRET_ACCESS_PSW')
+      loadCredentials('postgres', 'POSTGRES_USR', 'POSTGRES_CREDENTIALS_USR', 'POSTGRES_PSW', 'POSTGRES_CREDENTIALS_PSW')
     }
   }
+}
+
+
+void loadSpidSecrets() {
+  container('sbt-container') { // This is required only for kubectl command (sbt is not needed)
+    withKubeConfig([credentialsId: 'kube-config']) {
+      
+      sh'''
+        kubectl -n $NAMESPACE create secret generic spid-login \
+          --save-config \
+          --dry-run=client \
+          --from-file=METADATA_PUBLIC_CERT="$SPID_LOGIN_SAML_CERT" \
+          --from-file=METADATA_PRIVATE_CERT="$SPID_LOGIN_SAML_KEY" \
+          --from-file=JWT_TOKEN_PRIVATE_KEY="$SPID_LOGIN_JWT_PRIVATE_KEY" \
+          -o yaml | kubectl apply -f -
+
+        kubectl -n $NAMESPACE create secret generic idp-http-certs \
+          --save-config \
+          --dry-run=client \
+          --from-file=cert.pem=$SPID_LOGIN_SAML_CERT \
+          --from-file=key.pem=$SPID_LOGIN_SAML_KEY \
+          -o yaml | kubectl apply -f -
+
+      '''
+    }
+  }
+}
+
+String getVariableFromConf(String variableName) {
+  def configFile = getConfigFileFromStage(env.STAGE)
+  return sh (returnStdout: true, script: 'set +x && . ' + configFile + ' && set -x && echo $' + variableName).trim()
 }

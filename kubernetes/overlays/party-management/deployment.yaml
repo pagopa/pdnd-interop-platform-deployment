@@ -15,6 +15,21 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: POSTGRES_HOST
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: POSTGRES_PORT
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: POSTGRES_DB
+            - name: POSTGRES_SCHEMA
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: POSTGRES_SCHEMA
             - name: POSTGRES_USR
               valueFrom:
                 secretKeyRef:
@@ -29,17 +44,17 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: PARTY_MANAGEMENT_STORAGE_TYPE
+                  key: STORAGE_TYPE
             - name: STORAGE_CONTAINER
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: PARTY_MANAGEMENT_STORAGE_CONTAINER
+                  key: STORAGE_CONTAINER
             - name: STORAGE_ENDPOINT
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: PARTY_MANAGEMENT_STORAGE_ENDPOINT
+                  key: STORAGE_ENDPOINT
             - name: STORAGE_APPLICATION_ID
               valueFrom:
                 secretKeyRef:
@@ -50,3 +65,13 @@ spec:
                 secretKeyRef:
                   name: storage
                   key: STORAGE_PSW
+            - name: TOKEN_VALIDITY_HOURS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: TOKEN_VALIDITY_HOURS
+            - name: WELL_KNOWN_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: WELL_KNOWN_URL

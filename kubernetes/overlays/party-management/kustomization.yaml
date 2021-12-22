@@ -1,5 +1,5 @@
 bases:
-- ../base
+- ../../base
 patchesStrategicMerge:
-- compiled.deployment.yaml
-- compiled.configmap.yaml
+- deployment.yaml
+- configmap.yaml
