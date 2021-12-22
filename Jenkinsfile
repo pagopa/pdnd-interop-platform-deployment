@@ -163,6 +163,10 @@ void applyKustomizeToDir(String dirPath, String serviceName, String hostname, St
       compileDir("kubernetes/base", serviceName, hostname, ingressClass)
       echo "Base files compiled"
 
+      echo "Compiling common files"
+      compileDir("kubernetes/common", serviceName, hostname, ingressClass)
+      echo "Common files compiled"
+
       echo "Compiling directory ${dirPath}"
       compileDir(kubeDirPath, serviceName, hostname, ingressClass)
       echo "Directory ${dirPath} compiled"
