@@ -16,8 +16,10 @@ spec:
     - host: "{{EXTERNAL_APPLICATION_HOST}}"
       http:
         paths:
-          - backend:
-              serviceName: nginx-ui
-              servicePort: 80
-            path: /ui
+          - path: /ui
             pathType: Prefix
+            backend:
+              service:
+                name: {{SERVICE_NAME}}
+                port: 
+                  number: 80
