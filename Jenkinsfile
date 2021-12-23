@@ -248,11 +248,11 @@ void compileDir(String dirPath, String serviceName, String hostname, String ingr
 String getConfigFileFromStage(String stage) {
   switch(stage) { 
    case 'DEV': 
-     return './kubernetes/configs/dev'
+     return './kubernetes/configs/dev/main.sh'
    case 'TEST': 
-     return './kubernetes/configs/test'
+     return './kubernetes/configs/test/main.sh'
    case 'PROD': 
-     return './kubernetes/configs/prod'
+     return './kubernetes/configs/prod/main.sh'
    default:
      error "Stage not valid: ${stage}"
   } 
