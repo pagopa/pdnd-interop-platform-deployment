@@ -4,7 +4,7 @@ Deployment of all services required to run the PDND Interoperability platform.
 Main features:
 - deployment of the whole platform with a single pipeline
 - reproducible deployments of the entire platform, by specifying a version for each module
-- cohexistence of different versions of the platform, by deploying each platform in an indipendent kubernetes namespace
+- coexistence of different versions of the platform, by deploying each platform in an independent kubernetes namespace
 - automatic creation of the databases schemas required by the modules
 
 
@@ -20,11 +20,11 @@ The pipeline leverages on different hostnames, based on required visibility:
 
 The definition of `internal` and `external` hostnames can be found in each environment configuration file.\
 Each service can be defined to use the `internal` or the `external` hostname.
-> Note: Deveopment environment forces all hostnames to `internal`
+> Note: Development environment forces all hostnames to `internal`
 
-Services in each namespace can be reached at the hostname 
+Services in each namespace can be reached at the hostname
 ```
-https://<namespace>.<interanl/external>
+https://<namespace>.<internal/external>
 ```
 
 
