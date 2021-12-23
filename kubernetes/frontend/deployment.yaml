@@ -31,7 +31,7 @@ spec:
               subPath: default.conf
               readOnly: true
             - name: env-js
-              mountPath: /usr/share/nginx/html/ui/public/env.js
+              mountPath: /usr/share/nginx/html/ui/env.js
               subPath: env.js
               readOnly: true
       volumes:
