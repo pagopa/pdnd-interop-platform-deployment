@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./versions.sh
+. ./versions.sh
 
 # Functions
 # TODO Take version from image label
