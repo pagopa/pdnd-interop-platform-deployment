@@ -20,7 +20,7 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           image: {{REPOSITORY}}/services/{{SERVICE_NAME}}:{{FRONTEND_IMAGE_VERSION}}
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 80
