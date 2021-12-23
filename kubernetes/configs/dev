@@ -52,6 +52,8 @@ PARTY_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-party-management"
 CATALOG_PROCESS_SERVICE_NAME="pdnd-interop-uservice-catalog-process"
 USER_REGISTRY_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-user-registry-management"
 
+FRONTEND_SERVICE_NAME="pdnd-interop-frontend"
+
 # Party Management
 PARTY_MANAGEMENT_STORAGE_TYPE="S3"
 PARTY_MANAGEMENT_STORAGE_CONTAINER="interop-pdnd-dev-support"
