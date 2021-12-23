@@ -21,6 +21,8 @@ PARTY_PROCESS_REVIEWS_IMAGE_VERSION="v0.1.1-snapshot"
 PARTY_REGISTRY_PROXY_IMAGE_VERSION="v0.1.1-snapshot"
 USER_REGISTRY_MANAGEMENT_IMAGE_VERSION="v0.1.1-snapshot"
 
+FRONTEND_IMAGE_VERSION="v0.1.1-snapshot"
+
 SPID_LOGIN_MODULE_IMAGE_VERSION="2.1.2"
 
 # Common
@@ -49,6 +51,8 @@ CATALOG_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-catalog-management"
 PARTY_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-party-management"
 CATALOG_PROCESS_SERVICE_NAME="pdnd-interop-uservice-catalog-process"
 USER_REGISTRY_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-user-registry-management"
+
+FRONTEND_SERVICE_NAME="pdnd-interop-frontend"
 
 # Party Management
 PARTY_MANAGEMENT_STORAGE_TYPE="S3"
