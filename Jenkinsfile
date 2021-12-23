@@ -250,7 +250,7 @@ String getConfigFileFromStage(String stage) {
    case 'DEV': 
      return './kubernetes/configs/dev'
    case 'TEST': 
-     return './kubernetes/configs/test'
+     return './kubernetes/configs/testfolder/test.sh'
    case 'PROD': 
      return './kubernetes/configs/prod'
    default:
