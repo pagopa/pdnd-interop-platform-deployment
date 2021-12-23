@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. $(pwd)/versions.sh
+. $(pwd)/kubernetes/configs/testfolder/versions.sh
 
 # Functions
 # TODO Take version from image label
