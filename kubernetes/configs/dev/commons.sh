@@ -17,3 +17,5 @@ CATALOG_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-catalog-management"
 PARTY_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-party-management"
 CATALOG_PROCESS_SERVICE_NAME="pdnd-interop-uservice-catalog-process"
 USER_REGISTRY_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-user-registry-management"
+
+FRONTEND_SERVICE_NAME="pdnd-interop-frontend"

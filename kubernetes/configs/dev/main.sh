@@ -8,7 +8,7 @@
 . $(pwd)/kubernetes/configs/dev/party_management.sh
 . $(pwd)/kubernetes/configs/dev/catalog_process.sh
 
-# Common
+# Calculated
 NAMESPACE=$NAMESPACE
 INTERNAL_APPLICATION_HOST=$NAMESPACE.$INTERNAL_INGRESS_HOST
 EXTERNAL_APPLICATION_HOST=$NAMESPACE.$EXTERNAL_INGRESS_HOST
