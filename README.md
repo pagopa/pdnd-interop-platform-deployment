@@ -69,3 +69,13 @@ This service must be reachable from the Frontend client.
 ### Redis
 Required by the login module.\
 This service is not reachable outside the namespace.
+
+
+## Open Points
+Resources created must be deleted manually.\
+Resources:
+- namespaces
+- DNS entries
+- databases
+
+Deletions could be performed automatically if we intercept branch deletion (e.g. GitHub hooks)
