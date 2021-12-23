@@ -30,6 +30,10 @@ spec:
               mountPath: /etc/nginx/conf.d/default.conf
               subPath: default.conf
               readOnly: true
+            - name: env-js
+              mountPath: /usr/share/nginx/html/ui/public/env.js
+              subPath: env.js
+              readOnly: true
       volumes:
         - name: default-conf
           configMap:
@@ -38,3 +42,10 @@ spec:
             items:
               - key: default.conf
                 path: default.conf
+        - name: env-js
+          configMap:
+            defaultMode: 420
+            name: {{SERVICE_NAME}}
+            items:
+              - key: env.js
+                path: env.js

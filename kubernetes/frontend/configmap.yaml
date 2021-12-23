@@ -13,8 +13,7 @@ data:
         location /ui {
             root   /usr/share/nginx/html;
             index  index.html;
-            # try_files $uri $uri/ /ui/index.html;
-            try_files $uri $uri/ =404;
+            try_files $uri $uri/ /ui/index.html;
         }
 
         error_page   500 502 503 504  /50x.html;
@@ -22,3 +21,9 @@ data:
             root   /usr/share/nginx/html;
         }
     }
+  env.js: |-
+    <script>
+      window.pagopa_env = {
+        API_HOST: "{{EXTERNAL_APPLICATION_HOST}}"
+      }
+    </script>
