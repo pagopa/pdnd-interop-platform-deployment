@@ -80,6 +80,17 @@ pipeline {
                 )
               }
             }
+            stage('Attribute Registry Management') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/attribute-registry-management', 
+                  getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME"),
+                  getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION"),
+                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
+                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+                )
+              }
+            }
             stage('Catalog Process') {
               steps {
                 applyKustomizeToDir(
