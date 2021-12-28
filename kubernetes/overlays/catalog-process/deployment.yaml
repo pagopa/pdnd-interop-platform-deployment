@@ -8,7 +8,6 @@ spec:
     spec:
       containers:
         - name: {{SERVICE_NAME}}
-          image: {{REPOSITORY}}/services/{{SERVICE_NAME}}:{{CATALOG_PROCESS_IMAGE_VERSION}}
           env:
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
