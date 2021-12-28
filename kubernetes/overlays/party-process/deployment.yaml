@@ -1,0 +1,131 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          env:
+            - name: MAIL_TEMPLATE_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: MAIL_TEMPLATE_PATH
+            - name: MAIL_ONBOARDING_CONFIRMATION_LINK
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: MAIL_ONBOARDING_CONFIRMATION_LINK
+            - name: MAIL_ONBOARDING_REJECTION_LINK
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: MAIL_ONBOARDING_REJECTION_LINK
+            - name: MAIL_SENDER_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: MAIL_SENDER_ADDRESS
+            - name: SMTP_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SMTP_HOST
+            - name: SMTP_SSL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SMTP_SSL
+            - name: SMTP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SMTP_PORT
+            - name : EU_LIST_OF_TRUSTED_LISTS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: EU_LIST_OF_TRUSTED_LISTS_URL
+            - name : EU_OFFICIAL_JOURNAL_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: EU_OFFICIAL_JOURNAL_URL
+            - name: VAULT_ADDR
+              valueFrom:
+                secretKeyRef:
+                  name: vault
+                  key: VAULT_ADDR
+            - name: VAULT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: vault
+                  key: VAULT_TOKEN
+            - name: SMTP_USR
+              valueFrom:
+                secretKeyRef:
+                  name: smtp
+                  key: SMTP_USR
+            - name: SMTP_PSW
+              valueFrom:
+                secretKeyRef:
+                  name: smtp
+                  key: SMTP_PSW
+            - name: USER_REGISTRY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: user-registry-api-key
+                  key: USER_REGISTRY_API_KEY
+            - name: STORAGE_TYPE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: STORAGE_TYPE
+            - name: STORAGE_CONTAINER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: STORAGE_CONTAINER
+            - name: STORAGE_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: STORAGE_ENDPOINT
+            - name: STORAGE_CREDENTIAL_ID
+              valueFrom:
+                secretKeyRef:
+                  name: storage
+                  key: STORAGE_USR
+            - name: STORAGE_CREDENTIAL_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: storage
+                  key: STORAGE_PSW
+            - name: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
+            - name: PARTY_MANAGEMENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PARTY_MANAGEMENT_URL
+            - name: PARTY_PROXY_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PARTY_PROXY_REGISTRY_URL
+            - name: USER_REGISTRY_MANAGEMENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: USER_REGISTRY_MANAGEMENT_URL
+            - name: WELL_KNOWN_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: WELL_KNOWN_URL
