@@ -8,7 +8,6 @@ spec:
     spec:
       containers:
         - name: {{SERVICE_NAME}}
-          image: {{REPOSITORY}}/services/{{SERVICE_NAME}}:{{PARTY_MANAGEMENT_IMAGE_VERSION}}
           env:
             - name: POSTGRES_HOST
               valueFrom:

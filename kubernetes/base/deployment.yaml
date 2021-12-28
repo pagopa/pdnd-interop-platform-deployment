@@ -20,6 +20,7 @@ spec:
         - name: regcred
       containers:
         - name: {{SERVICE_NAME}}
+          image: {{REPOSITORY}}/services/{{SERVICE_NAME}}:{{IMAGE_VERSION}}
           command: ["bin/{{SERVICE_NAME}}"]
           args: ["-Dconfig.override_with_env_vars=true"]
           imagePullPolicy: Always
