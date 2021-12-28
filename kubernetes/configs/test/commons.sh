@@ -16,6 +16,7 @@ REPLICAS=1
 WELL_KNOWN_URL="https://pdnd-interop-test-public.s3.eu-central-1.amazonaws.com/.well-known/jwks.json"
 
 AGREEMENT_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-agreement-management"
+AGREEMENT_PROCESS_SERVICE_NAME="pdnd-interop-uservice-agreement-process"
 ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-attribute-registry-management"
 CATALOG_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-catalog-management"
 PARTY_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-party-management"
