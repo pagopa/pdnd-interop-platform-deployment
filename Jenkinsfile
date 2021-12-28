@@ -91,6 +91,17 @@ pipeline {
                 )
               }
             }
+            stage('Authorization Management') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/authorization-management', 
+                  getVariableFromConf("AUTHORIZATION_MANAGEMENT_SERVICE_NAME"),
+                  getVariableFromConf("AUTHORIZATION_MANAGEMENT_IMAGE_VERSION"),
+                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
+                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+                )
+              }
+            }
             stage('Catalog Process') {
               steps {
                 applyKustomizeToDir(
