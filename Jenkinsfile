@@ -90,6 +90,12 @@ pipeline {
             }
             
             stage('Spid') {
+              when { 
+                anyOf {
+                  environment name: 'STAGE', value: 'DEV'
+                  environment name: 'STAGE', value: 'TEST' 
+                }
+              }
               environment {
                 SPID_LOGIN_SAML_CERT = credentials('spid-login-saml-cert')
                 SPID_LOGIN_SAML_KEY = credentials('spid-login-saml-key')
@@ -158,7 +164,7 @@ void applyKubeFile(String fileName, String serviceName = null) {
   }
 }
 
-// dirPath starting from kubernetes folder (e.g. kubernetes/overlays/party-management)
+// dirPath starting from kubernetes folder (e.g. overlays/party-management)
 void applyKustomizeToDir(String dirPath, String serviceName, String hostname, String ingressClass) {
   container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
     withKubeConfig([credentialsId: 'kube-config']) {
