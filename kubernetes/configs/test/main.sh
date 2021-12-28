@@ -8,6 +8,7 @@
 . $(pwd)/kubernetes/configs/test/party_management.sh
 . $(pwd)/kubernetes/configs/test/catalog_management.sh
 . $(pwd)/kubernetes/configs/test/catalog_process.sh
+. $(pwd)/kubernetes/configs/test/party_registry_proxy.sh
 
 # Calculated
 NAMESPACE=$NAMESPACE

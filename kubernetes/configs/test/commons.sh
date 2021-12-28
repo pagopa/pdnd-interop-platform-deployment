@@ -22,6 +22,7 @@ AUTHORIZATION_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-key-management"
 CATALOG_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-catalog-management"
 PARTY_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-party-management"
 PARTY_MOCK_REGISTRY_SERVICE_NAME="pdnd-interop-uservice-party-mock-registry"
+PARTY_REGISTRY_PROXY_SERVICE_NAME="pdnd-interop-uservice-party-registry-proxy"
 CATALOG_PROCESS_SERVICE_NAME="pdnd-interop-uservice-catalog-process"
 USER_REGISTRY_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-user-registry-management"
 

@@ -9,6 +9,8 @@ pipeline {
     AWS_SECRET_ACCESS = credentials('aws-credentials')
     POSTGRES_CREDENTIALS = credentials('postgres-db')
     //
+    VAULT_TOKEN = credentials('vault-token')
+    VAULT_ADDR = credentials('vault-addr')
     NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH)
     CONFIG_FILE = getConfigFileFromStage(STAGE)
   }
@@ -141,6 +143,17 @@ pipeline {
                   'overlays/party-mock-registry', 
                   getVariableFromConf("PARTY_MOCK_REGISTRY_SERVICE_NAME"), 
                   getVariableFromConf("PARTY_MOCK_REGISTRY_IMAGE_VERSION"),
+                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
+                )
+              }
+            }
+            stage('Party Registry Proxy') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/party-registry-proxy', 
+                  getVariableFromConf("PARTY_REGISTRY_PROXY_SERVICE_NAME"), 
+                  getVariableFromConf("PARTY_REGISTRY_PROXY_IMAGE_VERSION"),
                   getVariableFromConf("INTERNAL_APPLICATION_HOST"),
                   getVariableFromConf("INTERNAL_INGRESS_CLASS")
                 )
@@ -364,6 +377,7 @@ void loadSecrets() {
       loadCredentials('storage', 'STORAGE_USR', 'AWS_SECRET_ACCESS_USR', 'STORAGE_PSW', 'AWS_SECRET_ACCESS_PSW')
       loadCredentials('aws', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_USR', 'AWS_SECRET_ACCESS_KEY', 'AWS_SECRET_ACCESS_PSW')
       loadCredentials('postgres', 'POSTGRES_USR', 'POSTGRES_CREDENTIALS_USR', 'POSTGRES_PSW', 'POSTGRES_CREDENTIALS_PSW')
+      loadCredentials('vault', 'VAULT_ADDR', 'VAULT_ADDR', 'VAULT_TOKEN', 'VAULT_TOKEN')
     }
   }
 }

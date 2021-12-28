@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          env:
+            - name: VAULT_ADDR
+              valueFrom:
+                secretKeyRef:
+                  name: vault
+                  key: VAULT_ADDR
+            - name: VAULT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: vault
+                  key: VAULT_TOKEN
+            - name: PARTY_REGISTRY_CATEGORIES_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PARTY_REGISTRY_CATEGORIES_URL
+            - name: PARTY_REGISTRY_INSTITUTIONS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PARTY_REGISTRY_INSTITUTIONS_URL
+          volumeMounts:
+            - name: categories-index-volume
+              mountPath: /opt/docker/index/categories
+            - name: institutions-index-volume
+              mountPath: /opt/docker/index/institutions
+      volumes:
+        - name: categories-index-volume
+          emptyDir: {}
+        - name: institutions-index-volume
+          emptyDir: {}
+      
