@@ -58,6 +58,17 @@ pipeline {
                   applyKubeFile('frontend/service.yaml', getVariableFromConf("FRONTEND_SERVICE_NAME"))
               }
             }
+            stage('Agreement Management') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/agreement-management', 
+                  getVariableFromConf("AGREEMENT_MANAGEMENT_SERVICE_NAME"), 
+                  getVariableFromConf("AGREEMENT_MANAGEMENT_IMAGE_VERSION"),
+                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
+                )
+              }
+            }
             stage('Catalog Process') {
               steps {
                 applyKustomizeToDir(
