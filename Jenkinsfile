@@ -102,6 +102,17 @@ pipeline {
                 )
               }
             }
+            stage('Catalog Management') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/catalog-management', 
+                  getVariableFromConf("CATALOG_MANAGEMENT_SERVICE_NAME"),
+                  getVariableFromConf("CATALOG_MANAGEMENT_IMAGE_VERSION"),
+                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
+                )
+              }
+            }
             stage('Catalog Process') {
               steps {
                 applyKustomizeToDir(

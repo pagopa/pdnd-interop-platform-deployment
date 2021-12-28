@@ -6,6 +6,7 @@
 . $(pwd)/kubernetes/configs/dev/commons.sh
 . $(pwd)/kubernetes/configs/dev/spid.sh
 . $(pwd)/kubernetes/configs/dev/party_management.sh
+. $(pwd)/kubernetes/configs/dev/catalog_management.sh
 . $(pwd)/kubernetes/configs/dev/catalog_process.sh
 
 # Calculated
