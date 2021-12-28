@@ -181,7 +181,7 @@ void applyKustomizeToDir(String dirPath, String serviceName, String imageVersion
       echo "Base files compiled"
 
       echo "Compiling common files"
-      compileDir("kubernetes/commons/database", imageVersion, serviceName, hostname, ingressClass)
+      compileDir("kubernetes/commons/database", serviceName, imageVersion, hostname, ingressClass)
       echo "Common files compiled"
 
       echo "Compiling directory ${dirPath}"
