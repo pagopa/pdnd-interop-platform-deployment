@@ -86,8 +86,19 @@ pipeline {
                   'overlays/attribute-registry-management', 
                   getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME"),
                   getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION"),
-                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
+                )
+              }
+            }
+            stage('Authorization Management') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/authorization-management', 
+                  getVariableFromConf("AUTHORIZATION_MANAGEMENT_SERVICE_NAME"),
+                  getVariableFromConf("AUTHORIZATION_MANAGEMENT_IMAGE_VERSION"),
+                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
                 )
               }
             }
