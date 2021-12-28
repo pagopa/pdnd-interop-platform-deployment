@@ -58,14 +58,14 @@ pipeline {
                   applyKubeFile('frontend/service.yaml', getVariableFromConf("FRONTEND_SERVICE_NAME"))
               }
             }
-            stage('User Registry Management') {
+            stage('Catalog Process') {
               steps {
-                  applyKustomizeToDir(
-                    'overlays/user-registry-management', 
-                    getVariableFromConf("USER_REGISTRY_MANAGEMENT_SERVICE_NAME"), 
-                    getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-                    getVariableFromConf("INTERNAL_INGRESS_CLASS")
-                  )
+                applyKustomizeToDir(
+                  'overlays/catalog-process', 
+                  getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"), 
+                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
+                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+                )
               }
             }
             stage('Party Management') {
@@ -78,14 +78,14 @@ pipeline {
                 )
               }
             }
-            stage('Catalog Process') {
+            stage('User Registry Management') {
               steps {
-                applyKustomizeToDir(
-                  'overlays/catalog-process', 
-                  getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"), 
-                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
-                )
+                  applyKustomizeToDir(
+                    'overlays/user-registry-management', 
+                    getVariableFromConf("USER_REGISTRY_MANAGEMENT_SERVICE_NAME"), 
+                    getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+                    getVariableFromConf("INTERNAL_INGRESS_CLASS")
+                  )
               }
             }
             
