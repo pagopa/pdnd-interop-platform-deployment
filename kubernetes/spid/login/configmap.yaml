@@ -16,7 +16,7 @@ data:
 
   ENDPOINT_ACS: "/acs"
   ENDPOINT_ERROR: "/error"
-  ENDPOINT_SUCCESS: "/success"
+  ENDPOINT_SUCCESS: "/ui"
   ENDPOINT_LOGIN: "/login"
   ENDPOINT_METADATA: "/metadata"
   ENDPOINT_LOGOUT: "/logout"
