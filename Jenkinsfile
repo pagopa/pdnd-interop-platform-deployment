@@ -220,6 +220,8 @@ pipeline {
                     applyKubeFile('spid/redis/configmap.yaml', "redis")
                     applyKubeFile('spid/redis/deployment.yaml', "redis")
                     applyKubeFile('spid/redis/service.yaml', "redis")
+
+                    waitForServiceReady("redis")
                   }
                 }
 
@@ -229,6 +231,8 @@ pipeline {
                     applyKubeFile('spid/login/configmap.yaml', "hub-spid-login-ms")
                     applyKubeFile('spid/login/deployment.yaml', "hub-spid-login-ms")
                     applyKubeFile('spid/login/service.yaml', "hub-spid-login-ms")
+
+                    waitForServiceReady("hub-spid-login-ms")
                   }
                 }
 
@@ -238,6 +242,8 @@ pipeline {
                     applyKubeFile('spid/idp/configmap.yaml', "spid-testenv2")
                     applyKubeFile('spid/idp/deployment.yaml', "spid-testenv2")
                     applyKubeFile('spid/idp/service.yaml', "spid-testenv2")
+                    
+                    waitForServiceReady("spid-testenv2")
                   }
                 }
               }
