@@ -341,7 +341,7 @@ void waitForServiceReady(String serviceName) {
       '''
 
       // Wait for pod readiness
-      sh "kubectl wait --for condition=Ready pod -l app=${serviceName} --namespace=\$NAMESPACE --timeout=60s"
+      sh "kubectl wait --for condition=Ready pod -l app=${serviceName} --namespace=\$NAMESPACE --timeout=90s"
 
       echo "Apply of ${serviceName} completed"
     }
