@@ -104,7 +104,7 @@ spec:
                 secretKeyRef:
                   name: storage
                   key: STORAGE_PSW
-            - name: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
+            - name: ATTRIBUTE_REGISTRY_URL
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
