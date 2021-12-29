@@ -242,7 +242,7 @@ pipeline {
                     applyKubeFile('spid/idp/configmap.yaml', "spid-testenv2")
                     applyKubeFile('spid/idp/deployment.yaml', "spid-testenv2")
                     applyKubeFile('spid/idp/service.yaml', "spid-testenv2")
-                    
+
                     waitForServiceReady("spid-testenv2")
                   }
                 }
@@ -308,40 +308,44 @@ void applyKustomizeToDir(String dirPath, String serviceName, String imageVersion
       sh "kubectl apply -f ${serviceName}/full.${serviceName}.yaml"
       echo "Files for ${serviceName} applied"
 
-      waitForServiceReady(serviceName)
-
       echo "Removing folder"
       sh "rm -rf ${serviceName}"
       echo "Folder removed"
     }
   }
+
+  waitForServiceReady(serviceName)
+
 }
 
 void waitForServiceReady(String serviceName) {
+  container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
+    withKubeConfig([credentialsId: 'kube-config']) {
 
-  echo "Waiting for completion of ${serviceName}..."
-  // TODO Pod waiting
-  // Not ideal, but the wait command fails if the resource has not been created yet
-  // See https://github.com/kubernetes/kubernetes/issues/83242
+      echo "Waiting for completion of ${serviceName}..."
+      // TODO Pod waiting
+      // Not ideal, but the wait command fails if the resource has not been created yet
+      // See https://github.com/kubernetes/kubernetes/issues/83242
 
-  // Wait for pod creation
-  sh'''
-    retry=0
-    result=0
-    maxRetries=10
-    while [ "$result" -lt 1 -a "$retry" -lt "$maxRetries" ] ; do
-      echo "Waiting for pod creation of service ${serviceName}..."
-      sleep 3
-      result=$(kubectl --namespace=\$NAMESPACE get pod -l app=''' + serviceName + ' 2>/dev/null  | grep ' + serviceName + ''' | wc -l)
-      retry=$((retry+1))
-    done
-  '''
+      // Wait for pod creation
+      sh'''
+        retry=0
+        result=0
+        maxRetries=10
+        while [ "$result" -lt 1 -a "$retry" -lt "$maxRetries" ] ; do
+          echo "Waiting for pod creation of service ${serviceName}..."
+          sleep 3
+          result=$(kubectl --namespace=\$NAMESPACE get pod -l app=''' + serviceName + ' 2>/dev/null  | grep ' + serviceName + ''' | wc -l)
+          retry=$((retry+1))
+        done
+      '''
 
-  // Wait for pod readiness
-  sh "kubectl wait --for condition=Ready pod -l app=${serviceName} --namespace=\$NAMESPACE --timeout=60s"
+      // Wait for pod readiness
+      sh "kubectl wait --for condition=Ready pod -l app=${serviceName} --namespace=\$NAMESPACE --timeout=60s"
 
-  echo "Apply of ${serviceName} completed"
-
+      echo "Apply of ${serviceName} completed"
+    }
+  }
 }
 
 /*
