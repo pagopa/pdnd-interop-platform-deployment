@@ -36,7 +36,6 @@ data:
 
   ENABLE_USER_REGISTRY: "true"
   USER_REGISTRY_URL: "{{USER_REGISTRY_MANAGEMENT_URL}}"
-  USER_REGISTRY_API_KEY: "afakesecretapimkey"
 
   ENABLE_ADE_AA: "false"
   ADE_AA_API_ENDPOINT: "http://ade-aa-ms-mock:3000" # ADE Mock to authorize user and enrich jwt

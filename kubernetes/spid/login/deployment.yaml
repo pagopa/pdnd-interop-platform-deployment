@@ -45,3 +45,8 @@ spec:
                 secretKeyRef:
                   name: spid-login
                   key: JWT_TOKEN_PRIVATE_KEY
+            - name: USER_REGISTRY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: user-registry-api-key
+                  key: USER_REGISTRY_API_KEY
