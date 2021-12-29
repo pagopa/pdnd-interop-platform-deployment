@@ -150,6 +150,17 @@ pipeline {
                 )
               }
             }
+            stage('Party Process') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/party-process', 
+                  getVariableFromConf("PARTY_PROCESS_SERVICE_NAME"), 
+                  getVariableFromConf("PARTY_PROCESS_IMAGE_VERSION"),
+                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
+                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+                )
+              }
+            }
             stage('Party Registry Proxy') {
               steps {
                 applyKustomizeToDir(
