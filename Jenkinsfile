@@ -11,6 +11,8 @@ pipeline {
     //
     VAULT_TOKEN = credentials('vault-token')
     VAULT_ADDR = credentials('vault-addr')
+    SMTP_CREDENTIALS = credentials('smtp')
+    USER_REGISTRY_API_KEY = credentials('user-registry-api-key')
     NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH)
     CONFIG_FILE = getConfigFileFromStage(STAGE)
   }
@@ -145,6 +147,17 @@ pipeline {
                   getVariableFromConf("PARTY_MOCK_REGISTRY_IMAGE_VERSION"),
                   getVariableFromConf("INTERNAL_APPLICATION_HOST"),
                   getVariableFromConf("INTERNAL_INGRESS_CLASS")
+                )
+              }
+            }
+            stage('Party Process') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/party-process', 
+                  getVariableFromConf("PARTY_PROCESS_SERVICE_NAME"), 
+                  getVariableFromConf("PARTY_PROCESS_IMAGE_VERSION"),
+                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
+                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
                 )
               }
             }
@@ -365,6 +378,17 @@ void loadCredentials(String secretName, String userSecret, String userVar, Strin
   '''
 }
 
+void loadSecret(String secretName, String key, String value) {
+  sh'''
+    # Allow to update secret if already exists
+    kubectl -n $NAMESPACE create secret generic ''' + secretName + ''' \
+      --save-config \
+      --dry-run=client \
+      --from-literal=''' + key + '=$' + value + ''' \
+      -o yaml | kubectl apply -f -
+  '''
+}
+
 void loadSecrets() {
   container('sbt-container') { // This is required only for kubectl command (sbt is not needed)
     withKubeConfig([credentialsId: 'kube-config']) {
@@ -374,10 +398,12 @@ void loadSecrets() {
         kubectl -n default get secret regcred -o yaml | sed s/"namespace: default"/"namespace: $NAMESPACE"/ |  kubectl apply -n $NAMESPACE -f -
       '''
 
+      loadSecret('user-registry-api-key', 'USER_REGISTRY_API_KEY', 'USER_REGISTRY_API_KEY')
       loadCredentials('storage', 'STORAGE_USR', 'AWS_SECRET_ACCESS_USR', 'STORAGE_PSW', 'AWS_SECRET_ACCESS_PSW')
       loadCredentials('aws', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_USR', 'AWS_SECRET_ACCESS_KEY', 'AWS_SECRET_ACCESS_PSW')
       loadCredentials('postgres', 'POSTGRES_USR', 'POSTGRES_CREDENTIALS_USR', 'POSTGRES_PSW', 'POSTGRES_CREDENTIALS_PSW')
       loadCredentials('vault', 'VAULT_ADDR', 'VAULT_ADDR', 'VAULT_TOKEN', 'VAULT_TOKEN')
+      loadCredentials('smtp', 'SMTP_USR', 'SMTP_CREDENTIALS_USR', 'SMTP_PSW', 'SMTP_CREDENTIALS_PSW')
     }
   }
 }
