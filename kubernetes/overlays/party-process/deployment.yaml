@@ -118,7 +118,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: PARTY_PROXY_REGISTRY_URL
+                  key: PARTY_REGISTRY_PROXY_URL
             - name: USER_REGISTRY_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
