@@ -484,16 +484,13 @@ void prepareDbMigrations() {
 
 String getDockerImageDigest(String serviceName, String imageVersion) {
   echo "Retrieving digest for service ${serviceName} and version ${imageVersion}..."
-  import groovy.json.JsonSlurper
-  def jsonSlurper = new JsonSlurper()
 
-  def response = sh(
+  def sha256 = sh(
     returnStdout: true, 
-    script: "curl -L -u \$DOCKER_REGISTRY_CREDENTIALS_USR:\$DOCKER_REGISTRY_CREDENTIALS_PSW -X GET 'https://\$REGISTRY/nexus/service/rest/v1/search/assets?repository=docker&name=services/${serviceName}&version=${imageVersion}' "
-    )
-
-  def object = jsonSlurper.parseText(response)
-  def sha256 = object.items[0].checksum.sha256
+    script: '''
+      curl -L -u $DOCKER_REGISTRY_CREDENTIALS_USR:$DOCKER_REGISTRY_CREDENTIALS_PSW -X GET \ 
+      'https://$REGISTRY/nexus/service/rest/v1/search/assets?repository=docker&name=services/''' + serviceName + '&version=' + imageVersion + ''' | jq -r '.items[0].checksum.sha256' '''
+    ).trim()
 
   echo "Digest retrieved for service ${serviceName} and version ${imageVersion}: " + sha256
 
