@@ -65,7 +65,7 @@ pipeline {
               steps {
                 applyKubeFile('frontend/ingress.yaml', SERVICE_NAME)
                 applyKubeFile('frontend/configmap.yaml', SERVICE_NAME)
-                applyKubeFile('frontend/deployment.yaml', SERVICE_NAME, IMAGE_VERSION)
+                applyKubeFile('frontend/deployment.yaml', SERVICE_NAME, IMAGE_DIGEST)
                 applyKubeFile('frontend/service.yaml', SERVICE_NAME)
               }
             }
