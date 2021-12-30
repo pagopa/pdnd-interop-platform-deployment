@@ -485,11 +485,13 @@ void prepareDbMigrations() {
 String getDockerImageDigest(String serviceName, String imageVersion) {
   echo "Retrieving digest for service ${serviceName} and version ${imageVersion}..."
 
-  def sha256 = sh(
+  def response = sh(
     returnStdout: true, 
-    script: '''curl -L -u $DOCKER_REGISTRY_CREDENTIALS_USR:$DOCKER_REGISTRY_CREDENTIALS_PSW -X GET 'https://$REGISTRY/nexus/service/rest/v1/search/assets?repository=docker&name=services/''' + serviceName + '&version=' + imageVersion + '''' | jq -r '.items[0].checksum.sha256' '''
+    script: '''curl -L -u $DOCKER_REGISTRY_CREDENTIALS_USR:$DOCKER_REGISTRY_CREDENTIALS_PSW -X GET 'https://$REGISTRY/nexus/service/rest/v1/search/assets?repository=docker&name=services/''' + serviceName + '&version=' + imageVersion + '''' '''
     ).trim()
 
+  def jsonResponse = readJSON text response
+  def sha256 = jsonResponse.items[0].checksum.sha256
   echo "Digest retrieved for service ${serviceName} and version ${imageVersion}: " + sha256
 
   return sha256
