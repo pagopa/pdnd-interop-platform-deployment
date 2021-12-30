@@ -57,10 +57,14 @@ pipeline {
           parallel {
             stage('Front End') {
               steps {
-                  applyKubeFile('frontend/ingress.yaml', getVariableFromConf("FRONTEND_SERVICE_NAME"))
-                  applyKubeFile('frontend/configmap.yaml', getVariableFromConf("FRONTEND_SERVICE_NAME"))
-                  applyKubeFile('frontend/deployment.yaml', getVariableFromConf("FRONTEND_SERVICE_NAME"))
-                  applyKubeFile('frontend/service.yaml', getVariableFromConf("FRONTEND_SERVICE_NAME"))
+                def serviceName = getVariableFromConf("FRONTEND_SERVICE_NAME")
+                def imageVersion = getVariableFromConf("FRONTEND_IMAGE_VERSION")
+                def imageDigest =  getDockerImageDigest(serviceName, imageVersion)
+
+                applyKubeFile('frontend/ingress.yaml', serviceName)
+                applyKubeFile('frontend/configmap.yaml', serviceName)
+                applyKubeFile('frontend/deployment.yaml', serviceName, imageDigest)
+                applyKubeFile('frontend/service.yaml', serviceName)
               }
             }
             stage('Agreement Management') {
@@ -256,14 +260,14 @@ pipeline {
   }
 }
 
-void applyKubeFile(String fileName, String serviceName = null) {
+void applyKubeFile(String fileName, String serviceName = null, String imageDigest = null) {
   container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Apply file ${fileName} on Kubernetes"
 
       echo "Compiling file ${fileName}"
-      sh "SERVICE_NAME=" + serviceName + " ./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
+      sh "SERVICE_NAME=${serviceName} IMAGE_DIGEST=${imageDigest} ./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
       echo "File ${fileName} compiled"
       
       // DEBUG
