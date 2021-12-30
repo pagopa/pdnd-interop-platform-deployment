@@ -56,11 +56,12 @@ pipeline {
         stage('Deploy Services') {
           parallel {
             stage('Front End') {
+              environment {
+                serviceName = getVariableFromConf("FRONTEND_SERVICE_NAME")
+                imageVersion = getVariableFromConf("FRONTEND_IMAGE_VERSION")
+                imageDigest =  getDockerImageDigest(serviceName, imageVersion)
+              }
               steps {
-                def serviceName = getVariableFromConf("FRONTEND_SERVICE_NAME")
-                def imageVersion = getVariableFromConf("FRONTEND_IMAGE_VERSION")
-                def imageDigest =  getDockerImageDigest(serviceName, imageVersion)
-
                 applyKubeFile('frontend/ingress.yaml', serviceName)
                 applyKubeFile('frontend/configmap.yaml', serviceName)
                 applyKubeFile('frontend/deployment.yaml', serviceName, imageDigest)
