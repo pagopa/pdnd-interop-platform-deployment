@@ -57,15 +57,15 @@ pipeline {
           parallel {
             stage('Front End') {
               environment {
-                serviceName = getVariableFromConf("FRONTEND_SERVICE_NAME")
-                imageVersion = getVariableFromConf("FRONTEND_IMAGE_VERSION")
-                imageDigest =  getDockerImageDigest(serviceName, imageVersion)
+                SERVICE_NAME = getVariableFromConf("FRONTEND_SERVICE_NAME")
+                IMAGE_VERSION = getVariableFromConf("FRONTEND_IMAGE_VERSION")
+                IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
               }
               steps {
-                applyKubeFile('frontend/ingress.yaml', serviceName)
-                applyKubeFile('frontend/configmap.yaml', serviceName)
-                applyKubeFile('frontend/deployment.yaml', serviceName, imageDigest)
-                applyKubeFile('frontend/service.yaml', serviceName)
+                applyKubeFile('frontend/ingress.yaml', SERVICE_NAME)
+                applyKubeFile('frontend/configmap.yaml', SERVICE_NAME)
+                applyKubeFile('frontend/deployment.yaml', SERVICE_NAME, IMAGE_VERSION)
+                applyKubeFile('frontend/service.yaml', SERVICE_NAME)
               }
             }
             stage('Agreement Management') {
