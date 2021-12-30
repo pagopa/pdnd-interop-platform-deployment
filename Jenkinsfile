@@ -487,14 +487,14 @@ String getDockerImageDigest(String serviceName, String imageVersion) {
 
   def repository = getVariableFromConf("REPOSITORY")
   def response = sh(
-    returnStdout: true, 
-    script: 'curl -s -L -u $DOCKER_REGISTRY_CREDENTIALS_USR:$DOCKER_REGISTRY_CREDENTIALS_PSW -X GET \'https://' + repository + '/nexus/service/rest/v1/search/assets?repository=docker&name=services/' + serviceName + '&version=' + imageVersion + '\''
+      returnStdout: true, 
+      script: 'curl -s -L -u $DOCKER_REGISTRY_CREDENTIALS_USR:$DOCKER_REGISTRY_CREDENTIALS_PSW -X GET \'https://' + repository + '/nexus/service/rest/v1/search/assets?repository=docker&name=services/' + serviceName + '&version=' + imageVersion + '\''
     ).trim()
 
   // No built in JSON parsers
   def tmp1 = response.substring(response.indexOf('"sha256"') + '"sha256"'.length())
-  def tmp2 = tmp1.substring(response.indexOf('"') + 1)
-  def sha256 = tmp2.substring(0, response.indexOf('"'))
+  def tmp2 = tmp1.substring(tmp1.indexOf('"') + 1)
+  def sha256 = tmp2.substring(0, tmp2.indexOf('"'))
 
   echo "Digest retrieved for service ${serviceName} and version ${imageVersion}: " + sha256
 
