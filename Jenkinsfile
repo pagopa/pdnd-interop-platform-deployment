@@ -30,11 +30,6 @@ pipeline {
           // DELETE ME. Just for testing
           steps {
             sh'env'
-
-            echo getDockerImageDigest(
-              getVariableFromConf("AGREEMENT_MANAGEMENT_SERVICE_NAME"), 
-              getVariableFromConf("AGREEMENT_MANAGEMENT_IMAGE_VERSION")
-            )
           }
         }
         
@@ -289,18 +284,20 @@ void applyKustomizeToDir(String dirPath, String serviceName, String imageVersion
 
       echo "Apply directory ${dirPath} on Kubernetes"
 
+      def serviceImageDigest = getDockerImageDigest(serviceName, imageVersion)
+
       def kubeDirPath = 'kubernetes/' + dirPath
 
       echo "Compiling base files"
-      compileDir("kubernetes/base", serviceName, imageVersion, hostname, ingressClass)
+      compileDir("kubernetes/base", serviceName, imageVersion, hostname, ingressClass, serviceImageDigest)
       echo "Base files compiled"
 
       echo "Compiling common files"
-      compileDir("kubernetes/commons/database", serviceName, imageVersion, hostname, ingressClass)
+      compileDir("kubernetes/commons/database", serviceName, imageVersion, hostname, ingressClass, serviceImageDigest)
       echo "Common files compiled"
 
       echo "Compiling directory ${dirPath}"
-      compileDir(kubeDirPath, serviceName, imageVersion, hostname, ingressClass)
+      compileDir(kubeDirPath, serviceName, imageVersion, hostname, ingressClass, serviceImageDigest)
       echo "Directory ${dirPath} compiled"
       
       echo "Applying Kustomization for ${serviceName}"
@@ -358,14 +355,14 @@ void waitForServiceReady(String serviceName) {
  * Compile each file in the directory replacing placeholders with actual values.
  * Note: kustomization.yaml is skipped because does not have placeholders
  */ 
-void compileDir(String dirPath, String serviceName, String imageVersion, String hostname, String ingressClass) {
+void compileDir(String dirPath, String serviceName, String imageVersion, String hostname, String ingressClass, String serviceImageDigest) {
   sh '''
   for f in ''' + dirPath + '''/*
   do
       if [ ! $(basename $f) = "kustomization.yaml" ]
         then
           mkdir -p ''' + serviceName + '/' + dirPath + '''
-          SERVICE_NAME=''' + serviceName + ' IMAGE_VERSION=' + imageVersion + ' APPLICATION_HOST=' + hostname + ' INGRESS_CLASS=' + ingressClass + ' kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ' + serviceName + '''/$f
+          SERVICE_NAME=''' + serviceName + ' IMAGE_VERSION=' + imageVersion + ' IMAGE_DIGEST=' + serviceImageDigest + ' APPLICATION_HOST=' + hostname + ' INGRESS_CLASS=' + ingressClass + ' kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ' + serviceName + '''/$f
         else
           cp $f ''' + serviceName + '''/$f
       fi
@@ -486,12 +483,14 @@ String getDockerImageDigest(String serviceName, String imageVersion) {
   echo "Retrieving digest for service ${serviceName} and version ${imageVersion}..."
 
   def repository = getVariableFromConf("REPOSITORY")
+  // Nexus REST API
   def response = sh(
       returnStdout: true, 
       script: 'curl -s -L -u $DOCKER_REGISTRY_CREDENTIALS_USR:$DOCKER_REGISTRY_CREDENTIALS_PSW -X GET \'https://' + repository + '/nexus/service/rest/v1/search/assets?repository=docker&name=services/' + serviceName + '&version=' + imageVersion + '\''
     ).trim()
 
-  // No built in JSON parsers
+  // Extract sha256 from response
+  // (no built in JSON parsers)
   def tmp1 = response.substring(response.indexOf('"sha256"') + '"sha256"'.length())
   def tmp2 = tmp1.substring(tmp1.indexOf('"') + 1)
   def sha256 = tmp2.substring(0, tmp2.indexOf('"'))

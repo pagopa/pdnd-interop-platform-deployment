@@ -15,6 +15,8 @@ spec:
       labels:
         app: {{SERVICE_NAME}}
         actorSystemName: {{SERVICE_NAME}}
+      annotations:
+        digest: {{IMAGE_DIGEST}} # Used to force deployment on same image version but different content
     spec:
       imagePullSecrets:
         - name: regcred
