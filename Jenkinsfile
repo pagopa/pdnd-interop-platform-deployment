@@ -488,7 +488,7 @@ String getDockerImageDigest(String serviceName, String imageVersion) {
   def repository = getVariableFromConf("REPOSITORY")
   def response = sh(
     returnStdout: true, 
-    script: 'curl -L -u $DOCKER_REGISTRY_CREDENTIALS_USR:$DOCKER_REGISTRY_CREDENTIALS_PSW -X GET \'https://' + repository + '/nexus/service/rest/v1/search/assets?repository=docker&name=services/' + serviceName + '&version=' + imageVersion + '\''
+    script: 'curl -s -L -u $DOCKER_REGISTRY_CREDENTIALS_USR:$DOCKER_REGISTRY_CREDENTIALS_PSW -X GET \'https://' + repository + '/nexus/service/rest/v1/search/assets?repository=docker&name=services/' + serviceName + '&version=' + imageVersion + '\''
     ).trim()
 
   def jsonResponse = readJSON text response
