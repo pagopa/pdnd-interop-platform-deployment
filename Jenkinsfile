@@ -13,6 +13,7 @@ pipeline {
     VAULT_ADDR = credentials('vault-addr')
     SMTP_CREDENTIALS = credentials('smtp')
     USER_REGISTRY_API_KEY = credentials('user-registry-api-key')
+    DOCKER_REGISTRY_CREDENTIALS = credentials('pdnd-nexus')
     NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH)
     CONFIG_FILE = getConfigFileFromStage(STAGE)
   }
@@ -29,6 +30,11 @@ pipeline {
           // DELETE ME. Just for testing
           steps {
             sh'env'
+
+            echo getDockerImageDigest(
+              getVariableFromConf("AGREEMENT_MANAGEMENT_SERVICE_NAME"), 
+              getVariableFromConf("AGREEMENT_MANAGEMENT_IMAGE_VERSION")
+            )
           }
         }
         
@@ -473,4 +479,22 @@ void prepareDbMigrations() {
       echo 'Migrations configmap created'
     }
   }
+}
+
+
+String getDockerImageDigest(String serviceName, String imageVersion) {
+  echo "Retrieving digest for service ${serviceName} and version ${imageVersion}..."
+  def jsonSlurper = new JsonSlurper()
+
+  def response = sh(
+    returnStdout: true, 
+    script: "curl -L -u \$DOCKER_REGISTRY_CREDENTIALS_USR:\$DOCKER_REGISTRY_CREDENTIALS_PSW -X GET 'https://\$REGISTRY/nexus/service/rest/v1/search/assets?repository=docker&name=services/${serviceName}&version=${imageVersion}' "
+    )
+
+  def object = jsonSlurper.parseText(response)
+  def sha256 = object.items[0].checksum.sha256
+
+  echo "Digest retrieved for service ${serviceName} and version ${imageVersion}: " + sha256
+
+  return sha256
 }
