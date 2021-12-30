@@ -488,7 +488,7 @@ String getDockerImageDigest(String serviceName, String imageVersion) {
   def sha256 = sh(
     returnStdout: true, 
     script: '''
-      curl -L -u $DOCKER_REGISTRY_CREDENTIALS_USR:$DOCKER_REGISTRY_CREDENTIALS_PSW -X GET \ 
+      curl -L -u $DOCKER_REGISTRY_CREDENTIALS_USR:$DOCKER_REGISTRY_CREDENTIALS_PSW -X GET \\ 
       'https://$REGISTRY/nexus/service/rest/v1/search/assets?repository=docker&name=services/''' + serviceName + '&version=' + imageVersion + ''' | jq -r '.items[0].checksum.sha256' '''
     ).trim()
 
