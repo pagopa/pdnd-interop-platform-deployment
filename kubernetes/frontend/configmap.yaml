@@ -22,8 +22,6 @@ data:
         }
     }
   env.js: |-
-    <script>
-      window.pagopa_env = {
-        API_HOST: "{{EXTERNAL_APPLICATION_HOST}}"
-      }
-    </script>
+    window.pagopa_env = {
+      API_HOST: "{{EXTERNAL_APPLICATION_HOST}}"
+    }
