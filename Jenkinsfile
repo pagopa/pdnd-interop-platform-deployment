@@ -13,7 +13,9 @@ pipeline {
     VAULT_ADDR = credentials('vault-addr')
     SMTP_CREDENTIALS = credentials('smtp')
     USER_REGISTRY_API_KEY = credentials('user-registry-api-key')
+    DOCKER_REGISTRY_CREDENTIALS = credentials('pdnd-nexus')
     NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH)
+    REPOSITORY = getVariableFromConf("REPOSITORY")
     CONFIG_FILE = getConfigFileFromStage(STAGE)
   }
 
@@ -55,11 +57,16 @@ pipeline {
         stage('Deploy Services') {
           parallel {
             stage('Front End') {
+              environment {
+                SERVICE_NAME = getVariableFromConf("FRONTEND_SERVICE_NAME")
+                IMAGE_VERSION = getVariableFromConf("FRONTEND_IMAGE_VERSION")
+                IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
+              }
               steps {
-                  applyKubeFile('frontend/ingress.yaml', getVariableFromConf("FRONTEND_SERVICE_NAME"))
-                  applyKubeFile('frontend/configmap.yaml', getVariableFromConf("FRONTEND_SERVICE_NAME"))
-                  applyKubeFile('frontend/deployment.yaml', getVariableFromConf("FRONTEND_SERVICE_NAME"))
-                  applyKubeFile('frontend/service.yaml', getVariableFromConf("FRONTEND_SERVICE_NAME"))
+                applyKubeFile('frontend/ingress.yaml', SERVICE_NAME)
+                applyKubeFile('frontend/configmap.yaml', SERVICE_NAME)
+                applyKubeFile('frontend/deployment.yaml', SERVICE_NAME, IMAGE_DIGEST)
+                applyKubeFile('frontend/service.yaml', SERVICE_NAME)
               }
             }
             stage('Agreement Management') {
@@ -255,14 +262,14 @@ pipeline {
   }
 }
 
-void applyKubeFile(String fileName, String serviceName = null) {
+void applyKubeFile(String fileName, String serviceName = null, String imageDigest = null) {
   container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Apply file ${fileName} on Kubernetes"
 
       echo "Compiling file ${fileName}"
-      sh "SERVICE_NAME=" + serviceName + " ./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
+      sh "SERVICE_NAME=${serviceName} IMAGE_DIGEST=${imageDigest} ./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
       echo "File ${fileName} compiled"
       
       // DEBUG
@@ -283,18 +290,20 @@ void applyKustomizeToDir(String dirPath, String serviceName, String imageVersion
 
       echo "Apply directory ${dirPath} on Kubernetes"
 
+      def serviceImageDigest = getDockerImageDigest(serviceName, imageVersion)
+
       def kubeDirPath = 'kubernetes/' + dirPath
 
       echo "Compiling base files"
-      compileDir("kubernetes/base", serviceName, imageVersion, hostname, ingressClass)
+      compileDir("kubernetes/base", serviceName, imageVersion, hostname, ingressClass, serviceImageDigest)
       echo "Base files compiled"
 
       echo "Compiling common files"
-      compileDir("kubernetes/commons/database", serviceName, imageVersion, hostname, ingressClass)
+      compileDir("kubernetes/commons/database", serviceName, imageVersion, hostname, ingressClass, serviceImageDigest)
       echo "Common files compiled"
 
       echo "Compiling directory ${dirPath}"
-      compileDir(kubeDirPath, serviceName, imageVersion, hostname, ingressClass)
+      compileDir(kubeDirPath, serviceName, imageVersion, hostname, ingressClass, serviceImageDigest)
       echo "Directory ${dirPath} compiled"
       
       echo "Applying Kustomization for ${serviceName}"
@@ -352,14 +361,14 @@ void waitForServiceReady(String serviceName) {
  * Compile each file in the directory replacing placeholders with actual values.
  * Note: kustomization.yaml is skipped because does not have placeholders
  */ 
-void compileDir(String dirPath, String serviceName, String imageVersion, String hostname, String ingressClass) {
+void compileDir(String dirPath, String serviceName, String imageVersion, String hostname, String ingressClass, String serviceImageDigest) {
   sh '''
   for f in ''' + dirPath + '''/*
   do
       if [ ! $(basename $f) = "kustomization.yaml" ]
         then
           mkdir -p ''' + serviceName + '/' + dirPath + '''
-          SERVICE_NAME=''' + serviceName + ' IMAGE_VERSION=' + imageVersion + ' APPLICATION_HOST=' + hostname + ' INGRESS_CLASS=' + ingressClass + ' kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ' + serviceName + '''/$f
+          SERVICE_NAME=''' + serviceName + ' IMAGE_VERSION=' + imageVersion + ' IMAGE_DIGEST=' + serviceImageDigest + ' APPLICATION_HOST=' + hostname + ' INGRESS_CLASS=' + ingressClass + ' kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ' + serviceName + '''/$f
         else
           cp $f ''' + serviceName + '''/$f
       fi
@@ -473,4 +482,27 @@ void prepareDbMigrations() {
       echo 'Migrations configmap created'
     }
   }
+}
+
+
+String getDockerImageDigest(String serviceName, String imageVersion) {
+  echo "Retrieving digest for service ${serviceName} and version ${imageVersion}..."
+    container('sbt-container') { // This is required only for docker command (sbt is not needed)
+
+      def response = sh(
+          returnStdout: true, 
+          script: '''
+          docker login $REPOSITORY -u $DOCKER_REGISTRY_CREDENTIALS_USR -p $DOCKER_REGISTRY_CREDENTIALS_PSW 2>/dev/null 1>&2
+          docker manifest inspect $REPOSITORY/services/''' + serviceName + ':' + imageVersion
+        ).trim()
+
+      def jsonResponse = readJSON text: response
+
+      def sha256 = jsonResponse.config.digest
+
+      echo "Digest retrieved for service ${serviceName} and version ${imageVersion}: " + sha256
+
+      return sha256
+    }
+  
 }
