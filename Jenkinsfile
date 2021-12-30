@@ -484,6 +484,7 @@ void prepareDbMigrations() {
 
 String getDockerImageDigest(String serviceName, String imageVersion) {
   echo "Retrieving digest for service ${serviceName} and version ${imageVersion}..."
+  import groovy.json.JsonSlurper
   def jsonSlurper = new JsonSlurper()
 
   def response = sh(
