@@ -15,6 +15,7 @@ pipeline {
     USER_REGISTRY_API_KEY = credentials('user-registry-api-key')
     DOCKER_REGISTRY_CREDENTIALS = credentials('pdnd-nexus')
     NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH)
+    REPOSITORY = getVariableFromConf("REPOSITORY")
     CONFIG_FILE = getConfigFileFromStage(STAGE)
   }
 
@@ -487,11 +488,10 @@ void prepareDbMigrations() {
 String getDockerImageDigest(String serviceName, String imageVersion) {
   echo "Retrieving digest for service ${serviceName} and version ${imageVersion}..."
 
-  def repository = getVariableFromConf("REPOSITORY")
   // Nexus REST API
   def response = sh(
       returnStdout: true, 
-      script: 'curl -s -L -u $DOCKER_REGISTRY_CREDENTIALS_USR:$DOCKER_REGISTRY_CREDENTIALS_PSW -X GET \'https://' + repository + '/nexus/service/rest/v1/search/assets?repository=docker&name=services/' + serviceName + '&version=' + imageVersion + '\''
+      script: 'curl -s -L -u $DOCKER_REGISTRY_CREDENTIALS_USR:$DOCKER_REGISTRY_CREDENTIALS_PSW -X GET \'https://$REPOSITORY/nexus/service/rest/v1/search/assets?repository=docker&name=services/' + serviceName + '&version=' + imageVersion + '\''
     ).trim()
 
   // Extract sha256 from response
