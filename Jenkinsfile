@@ -487,7 +487,7 @@ void prepareDbMigrations() {
 
 String getDockerImageDigest(String serviceName, String imageVersion) {
   echo "Retrieving digest for service ${serviceName} and version ${imageVersion}..."
-    container('sbt-container') { // This is required only for kubectl command (sbt is not needed)
+    container('sbt-container') { // This is required only for docker command (sbt is not needed)
 
       def response = sh(
           returnStdout: true, 
@@ -500,18 +500,6 @@ String getDockerImageDigest(String serviceName, String imageVersion) {
 
       def sha256 = jsonResponse.config.digest
 
-
-  // // Nexus REST API
-  // def response = sh(
-  //     returnStdout: true, 
-  //     script: 'curl -s -L -u $DOCKER_REGISTRY_CREDENTIALS_USR:$DOCKER_REGISTRY_CREDENTIALS_PSW -X GET "https://$REPOSITORY/nexus/service/rest/v1/search/assets?repository=docker&name=services/' + serviceName + '&version=' + imageVersion + '"'
-  //   ).trim()
-
-  // // Extract sha256 from response
-  // // (no built in JSON parsers)
-  // def tmp1 = response.substring(response.indexOf('"sha256"') + '"sha256"'.length())
-  // def tmp2 = tmp1.substring(tmp1.indexOf('"') + 1)
-  // def sha256 = tmp2.substring(0, tmp2.indexOf('"'))
       echo "Digest retrieved for service ${serviceName} and version ${imageVersion}: " + sha256
 
       return sha256
