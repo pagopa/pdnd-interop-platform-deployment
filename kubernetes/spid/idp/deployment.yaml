@@ -54,7 +54,7 @@ spec:
                   items:
                     - key: config.yaml
                       path: config.yaml
-       - name: users-tmp
+        - name: users-tmp
           projected:
             sources:
               - configMap:
