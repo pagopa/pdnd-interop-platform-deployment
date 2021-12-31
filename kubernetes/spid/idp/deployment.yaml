@@ -32,6 +32,19 @@ spec:
             - name: idp-http-certs
               mountPath: "/app/certs"
               readOnly: true
+      initContainers:
+      # Volumes loaded from secrets are read only
+      # The application needs to write in the same folder
+      # This init container is used as workaround to load secrets and copy them to a new read-write volume
+        - name: rw-conf-directory
+          image: busybox:1.34
+          command: ['sh', '-c', "cp -n /temp/app/conf/users.json /app/conf/users.json"]
+          volumeMounts:
+            - name: users-tmp
+              mountPath: "/temp/app/conf/users.json"
+              subPath: "users.json"
+            - name: users
+              mountPath: "/app/conf"
       volumes:
         - name: config
           projected:
@@ -41,11 +54,17 @@ spec:
                   items:
                     - key: config.yaml
                       path: config.yaml
+       - name: users-tmp
+          projected:
+            sources:
+              - configMap:
+                  name: {{SERVICE_NAME}}
+                  items:
+                    - key: users.json
+                      path: users.json
         - name: users
           persistentVolumeClaim:
             claimName: {{SERVICE_NAME}}-users
-        - name: conf
-          emptyDir: {}
         - name: idp-http-certs
           secret:
             secretName: idp-http-certs

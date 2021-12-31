@@ -190,17 +190,17 @@ pipeline {
             //     )
             //   }
             // }
-            stage('User Registry Management') {
-              steps {
-                applyKustomizeToDir(
-                  'overlays/user-registry-management', 
-                  getVariableFromConf("USER_REGISTRY_MANAGEMENT_SERVICE_NAME"), 
-                  getVariableFromConf("USER_REGISTRY_MANAGEMENT_IMAGE_VERSION"),
-                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
-                )
-              }
-            }
+            // stage('User Registry Management') {
+            //   steps {
+            //     applyKustomizeToDir(
+            //       'overlays/user-registry-management', 
+            //       getVariableFromConf("USER_REGISTRY_MANAGEMENT_SERVICE_NAME"), 
+            //       getVariableFromConf("USER_REGISTRY_MANAGEMENT_IMAGE_VERSION"),
+            //       getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+            //       getVariableFromConf("INTERNAL_INGRESS_CLASS")
+            //     )
+            //   }
+            // }
             
             stage('Spid') {
               when { 
