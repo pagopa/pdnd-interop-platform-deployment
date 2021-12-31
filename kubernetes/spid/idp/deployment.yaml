@@ -26,6 +26,7 @@ spec:
           volumeMounts:
             - name: config
               mountPath: "/app/conf/config.yaml"
+              subPath: "config.yaml"
             - name: users
               mountPath: "/app/conf/users.json"
               subPath: "users.json"
