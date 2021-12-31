@@ -56,140 +56,140 @@ pipeline {
         }
         stage('Deploy Services') {
           parallel {
-            stage('Front End') {
-              environment {
-                SERVICE_NAME = getVariableFromConf("FRONTEND_SERVICE_NAME")
-                IMAGE_VERSION = getVariableFromConf("FRONTEND_IMAGE_VERSION")
-                IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
-              }
-              steps {
-                applyKubeFile('frontend/ingress.yaml', SERVICE_NAME)
-                applyKubeFile('frontend/configmap.yaml', SERVICE_NAME)
-                applyKubeFile('frontend/deployment.yaml', SERVICE_NAME, IMAGE_DIGEST)
-                applyKubeFile('frontend/service.yaml', SERVICE_NAME)
-              }
-            }
-            stage('Agreement Management') {
-              steps {
-                applyKustomizeToDir(
-                  'overlays/agreement-management', 
-                  getVariableFromConf("AGREEMENT_MANAGEMENT_SERVICE_NAME"), 
-                  getVariableFromConf("AGREEMENT_MANAGEMENT_IMAGE_VERSION"),
-                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
-                )
-              }
-            }
-            stage('Agreement Process') {
-              steps {
-                applyKustomizeToDir(
-                  'overlays/agreement-process', 
-                  getVariableFromConf("AGREEMENT_PROCESS_SERVICE_NAME"),
-                  getVariableFromConf("AGREEMENT_PROCESS_IMAGE_VERSION"),
-                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
-                )
-              }
-            }
-            stage('Attribute Registry Management') {
-              steps {
-                applyKustomizeToDir(
-                  'overlays/attribute-registry-management', 
-                  getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME"),
-                  getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION"),
-                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
-                )
-              }
-            }
-            stage('Authorization Management') {
-              steps {
-                applyKustomizeToDir(
-                  'overlays/authorization-management', 
-                  getVariableFromConf("AUTHORIZATION_MANAGEMENT_SERVICE_NAME"),
-                  getVariableFromConf("AUTHORIZATION_MANAGEMENT_IMAGE_VERSION"),
-                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
-                )
-              }
-            }
-            stage('Authorization Process') {
-              steps {
-                applyKustomizeToDir(
-                  'overlays/authorization-process', 
-                  getVariableFromConf("AUTHORIZATION_PROCESS_SERVICE_NAME"),
-                  getVariableFromConf("AUTHORIZATION_PROCESS_IMAGE_VERSION"),
-                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
-                )
-              }
-            }
-            stage('Catalog Management') {
-              steps {
-                applyKustomizeToDir(
-                  'overlays/catalog-management', 
-                  getVariableFromConf("CATALOG_MANAGEMENT_SERVICE_NAME"),
-                  getVariableFromConf("CATALOG_MANAGEMENT_IMAGE_VERSION"),
-                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
-                )
-              }
-            }
-            stage('Catalog Process') {
-              steps {
-                applyKustomizeToDir(
-                  'overlays/catalog-process', 
-                  getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"),
-                  getVariableFromConf("CATALOG_PROCESS_IMAGE_VERSION"),
-                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
-                )
-              }
-            }
-            stage('Party Management') {
-              steps {
-                applyKustomizeToDir(
-                  'overlays/party-management', 
-                  getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"), 
-                  getVariableFromConf("PARTY_MANAGEMENT_IMAGE_VERSION"),
-                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
-                )
-              }
-            }
-            stage('Party Mock Registry') {
-              steps {
-                applyKustomizeToDir(
-                  'overlays/party-mock-registry', 
-                  getVariableFromConf("PARTY_MOCK_REGISTRY_SERVICE_NAME"), 
-                  getVariableFromConf("PARTY_MOCK_REGISTRY_IMAGE_VERSION"),
-                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
-                )
-              }
-            }
-            stage('Party Process') {
-              steps {
-                applyKustomizeToDir(
-                  'overlays/party-process', 
-                  getVariableFromConf("PARTY_PROCESS_SERVICE_NAME"), 
-                  getVariableFromConf("PARTY_PROCESS_IMAGE_VERSION"),
-                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
-                )
-              }
-            }
-            stage('Party Registry Proxy') {
-              steps {
-                applyKustomizeToDir(
-                  'overlays/party-registry-proxy', 
-                  getVariableFromConf("PARTY_REGISTRY_PROXY_SERVICE_NAME"), 
-                  getVariableFromConf("PARTY_REGISTRY_PROXY_IMAGE_VERSION"),
-                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
-                )
-              }
-            }
+            // stage('Front End') {
+            //   environment {
+            //     SERVICE_NAME = getVariableFromConf("FRONTEND_SERVICE_NAME")
+            //     IMAGE_VERSION = getVariableFromConf("FRONTEND_IMAGE_VERSION")
+            //     IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
+            //   }
+            //   steps {
+            //     applyKubeFile('frontend/ingress.yaml', SERVICE_NAME)
+            //     applyKubeFile('frontend/configmap.yaml', SERVICE_NAME)
+            //     applyKubeFile('frontend/deployment.yaml', SERVICE_NAME, IMAGE_DIGEST)
+            //     applyKubeFile('frontend/service.yaml', SERVICE_NAME)
+            //   }
+            // }
+            // stage('Agreement Management') {
+            //   steps {
+            //     applyKustomizeToDir(
+            //       'overlays/agreement-management', 
+            //       getVariableFromConf("AGREEMENT_MANAGEMENT_SERVICE_NAME"), 
+            //       getVariableFromConf("AGREEMENT_MANAGEMENT_IMAGE_VERSION"),
+            //       getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+            //       getVariableFromConf("INTERNAL_INGRESS_CLASS")
+            //     )
+            //   }
+            // }
+            // stage('Agreement Process') {
+            //   steps {
+            //     applyKustomizeToDir(
+            //       'overlays/agreement-process', 
+            //       getVariableFromConf("AGREEMENT_PROCESS_SERVICE_NAME"),
+            //       getVariableFromConf("AGREEMENT_PROCESS_IMAGE_VERSION"),
+            //       getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
+            //       getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+            //     )
+            //   }
+            // }
+            // stage('Attribute Registry Management') {
+            //   steps {
+            //     applyKustomizeToDir(
+            //       'overlays/attribute-registry-management', 
+            //       getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME"),
+            //       getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION"),
+            //       getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+            //       getVariableFromConf("INTERNAL_INGRESS_CLASS")
+            //     )
+            //   }
+            // }
+            // stage('Authorization Management') {
+            //   steps {
+            //     applyKustomizeToDir(
+            //       'overlays/authorization-management', 
+            //       getVariableFromConf("AUTHORIZATION_MANAGEMENT_SERVICE_NAME"),
+            //       getVariableFromConf("AUTHORIZATION_MANAGEMENT_IMAGE_VERSION"),
+            //       getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+            //       getVariableFromConf("INTERNAL_INGRESS_CLASS")
+            //     )
+            //   }
+            // }
+            // stage('Authorization Process') {
+            //   steps {
+            //     applyKustomizeToDir(
+            //       'overlays/authorization-process', 
+            //       getVariableFromConf("AUTHORIZATION_PROCESS_SERVICE_NAME"),
+            //       getVariableFromConf("AUTHORIZATION_PROCESS_IMAGE_VERSION"),
+            //       getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
+            //       getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+            //     )
+            //   }
+            // }
+            // stage('Catalog Management') {
+            //   steps {
+            //     applyKustomizeToDir(
+            //       'overlays/catalog-management', 
+            //       getVariableFromConf("CATALOG_MANAGEMENT_SERVICE_NAME"),
+            //       getVariableFromConf("CATALOG_MANAGEMENT_IMAGE_VERSION"),
+            //       getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+            //       getVariableFromConf("INTERNAL_INGRESS_CLASS")
+            //     )
+            //   }
+            // }
+            // stage('Catalog Process') {
+            //   steps {
+            //     applyKustomizeToDir(
+            //       'overlays/catalog-process', 
+            //       getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"),
+            //       getVariableFromConf("CATALOG_PROCESS_IMAGE_VERSION"),
+            //       getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
+            //       getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+            //     )
+            //   }
+            // }
+            // stage('Party Management') {
+            //   steps {
+            //     applyKustomizeToDir(
+            //       'overlays/party-management', 
+            //       getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"), 
+            //       getVariableFromConf("PARTY_MANAGEMENT_IMAGE_VERSION"),
+            //       getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+            //       getVariableFromConf("INTERNAL_INGRESS_CLASS")
+            //     )
+            //   }
+            // }
+            // stage('Party Mock Registry') {
+            //   steps {
+            //     applyKustomizeToDir(
+            //       'overlays/party-mock-registry', 
+            //       getVariableFromConf("PARTY_MOCK_REGISTRY_SERVICE_NAME"), 
+            //       getVariableFromConf("PARTY_MOCK_REGISTRY_IMAGE_VERSION"),
+            //       getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+            //       getVariableFromConf("INTERNAL_INGRESS_CLASS")
+            //     )
+            //   }
+            // }
+            // stage('Party Process') {
+            //   steps {
+            //     applyKustomizeToDir(
+            //       'overlays/party-process', 
+            //       getVariableFromConf("PARTY_PROCESS_SERVICE_NAME"), 
+            //       getVariableFromConf("PARTY_PROCESS_IMAGE_VERSION"),
+            //       getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
+            //       getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+            //     )
+            //   }
+            // }
+            // stage('Party Registry Proxy') {
+            //   steps {
+            //     applyKustomizeToDir(
+            //       'overlays/party-registry-proxy', 
+            //       getVariableFromConf("PARTY_REGISTRY_PROXY_SERVICE_NAME"), 
+            //       getVariableFromConf("PARTY_REGISTRY_PROXY_IMAGE_VERSION"),
+            //       getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+            //       getVariableFromConf("INTERNAL_INGRESS_CLASS")
+            //     )
+            //   }
+            // }
             stage('User Registry Management') {
               steps {
                 applyKustomizeToDir(
