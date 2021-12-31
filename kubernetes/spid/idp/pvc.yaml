@@ -1,0 +1,60 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  labels:
+    app: {{SERVICE_NAME}}
+  name: {{SERVICE_NAME}}-users
+  namespace: {{NAMESPACE}}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  resources:
+    requests:
+      storage: 50Mi
+  dataSourceRef:
+    apiGroup: users.idp.k8s.io
+    kind: Users
+    name: users-file
+  volumeMode: Filesystem
+---
+apiVersion: users.idp.k8s.io/v1alpha1
+kind: Users
+metadata:
+  name: users-file
+spec:
+  fileName: users.json
+  fileContents: |-
+    {
+      "carla.rossi": {
+        "sp": null,
+        "attrs": {
+            "fiscalNumber": "ISPXNB32R82Y766D",
+            "name": "Carla",
+            "gender": "F",
+            "familyName": "Rossi",
+            "dateOfBirth": "2000-12-12",
+            "email": "carla.rossi@test.pagopa.it",
+            "spidCode": "7b09078d-989b-6e6d-87b9-aab53efd714f",
+            "mobilePhone": "333333333",
+            "address": "Via Roma 1, Roma"
+        },
+        "pwd": "test"
+      },
+      "mario.rossi": {
+        "sp": null,
+        "attrs": {
+            "fiscalNumber": "GDNNWA12H81Y874F",
+            "name": "Mario",
+            "gender": "M",
+            "familyName": "Rossi",
+            "dateOfBirth": "1991-12-12",
+            "email": "mario.rossi@test.pagopa.it",
+            "spidCode": "d4b9f692-a0f2-1100-7bb6-8650c02d75d5",
+            "mobilePhone": "333333334",
+            "address": "Via Roma 2, Roma"
+        },
+        "pwd": "test"
+      }
+    }
+  
