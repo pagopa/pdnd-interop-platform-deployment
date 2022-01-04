@@ -8,6 +8,7 @@
 . $(pwd)/kubernetes/configs/test/party_management.sh
 . $(pwd)/kubernetes/configs/test/catalog_management.sh
 . $(pwd)/kubernetes/configs/test/catalog_process.sh
+. $(pwd)/kubernetes/configs/test/party_registry_proxy.sh
 . $(pwd)/kubernetes/configs/test/party_process.sh
 
 # Calculated
@@ -25,3 +26,4 @@ PARTY_MOCK_REGISTRY_INTERFACE_VERSION=$(shortVersion $PARTY_MOCK_REGISTRY_IMAGE_
 USER_REGISTRY_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $USER_REGISTRY_MANAGEMENT_IMAGE_VERSION)
 
 USER_REGISTRY_MANAGEMENT_URL="https://$INTERNAL_APPLICATION_HOST/$USER_REGISTRY_MANAGEMENT_SERVICE_NAME/$USER_REGISTRY_MANAGEMENT_INTERFACE_VERSION"
+
