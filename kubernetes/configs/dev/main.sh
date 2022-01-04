@@ -5,7 +5,10 @@
 
 . $(pwd)/kubernetes/configs/dev/commons.sh
 . $(pwd)/kubernetes/configs/dev/spid.sh
-
+. $(pwd)/kubernetes/configs/dev/party_management.sh
+. $(pwd)/kubernetes/configs/dev/catalog_management.sh
+. $(pwd)/kubernetes/configs/dev/catalog_process.sh
+. $(pwd)/kubernetes/configs/dev/party_process.sh
 
 # Calculated
 NAMESPACE=$NAMESPACE
@@ -23,9 +26,3 @@ USER_REGISTRY_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $USER_REGISTRY_MANAGEM
 
 USER_REGISTRY_MANAGEMENT_URL="$USER_REGISTRY_MANAGEMENT_SERVICE_NAME/$USER_REGISTRY_MANAGEMENT_INTERFACE_VERSION"
 
-
-. $(pwd)/kubernetes/configs/dev/party_management.sh
-. $(pwd)/kubernetes/configs/dev/catalog_management.sh
-. $(pwd)/kubernetes/configs/dev/catalog_process.sh
-. $(pwd)/kubernetes/configs/dev/party_registry_proxy.sh
-. $(pwd)/kubernetes/configs/dev/party_process.sh
