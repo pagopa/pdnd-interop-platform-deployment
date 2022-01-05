@@ -8,7 +8,7 @@ PARTY_PROCESS_MAIL_TEMPLATE_PATH="mail-templates/onboarding-interop-template.jso
 PARTY_PROCESS_MAIL_ONBOARDING_CONFIRMATION_LINK_PATH="ui/conferma-registrazione?jwt="
 PARTY_PROCESS_MAIL_ONBOARDING_REJECTION_LINK_PATH="ui/cancella-registrazione?jwt="
 PARTY_PROCESS_MAIL_SENDER_ADDRESS="test-pdnd-interop@pagopa.it"
-PARTY_PROCESS_SMTP_HOST="smtps.pec.aruba.it"
+PARTY_PROCESS_SMTP_HOST="smtp.gmail.com"
 PARTY_PROCESS_SMTP_SSL="true"
 PARTY_PROCESS_SMTP_PORT="465"
 PARTY_PROCESS_EU_LIST_OF_TRUSTED_LISTS_URL="https://ec.europa.eu/tools/lotl/eu-lotl.xml"
