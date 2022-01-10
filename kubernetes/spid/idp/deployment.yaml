@@ -24,39 +24,43 @@ spec:
               containerPort: 8088
               protocol: TCP
           volumeMounts:
-            - name: conf
-              mountPath: "/app/conf"
+            - name: config
+              mountPath: "/app/conf/config.yaml"
+              subPath: "config.yaml"
+            - name: users
+              mountPath: "/app/conf/users.json"
+              subPath: "users.json"
             - name: idp-http-certs
               mountPath: "/app/certs"
               readOnly: true
       initContainers:
-      # Volumes loaded from secrets are read only
-      # The application needs to write in the same folder
-      # This init container is used as workaround to load secrets and copy them to a new read-write volume
+        # Used to initialize users file if not already created
+        # Note: A better solution is to use dataSourceRef on pvc, but it is available on k8s 1.22+
         - name: rw-conf-directory
           image: busybox:1.34
-          command: ['sh', '-c', "cp -rf /temp/app/conf /app"]
+          command: ['sh', '-c', "cp -n /temp/app/conf/users.json /app/conf/users.json"]
           volumeMounts:
-            - name: conf-tmp
-              mountPath: "/temp/app/conf"
-            - name: conf
+            - name: users-tmp
+              mountPath: "/temp/app/conf/users.json"
+              subPath: "users.json"
+            - name: users
               mountPath: "/app/conf"
       volumes:
-        - name: conf-tmp
-          projected:
-            sources:
-              - configMap:
-                  name: {{SERVICE_NAME}}
-                  items:
-                    - key: config.yaml
-                      path: config.yaml
-              - configMap:
-                  name: {{SERVICE_NAME}}
-                  items:
-                    - key: users.json
-                      path: users.json
-        - name: conf
-          emptyDir: {}
+        - name: config
+          configMap:
+            name: {{SERVICE_NAME}}
+            items:
+              - key: config.yaml
+                path: config.yaml
+        - name: users-tmp
+          configMap:
+            name: {{SERVICE_NAME}}
+            items:
+              - key: users.json
+                path: users.json
+        - name: users
+          persistentVolumeClaim:
+            claimName: {{SERVICE_NAME}}-users
         - name: idp-http-certs
           secret:
             secretName: idp-http-certs
