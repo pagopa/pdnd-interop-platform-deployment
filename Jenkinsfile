@@ -14,6 +14,7 @@ pipeline {
     SMTP_CREDENTIALS = credentials('smtp')
     USER_REGISTRY_API_KEY = credentials('user-registry-api-key')
     DOCKER_REGISTRY_CREDENTIALS = credentials('pdnd-nexus')
+    ECR_CREDENTIALS = credentials('ecr-credentials')
     NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH)
     REPOSITORY = getVariableFromConf("REPOSITORY")
     CONFIG_FILE = getConfigFileFromStage(STAGE)
