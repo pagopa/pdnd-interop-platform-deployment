@@ -309,11 +309,11 @@ void applyKustomizeToDir(String dirPath, String serviceName, String applicationP
       def kubeDirPath = 'kubernetes/' + dirPath
 
       echo "Compiling base files"
-      compileDir("kubernetes/base", serviceName, imageVersion, hostname, ingressClass, serviceImageDigest)
+      compileDir("kubernetes/base", serviceName, applicationPath, imageVersion, hostname, ingressClass, serviceImageDigest)
       echo "Base files compiled"
 
       echo "Compiling common files"
-      compileDir("kubernetes/commons/database", serviceName, imageVersion, hostname, ingressClass, serviceImageDigest)
+      compileDir("kubernetes/commons/database", serviceName, applicationPath, imageVersion, hostname, ingressClass, serviceImageDigest)
       echo "Common files compiled"
 
       echo "Compiling directory ${dirPath}"
@@ -382,7 +382,7 @@ void compileDir(String dirPath, String serviceName, String applicationPath, Stri
       if [ ! $(basename $f) = "kustomization.yaml" ]
         then
           mkdir -p ''' + serviceName + '/' + dirPath + '''
-          SERVICE_NAME=''' + serviceName + ' APPLICATION_PATH=''' + applicationPath + ' IMAGE_VERSION=' + imageVersion + ' IMAGE_DIGEST=' + serviceImageDigest + ' APPLICATION_HOST=' + hostname + ' INGRESS_CLASS=' + ingressClass + ' kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ' + serviceName + '''/$f
+          SERVICE_NAME=''' + serviceName + ' APPLICATION_PATH=' + applicationPath + ' IMAGE_VERSION=' + imageVersion + ' IMAGE_DIGEST=' + serviceImageDigest + ' APPLICATION_HOST=' + hostname + ' INGRESS_CLASS=' + ingressClass + ' kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ' + serviceName + '''/$f
         else
           cp $f ''' + serviceName + '''/$f
       fi
@@ -508,7 +508,7 @@ String getDockerImageDigest(String serviceName, String imageVersion) {
           script: '''
           export AWS_ACCESS_KEY_ID=$ECR_CREDENTIALS_USR
           export AWS_SECRET_ACCESS_KEY=$ECR_CREDENTIALS_PSW
-          aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $REPOSITORY
+          aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $REPOSITORY 2>/dev/null 1>&2
           docker manifest inspect $REPOSITORY/''' + serviceName + ':' + imageVersion
         ).trim()
 
