@@ -506,7 +506,7 @@ String getDockerImageDigest(String serviceName, String imageVersion) {
           returnStdout: true, 
           script: '''
           docker login $REPOSITORY -u $DOCKER_REGISTRY_CREDENTIALS_USR -p $DOCKER_REGISTRY_CREDENTIALS_PSW 2>/dev/null 1>&2
-          docker manifest inspect $REPOSITORY/services/''' + serviceName + ':' + imageVersion
+          docker manifest inspect $REPOSITORY/''' + serviceName + ':' + imageVersion
         ).trim()
 
       def jsonResponse = readJSON text: response
