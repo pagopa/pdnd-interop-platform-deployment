@@ -74,6 +74,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/agreement-management', 
                   getVariableFromConf("AGREEMENT_MANAGEMENT_SERVICE_NAME"), 
+                  getVariableFromConf("AGREEMENT_MANAGEMENT_APPLICATION_PATH"), 
                   getVariableFromConf("AGREEMENT_MANAGEMENT_IMAGE_VERSION"),
                   getVariableFromConf("INTERNAL_APPLICATION_HOST"),
                   getVariableFromConf("INTERNAL_INGRESS_CLASS")
@@ -85,6 +86,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/agreement-process', 
                   getVariableFromConf("AGREEMENT_PROCESS_SERVICE_NAME"),
+                  getVariableFromConf("AGREEMENT_PROCESS_APPLICATION_PATH"), 
                   getVariableFromConf("AGREEMENT_PROCESS_IMAGE_VERSION"),
                   getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
                   getVariableFromConf("EXTERNAL_INGRESS_CLASS")
@@ -96,6 +98,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/attribute-registry-management', 
                   getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME"),
+                  getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_APPLICATION_PATH"), 
                   getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION"),
                   getVariableFromConf("INTERNAL_APPLICATION_HOST"),
                   getVariableFromConf("INTERNAL_INGRESS_CLASS")
@@ -107,6 +110,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/authorization-management', 
                   getVariableFromConf("AUTHORIZATION_MANAGEMENT_SERVICE_NAME"),
+                  getVariableFromConf("AUTHORIZATION_MANAGEMENT_APPLICATION_PATH"), 
                   getVariableFromConf("AUTHORIZATION_MANAGEMENT_IMAGE_VERSION"),
                   getVariableFromConf("INTERNAL_APPLICATION_HOST"),
                   getVariableFromConf("INTERNAL_INGRESS_CLASS")
@@ -118,6 +122,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/authorization-process', 
                   getVariableFromConf("AUTHORIZATION_PROCESS_SERVICE_NAME"),
+                  getVariableFromConf("AUTHORIZATION_PROCESS_APPLICATION_PATH"), 
                   getVariableFromConf("AUTHORIZATION_PROCESS_IMAGE_VERSION"),
                   getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
                   getVariableFromConf("EXTERNAL_INGRESS_CLASS")
@@ -129,6 +134,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/catalog-management', 
                   getVariableFromConf("CATALOG_MANAGEMENT_SERVICE_NAME"),
+                  getVariableFromConf("CATALOG_MANAGEMENT_APPLICATION_PATH"), 
                   getVariableFromConf("CATALOG_MANAGEMENT_IMAGE_VERSION"),
                   getVariableFromConf("INTERNAL_APPLICATION_HOST"),
                   getVariableFromConf("INTERNAL_INGRESS_CLASS")
@@ -140,6 +146,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/catalog-process', 
                   getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"),
+                  getVariableFromConf("CATALOG_PROCESS_APPLICATION_PATH"), 
                   getVariableFromConf("CATALOG_PROCESS_IMAGE_VERSION"),
                   getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
                   getVariableFromConf("EXTERNAL_INGRESS_CLASS")
@@ -151,6 +158,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/party-management', 
                   getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"), 
+                  getVariableFromConf("PARTY_MANAGEMENT_APPLICATION_PATH"), 
                   getVariableFromConf("PARTY_MANAGEMENT_IMAGE_VERSION"),
                   getVariableFromConf("INTERNAL_APPLICATION_HOST"),
                   getVariableFromConf("INTERNAL_INGRESS_CLASS")
@@ -162,6 +170,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/party-mock-registry', 
                   getVariableFromConf("PARTY_MOCK_REGISTRY_SERVICE_NAME"), 
+                  getVariableFromConf("PARTY_MOCK_REGISTRY_APPLICATION_PATH"), 
                   getVariableFromConf("PARTY_MOCK_REGISTRY_IMAGE_VERSION"),
                   getVariableFromConf("INTERNAL_APPLICATION_HOST"),
                   getVariableFromConf("INTERNAL_INGRESS_CLASS")
@@ -173,6 +182,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/party-process', 
                   getVariableFromConf("PARTY_PROCESS_SERVICE_NAME"), 
+                  getVariableFromConf("PARTY_PROCESS_APPLICATION_PATH"), 
                   getVariableFromConf("PARTY_PROCESS_IMAGE_VERSION"),
                   getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
                   getVariableFromConf("EXTERNAL_INGRESS_CLASS")
@@ -184,6 +194,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/party-registry-proxy', 
                   getVariableFromConf("PARTY_REGISTRY_PROXY_SERVICE_NAME"), 
+                  getVariableFromConf("PARTY_REGISTRY_PROXY_APPLICATION_PATH"), 
                   getVariableFromConf("PARTY_REGISTRY_PROXY_IMAGE_VERSION"),
                   getVariableFromConf("INTERNAL_APPLICATION_HOST"),
                   getVariableFromConf("INTERNAL_INGRESS_CLASS")
@@ -195,6 +206,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/user-registry-management', 
                   getVariableFromConf("USER_REGISTRY_MANAGEMENT_SERVICE_NAME"), 
+                  getVariableFromConf("USER_REGISTRY_MANAGEMENT_APPLICATION_PATH"), 
                   getVariableFromConf("USER_REGISTRY_MANAGEMENT_IMAGE_VERSION"),
                   getVariableFromConf("INTERNAL_APPLICATION_HOST"),
                   getVariableFromConf("INTERNAL_INGRESS_CLASS")
@@ -285,7 +297,7 @@ void applyKubeFile(String fileName, String serviceName = null, String imageDiges
 }
 
 // dirPath starting from kubernetes folder (e.g. overlays/party-management)
-void applyKustomizeToDir(String dirPath, String serviceName, String imageVersion, String hostname, String ingressClass) {
+void applyKustomizeToDir(String dirPath, String serviceName, String applicationPath, String imageVersion, String hostname, String ingressClass) {
   container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
     withKubeConfig([credentialsId: 'kube-config']) {
 
@@ -304,7 +316,7 @@ void applyKustomizeToDir(String dirPath, String serviceName, String imageVersion
       echo "Common files compiled"
 
       echo "Compiling directory ${dirPath}"
-      compileDir(kubeDirPath, serviceName, imageVersion, hostname, ingressClass, serviceImageDigest)
+      compileDir(kubeDirPath, serviceName, applicationPath, imageVersion, hostname, ingressClass, serviceImageDigest)
       echo "Directory ${dirPath} compiled"
       
       echo "Applying Kustomization for ${serviceName}"
@@ -362,14 +374,14 @@ void waitForServiceReady(String serviceName) {
  * Compile each file in the directory replacing placeholders with actual values.
  * Note: kustomization.yaml is skipped because does not have placeholders
  */ 
-void compileDir(String dirPath, String serviceName, String imageVersion, String hostname, String ingressClass, String serviceImageDigest) {
+void compileDir(String dirPath, String serviceName, String applicationPath, String imageVersion, String hostname, String ingressClass, String serviceImageDigest) {
   sh '''
   for f in ''' + dirPath + '''/*
   do
       if [ ! $(basename $f) = "kustomization.yaml" ]
         then
           mkdir -p ''' + serviceName + '/' + dirPath + '''
-          SERVICE_NAME=''' + serviceName + ' IMAGE_VERSION=' + imageVersion + ' IMAGE_DIGEST=' + serviceImageDigest + ' APPLICATION_HOST=' + hostname + ' INGRESS_CLASS=' + ingressClass + ' kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ' + serviceName + '''/$f
+          SERVICE_NAME=''' + serviceName + ' APPLICATION_PATH=''' + applicationPath + ' IMAGE_VERSION=' + imageVersion + ' IMAGE_DIGEST=' + serviceImageDigest + ' APPLICATION_HOST=' + hostname + ' INGRESS_CLASS=' + ingressClass + ' kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ' + serviceName + '''/$f
         else
           cp $f ''' + serviceName + '''/$f
       fi
