@@ -505,7 +505,9 @@ String getDockerImageDigest(String serviceName, String imageVersion) {
       def response = sh(
           returnStdout: true, 
           script: '''
-          docker login $REPOSITORY -u $DOCKER_REGISTRY_CREDENTIALS_USR -p $DOCKER_REGISTRY_CREDENTIALS_PSW 2>/dev/null 1>&2
+          export AWS_ACCESS_KEY_ID=$ECR_CREDENTIALS_USR
+          export AWS_SECRET_ACCESS_KEY=$ECR_CREDENTIALS_PSW
+          aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $REPOSITORY
           docker manifest inspect $REPOSITORY/''' + serviceName + ':' + imageVersion
         ).trim()
 
