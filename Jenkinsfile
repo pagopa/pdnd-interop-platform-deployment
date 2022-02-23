@@ -202,6 +202,18 @@ pipeline {
                 )
               }
             }
+            stage('Purpose Management') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/purpose-management', 
+                  getVariableFromConf("PURPOSE_MANAGEMENT_SERVICE_NAME"), 
+                  getVariableFromConf("PURPOSE_MANAGEMENT_APPLICATION_PATH"), 
+                  getVariableFromConf("PURPOSE_MANAGEMENT_IMAGE_VERSION"),
+                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
+                )
+              }
+            }
             stage('User Registry Management') {
               steps {
                 applyKustomizeToDir(
