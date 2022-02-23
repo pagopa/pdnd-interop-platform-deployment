@@ -18,6 +18,7 @@ PARTY_PROCESS_SERVICE_NAME="interop-be-party-process"
 PARTY_REGISTRY_PROXY_SERVICE_NAME="interop-be-party-registry-proxy"
 CATALOG_PROCESS_SERVICE_NAME="interop-be-catalog-process"
 USER_REGISTRY_MANAGEMENT_SERVICE_NAME="interop-be-user-registry-management"
+API_GATEWAY_SERVICE_NAME="interop-be-api-gateway"
 
 FRONTEND_SERVICE_NAME="interop-frontend"
 
@@ -33,4 +34,4 @@ PARTY_PROCESS_APPLICATION_PATH="party-process"
 PARTY_REGISTRY_PROXY_APPLICATION_PATH="party-registry-proxy"
 CATALOG_PROCESS_APPLICATION_PATH="catalog-process"
 USER_REGISTRY_MANAGEMENT_APPLICATION_PATH="user-registry-management"
-
+API_GATEWAY_APPLICATION_PATH="api-gateway"
