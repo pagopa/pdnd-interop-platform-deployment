@@ -203,6 +203,30 @@ pipeline {
                 )
               }
             }
+            stage('Purpose Management') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/purpose-management', 
+                  getVariableFromConf("PURPOSE_MANAGEMENT_SERVICE_NAME"), 
+                  getVariableFromConf("PURPOSE_MANAGEMENT_APPLICATION_PATH"), 
+                  getVariableFromConf("PURPOSE_MANAGEMENT_IMAGE_VERSION"),
+                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
+                )
+              }
+            }
+            stage('Purpose Process') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/purpose-process', 
+                  getVariableFromConf("PURPOSE_PROCESS_SERVICE_NAME"), 
+                  getVariableFromConf("PURPOSE_PROCESS_APPLICATION_PATH"), 
+                  getVariableFromConf("PURPOSE_PROCESS_IMAGE_VERSION"),
+                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
+                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+                )
+              }
+            }
             stage('User Registry Management') {
               steps {
                 applyKustomizeToDir(
