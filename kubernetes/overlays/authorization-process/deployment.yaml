@@ -44,11 +44,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: CATALOG_MANAGEMENT_URL
-            - name: KEY_MANAGEMENT_URL
+            - name: AUTHORIZATION_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: KEY_MANAGEMENT_URL
+                  key: AUTHORIZATION_MANAGEMENT_URL
             - name: PARTY_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
