@@ -74,8 +74,3 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PURPOSE_MANAGEMENT_URL
-            - name: WELL_KNOWN_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: WELL_KNOWN_URL
