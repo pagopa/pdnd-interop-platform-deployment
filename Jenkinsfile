@@ -214,6 +214,18 @@ pipeline {
                 )
               }
             }
+            stage('Purpose Process') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/purpose-process', 
+                  getVariableFromConf("PURPOSE_PROCESS_SERVICE_NAME"), 
+                  getVariableFromConf("PURPOSE_PROCESS_APPLICATION_PATH"), 
+                  getVariableFromConf("PURPOSE_PROCESS_IMAGE_VERSION"),
+                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
+                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+                )
+              }
+            }
             stage('User Registry Management') {
               steps {
                 applyKustomizeToDir(
