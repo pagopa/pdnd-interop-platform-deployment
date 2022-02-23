@@ -11,7 +11,6 @@ pipeline {
     //
     VAULT_TOKEN = credentials('vault-token')
     VAULT_ADDR = credentials('vault-addr')
-    PDND_INTEROP_KEYS = credentials('pdnd-interop-keys')
     SMTP_CREDENTIALS = credentials('smtp')
     USER_REGISTRY_API_KEY = credentials('user-registry-api-key')
     DOCKER_REGISTRY_CREDENTIALS = credentials('pdnd-nexus')
@@ -481,7 +480,6 @@ void loadSecrets() {
       '''
 
       loadSecret('user-registry-api-key', 'USER_REGISTRY_API_KEY', 'USER_REGISTRY_API_KEY')
-      loadSecret('key-paths', 'PDND_INTEROP_KEYS', 'PDND_INTEROP_KEYS')
       loadCredentials('storage', 'STORAGE_USR', 'AWS_SECRET_ACCESS_USR', 'STORAGE_PSW', 'AWS_SECRET_ACCESS_PSW')
       loadCredentials('aws', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_USR', 'AWS_SECRET_ACCESS_KEY', 'AWS_SECRET_ACCESS_PSW')
       loadCredentials('postgres', 'POSTGRES_USR', 'POSTGRES_CREDENTIALS_USR', 'POSTGRES_PSW', 'POSTGRES_CREDENTIALS_PSW')

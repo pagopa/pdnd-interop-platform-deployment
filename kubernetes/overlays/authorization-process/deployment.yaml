@@ -9,26 +9,11 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
-            - name: VAULT_ADDR
-              valueFrom:
-                secretKeyRef:
-                  name: vault
-                  key: VAULT_ADDR
-            - name: VAULT_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: vault
-                  key: VAULT_TOKEN
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
                   name: aws
                   key: AWS_ACCESS_KEY_ID
-            - name: PDND_INTEROP_KEYS
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: PDND_INTEROP_KEYS_VALUT_PATH
             - name: USER_REGISTRY_API_KEY
               valueFrom:
                 secretKeyRef:
