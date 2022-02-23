@@ -1,6 +1,5 @@
 bases:
 - ../../base
 patchesStrategicMerge:
-- deployment.yaml
 - configmap.yaml
 - ../../commons/database/db.yaml

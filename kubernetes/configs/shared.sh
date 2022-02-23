@@ -9,7 +9,7 @@ shortVersion() {
 AGREEMENT_MANAGEMENT_SERVICE_NAME="interop-be-agreement-management"
 AGREEMENT_PROCESS_SERVICE_NAME="interop-be-agreement-process"
 ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME="interop-be-attribute-registry-management"
-AUTHORIZATION_MANAGEMENT_SERVICE_NAME="interop-be-key-management"
+AUTHORIZATION_MANAGEMENT_SERVICE_NAME="interop-be-authorization-management"
 AUTHORIZATION_PROCESS_SERVICE_NAME="interop-be-authorization-process"
 CATALOG_MANAGEMENT_SERVICE_NAME="interop-be-catalog-management"
 PARTY_MANAGEMENT_SERVICE_NAME="interop-be-party-management"

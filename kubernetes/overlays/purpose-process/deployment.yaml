@@ -69,8 +69,3 @@ spec:
                 secretKeyRef:
                   name: storage
                   key: STORAGE_PSW
-            - name: WELL_KNOWN_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: WELL_KNOWN_URL

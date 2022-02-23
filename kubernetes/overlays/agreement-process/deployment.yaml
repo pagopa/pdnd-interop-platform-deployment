@@ -19,6 +19,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: AGREEMENT_MANAGEMENT_URL
+            - name: AUTHORIZATION_MANAGEMENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: AUTHORIZATION_MANAGEMENT_URL
             - name: PARTY_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
@@ -29,8 +34,3 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
-            - name: WELL_KNOWN_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: WELL_KNOWN_URL
