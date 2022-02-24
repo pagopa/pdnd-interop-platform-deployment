@@ -29,6 +29,26 @@ spec:
                 secretKeyRef:
                   name: aws
                   key: AWS_SECRET_ACCESS_KEY
+            - name: JWT_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTERNAL_TOKEN_JWT_ISSUER
+            - name: JWT_SUBJECT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTERNAL_TOKEN_JWT_SUBJECT
+            - name: JWT_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTERNAL_TOKEN_JWT_AUDIENCE
+            - name: JWT_DURATION_MS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTERNAL_TOKEN_JWT_DURATION_SECONDS
             - name: INTEROP_KEYS
               valueFrom:
                 configMapKeyRef:
