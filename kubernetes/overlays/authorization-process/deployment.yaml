@@ -39,6 +39,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PARTY_MANAGEMENT_URL
+            - name: PURPOSE_MANAGEMENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PURPOSE_MANAGEMENT_URL
             - name: USER_REGISTRY_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
