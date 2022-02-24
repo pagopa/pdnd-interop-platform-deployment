@@ -12,22 +12,22 @@ spec:
             - name: VAULT_ADDR
               valueFrom:
                 secretKeyRef:
-                  name: {{SERVICE_NAME}}
+                  name: vault
                   key: VAULT_ADDR
             - name: VAULT_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{SERVICE_NAME}}
+                  name: vault
                   key: VAULT_TOKEN
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  name: {{SERVICE_NAME}}
+                  name: aws
                   key: AWS_ACCESS_KEY_ID
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{SERVICE_NAME}}
+                  name: aws
                   key: AWS_SECRET_ACCESS_KEY
             - name: INTEROP_KEYS
               valueFrom:
@@ -47,7 +47,7 @@ spec:
             - name: USER_REGISTRY_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{SERVICE_NAME}}
+                  name: user-registry-api-key
                   key: USER_REGISTRY_API_KEY
             - name: AGREEMENT_MANAGEMENT_URL
               valueFrom:
