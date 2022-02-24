@@ -21,7 +21,7 @@ spec:
         - name: regcred
       containers:
         - name: {{SERVICE_NAME}}
-          image: {{REPOSITORY}}/services/{{SERVICE_NAME}}:{{FRONTEND_IMAGE_VERSION}}
+          image: {{REPOSITORY}}/{{SERVICE_NAME}}:{{FRONTEND_IMAGE_VERSION}}
           imagePullPolicy: Always
           ports:
             - name: http
