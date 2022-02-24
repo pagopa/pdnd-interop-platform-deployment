@@ -29,7 +29,7 @@ spec:
                 secretKeyRef:
                   name: {{SERVICE_NAME}}
                   key: AWS_SECRET_ACCESS_KEY
-            - name: PDND_INTEROP_KEYS
+            - name: INTEROP_KEYS
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
