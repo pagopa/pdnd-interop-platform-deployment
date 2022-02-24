@@ -6,11 +6,12 @@
 . $(pwd)/kubernetes/configs/dev/commons.sh
 . $(pwd)/kubernetes/configs/dev/spid.sh
 . $(pwd)/kubernetes/configs/dev/api_gateway.sh
-. $(pwd)/kubernetes/configs/dev/party_management.sh
 . $(pwd)/kubernetes/configs/dev/catalog_management.sh
 . $(pwd)/kubernetes/configs/dev/catalog_process.sh
-. $(pwd)/kubernetes/configs/dev/party_registry_proxy.sh
+. $(pwd)/kubernetes/configs/dev/party_management.sh
 . $(pwd)/kubernetes/configs/dev/party_process.sh
+. $(pwd)/kubernetes/configs/dev/party_registry_proxy.sh
+. $(pwd)/kubernetes/configs/dev/purpose_process.sh
 
 # Calculated
 NAMESPACE=$NAMESPACE
