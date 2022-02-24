@@ -5,3 +5,4 @@ metadata:
   namespace: {{NAMESPACE}}
 data:
   INTEROP_KEYS_VAULT_PATH: "secret/data/interop/keys"
+  INTEROP_JWT_DURATION: "{{INTEROP_JWT_DURATION}}"

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+INTEROP_JWT_DURATION="99999999"
