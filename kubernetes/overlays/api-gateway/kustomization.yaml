@@ -2,4 +2,4 @@ bases:
 - ../../base
 patchesStrategicMerge:
 - configmap.yaml
-- ../../commons/database/db.yaml
+- deployment.yaml

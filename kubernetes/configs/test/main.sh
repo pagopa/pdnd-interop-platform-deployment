@@ -5,11 +5,13 @@
 
 . $(pwd)/kubernetes/configs/test/commons.sh
 . $(pwd)/kubernetes/configs/test/spid.sh
-. $(pwd)/kubernetes/configs/test/party_management.sh
+. $(pwd)/kubernetes/configs/test/api_gateway.sh
 . $(pwd)/kubernetes/configs/test/catalog_management.sh
 . $(pwd)/kubernetes/configs/test/catalog_process.sh
-. $(pwd)/kubernetes/configs/test/party_registry_proxy.sh
+. $(pwd)/kubernetes/configs/test/party_management.sh
 . $(pwd)/kubernetes/configs/test/party_process.sh
+. $(pwd)/kubernetes/configs/test/party_registry_proxy.sh
+. $(pwd)/kubernetes/configs/test/purpose_process.sh
 
 # Calculated
 NAMESPACE=$NAMESPACE
@@ -22,6 +24,7 @@ AUTHORIZATION_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $AUTHORIZATION_MANAGEM
 CATALOG_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $CATALOG_MANAGEMENT_IMAGE_VERSION)
 PARTY_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $PARTY_MANAGEMENT_IMAGE_VERSION)
 PARTY_REGISTRY_PROXY_INTERFACE_VERSION=$(shortVersion $PARTY_REGISTRY_PROXY_IMAGE_VERSION)
+PURPOSE_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $PURPOSE_MANAGEMENT_IMAGE_VERSION)
 USER_REGISTRY_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $USER_REGISTRY_MANAGEMENT_IMAGE_VERSION)
 
 USER_REGISTRY_MANAGEMENT_URL="https://$INTERNAL_APPLICATION_HOST/$USER_REGISTRY_MANAGEMENT_SERVICE_NAME/$USER_REGISTRY_MANAGEMENT_INTERFACE_VERSION"

@@ -124,13 +124,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: USER_REGISTRY_MANAGEMENT_URL
-            - name: WELL_KNOWN_URL
+            - name: DESTINATION_MAILS
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: WELL_KNOWN_URL
-            - name: SIGNATURE_VALIDATION_ENABLED
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: SIGNATURE_VALIDATION_ENABLED
+                  key: ONBOARDING_DESTINATION_MAILS

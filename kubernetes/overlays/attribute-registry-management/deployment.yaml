@@ -9,8 +9,8 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
-            - name: WELL_KNOWN_URL
+            - name: PARTY_PROXY_URL
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: WELL_KNOWN_URL
+                  key: PARTY_REGISTRY_PROXY_URL

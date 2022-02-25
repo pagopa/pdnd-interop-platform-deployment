@@ -17,7 +17,7 @@ spec:
     - host: "{{APPLICATION_HOST}}"
       http:
         paths:
-          - path: "/({{SERVICE_NAME}}.*)"
+          - path: "/({{APPLICATION_PATH}}.*)"
             pathType: Prefix
             backend:
               service:

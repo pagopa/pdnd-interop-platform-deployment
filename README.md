@@ -1,5 +1,5 @@
-# PDND Interoperability Platform Deployment
-Deployment of all services required to run the PDND Interoperability platform.
+# Interoperability Platform Deployment
+Deployment of all services required to run the Interoperability platform.
 
 Main features:
 - deployment of the whole platform with a single pipeline
@@ -42,11 +42,11 @@ These configurations will create a schema with the tables required to the backen
 The resulting schema will be named as
 `<namespace>_<schemaName>`
 
-## PDND Modules
-Modules specific to PDND Interoperability Platform
+## Interop Modules
+Modules specific to Interoperability Platform
 
 ### Backends
-Backends modules are based on the [PDND template](https://github.com/pagopa/pdnd-uservice-rest-template).\
+Backends modules are based on the [template](https://github.com/pagopa/pdnd-uservice-rest-template).\
 The deployment leverages on `kustomize`.
 
 ### Frontend

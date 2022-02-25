@@ -9,31 +9,31 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws
+                  key: AWS_SECRET_ACCESS_KEY
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
                   name: aws
                   key: AWS_ACCESS_KEY_ID
-            - name: USER_REGISTRY_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: user-registry-api-key
-                  key: USER_REGISTRY_API_KEY
             - name: AGREEMENT_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: AGREEMENT_MANAGEMENT_URL
-            - name: CATALOG_MANAGEMENT_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: CATALOG_MANAGEMENT_URL
             - name: AUTHORIZATION_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: AUTHORIZATION_MANAGEMENT_URL
+            - name: CATALOG_MANAGEMENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: CATALOG_MANAGEMENT_URL
             - name: PARTY_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
@@ -44,8 +44,28 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PURPOSE_MANAGEMENT_URL
-            - name: USER_REGISTRY_MANAGEMENT_URL
+            - name: STORAGE_TYPE
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: USER_REGISTRY_MANAGEMENT_URL
+                  key: STORAGE_TYPE
+            - name: STORAGE_CONTAINER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: STORAGE_CONTAINER
+            - name: STORAGE_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: STORAGE_ENDPOINT
+            - name: STORAGE_CREDENTIAL_ID
+              valueFrom:
+                secretKeyRef:
+                  name: storage
+                  key: STORAGE_USR
+            - name: STORAGE_CREDENTIAL_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: storage
+                  key: STORAGE_PSW
