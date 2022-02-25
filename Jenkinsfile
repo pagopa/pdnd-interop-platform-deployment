@@ -11,9 +11,9 @@ pipeline {
     //
     VAULT_TOKEN = credentials('vault-token')
     VAULT_ADDR = credentials('vault-addr')
-    PDND_INTEROP_KEYS = credentials('pdnd-interop-keys')
     SMTP_CREDENTIALS = credentials('smtp')
     USER_REGISTRY_API_KEY = credentials('user-registry-api-key')
+    ONBOARDING_DESTINATION_MAILS = credentials('onboarding-destination-mails')
     DOCKER_REGISTRY_CREDENTIALS = credentials('pdnd-nexus')
     ECR_CREDENTIALS = credentials('ecr-credentials')
     NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH)
@@ -167,18 +167,18 @@ pipeline {
                 )
               }
             }
-            stage('Party Mock Registry') {
-              steps {
-                applyKustomizeToDir(
-                  'overlays/party-mock-registry', 
-                  getVariableFromConf("PARTY_MOCK_REGISTRY_SERVICE_NAME"), 
-                  getVariableFromConf("PARTY_MOCK_REGISTRY_APPLICATION_PATH"), 
-                  getVariableFromConf("PARTY_MOCK_REGISTRY_IMAGE_VERSION"),
-                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
-                )
-              }
-            }
+            // stage('Party Mock Registry') {
+            //   steps {
+            //     applyKustomizeToDir(
+            //       'overlays/party-mock-registry', 
+            //       getVariableFromConf("PARTY_MOCK_REGISTRY_SERVICE_NAME"), 
+            //       getVariableFromConf("PARTY_MOCK_REGISTRY_APPLICATION_PATH"), 
+            //       getVariableFromConf("PARTY_MOCK_REGISTRY_IMAGE_VERSION"),
+            //       getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+            //       getVariableFromConf("INTERNAL_INGRESS_CLASS")
+            //     )
+            //   }
+            // }
             stage('Party Process') {
               steps {
                 applyKustomizeToDir(
@@ -402,7 +402,7 @@ void waitForServiceReady(String serviceName) {
       '''
 
       // Wait for pod readiness
-      sh "kubectl wait --for condition=Ready pod -l app=${serviceName} --namespace=\$NAMESPACE --timeout=90s"
+      sh "kubectl wait --for condition=Ready pod -l app=${serviceName} --namespace=\$NAMESPACE --timeout=120s"
 
       echo "Apply of ${serviceName} completed"
     }
@@ -480,8 +480,8 @@ void loadSecrets() {
         kubectl -n default get secret regcred -o yaml | sed s/"namespace: default"/"namespace: $NAMESPACE"/ |  kubectl apply -n $NAMESPACE -f -
       '''
 
+      loadSecret(getVariableFromConf("PARTY_PROCESS_SERVICE_NAME"), 'ONBOARDING_DESTINATION_MAILS', 'ONBOARDING_DESTINATION_MAILS')
       loadSecret('user-registry-api-key', 'USER_REGISTRY_API_KEY', 'USER_REGISTRY_API_KEY')
-      loadSecret('key-paths', 'PDND_INTEROP_KEYS', 'PDND_INTEROP_KEYS')
       loadCredentials('storage', 'STORAGE_USR', 'AWS_SECRET_ACCESS_USR', 'STORAGE_PSW', 'AWS_SECRET_ACCESS_PSW')
       loadCredentials('aws', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_USR', 'AWS_SECRET_ACCESS_KEY', 'AWS_SECRET_ACCESS_PSW')
       loadCredentials('postgres', 'POSTGRES_USR', 'POSTGRES_CREDENTIALS_USR', 'POSTGRES_PSW', 'POSTGRES_CREDENTIALS_PSW')

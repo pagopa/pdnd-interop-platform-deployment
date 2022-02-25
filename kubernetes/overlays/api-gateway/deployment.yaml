@@ -12,32 +12,62 @@ spec:
             - name: VAULT_ADDR
               valueFrom:
                 secretKeyRef:
-                  name: {{SERVICE_NAME}}
+                  name: vault
                   key: VAULT_ADDR
             - name: VAULT_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{SERVICE_NAME}}
+                  name: vault
                   key: VAULT_TOKEN
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  name: {{SERVICE_NAME}}
+                  name: aws
                   key: AWS_ACCESS_KEY_ID
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{SERVICE_NAME}}
+                  name: aws
                   key: AWS_SECRET_ACCESS_KEY
-            - name: PDND_INTEROP_KEYS
+            - name: JWT_ISSUER
               valueFrom:
-                secretKeyRef:
+                configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: PDND_INTEROP_KEYS
+                  key: INTERNAL_TOKEN_JWT_ISSUER
+            - name: JWT_SUBJECT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTERNAL_TOKEN_JWT_SUBJECT
+            - name: JWT_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTERNAL_TOKEN_JWT_AUDIENCE
+            - name: JWT_DURATION_SECONDS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTERNAL_TOKEN_JWT_DURATION_SECONDS
+            - name: RSA_PRIVATE_VAULT_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTEROP_RSA_PRIVATE_VAULT_PATH
+            - name: INTEROP_JWT_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: MAIN_AUDIENCE
+            - name: INTEROP_JWT_DURATION
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: MAIN_AUDIENCE
             - name: USER_REGISTRY_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{SERVICE_NAME}}
+                  name: user-registry-api-key
                   key: USER_REGISTRY_API_KEY
             - name: AGREEMENT_MANAGEMENT_URL
               valueFrom:
@@ -64,11 +94,6 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
-            - name: USER_REGISTRY_MANAGEMENT_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: USER_REGISTRY_MANAGEMENT_URL
             - name: PURPOSE_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:

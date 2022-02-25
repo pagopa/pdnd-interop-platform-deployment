@@ -124,3 +124,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: USER_REGISTRY_MANAGEMENT_URL
+            - name: DESTINATION_MAILS
+              valueFrom:
+                secretKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ONBOARDING_DESTINATION_MAILS
