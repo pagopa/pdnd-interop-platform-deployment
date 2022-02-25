@@ -13,6 +13,7 @@ pipeline {
     VAULT_ADDR = credentials('vault-addr')
     SMTP_CREDENTIALS = credentials('smtp')
     USER_REGISTRY_API_KEY = credentials('user-registry-api-key')
+    ONBOARDING_DESTINATION_MAILS = credentials('onboarding-destination-mails')
     DOCKER_REGISTRY_CREDENTIALS = credentials('pdnd-nexus')
     ECR_CREDENTIALS = credentials('ecr-credentials')
     NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH)
@@ -479,6 +480,7 @@ void loadSecrets() {
         kubectl -n default get secret regcred -o yaml | sed s/"namespace: default"/"namespace: $NAMESPACE"/ |  kubectl apply -n $NAMESPACE -f -
       '''
 
+      loadSecret(getVariableFromConf("PARTY_PROCESS_SERVICE_NAME"), 'ONBOARDING_DESTINATION_MAILS', 'ONBOARDING_DESTINATION_MAILS')
       loadSecret('user-registry-api-key', 'USER_REGISTRY_API_KEY', 'USER_REGISTRY_API_KEY')
       loadCredentials('storage', 'STORAGE_USR', 'AWS_SECRET_ACCESS_USR', 'STORAGE_PSW', 'AWS_SECRET_ACCESS_PSW')
       loadCredentials('aws', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_USR', 'AWS_SECRET_ACCESS_KEY', 'AWS_SECRET_ACCESS_PSW')
