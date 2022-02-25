@@ -44,16 +44,16 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: INTERNAL_TOKEN_JWT_AUDIENCE
-            - name: JWT_DURATION_MS
+            - name: JWT_DURATION_SECONDS
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: INTERNAL_TOKEN_JWT_DURATION_SECONDS
-            - name: INTEROP_KEYS
+            - name: RSA_PRIVATE_VAULT_PATH
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: INTEROP_KEYS_VAULT_PATH
+                  key: INTEROP_RSA_PRIVATE_VAULT_PATH
             - name: INTEROP_JWT_AUDIENCE
               valueFrom:
                 configMapKeyRef:
