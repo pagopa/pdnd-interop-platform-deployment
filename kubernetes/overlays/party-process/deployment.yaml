@@ -54,6 +54,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: EU_OFFICIAL_JOURNAL_URL
+            - name: SIGNATURE_VALIDATION_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SIGNATURE_VALIDATION_ENABLED
             - name: VAULT_ADDR
               valueFrom:
                 secretKeyRef:
