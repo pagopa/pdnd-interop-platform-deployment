@@ -102,8 +102,8 @@ pipeline {
                   getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME"),
                   getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_APPLICATION_PATH"), 
                   getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION"),
-                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
+                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
+                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
                 )
               }
             }
