@@ -69,3 +69,8 @@ spec:
                 secretKeyRef:
                   name: storage
                   key: STORAGE_PSW
+            - name: CONTRACT_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: CONTRACT_PATH
