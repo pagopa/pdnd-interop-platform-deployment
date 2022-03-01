@@ -4,7 +4,7 @@ metadata:
   name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 data:
-  INTEROP_RSA_PRIVATE_VAULT_PATH: "secret/data/interop/keys"
+  INTEROP_RSA_PRIVATE_VAULT_PATH: "secret/data/interop/keys/rsa/jwk/private"
   INTEROP_JWT_DURATION: "{{INTEROP_JWT_DURATION}}"
 
   INTERNAL_TOKEN_JWT_ISSUER: "{{INTERNAL_TOKEN_JWT_ISSUER}}"
