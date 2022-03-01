@@ -34,3 +34,8 @@ spec:
                 secretKeyRef:
                   name: storage
                   key: STORAGE_PSW
+            - name: ESERVICE_DOCS_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ESERVICE_DOCS_PATH
