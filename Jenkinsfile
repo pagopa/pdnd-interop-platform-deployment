@@ -252,6 +252,17 @@ pipeline {
                 )
               }
             }
+
+            stage('Jobs') {
+              stages {
+                stage('Attributes Loader') {
+                  steps {
+                    applyKubeFile('jobs/attributes-loader/configmap.yaml', "attributes-loader")
+                    applyKubeFile('jobs/attributes-loader/cronjob.yaml', "attributes-loader")
+                  }
+                }
+              }
+            }
             
             stage('Spid') {
               when { 
