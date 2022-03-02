@@ -24,6 +24,8 @@ API_GATEWAY_SERVICE_NAME="interop-be-api-gateway"
 
 FRONTEND_SERVICE_NAME="interop-frontend"
 
+JOB_ATTRIBUTES_LOADER_SERVICE_NAME="attributes-loader"
+
 AGREEMENT_MANAGEMENT_APPLICATION_PATH="agreement-management"
 AGREEMENT_PROCESS_APPLICATION_PATH="agreement-process"
 ATTRIBUTE_REGISTRY_MANAGEMENT_APPLICATION_PATH="attribute-registry-management"

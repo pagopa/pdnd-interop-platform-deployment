@@ -257,8 +257,8 @@ pipeline {
               stages {
                 stage('Attributes Loader') {
                   steps {
-                    applyKubeFile('jobs/attributes-loader/configmap.yaml', "attributes-loader")
-                    applyKubeFile('jobs/attributes-loader/cronjob.yaml', "attributes-loader")
+                    applyKubeFile('jobs/attributes-loader/configmap.yaml', getVariableFromConf("JOB_ATTRIBUTES_LOADER_SERVICE_NAME"))
+                    applyKubeFile('jobs/attributes-loader/cronjob.yaml', getVariableFromConf("JOB_ATTRIBUTES_LOADER_SERVICE_NAME"))
                   }
                 }
               }
