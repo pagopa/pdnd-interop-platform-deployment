@@ -252,6 +252,22 @@ pipeline {
                 )
               }
             }
+
+            stage('Jobs') {
+              stages {
+                stage('Attributes Loader') {
+                  environment {
+                    SERVICE_NAME = getVariableFromConf("JOB_ATTRIBUTES_LOADER_SERVICE_NAME")
+                    IMAGE_VERSION = getVariableFromConf("JOB_ATTRIBUTES_LOADER_IMAGE_VERSION")
+                    IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
+                  }
+                  steps {
+                    applyKubeFile('jobs/attributes-loader/configmap.yaml', SERVICE_NAME)
+                    applyKubeFile('jobs/attributes-loader/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST)
+                  }
+                }
+              }
+            }
             
             stage('Spid') {
               when { 

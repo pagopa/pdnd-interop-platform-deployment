@@ -14,3 +14,9 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PARTY_REGISTRY_PROXY_URL
+            - name: INTERNAL_AUDIENCE_ATTRIBUTES_LOADER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTERNAL_AUDIENCE_ATTRIBUTES_LOADER
+            

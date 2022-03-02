@@ -6,6 +6,7 @@
 . $(pwd)/kubernetes/configs/test/commons.sh
 . $(pwd)/kubernetes/configs/test/spid.sh
 . $(pwd)/kubernetes/configs/test/api_gateway.sh
+. $(pwd)/kubernetes/configs/test/attributes_loader.sh
 . $(pwd)/kubernetes/configs/test/catalog_management.sh
 . $(pwd)/kubernetes/configs/test/catalog_process.sh
 . $(pwd)/kubernetes/configs/test/party_management.sh
