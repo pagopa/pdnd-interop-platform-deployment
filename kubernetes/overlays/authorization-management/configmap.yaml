@@ -6,3 +6,5 @@ metadata:
 data:
   POSTGRES_DB: "persistence_management"
   POSTGRES_SCHEMA: "{{NAMESPACE}}_authz"
+
+  INTERNAL_AUDIENCE_M2M: "{{INTERNAL_TOKEN_JWT_AUDIENCE}}"
