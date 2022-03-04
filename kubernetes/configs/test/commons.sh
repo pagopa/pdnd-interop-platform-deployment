@@ -1,10 +1,10 @@
 #!/bin/bash
 
-INTERNAL_INGRESS_HOST="gateway-private.test.pdnd-interop.pagopa.it"
-INTERNAL_INGRESS_CLASS="nginx-internal"
+# INTERNAL_INGRESS_HOST="gateway-private.test.pdnd-interop.pagopa.it"
+# INTERNAL_INGRESS_CLASS="nginx-internal"
 # TODO Enable this when ready
-# EXTERNAL_INGRESS_HOST="gateway.test.pdnd-interop.pagopa.it"
-# EXTERNAL_INGRESS_CLASS="nginx"
+EXTERNAL_INGRESS_HOST="gateway.test.pdnd-interop.pagopa.it"
+EXTERNAL_INGRESS_CLASS="nginx"
 EXTERNAL_INGRESS_HOST="gateway-private.test.pdnd-interop.pagopa.it"
 EXTERNAL_INGRESS_CLASS="nginx-internal"
 ### End TODO
