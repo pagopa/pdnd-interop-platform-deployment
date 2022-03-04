@@ -15,5 +15,4 @@ POSTGRES_PORT="5432"
 REPLICAS=1
 
 MAIN_AUDIENCE="test.interop.pagopa.it"
-INTEROP_JWT_DURATION=600
 WELL_KNOWN_URL="https://pdnd-interop-test-public.s3.eu-central-1.amazonaws.com/.well-known/jwks.json"
