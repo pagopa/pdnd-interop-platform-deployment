@@ -63,7 +63,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: MAIN_AUDIENCE
+                  key: INTEROP_JWT_DURATION
             - name: USER_REGISTRY_API_KEY
               valueFrom:
                 secretKeyRef:
