@@ -19,6 +19,7 @@ data:
         }
 
         location / {
+            resolver 8.8.8.8;
             proxy_pass http://{{ADMIN_IDP_SERVICE_URL}};
         }
 
