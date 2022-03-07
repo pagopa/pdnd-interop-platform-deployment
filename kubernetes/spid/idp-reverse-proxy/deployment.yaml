@@ -21,7 +21,7 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
-              containerPort: 8088
+              containerPort: 80
               protocol: TCP
           volumeMounts:
             - name: default-conf

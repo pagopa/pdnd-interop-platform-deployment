@@ -23,11 +23,11 @@ spec:
               service:
                 name: {{SERVICE_NAME}}
                 port: 
-                  number: 8088
+                  number: 80
           - path: "/"
             pathType: Prefix
             backend:
               service:
                 name: {{SERVICE_NAME}}
                 port: 
-                  number: 8088
+                  number: 80

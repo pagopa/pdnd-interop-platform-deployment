@@ -19,8 +19,7 @@ data:
         }
 
         location / {
-            resolver 8.8.8.8;
-            proxy_pass http://{{ADMIN_IDP_SERVICE_URL}};
+            proxy_pass http://{{IDP_SERVICE_NAME}}:8088;
         }
 
         error_page   500 502 503 504  /50x.html;
