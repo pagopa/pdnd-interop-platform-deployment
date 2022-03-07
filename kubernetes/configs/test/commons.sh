@@ -3,10 +3,10 @@
 INTERNAL_INGRESS_HOST="gateway-private.test.pdnd-interop.pagopa.it"
 INTERNAL_INGRESS_CLASS="nginx-internal"
 # TODO Enable this when ready
-EXTERNAL_INGRESS_HOST="gateway.test.pdnd-interop.pagopa.it"
-EXTERNAL_INGRESS_CLASS="nginx"
-# EXTERNAL_INGRESS_HOST="gateway-private.test.pdnd-interop.pagopa.it"
-# EXTERNAL_INGRESS_CLASS="nginx-internal"
+# EXTERNAL_INGRESS_HOST="gateway.test.pdnd-interop.pagopa.it"
+# EXTERNAL_INGRESS_CLASS="nginx"
+EXTERNAL_INGRESS_HOST="gateway-private.test.pdnd-interop.pagopa.it"
+EXTERNAL_INGRESS_CLASS="nginx-internal"
 ### End TODO
 
 REPOSITORY="505630707203.dkr.ecr.eu-central-1.amazonaws.com"
