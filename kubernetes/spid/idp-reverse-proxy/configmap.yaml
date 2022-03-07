@@ -19,7 +19,7 @@ data:
         }
 
         location / {
-            proxy_pass {{ADMIN_IDP_SERVICE_URL}};
+            proxy_pass http://{{ADMIN_IDP_SERVICE_URL}};
         }
 
         error_page   500 502 503 504  /50x.html;
