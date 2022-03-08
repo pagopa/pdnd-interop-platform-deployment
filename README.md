@@ -63,6 +63,10 @@ This service must be reachable from the Frontend client.
 
 ### Identity Provider
 [spid-testenv2](https://github.com/italia/spid-testenv2) Identity Provider mock.\
+The service url is `https://<namespace>-idp-admin.<internalHostName>`\
+
+### Identity Provider Reverse Proxy
+The Identity Provider reverse proxy is required in order to avoid exposing IDP admin endpoints, such as users list and creation.\
 The service url is `https://<namespace>-idp.<externalHostName>`\
 This service must be reachable from the Frontend client.
 
