@@ -321,6 +321,18 @@ pipeline {
                     waitForServiceReady("spid-testenv2")
                   }
                 }
+
+                stage('IdP Proxy') {
+                  steps {
+                    applyKubeFile('spid/idp-reverse-proxy/ingress.yaml', "idp-reverse-proxy")
+                    applyKubeFile('spid/idp-reverse-proxy/configmap.yaml', "idp-reverse-proxy")
+                    applyKubeFile('spid/idp-reverse-proxy/deployment.yaml', "idp-reverse-proxy")
+                    applyKubeFile('spid/idp-reverse-proxy/service.yaml', "idp-reverse-proxy")
+
+                    waitForServiceReady("idp-reverse-proxy")
+                  }
+                }
+
               }
             }
           }
