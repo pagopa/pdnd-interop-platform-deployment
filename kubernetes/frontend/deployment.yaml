@@ -36,7 +36,11 @@ spec:
             postStart:
               exec:
                 # Inject current hostname into the generic build
-                command: ["/bin/sh", "-c", "sed -i 's/___PUBLIC_URL_PLACEHOLDER___/https:\\/\\/{{EXTERNAL_APPLICATION_HOST}}\\/ui/g' /usr/share/nginx/html/ui/index.html"]
+                # Note to future devops: forgive me
+                command: 
+                  - "/bin/sh"
+                  - "-c"
+                  - "sed -i 's/___PUBLIC_URL_PLACEHOLDER___/https:\\/\\/{{EXTERNAL_APPLICATION_HOST}}\\/ui/g' /usr/share/nginx/html/ui/index.html && find /usr/share/nginx/html/ui/static/js/ -type f -name '*.js' -print0 | xargs -0 sed -i'' -e 's|___PUBLIC_URL_PLACEHOLDER___|https\\://{{EXTERNAL_APPLICATION_HOST}}/ui|g'"
       volumes:
         - name: default-conf
           configMap:
