@@ -21,7 +21,3 @@ data:
             root   /usr/share/nginx/html;
         }
     }
-  env.js: |-
-    window.pagopa_env = {
-      API_HOST: "{{EXTERNAL_APPLICATION_HOST}}"
-    }
