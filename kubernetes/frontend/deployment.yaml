@@ -32,15 +32,15 @@ spec:
               mountPath: /etc/nginx/conf.d/default.conf
               subPath: default.conf
               readOnly: true
-          lifecycle:
-            postStart:
-              exec:
-                # Inject current hostname into the generic build
-                # Note to future devops: forgive me
-                command: 
-                  - "/bin/sh"
-                  - "-c"
-                  - "sed -i 's|___PUBLIC_URL_PLACEHOLDER___|https\\://{{EXTERNAL_APPLICATION_HOST}}/ui/|g' /usr/share/nginx/html/ui/index.html"
+          # lifecycle:
+          #   postStart:
+          #     exec:
+          #       # Inject current hostname into the generic build
+          #       # Note to future devops: forgive me
+          #       command: 
+          #         - "/bin/sh"
+          #         - "-c"
+          #         - "sed -i 's|___PUBLIC_URL_PLACEHOLDER___|https\\://{{EXTERNAL_APPLICATION_HOST}}/ui/|g' /usr/share/nginx/html/ui/index.html"
       volumes:
         - name: default-conf
           configMap:
