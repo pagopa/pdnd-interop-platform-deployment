@@ -40,7 +40,7 @@ spec:
                 command: 
                   - "/bin/sh"
                   - "-c"
-                  - "sed -i 's|___PUBLIC_URL_PLACEHOLDER___|https\\://{{EXTERNAL_APPLICATION_HOST}}/ui|g' /usr/share/nginx/html/ui/index.html"
+                  - "sed -i 's|___PUBLIC_URL_PLACEHOLDER___|https\\://{{EXTERNAL_APPLICATION_HOST}}/ui/|g' /usr/share/nginx/html/ui/index.html"
       volumes:
         - name: default-conf
           configMap:
