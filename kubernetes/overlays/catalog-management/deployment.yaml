@@ -39,3 +39,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ESERVICE_DOCS_PATH
+            - name: ENABLED_PROJECTIONS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ENABLED_PROJECTIONS
