@@ -11,4 +11,5 @@ POSTGRES_PORT="5432"
 REPLICAS=1
 
 MAIN_AUDIENCE="dev.interop.pagopa.it"
+ENABLED_PROJECTIONS: "false"
 WELL_KNOWN_URL="https://pdnd-interop-dev-public.s3.eu-central-1.amazonaws.com/.well-known/jwks.json"
