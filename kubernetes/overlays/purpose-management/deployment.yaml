@@ -9,14 +9,8 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
-            - name: INTERNAL_AUDIENCE_M2M
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: INTERNAL_AUDIENCE_M2M
             - name: ENABLED_PROJECTIONS
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ENABLED_PROJECTIONS
-            

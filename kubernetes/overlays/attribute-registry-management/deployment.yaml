@@ -19,4 +19,9 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: INTERNAL_AUDIENCE_ATTRIBUTES_LOADER
+            - name: ENABLED_PROJECTIONS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ENABLED_PROJECTIONS
             
