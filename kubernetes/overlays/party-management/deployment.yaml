@@ -39,3 +39,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: TOKEN_VALIDITY_HOURS
+            - name: ENABLED_PROJECTIONS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ENABLED_PROJECTIONS
