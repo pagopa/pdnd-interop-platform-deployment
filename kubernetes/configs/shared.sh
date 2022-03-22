@@ -3,7 +3,7 @@
 # Functions
 # TODO Take version from image label
 shortVersion() {
-  echo $1 | grep -oE '[0-9]+\.[0-9]+'
+  echo $1 | grep  -oE '^[0-9]+\.[0-9]+\.[0-9]+$' | grep -oE '[0-9]+\.[0-9]+' || echo "0.0"
 }
 
 AGREEMENT_MANAGEMENT_SERVICE_NAME="interop-be-agreement-management"
