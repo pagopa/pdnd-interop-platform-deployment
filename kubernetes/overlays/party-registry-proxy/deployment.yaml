@@ -44,6 +44,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PARTY_MOCK_REGISTRY_CATEGORIES_URL
+            - name: M2M_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTERNAL_AUDIENCE_ATTRIBUTES_LOADER
           volumeMounts:
             - name: categories-index-volume
               mountPath: /opt/docker/index/categories
