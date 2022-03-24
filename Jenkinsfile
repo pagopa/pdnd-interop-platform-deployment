@@ -167,18 +167,18 @@ pipeline {
                 )
               }
             }
-            // stage('Party Mock Registry') {
-            //   steps {
-            //     applyKustomizeToDir(
-            //       'overlays/party-mock-registry', 
-            //       getVariableFromConf("PARTY_MOCK_REGISTRY_SERVICE_NAME"), 
-            //       getVariableFromConf("PARTY_MOCK_REGISTRY_APPLICATION_PATH"), 
-            //       getVariableFromConf("PARTY_MOCK_REGISTRY_IMAGE_VERSION"),
-            //       getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-            //       getVariableFromConf("INTERNAL_INGRESS_CLASS")
-            //     )
-            //   }
-            // }
+            stage('Party Mock Registry') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/party-mock-registry', 
+                  getVariableFromConf("PARTY_MOCK_REGISTRY_SERVICE_NAME"), 
+                  getVariableFromConf("PARTY_MOCK_REGISTRY_APPLICATION_PATH"), 
+                  getVariableFromConf("PARTY_MOCK_REGISTRY_IMAGE_VERSION"),
+                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
+                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
+                )
+              }
+            }
             stage('Party Process') {
               steps {
                 applyKustomizeToDir(

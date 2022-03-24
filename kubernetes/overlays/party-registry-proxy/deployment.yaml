@@ -29,6 +29,21 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PARTY_REGISTRY_INSTITUTIONS_URL
+            - name: MOCK_ORIGIN
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: MOCK_ORIGIN
+            - name: PARTY_MOCK_REGISTRY_INSTITUTIONS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PARTY_MOCK_REGISTRY_INSTITUTIONS_URL
+            - name: PARTY_MOCK_REGISTRY_CATEGORIES_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PARTY_MOCK_REGISTRY_CATEGORIES_URL
           volumeMounts:
             - name: categories-index-volume
               mountPath: /opt/docker/index/categories
