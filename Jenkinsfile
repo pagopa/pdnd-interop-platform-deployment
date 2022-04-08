@@ -253,6 +253,19 @@ pipeline {
               }
             }
 
+            stage('Authorization Server') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/authorization-server', 
+                  getVariableFromConf("AUTHORIZATION_SERVER_SERVICE_NAME"),
+                  getVariableFromConf("AUTHORIZATION_SERVER_APPLICATION_PATH"),
+                  getVariableFromConf("AUTHORIZATION_SERVER_IMAGE_VERSION"),
+                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
+                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+                )
+              }
+            }
+
             stage('Jobs') {
               stages {
                 stage('Attributes Loader') {
