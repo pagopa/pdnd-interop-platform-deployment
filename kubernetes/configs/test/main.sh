@@ -24,7 +24,7 @@ USER_REGISTRY_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $USER_REGISTRY_MANAGEM
 USER_REGISTRY_MANAGEMENT_URL="https://$INTERNAL_APPLICATION_HOST/$USER_REGISTRY_MANAGEMENT_SERVICE_NAME/$USER_REGISTRY_MANAGEMENT_INTERFACE_VERSION"
 
 . $(pwd)/kubernetes/configs/test/spid.sh
-. $(pwd)/kubernetes/configs/test/api_gateway.sh
+. $(pwd)/kubernetes/configs/test/authorization_server.sh
 . $(pwd)/kubernetes/configs/test/attributes_loader.sh
 . $(pwd)/kubernetes/configs/test/catalog_management.sh
 . $(pwd)/kubernetes/configs/test/catalog_process.sh
