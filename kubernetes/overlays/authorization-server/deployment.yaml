@@ -59,6 +59,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: INTEROP_JWT_ISSUER
+            - name: CLIENT_ASSERTION_JWT_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: CLIENT_ASSERTION_JWT_AUDIENCE
             - name: AUTHORIZATION_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
