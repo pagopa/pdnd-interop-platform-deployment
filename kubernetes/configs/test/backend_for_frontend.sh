@@ -1,4 +1,4 @@
 #!/bin/bash
 
-INTEROP_JWT_DURATION=600
-INTEROP_JWT_ISSUER="test.interop.pagopa.it"
+INTEROP_SESSION_TOKEN_DURATION=600
+INTEROP_SESSION_TOKEN_ISSUER="test.interop.pagopa.it"
