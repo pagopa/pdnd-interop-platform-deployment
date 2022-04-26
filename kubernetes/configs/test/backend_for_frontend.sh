@@ -1,0 +1,4 @@
+#!/bin/bash
+
+INTEROP_SESSION_TOKEN_DURATION=600
+INTEROP_SESSION_TOKEN_ISSUER="test.interop.pagopa.it"

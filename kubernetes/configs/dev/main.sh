@@ -31,6 +31,7 @@ USER_REGISTRY_MANAGEMENT_URL="https://$INTERNAL_APPLICATION_HOST/$USER_REGISTRY_
 . $(pwd)/kubernetes/configs/dev/spid.sh
 . $(pwd)/kubernetes/configs/dev/authorization_server.sh
 . $(pwd)/kubernetes/configs/dev/attributes_loader.sh
+. $(pwd)/kubernetes/configs/dev/backend_for_frontend.sh
 . $(pwd)/kubernetes/configs/dev/catalog_management.sh
 . $(pwd)/kubernetes/configs/dev/catalog_process.sh
 . $(pwd)/kubernetes/configs/dev/party_management.sh
