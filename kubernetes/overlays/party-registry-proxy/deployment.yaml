@@ -9,6 +9,11 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
+            - name: ACCEPTED_AUDIENCES
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ACCEPTED_AUDIENCES
             - name: VAULT_ADDR
               valueFrom:
                 secretKeyRef:
@@ -44,11 +49,6 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PARTY_MOCK_REGISTRY_CATEGORIES_URL
-            - name: M2M_AUDIENCE
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: INTERNAL_AUDIENCE_ATTRIBUTES_LOADER
           volumeMounts:
             - name: categories-index-volume
               mountPath: /opt/docker/index/categories

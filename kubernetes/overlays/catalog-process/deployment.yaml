@@ -9,6 +9,11 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
+            - name: ACCEPTED_AUDIENCES
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ACCEPTED_AUDIENCES
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
