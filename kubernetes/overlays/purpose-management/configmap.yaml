@@ -6,3 +6,5 @@ metadata:
 data:
   POSTGRES_DB: "persistence_management"
   POSTGRES_SCHEMA: "{{NAMESPACE}}_purpose"
+  PERSISTENCE_EVENTS_QUEUE_URL: "{{PERSISTENCE_EVENTS_QUEUE_URL}}"
+  AWS_REGION: "{{AWS_REGION}}"
