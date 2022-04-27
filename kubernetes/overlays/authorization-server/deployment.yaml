@@ -54,11 +54,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: GENERATED_M2M_JWT_DURATION_SECONDS
-            - name: GENERATED_M2M_JWT_AUDIENCE
+            - name: GENERATED_JWT_ISSUER
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: GENERATED_M2M_JWT_AUDIENCE
+                  key: GENERATED_JWT_ISSUER
             - name: CLIENT_ASSERTION_JWT_AUDIENCE
               valueFrom:
                 configMapKeyRef:
