@@ -10,6 +10,9 @@ POSTGRES_HOST="pdnd-interop-dev-rds.c9zr6t2swdpb.eu-central-1.rds.amazonaws.com"
 POSTGRES_PORT="5432"
 REPLICAS=1
 
-MAIN_AUDIENCE="dev.interop.pagopa.it"
 ENABLED_PROJECTIONS="false"
 WELL_KNOWN_URL="https://pdnd-interop-dev-public.s3.eu-central-1.amazonaws.com/.well-known/jwks.json"
+
+UI_JWT_AUDIENCE="dev.interop.pagopa.it/ui"
+M2M_JWT_AUDIENCE="dev.interop.pagopa.it/m2m"
+INTERNAL_JWT_AUDIENCE="dev.interop.pagopa.it/internal"
