@@ -514,15 +514,16 @@ void loadCredentials(String secretName, String userSecret, String userVar, Strin
   '''
 }
 
-void loadSecret(String secretName, String key, String value) {
-  sh'''
-    # Allow to update secret if already exists
-    kubectl -n $NAMESPACE create secret generic ''' + secretName + ''' \
-      --save-config \
-      --dry-run=client \
-      --from-literal=''' + key + '=$' + value + ''' \
-      -o yaml | kubectl apply -f -
-  '''
+void loadSecret(String secretName, String... variablesMappings) {
+    varSize = variablesMappings.size()
+    assert(varSize % 2 == 0)
+    header = 'kubectl -n $NAMESPACE create secret generic ' + secretName + ' --save-config --dry-run=client '
+    command = header
+    for (i = 0; i < varSize; i += 2) {
+        command = command + '--from-literal=' + variablesMappings[i] + '=$' + variablesMappings[i+1] + ' '
+    }
+    command = command + '-o yaml | kubectl apply -f -'
+    sh(command)
 }
 
 void loadSecrets() {

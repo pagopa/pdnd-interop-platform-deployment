@@ -9,6 +9,11 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
+            - name: AWS_ACCOUNT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws
+                  key: AWS_ACCOUNT_ID
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
@@ -19,11 +24,6 @@ spec:
                 secretKeyRef:
                   name: aws
                   key: AWS_ACCESS_KEY_ID
-            - name: ACCEPTED_AUDIENCES
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: ACCEPTED_AUDIENCES
             - name: ENABLED_PROJECTIONS
               valueFrom:
                 configMapKeyRef:
@@ -35,7 +35,9 @@ spec:
                   name: {{SERVICE_NAME}}
                   key: AWS_REGION
             - name: PERSISTENCE_EVENTS_QUEUE_URL
+              value: "{{AWS_SQS_DOMAIN}}/$(AWS_ACCOUNT_ID)/{{PERSISTENCE_QUEUE_NAME}}"
+            - name: ACCEPTED_AUDIENCES
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: PERSISTENCE_EVENTS_QUEUE_URL
+                  key: ACCEPTED_AUDIENCES
