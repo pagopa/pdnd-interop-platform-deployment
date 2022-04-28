@@ -9,11 +9,11 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
-            - name: INTEROP_JWT_AUDIENCE
+            - name: ACCEPTED_AUDIENCES
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: MAIN_AUDIENCE
+                  key: ACCEPTED_AUDIENCES
             - name: AGREEMENT_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
