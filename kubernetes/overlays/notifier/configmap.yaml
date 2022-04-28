@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+data:
+  DYNAMO_TABLE_NAME: "{{DYNAMO_TABLE_NAME}}"
+  QUEUE_READER_THREAD_POOL_SIZE: "{{QUEUE_READER_THREAD_POOL_SIZE}}"

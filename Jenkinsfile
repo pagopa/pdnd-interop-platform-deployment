@@ -279,6 +279,19 @@ pipeline {
               }
             }
 
+            stage('Notifier') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/authorization-server', 
+                  getVariableFromConf("NOTIFIER_SERVICE_NAME"),
+                  getVariableFromConf("NOTIFIER_APPLICATION_PATH"),
+                  getVariableFromConf("NOTIFIER_IMAGE_VERSION"),
+                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
+                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+                )
+              }
+            }
+
             stage('Jobs') {
               stages {
                 stage('Attributes Loader') {
