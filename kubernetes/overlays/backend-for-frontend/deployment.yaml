@@ -9,6 +9,11 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
+            - name: ACCEPTED_AUDIENCES
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ACCEPTED_AUDIENCES
             - name: VAULT_ADDR
               valueFrom:
                 secretKeyRef:
@@ -24,18 +29,18 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: INTEROP_RSA_PRIVATE_VAULT_PATH
-            - name: INTEROP_JWT_AUDIENCE
+            - name: GENERATED_JWT_AUDIENCE
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: MAIN_AUDIENCE
-            - name: INTEROP_JWT_DURATION
+                  key: GENERATED_JWT_AUDIENCE
+            - name: GENERATED_JWT_DURATION_SECONDS
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: INTEROP_JWT_DURATION
-            - name: INTEROP_JWT_ISSUER
+                  key: GENERATED_JWT_DURATION_SECONDS
+            - name: GENERATED_JWT_ISSUER
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: INTEROP_JWT_ISSUER
+                  key: GENERATED_JWT_ISSUER

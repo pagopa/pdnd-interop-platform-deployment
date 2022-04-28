@@ -15,6 +15,9 @@ REPLICAS=1
 PERSISTENCE_EVENTS_QUEUE_URL="https://sqs.eu-central-1.amazonaws.com/895646477129/persistence-events.fifo"
 AWS_REGION="eu-central-1"
 
-MAIN_AUDIENCE="test.interop.pagopa.it"
 ENABLED_PROJECTIONS="true"
 WELL_KNOWN_URL="https://pdnd-interop-test-public.s3.eu-central-1.amazonaws.com/.well-known/jwks.json"
+
+UI_JWT_AUDIENCE="test.interop.pagopa.it/ui"
+M2M_JWT_AUDIENCE="test.interop.pagopa.it/m2m"
+INTERNAL_JWT_AUDIENCE="test.interop.pagopa.it/internal"

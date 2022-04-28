@@ -9,16 +9,16 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
+            - name: ACCEPTED_AUDIENCES
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ACCEPTED_AUDIENCES
             - name: PARTY_PROXY_URL
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PARTY_REGISTRY_PROXY_URL
-            - name: INTERNAL_AUDIENCE_ATTRIBUTES_LOADER
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: INTERNAL_AUDIENCE_ATTRIBUTES_LOADER
             - name: ENABLED_PROJECTIONS
               valueFrom:
                 configMapKeyRef:
