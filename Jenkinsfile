@@ -6,6 +6,7 @@ pipeline {
     // STAGE variable should be set as Global Properties
     STAGE = "${env.STAGE}"
     // TODO Create one set of credentials for each service
+    AWS_ACCOUNT_ID = credentials('aws-account-id')
     AWS_SECRET_ACCESS = credentials('aws-credentials')
     POSTGRES_CREDENTIALS = credentials('postgres-db')
     //
@@ -502,18 +503,6 @@ String normalizeNamespaceName(String namespace) {
      .toLowerCase()
 }
 
-void loadCredentials(String secretName, String userSecret, String userVar, String passwordSecret, String passwordVar) {
-  sh'''
-    # Allow to update secret if already exists
-    kubectl -n $NAMESPACE create secret generic ''' + secretName + ''' \
-      --save-config \
-      --dry-run=client \
-      --from-literal=''' + userSecret + '=$' + userVar + ''' \
-      --from-literal=''' + passwordSecret + '=$' + passwordVar + ''' \
-      -o yaml | kubectl apply -f -
-  '''
-}
-
 void loadSecret(String secretName, String... variablesMappings) {
     varSize = variablesMappings.size()
     assert(varSize % 2 == 0)
@@ -537,11 +526,11 @@ void loadSecrets() {
 
       loadSecret(getVariableFromConf("PARTY_PROCESS_SERVICE_NAME"), 'ONBOARDING_DESTINATION_MAILS', 'ONBOARDING_DESTINATION_MAILS')
       loadSecret('user-registry-api-key', 'USER_REGISTRY_API_KEY', 'USER_REGISTRY_API_KEY')
-      loadCredentials('storage', 'STORAGE_USR', 'AWS_SECRET_ACCESS_USR', 'STORAGE_PSW', 'AWS_SECRET_ACCESS_PSW')
-      loadCredentials('aws', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_USR', 'AWS_SECRET_ACCESS_KEY', 'AWS_SECRET_ACCESS_PSW')
-      loadCredentials('postgres', 'POSTGRES_USR', 'POSTGRES_CREDENTIALS_USR', 'POSTGRES_PSW', 'POSTGRES_CREDENTIALS_PSW')
-      loadCredentials('vault', 'VAULT_ADDR', 'VAULT_ADDR', 'VAULT_TOKEN', 'VAULT_TOKEN')
-      loadCredentials('smtp', 'SMTP_USR', 'SMTP_CREDENTIALS_USR', 'SMTP_PSW', 'SMTP_CREDENTIALS_PSW')
+      loadSecret('storage', 'STORAGE_USR', 'AWS_SECRET_ACCESS_USR', 'STORAGE_PSW', 'AWS_SECRET_ACCESS_PSW')
+      loadSecret('aws', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_USR', 'AWS_SECRET_ACCESS_KEY', 'AWS_SECRET_ACCESS_PSW', 'AWS_ACCOUNT_ID', 'AWS_ACCOUNT_ID')
+      loadSecret('postgres', 'POSTGRES_USR', 'POSTGRES_CREDENTIALS_USR', 'POSTGRES_PSW', 'POSTGRES_CREDENTIALS_PSW')
+      loadSecret('vault', 'VAULT_ADDR', 'VAULT_ADDR', 'VAULT_TOKEN', 'VAULT_TOKEN')
+      loadSecret('smtp', 'SMTP_USR', 'SMTP_CREDENTIALS_USR', 'SMTP_PSW', 'SMTP_CREDENTIALS_PSW')
     }
   }
 }
