@@ -70,4 +70,10 @@ spec:
                     configMapKeyRef:
                       name: {{SERVICE_NAME}}
                       key: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
-            
+              resources:
+                requests:
+                  memory: "512Mi"
+                  cpu: "30m"
+                limits:
+                  memory: "1Gi"
+                  cpu: "500m"

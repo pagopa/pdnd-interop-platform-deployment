@@ -33,6 +33,13 @@ spec:
             - name: idp-http-certs
               mountPath: "/app/certs"
               readOnly: true
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "15m"
+            limits:
+              memory: "512Mi"
+              cpu: "100m"
       initContainers:
         # Used to initialize users file if not already created
         # Note: A better solution is to use dataSourceRef on pvc, but it is available on k8s 1.22+
@@ -45,6 +52,13 @@ spec:
               subPath: "users.json"
             - name: users
               mountPath: "/app/conf"
+          resources:
+            requests:
+              memory: "16Mi"
+              cpu: "10m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
       volumes:
         - name: config
           configMap:

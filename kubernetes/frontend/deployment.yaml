@@ -36,6 +36,13 @@ spec:
               mountPath: /usr/share/nginx/html/ui/env.js
               subPath: env.js
               readOnly: true
+          resources:
+            requests:
+              memory: "16Mi"
+              cpu: "10m"
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
       volumes:
         - name: default-conf
           configMap:
