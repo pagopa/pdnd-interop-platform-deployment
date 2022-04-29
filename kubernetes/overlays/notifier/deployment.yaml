@@ -76,11 +76,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: INTEROP_RSA_PRIVATE_VAULT_PATH
-            - name: MAIN_AUDIENCE
+            - name: ACCEPTED_AUDIENCES
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: MAIN_AUDIENCE
+                  key: ACCEPTED_AUDIENCES
             - name: WELL_KNOWN_URL
               valueFrom:
                 configMapKeyRef:
