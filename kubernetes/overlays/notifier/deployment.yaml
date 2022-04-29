@@ -40,10 +40,7 @@ spec:
                   name: {{SERVICE_NAME}}
                   key: AWS_REGION
             - name: PERSISTENCE_EVENTS_QUEUE_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: PERSISTENCE_EVENTS_QUEUE_URL
+              value: "{{AWS_SQS_DOMAIN}}/$(AWS_ACCOUNT_ID)/{{PERSISTENCE_QUEUE_NAME}}"
             - name: VAULT_ADDR
               valueFrom:
                 secretKeyRef:
@@ -89,13 +86,13 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: WELL_KNOWN_URL  
-            - name: DYNAMO_TABLE_NAME
+            - name: NOTIFICATION_DYNAMO_TABLE_NAME
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: DYNAMO_TABLE_NAME
-            - name: QUEUE_READER_THREAD_POOL_SIZE
+                  key: NOTIFICATION_DYNAMO_TABLE_NAME
+            - name: NOTIFICATION_QUEUE_READER_THREAD_POOL_SIZE
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: QUEUE_READER_THREAD_POOL_SIZE
+                  key: NOTIFICATION_QUEUE_READER_THREAD_POOL_SIZE
