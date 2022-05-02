@@ -50,3 +50,10 @@ spec:
                 secretKeyRef:
                   name: user-registry-api-key
                   key: USER_REGISTRY_API_KEY
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "10m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"

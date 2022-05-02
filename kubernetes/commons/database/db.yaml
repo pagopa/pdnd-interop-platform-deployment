@@ -44,6 +44,13 @@ spec:
           volumeMounts:
             - name: migrations-files
               mountPath: "/flyway/sql"
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "10m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
       containers:
         - name: {{SERVICE_NAME}}
           env:

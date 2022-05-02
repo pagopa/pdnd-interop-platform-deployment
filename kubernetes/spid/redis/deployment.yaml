@@ -39,3 +39,10 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: REDIS_MAXMEMORY
+          resources:
+            requests:
+              memory: "8Mi"
+              cpu: "10m"
+            limits:
+              memory: "512Mi"
+              cpu: "200m"

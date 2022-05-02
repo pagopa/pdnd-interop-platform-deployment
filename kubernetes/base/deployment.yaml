@@ -65,4 +65,10 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: WELL_KNOWN_URL
-
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "30m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
