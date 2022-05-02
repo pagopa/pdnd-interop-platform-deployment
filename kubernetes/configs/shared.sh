@@ -23,6 +23,7 @@ PURPOSE_PROCESS_SERVICE_NAME="interop-be-purpose-process"
 USER_REGISTRY_MANAGEMENT_SERVICE_NAME="pdnd-interop-uservice-user-registry-management"
 API_GATEWAY_SERVICE_NAME="interop-be-api-gateway"
 BACKEND_FOR_FRONTEND_SERVICE_NAME="interop-be-backend-for-frontend"
+NOTIFIER_SERVICE_NAME="interop-be-notifier"
 
 FRONTEND_SERVICE_NAME="interop-frontend"
 
@@ -45,3 +46,4 @@ PURPOSE_PROCESS_APPLICATION_PATH="purpose-process"
 USER_REGISTRY_MANAGEMENT_APPLICATION_PATH="pdnd-interop-uservice-user-registry-management"
 API_GATEWAY_APPLICATION_PATH="api-gateway"
 BACKEND_FOR_FRONTEND_SERVICE_PATH="backend-for-frontend"
+NOTIFIER_APPLICATION_PATH="notifier"
