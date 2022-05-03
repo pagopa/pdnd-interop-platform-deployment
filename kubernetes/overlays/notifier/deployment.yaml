@@ -96,3 +96,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: NOTIFICATION_QUEUE_READER_THREAD_POOL_SIZE
+            - name: ENABLED_PROJECTIONS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ENABLED_PROJECTIONS
