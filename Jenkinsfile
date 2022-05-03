@@ -283,7 +283,7 @@ pipeline {
             stage('Notifier') {
               steps {
                 applyKustomizeToDir(
-                  'overlays/authorization-server', 
+                  'overlays/notifier', 
                   getVariableFromConf("NOTIFIER_SERVICE_NAME"),
                   getVariableFromConf("NOTIFIER_APPLICATION_PATH"),
                   getVariableFromConf("NOTIFIER_IMAGE_VERSION"),
