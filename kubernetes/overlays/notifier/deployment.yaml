@@ -86,12 +86,12 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: WELL_KNOWN_URL  
-            - name: NOTIFICATION_DYNAMO_TABLE_NAME
+            - name: DYNAMO_TABLE_NAME
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: NOTIFICATION_DYNAMO_TABLE_NAME
-            - name: NOTIFICATION_QUEUE_READER_THREAD_POOL_SIZE
+            - name: QUEUE_READER_THREAD_POOL_SIZE
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
