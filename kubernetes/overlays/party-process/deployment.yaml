@@ -9,11 +9,11 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
-            - name: ACCEPTED_AUDIENCES
+            - name: MAIN_AUDIENCE
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: ACCEPTED_AUDIENCES
+                  key: MAIN_AUDIENCE
             - name: MAIL_TEMPLATE_PATH
               valueFrom:
                 configMapKeyRef:
