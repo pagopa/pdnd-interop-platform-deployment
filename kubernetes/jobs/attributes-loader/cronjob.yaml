@@ -60,11 +60,21 @@ spec:
                     configMapKeyRef:
                       name: {{SERVICE_NAME}}
                       key: JWT_DURATION_SECONDS
-                - name: RSA_PRIVATE_VAULT_PATH
+                - name: EC_KEYS_IDENTIFIERS
                   valueFrom:
                     configMapKeyRef:
                       name: {{SERVICE_NAME}}
-                      key: RSA_PRIVATE_VAULT_PATH
+                      key: EC_KEYS_IDENTIFIERS
+                - name: RSA_KEYS_IDENTIFIERS
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: RSA_KEYS_IDENTIFIERS
+                - name: VAULT_SIGNATURE_ROUTE
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: VAULT_SIGNATURE_ROUTE
                 - name: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
                   valueFrom:
                     configMapKeyRef:

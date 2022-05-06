@@ -23,3 +23,6 @@ WELL_KNOWN_URL="https://pdnd-interop-test-public.s3.eu-central-1.amazonaws.com/.
 UI_JWT_AUDIENCE="test.interop.pagopa.it/ui"
 M2M_JWT_AUDIENCE="test.interop.pagopa.it/m2m"
 INTERNAL_JWT_AUDIENCE="test.interop.pagopa.it/internal"
+EC_KEYS_IDENTIFIERS="ec-202205061250"
+RSA_KEYS_IDENTIFIERS="rsa-202205061334"
+VAULT_SIGNATURE_ROUTE="/v1/transit/sign/"
