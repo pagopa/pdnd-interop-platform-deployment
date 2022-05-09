@@ -35,6 +35,7 @@ USER_REGISTRY_MANAGEMENT_URL="https://$INTERNAL_APPLICATION_HOST/$USER_REGISTRY_
 . $(pwd)/kubernetes/configs/test/attributes_loader.sh
 . $(pwd)/kubernetes/configs/test/catalog_management.sh
 . $(pwd)/kubernetes/configs/test/catalog_process.sh
+. $(pwd)/kubernetes/configs/test/frontend.sh
 . $(pwd)/kubernetes/configs/test/party_management.sh
 . $(pwd)/kubernetes/configs/test/party_process.sh
 . $(pwd)/kubernetes/configs/test/party_registry_proxy.sh
