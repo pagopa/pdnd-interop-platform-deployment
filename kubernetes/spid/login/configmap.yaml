@@ -33,7 +33,7 @@ data:
   TOKEN_EXPIRATION: "3600"
   JWT_TOKEN_ISSUER: "SPID"
   JWT_TOKEN_KID: "f26e03db-f8b3-499e-8f32-072c93ecf761"
-  JWT_TOKEN_AUDIENCE: "test.interop.pagopa.it"
+  JWT_TOKEN_AUDIENCE: "test.interop.pagopa.it/ui"
 
 
   ENABLE_USER_REGISTRY: "true"
