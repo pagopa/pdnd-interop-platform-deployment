@@ -241,19 +241,6 @@ pipeline {
               }
             }
 
-            stage('Backend for Frontend') {
-              steps {
-                applyKustomizeToDir(
-                  'overlays/backend-for-frontend', 
-                  getVariableFromConf("BACKEND_FOR_FRONTEND_SERVICE_NAME"),
-                  getVariableFromConf("BACKEND_FOR_FRONTEND_SERVICE_PATH"),
-                  getVariableFromConf("BACKEND_FOR_FRONTEND_IMAGE_VERSION"),
-                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
-                )
-              }
-            }
-
             stage('API Gateway') {
               steps {
                 applyKustomizeToDir(
