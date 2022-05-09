@@ -20,3 +20,6 @@ WELL_KNOWN_URL="https://pdnd-interop-dev-public.s3.eu-central-1.amazonaws.com/.w
 UI_JWT_AUDIENCE="dev.interop.pagopa.it/ui"
 M2M_JWT_AUDIENCE="dev.interop.pagopa.it/m2m"
 INTERNAL_JWT_AUDIENCE="dev.interop.pagopa.it/internal"
+EC_KEYS_IDENTIFIERS="interop-ecdsa-p256-01"
+RSA_KEYS_IDENTIFIERS="interop-rsa4096-01"
+VAULT_SIGNATURE_ROUTE="/v1/transit/sign/"
