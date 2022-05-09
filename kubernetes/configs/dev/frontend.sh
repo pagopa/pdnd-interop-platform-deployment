@@ -1,4 +1,4 @@
 #!/bin/bash
 
-# Not yeat available
+# Not yet available
 SELFCARE_LOGIN_URL="https://something-that-should-break.pagopa.it"
