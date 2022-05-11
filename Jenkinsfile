@@ -211,7 +211,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/backend-for-frontend', 
                   getVariableFromConf("BACKEND_FOR_FRONTEND_SERVICE_NAME"),
-                  getVariableFromConf("BACKEND_FOR_FRONTEND_SERVICE_PATH"),
+                  getVariableFromConf("BACKEND_FOR_FRONTEND_APPLICATION_PATH"),
                   getVariableFromConf("BACKEND_FOR_FRONTEND_IMAGE_VERSION"),
                   getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
                   getVariableFromConf("EXTERNAL_INGRESS_CLASS")
@@ -275,6 +275,24 @@ pipeline {
             }
           }
         }
+        stage('Create Ingress') {
+          createIngress(
+            getVariableFromConf("AGREEMENT_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("AGREEMENT_MANAGEMENT_APPLICATION_PATH"),
+            getVariableFromConf("AGREEMENT_PROCESS_SERVICE_NAME"), getVariableFromConf("AGREEMENT_PROCESS_APPLICATION_PATH"),
+            getVariableFromConf("API_GATEWAY_SERVICE_NAME"), getVariableFromConf("API_GATEWAY_APPLICATION_PATH"),
+            getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_APPLICATION_PATH"),
+            getVariableFromConf("AUTHORIZATION_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_MANAGEMENT_APPLICATION_PATH"),
+            getVariableFromConf("AUTHORIZATION_PROCESS_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_PROCESS_APPLICATION_PATH"),
+            getVariableFromConf("AUTHORIZATION_SERVER_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_SERVER_APPLICATION_PATH"),
+            getVariableFromConf("BACKEND_FOR_FRONTEND_SERVICE_NAME"), getVariableFromConf("BACKEND_FOR_FRONTEND_APPLICATION_PATH"),
+            getVariableFromConf("CATALOG_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("CATALOG_MANAGEMENT_APPLICATION_PATH"),
+            getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"), getVariableFromConf("CATALOG_PROCESS_APPLICATION_PATH"),
+            getVariableFromConf("NOTIFIER_SERVICE_NAME"), getVariableFromConf("NOTIFIER_APPLICATION_PATH"),
+            getVariableFromConf("PURPOSE_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("PURPOSE_MANAGEMENT_APPLICATION_PATH"),
+            getVariableFromConf("PURPOSE_PROCESS_SERVICE_NAME"), getVariableFromConf("PURPOSE_PROCESS_APPLICATION_PATH"),
+          )
+        }
+
       }
     }
   }
@@ -412,6 +430,20 @@ String normalizeNamespaceName(String namespace) {
      .replace('_', '-')
      .replace('.', '-')
      .toLowerCase()
+}
+
+void createIngress(String... variablesMappings) {
+    varSize = variablesMappings.size()
+    assert(varSize % 2 == 0)
+    baseCommand = 'kubectl -n $NAMESPACE create ingress test-ingress --class=alb --dry-run=client -o yaml '
+    annotations = '--annotation="alb.ingress.kubernetes.io/scheme=internet-facing" --annotation="alb.ingress.kubernetes.io/target-type=ip" '
+
+    rules = ''
+    for (i = 0; i < varSize; i += 2) {
+        rules = rules + '--rule="/' + variablesMappings[i+1] + '*=' + variablesMappings[i] + ':8088" '
+    }
+
+    sh(baseCommand + annotations + rules + ' | kubectl apply -f -')
 }
 
 void loadSecret(String secretName, String... variablesMappings) {
