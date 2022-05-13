@@ -306,6 +306,18 @@ pipeline {
                     applyKubeFile('jobs/attributes-loader/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST)
                   }
                 }
+
+                stage('Token Reader') {
+                  environment {
+                    SERVICE_NAME = getVariableFromConf("JOB_TOKEN_READER_SERVICE_NAME")
+                    IMAGE_VERSION = getVariableFromConf("JOB_TOKEN_READER_IMAGE_VERSION")
+                    IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
+                  }
+                  steps {
+                    applyKubeFile('jobs/token-reader/configmap.yaml', SERVICE_NAME)
+                    applyKubeFile('jobs/token-reader/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST)
+                  }
+                }
               }
             }
             

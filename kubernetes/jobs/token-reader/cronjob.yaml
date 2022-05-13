@@ -1,0 +1,71 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  labels:
+    app: {{SERVICE_NAME}}
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  schedule: "* 6 * * *"
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 0
+  jobTemplate:
+    metadata:
+      labels:
+        app: {{SERVICE_NAME}}
+      annotations:
+        digest: {{IMAGE_DIGEST}} # Used to force deployment on same image version but different content
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: {{SERVICE_NAME}}
+              image: {{REPOSITORY}}/{{SERVICE_NAME}}:{{JOB_TOKEN_READER_IMAGE_VERSION}}
+              imagePullPolicy: Always
+              command: ["bin/{{SERVICE_NAME}}"]
+              args: ["-Dconfig.override_with_env_vars=true"]
+              env:
+                - name: NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: STORAGE_ENDPOINT
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: STORAGE_ENDPOINT
+                - name: AWS_REGION
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: AWS_REGION
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: AWS_ACCESS_KEY_ID
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: AWS_SECRET_ACCESS_KEY
+                - name: TOKEN_JOB_STORAGE_CONTAINER
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: TOKEN_JOB_STORAGE_CONTAINER
+                - name: STORAGE_TYPE
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: STORAGE_TYPE
+                - name: JWT_QUEUE_URL
+                  value: "{{AWS_SQS_DOMAIN}}/$(AWS_ACCOUNT_ID)/{{JWT_QUEUE_URL}}"            
+              resources:
+                requests:
+                  memory: "512Mi"
+                  cpu: "30m"
+                limits:
+                  memory: "1Gi"
+                  cpu: "500m"
