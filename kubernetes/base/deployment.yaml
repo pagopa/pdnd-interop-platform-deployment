@@ -18,6 +18,7 @@ spec:
       annotations:
         digest: {{IMAGE_DIGEST}} # Used to force deployment on same image version but different content
     spec:
+      serviceAccountName: {{SERVICE_NAME}}
       imagePullSecrets:
         - name: regcred
       containers:
