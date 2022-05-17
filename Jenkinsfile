@@ -1,6 +1,21 @@
 pipeline {
 
-  agent any
+    agent {
+        kubernetes {
+            label "sbt-container"
+            yaml """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+    - name: kubectl
+      image: lachlanevenson/k8s-kubectl:v1.23.6
+      command:
+        - cat
+      tty: true
+"""
+        }
+    }
 
   environment {
     // STAGE variable should be set as Global Properties
@@ -16,7 +31,6 @@ pipeline {
     USER_REGISTRY_API_KEY = credentials('user-registry-api-key')
     PARTY_PROCESS_API_KEY = credentials('party-process-api-key')
     PARTY_MANAGEMENT_API_KEY = credentials('party-management-api-key')
-    DOCKER_REGISTRY_CREDENTIALS = credentials('pdnd-nexus')
     ECR_CREDENTIALS = credentials('ecr-credentials')
     NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH)
     REPOSITORY = getVariableFromConf("REPOSITORY")
