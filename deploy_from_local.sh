@@ -1,11 +1,38 @@
+#!/bin/bash
 
-if [ "$#" -ne 1 ]; then
-    echo "Illegal number of parameters"
-    echo "Usage $0 namespace"
-    exit 1
+while getopts ":n:dh" opt; do
+  case $opt in
+    n)
+      NAMESPACE=$OPTARG
+      echo "Selected namespace: $NAMESPACE" >&2
+      ;;
+    d)
+      DRYRUN=1
+      echo "Dry-run enabled"
+      ;;
+    h)
+      echo "Usage $0 -n namespace [-d]"
+      echo " -d dry-run: Creates files and print commands without executing them"
+      exit 0
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
+
+if [ -z ${NAMESPACE} ]; then 
+  echo "namespace parameter is mandatory"
+  echo "Usage $0 -n namespace [-d]"
+  exit 1
 fi
 
-export NAMESPACE=$1
+export NAMESPACE
 export CONFIG_FILE='./kubernetes/configs/test/main.sh'
 
 source $CONFIG_FILE
@@ -172,26 +199,26 @@ applyKubeFile 'roles.yaml'
 # loadSecrets()
 # prepareDbMigrations()
 
-applyKubeFile 'frontend/configmap.yaml', $FRONTEND_SERVICE_NAME
-applyKubeFile 'frontend/deployment.yaml', $FRONTEND_SERVICE_NAME "IMAGE_DIGEST_TBD"
-applyKubeFile 'frontend/service.yaml', $FRONTEND_SERVICE_NAME
+# applyKubeFile 'frontend/configmap.yaml', $FRONTEND_SERVICE_NAME
+# applyKubeFile 'frontend/deployment.yaml', $FRONTEND_SERVICE_NAME "IMAGE_DIGEST_TBD"
+# applyKubeFile 'frontend/service.yaml', $FRONTEND_SERVICE_NAME
 
-applyKustomizeToDir 'overlays/agreement-management' $AGREEMENT_MANAGEMENT_SERVICE_NAME $AGREEMENT_MANAGEMENT_IMAGE_VERSION
-applyKustomizeToDir 'overlays/agreement-process' $AGREEMENT_PROCESS_SERVICE_NAME $AGREEMENT_PROCESS_IMAGE_VERSION
-applyKustomizeToDir 'overlays/attribute-registry-management' $ATTRIBUTE_REGISTRY_MANAGEMENT_APPLICATION_PATH $ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION
-applyKustomizeToDir 'overlays/authorization-management' $AUTHORIZATION_MANAGEMENT_SERVICE_NAME $AUTHORIZATION_MANAGEMENT_IMAGE_VERSION
-applyKustomizeToDir 'overlays/authorization-process' $AUTHORIZATION_PROCESS_SERVICE_NAME $AUTHORIZATION_PROCESS_IMAGE_VERSION
-applyKustomizeToDir 'overlays/catalog-management' $CATALOG_MANAGEMENT_SERVICE_NAME $CATALOG_MANAGEMENT_IMAGE_VERSION
-applyKustomizeToDir 'overlays/catalog-process' $CATALOG_PROCESS_SERVICE_NAME $CATALOG_PROCESS_IMAGE_VERSION
-applyKustomizeToDir 'overlays/party-registry-proxy' $PARTY_REGISTRY_PROXY_SERVICE_NAME $PARTY_REGISTRY_PROXY_IMAGE_VERSION
-applyKustomizeToDir 'overlays/purpose-management' $PURPOSE_MANAGEMENT_SERVICE_NAME $PURPOSE_MANAGEMENT_IMAGE_VERSION
-applyKustomizeToDir 'overlays/purpose-process' $PURPOSE_PROCESS_SERVICE_NAME $PURPOSE_PROCESS_IMAGE_VERSION
-applyKustomizeToDir 'overlays/backend-for-frontend' $BACKEND_FOR_FRONTEND_SERVICE_NAME $BACKEND_FOR_FRONTEND_IMAGE_VERSION
-applyKustomizeToDir 'overlays/api-gateway' $API_GATEWAY_SERVICE_NAME $API_GATEWAY_IMAGE_VERSION
-applyKustomizeToDir 'overlays/notifier' $NOTIFIER_SERVICE_NAME $NOTIFIER_IMAGE_VERSION
+# applyKustomizeToDir 'overlays/agreement-management' $AGREEMENT_MANAGEMENT_SERVICE_NAME $AGREEMENT_MANAGEMENT_IMAGE_VERSION
+# applyKustomizeToDir 'overlays/agreement-process' $AGREEMENT_PROCESS_SERVICE_NAME $AGREEMENT_PROCESS_IMAGE_VERSION
+# applyKustomizeToDir 'overlays/attribute-registry-management' $ATTRIBUTE_REGISTRY_MANAGEMENT_APPLICATION_PATH $ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION
+# applyKustomizeToDir 'overlays/authorization-management' $AUTHORIZATION_MANAGEMENT_SERVICE_NAME $AUTHORIZATION_MANAGEMENT_IMAGE_VERSION
+# applyKustomizeToDir 'overlays/authorization-process' $AUTHORIZATION_PROCESS_SERVICE_NAME $AUTHORIZATION_PROCESS_IMAGE_VERSION
+# applyKustomizeToDir 'overlays/catalog-management' $CATALOG_MANAGEMENT_SERVICE_NAME $CATALOG_MANAGEMENT_IMAGE_VERSION
+# applyKustomizeToDir 'overlays/catalog-process' $CATALOG_PROCESS_SERVICE_NAME $CATALOG_PROCESS_IMAGE_VERSION
+# applyKustomizeToDir 'overlays/party-registry-proxy' $PARTY_REGISTRY_PROXY_SERVICE_NAME $PARTY_REGISTRY_PROXY_IMAGE_VERSION
+# applyKustomizeToDir 'overlays/purpose-management' $PURPOSE_MANAGEMENT_SERVICE_NAME $PURPOSE_MANAGEMENT_IMAGE_VERSION
+# applyKustomizeToDir 'overlays/purpose-process' $PURPOSE_PROCESS_SERVICE_NAME $PURPOSE_PROCESS_IMAGE_VERSION
+# applyKustomizeToDir 'overlays/backend-for-frontend' $BACKEND_FOR_FRONTEND_SERVICE_NAME $BACKEND_FOR_FRONTEND_IMAGE_VERSION
+# applyKustomizeToDir 'overlays/api-gateway' $API_GATEWAY_SERVICE_NAME $API_GATEWAY_IMAGE_VERSION
+# applyKustomizeToDir 'overlays/notifier' $NOTIFIER_SERVICE_NAME $NOTIFIER_IMAGE_VERSION
 
-applyKubeFile 'jobs/attributes-loader/configmap.yaml' $JOB_ATTRIBUTES_LOADER_SERVICE_NAME
-applyKubeFile 'jobs/attributes-loader/cronjob.yaml' $JOB_ATTRIBUTES_LOADER_SERVICE_NAME "IMAGE_DIGEST_TBD"
+# applyKubeFile 'jobs/attributes-loader/configmap.yaml' $JOB_ATTRIBUTES_LOADER_SERVICE_NAME
+# applyKubeFile 'jobs/attributes-loader/cronjob.yaml' $JOB_ATTRIBUTES_LOADER_SERVICE_NAME "IMAGE_DIGEST_TBD"
 
 # createIngress \
 #     $AGREEMENT_MANAGEMENT_SERVICE_NAME $AGREEMENT_MANAGEMENT_APPLICATION_PATH \
