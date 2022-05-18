@@ -11,7 +11,8 @@ spec:
     - name: kubectl-container
       image: lachlanevenson/k8s-kubectl:v1.23.6
       command:
-        - apk add bash && cat
+        - /bin/ash
+      args: [ "-c", "apk add bash && cat"]
       tty: true
 """
         }
