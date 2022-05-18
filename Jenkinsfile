@@ -10,6 +10,13 @@ spec:
   containers:
     - name: kubectl-container
       image: lachlanevenson/k8s-kubectl:v1.23.6
+      resources:
+        requests:
+          cpu: 1
+          memory: 1Gi
+        limits:
+          cpu: 1
+          memory: 1Gi
       command:
         - /bin/ash
       args: [ "-c", "apk add bash && cat"]
