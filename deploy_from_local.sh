@@ -1,6 +1,6 @@
 #!/bin/bash
 
-while getopts ":n:dh" opt; do
+while getopts ":n:dkh" opt; do
   case $opt in
     n)
       NAMESPACE=$OPTARG
@@ -8,11 +8,16 @@ while getopts ":n:dh" opt; do
       ;;
     d)
       DRYRUN=1
-      echo "Dry-run enabled"
+      echo "Dry-run enabled. No file will be applied"
+      ;;
+    k)
+      KEEPFILES=1
+      echo "Generated files will not be deleted"
       ;;
     h)
       echo "Usage $0 -n namespace [-d]"
       echo " -d dry-run: Creates files and print commands without executing them"
+      echo " -k keep files: Generated files will not be deleted"
       exit 0
       ;;
     \?)
@@ -28,7 +33,7 @@ done
 
 if [ -z ${NAMESPACE} ]; then 
   echo "namespace parameter is mandatory"
-  echo "Usage $0 -n namespace [-d]"
+  echo "Usage $0 -n namespace [-d] [-k]"
   exit 1
 fi
 
@@ -95,12 +100,12 @@ function applyKustomizeToDir() {
     # DEBUG
     # cat ${serviceName}/full.${serviceName}.yaml
 
-    # echo "Applying files for ${serviceName}"
-    # kubectl apply -f ${serviceName}/full.${serviceName}.yaml
-    # echo "Files for ${serviceName} applied"
+    echo "Applying files for ${serviceName}"
+    kubeApply ${serviceName}/full.${serviceName}.yaml
+    echo "Files for ${serviceName} applied"
 
     echo "Removing folder"
-    rm -rf ${serviceName}
+    cleanFiles ${serviceName}
     echo "Folder removed"
 }
 
@@ -120,29 +125,36 @@ function applyKubeFile() {
     # sh "cat ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
 
     echo "Applying file ${fileName}"
-    # kubectl apply -f ./kubernetes/$(dirname $fileName)/compiled.$(basename $fileName)
+    kubeApply ./kubernetes/$(dirname $fileName)/compiled.$(basename $fileName)
     echo "File ${fileName} applied"
 
     echo "Removing file"
-    rm -rf ./kubernetes/$(dirname $fileName)/compiled.$(basename $fileName)
+    cleanFiles ./kubernetes/$(dirname $fileName)/compiled.$(basename $fileName)
     echo "File removed"
 }
 
 
 function prepareDbMigrations() {
     echo 'Creating migrations configmap...'
+    outputFileName='./kubernetes/compiled.dbmigrationconfigmap.yaml'
     kubectl \
         create configmap common-db-migrations \
         --namespace $NAMESPACE \
         --from-file=db/migrations/ \
         --dry-run \
-        -o yaml | kubectl apply -f -
+        -o yaml > $outputFileName
+        
+    kubeApply $outputFileName
+    cleanFiles $outputFileName
+
     echo 'Migrations configmap created'
 }
 
 
 function loadSecret() {
     secretName=$1
+
+    outputFileName="./kubernetes/compiled.secret.$secretName.yaml"
 
     shift
     tuples=("${@}")
@@ -158,9 +170,11 @@ function loadSecret() {
     command="$command--from-literal=${tuples[$i]}=\${${tuples[$k]}} "
     done
 
-    command="$command -o yaml | kubectl apply -f -"
-
+    command="$command -o yaml > $outputFileName"
     eval $command
+
+    kubeApply $outputFileName
+    cleanFiles $outputFileName
 }
 
 function loadSecrets() {
@@ -176,6 +190,8 @@ function createIngress() {
     tuples=("${@}")
     length=${#tuples[@]}
 
+    outputFileName='./kubernetes/compiled.ingress.yaml'
+
     baseCommand="kubectl -n $NAMESPACE create ingress interop-services --class=alb --dry-run=client -o yaml "
     annotations='--annotation="alb.ingress.kubernetes.io/scheme=internet-facing" --annotation="alb.ingress.kubernetes.io/target-type=ip" '
 
@@ -189,10 +205,25 @@ function createIngress() {
     rules=$rules' --rule="/'${tuples[$i]}'*='${tuples[$k]}':8088" '
     done
 
-    eval "$baseCommand $annotations $rules | kubectl apply -f -"
+    eval "$baseCommand $annotations $rules > $outputFileName"
+
+    kubeApply $outputFileName
+    cleanFiles $outputFileName
 }
 
+function kubeApply() {
+    fileName=$1
+    if [ ! -z ${DRYRUN} ]; then 
+        kubectl apply -f $fileName
+    fi
+}
 
+function cleanFiles() {
+    fileName=$1
+    if [ ! -z ${KEEPFILES} ]; then 
+        rm -rf $fileName
+    fi
+}
 
 applyKubeFile 'namespace.yaml'
 applyKubeFile 'roles.yaml'
