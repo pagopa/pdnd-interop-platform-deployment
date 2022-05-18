@@ -2,13 +2,13 @@ pipeline {
 
     agent {
         kubernetes {
-            label "kubectl-container"
+            label "kubectl-template"
             yaml """
 apiVersion: v1
 kind: Pod
 spec:
   containers:
-    - name: kubectl
+    - name: kubectl-container
       image: lachlanevenson/k8s-kubectl:v1.23.6
       command:
         - cat
