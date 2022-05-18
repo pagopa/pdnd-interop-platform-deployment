@@ -9,7 +9,7 @@ kind: Pod
 spec:
   containers:
     - name: kubectl-container
-      image: lachlanevenson/k8s-kubectl:v1.23.6
+      image: bitnami/kubectl:v1.23
       command:
         - cat
       tty: true
@@ -74,7 +74,8 @@ spec:
               environment {
                 SERVICE_NAME = getVariableFromConf("FRONTEND_SERVICE_NAME")
                 IMAGE_VERSION = getVariableFromConf("FRONTEND_IMAGE_VERSION")
-                IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
+                // IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
+                IMAGE_DIGEST =  "dummy_digest"
               }
               steps {
                 applyKubeFile('frontend/configmap.yaml', SERVICE_NAME)
@@ -228,7 +229,8 @@ spec:
                   environment {
                     SERVICE_NAME = getVariableFromConf("JOB_ATTRIBUTES_LOADER_SERVICE_NAME")
                     IMAGE_VERSION = getVariableFromConf("JOB_ATTRIBUTES_LOADER_IMAGE_VERSION")
-                    IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
+                    // IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
+                    IMAGE_DIGEST =  "dummy_digest"
                   }
                   steps {
                     applyKubeFile('jobs/attributes-loader/configmap.yaml', SERVICE_NAME)
@@ -266,7 +268,7 @@ spec:
 }
 
 void applyKubeFile(String fileName, String serviceName = null, String imageDigest = null) {
-  container('kubectl-container') { // This is required only for kubectl command (we do not need sbt)
+  container('kubectl-container') {
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Apply file ${fileName} on Kubernetes"
@@ -288,12 +290,13 @@ void applyKubeFile(String fileName, String serviceName = null, String imageDiges
 
 // dirPath starting from kubernetes folder (e.g. overlays/party-management)
 void applyKustomizeToDir(String dirPath, String serviceName, String imageVersion) {
-  container('kubectl-container') { // This is required only for kubectl command (we do not need sbt)
+  container('kubectl-container') {
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Apply directory ${dirPath} on Kubernetes"
 
-      def serviceImageDigest = getDockerImageDigest(serviceName, imageVersion)
+      // def serviceImageDigest = getDockerImageDigest(serviceName, imageVersion)
+      def serviceImageDigest = "dummy_digest"
 
       def kubeDirPath = 'kubernetes/' + dirPath
 
@@ -331,7 +334,7 @@ void applyKustomizeToDir(String dirPath, String serviceName, String imageVersion
 }
 
 void waitForServiceReady(String serviceName) {
-  container('kubectl-container') { // This is required only for kubectl command (we do not need sbt)
+  container('kubectl-container') {
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Waiting for completion of ${serviceName}..."
@@ -428,7 +431,7 @@ void loadSecret(String secretName, String... variablesMappings) {
 }
 
 void loadSecrets() {
-  container('kubectl-container') { // This is required only for kubectl command (sbt is not needed)
+  container('kubectl-container') {
     withKubeConfig([credentialsId: 'kube-config']) {
       sh'''
         # Cleanup
@@ -455,7 +458,7 @@ String getVariableFromConf(String variableName) {
 }
 
 void prepareDbMigrations() {
-  container('kubectl-container') { // This is required only for kubectl command (sbt is not needed)
+  container('kubectl-container') {
     withKubeConfig([credentialsId: 'kube-config']) {
       echo 'Creating migrations configmap...'
       sh'''kubectl \
@@ -470,26 +473,26 @@ void prepareDbMigrations() {
 }
 
 
-String getDockerImageDigest(String serviceName, String imageVersion) {
-  echo "Retrieving digest for service ${serviceName} and version ${imageVersion}..."
-    container('kubectl-container') { // This is required only for docker command (sbt is not needed)
+// String getDockerImageDigest(String serviceName, String imageVersion) {
+//   echo "Retrieving digest for service ${serviceName} and version ${imageVersion}..."
+//     container('kubectl-container') {
 
-      def response = sh(
-          returnStdout: true, 
-          script: '''
-          export AWS_ACCESS_KEY_ID=$ECR_CREDENTIALS_USR
-          export AWS_SECRET_ACCESS_KEY=$ECR_CREDENTIALS_PSW
-          aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $REPOSITORY 2>/dev/null 1>&2
-          docker manifest inspect $REPOSITORY/''' + serviceName + ':' + imageVersion
-        ).trim()
+//       def response = sh(
+//           returnStdout: true, 
+//           script: '''
+//           export AWS_ACCESS_KEY_ID=$ECR_CREDENTIALS_USR
+//           export AWS_SECRET_ACCESS_KEY=$ECR_CREDENTIALS_PSW
+//           aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $REPOSITORY 2>/dev/null 1>&2
+//           docker manifest inspect $REPOSITORY/''' + serviceName + ':' + imageVersion
+//         ).trim()
 
-      def jsonResponse = readJSON text: response
+//       def jsonResponse = readJSON text: response
 
-      def sha256 = jsonResponse.config.digest
+//       def sha256 = jsonResponse.config.digest
 
-      echo "Digest retrieved for service ${serviceName} and version ${imageVersion}: " + sha256
+//       echo "Digest retrieved for service ${serviceName} and version ${imageVersion}: " + sha256
 
-      return sha256
-    }
+//       return sha256
+//     }
   
-}
+// }
