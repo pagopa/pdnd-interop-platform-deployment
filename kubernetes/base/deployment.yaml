@@ -31,14 +31,19 @@ spec:
               port: management
             periodSeconds: 10
             failureThreshold: 5
-            initialDelaySeconds: 30
           livenessProbe:
             httpGet:
               path: "/alive"
               port: management
             periodSeconds: 10
             failureThreshold: 5
-            initialDelaySeconds: 30
+          startupProbe:
+            httpGet:
+              path: "/alive"
+              port: management
+            periodSeconds: 20
+            failureThreshold: 15
+            initialDelaySeconds: 60
           ports:
             - name: management
               containerPort: 8558
@@ -66,8 +71,8 @@ spec:
                   key: WELL_KNOWN_URLS
           resources:
             requests:
-              memory: "512Mi"
-              cpu: "30m"
+              memory: "1Gi"
+              cpu: "500m"
             limits:
               memory: "2Gi"
               cpu: "2"
