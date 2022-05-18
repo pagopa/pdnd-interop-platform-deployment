@@ -255,7 +255,7 @@ spec:
             getVariableFromConf("BACKEND_FOR_FRONTEND_SERVICE_NAME"), getVariableFromConf("BACKEND_FOR_FRONTEND_APPLICATION_PATH"),
             getVariableFromConf("CATALOG_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("CATALOG_MANAGEMENT_APPLICATION_PATH"),
             getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"), getVariableFromConf("CATALOG_PROCESS_APPLICATION_PATH"),
-            getVariableFromConf("FRONTEND_SERVICE_NAME"), getVariableFromConf("FRONTEND_SERVICE_APPLICATION_PATH")
+            getVariableFromConf("FRONTEND_SERVICE_NAME"), getVariableFromConf("FRONTEND_SERVICE_APPLICATION_PATH"),
             getVariableFromConf("NOTIFIER_SERVICE_NAME"), getVariableFromConf("NOTIFIER_APPLICATION_PATH"),
             getVariableFromConf("PURPOSE_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("PURPOSE_MANAGEMENT_APPLICATION_PATH"),
             getVariableFromConf("PURPOSE_PROCESS_SERVICE_NAME"), getVariableFromConf("PURPOSE_PROCESS_APPLICATION_PATH"),
