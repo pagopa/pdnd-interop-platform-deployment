@@ -208,9 +208,9 @@ function createIngress() {
 function kubeApply() {
     yamlFileNameForKubeApply=$1
     if [ -z ${DRYRUN} ]; then 
-        echo "Applying $fileName"
-        yamlFileNameForKubeApply apply -f $fileName
-        echo "Applied: $fileName"
+        echo "Applying $yamlFileNameForKubeApply"
+        kubectl apply -f $yamlFileNameForKubeApply
+        echo "Applied: $yamlFileNameForKubeApply"
     fi
 }
 
