@@ -2,7 +2,7 @@ pipeline {
 
     agent {
         kubernetes {
-            label "sbt-container"
+            label "kubectl-container"
             yaml """
 apiVersion: v1
 kind: Pod
@@ -266,7 +266,7 @@ spec:
 }
 
 void applyKubeFile(String fileName, String serviceName = null, String imageDigest = null) {
-  container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
+  container('kubectl-container') { // This is required only for kubectl command (we do not need sbt)
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Apply file ${fileName} on Kubernetes"
@@ -288,7 +288,7 @@ void applyKubeFile(String fileName, String serviceName = null, String imageDiges
 
 // dirPath starting from kubernetes folder (e.g. overlays/party-management)
 void applyKustomizeToDir(String dirPath, String serviceName, String imageVersion) {
-  container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
+  container('kubectl-container') { // This is required only for kubectl command (we do not need sbt)
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Apply directory ${dirPath} on Kubernetes"
@@ -331,7 +331,7 @@ void applyKustomizeToDir(String dirPath, String serviceName, String imageVersion
 }
 
 void waitForServiceReady(String serviceName) {
-  container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
+  container('kubectl-container') { // This is required only for kubectl command (we do not need sbt)
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Waiting for completion of ${serviceName}..."
@@ -428,7 +428,7 @@ void loadSecret(String secretName, String... variablesMappings) {
 }
 
 void loadSecrets() {
-  container('sbt-container') { // This is required only for kubectl command (sbt is not needed)
+  container('kubectl-container') { // This is required only for kubectl command (sbt is not needed)
     withKubeConfig([credentialsId: 'kube-config']) {
       sh'''
         # Cleanup
@@ -455,7 +455,7 @@ String getVariableFromConf(String variableName) {
 }
 
 void prepareDbMigrations() {
-  container('sbt-container') { // This is required only for kubectl command (sbt is not needed)
+  container('kubectl-container') { // This is required only for kubectl command (sbt is not needed)
     withKubeConfig([credentialsId: 'kube-config']) {
       echo 'Creating migrations configmap...'
       sh'''kubectl \
@@ -472,7 +472,7 @@ void prepareDbMigrations() {
 
 String getDockerImageDigest(String serviceName, String imageVersion) {
   echo "Retrieving digest for service ${serviceName} and version ${imageVersion}..."
-    container('sbt-container') { // This is required only for docker command (sbt is not needed)
+    container('kubectl-container') { // This is required only for docker command (sbt is not needed)
 
       def response = sh(
           returnStdout: true, 
