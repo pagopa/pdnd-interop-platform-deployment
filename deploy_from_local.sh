@@ -195,13 +195,12 @@ function createIngress() {
     baseCommand="kubectl -n $NAMESPACE create ingress interop-services --class=alb --dry-run=client -o yaml "
     annotations='--annotation="alb.ingress.kubernetes.io/scheme=internet-facing" --annotation="alb.ingress.kubernetes.io/target-type=ip" '
 
-    rules = ''
+    rules=''
 
     for (( j=0; j<length; j=j+2 ));
     do
     i=$j
     k=$((j+1))
-    command="$command--from-literal=${tuples[$i]}=\${${tuples[$k]}} "
     rules=$rules' --rule="/'${tuples[$i]}'*='${tuples[$k]}':8088" '
     done
 
@@ -213,26 +212,26 @@ function createIngress() {
 
 function kubeApply() {
     fileName=$1
-    if [ ! -z ${DRYRUN} ]; then 
+    if [ -z ${DRYRUN} ]; then 
         kubectl apply -f $fileName
     fi
 }
 
 function cleanFiles() {
     fileName=$1
-    if [ ! -z ${KEEPFILES} ]; then 
+    if [ -z ${KEEPFILES} ]; then 
         rm -rf $fileName
     fi
 }
 
-applyKubeFile 'namespace.yaml'
-applyKubeFile 'roles.yaml'
-# loadSecrets()
-# prepareDbMigrations()
+# applyKubeFile 'namespace.yaml'
+# applyKubeFile 'roles.yaml'
+# loadSecrets
+# prepareDbMigrations
 
-# applyKubeFile 'frontend/configmap.yaml', $FRONTEND_SERVICE_NAME
-# applyKubeFile 'frontend/deployment.yaml', $FRONTEND_SERVICE_NAME "IMAGE_DIGEST_TBD"
-# applyKubeFile 'frontend/service.yaml', $FRONTEND_SERVICE_NAME
+# applyKubeFile 'frontend/configmap.yaml' $FRONTEND_SERVICE_NAME
+# applyKubeFile 'frontend/deployment.yaml' $FRONTEND_SERVICE_NAME "IMAGE_DIGEST_TBD"
+# applyKubeFile 'frontend/service.yaml' $FRONTEND_SERVICE_NAME
 
 # applyKustomizeToDir 'overlays/agreement-management' $AGREEMENT_MANAGEMENT_SERVICE_NAME $AGREEMENT_MANAGEMENT_IMAGE_VERSION
 # applyKustomizeToDir 'overlays/agreement-process' $AGREEMENT_PROCESS_SERVICE_NAME $AGREEMENT_PROCESS_IMAGE_VERSION
@@ -251,18 +250,18 @@ applyKubeFile 'roles.yaml'
 # applyKubeFile 'jobs/attributes-loader/configmap.yaml' $JOB_ATTRIBUTES_LOADER_SERVICE_NAME
 # applyKubeFile 'jobs/attributes-loader/cronjob.yaml' $JOB_ATTRIBUTES_LOADER_SERVICE_NAME "IMAGE_DIGEST_TBD"
 
-# createIngress \
-#     $AGREEMENT_MANAGEMENT_SERVICE_NAME $AGREEMENT_MANAGEMENT_APPLICATION_PATH \
-#     $AGREEMENT_PROCESS_SERVICE_NAME $AGREEMENT_PROCESS_APPLICATION_PATH \
-#     $API_GATEWAY_SERVICE_NAME $API_GATEWAY_APPLICATION_PATH \
-#     $ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME $ATTRIBUTE_REGISTRY_MANAGEMENT_APPLICATION_PATH \
-#     $AUTHORIZATION_MANAGEMENT_SERVICE_NAME $AUTHORIZATION_MANAGEMENT_APPLICATION_PATH \
-#     $AUTHORIZATION_PROCESS_SERVICE_NAME $AUTHORIZATION_PROCESS_APPLICATION_PATH \
-#     $AUTHORIZATION_SERVER_SERVICE_NAME $AUTHORIZATION_SERVER_APPLICATION_PATH \
-#     $BACKEND_FOR_FRONTEND_SERVICE_NAME $BACKEND_FOR_FRONTEND_APPLICATION_PATH \
-#     $CATALOG_MANAGEMENT_SERVICE_NAME $CATALOG_MANAGEMENT_APPLICATION_PATH \
-#     $CATALOG_PROCESS_SERVICE_NAME $CATALOG_PROCESS_APPLICATION_PATH \
-#     $FRONTEND_SERVICE_NAME $FRONTEND_SERVICE_APPLICATION_PAT \
-#     $NOTIFIER_SERVICE_NAME $NOTIFIER_APPLICATION_PATH \
-#     $PURPOSE_MANAGEMENT_SERVICE_NAME $PURPOSE_MANAGEMENT_APPLICATION_PATH \
-#     $PURPOSE_PROCESS_SERVICE_NAME $PURPOSE_PROCESS_APPLICATION_PATH
+createIngress \
+    $AGREEMENT_MANAGEMENT_SERVICE_NAME $AGREEMENT_MANAGEMENT_APPLICATION_PATH \
+    $AGREEMENT_PROCESS_SERVICE_NAME $AGREEMENT_PROCESS_APPLICATION_PATH \
+    $API_GATEWAY_SERVICE_NAME $API_GATEWAY_APPLICATION_PATH \
+    $ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME $ATTRIBUTE_REGISTRY_MANAGEMENT_APPLICATION_PATH \
+    $AUTHORIZATION_MANAGEMENT_SERVICE_NAME $AUTHORIZATION_MANAGEMENT_APPLICATION_PATH \
+    $AUTHORIZATION_PROCESS_SERVICE_NAME $AUTHORIZATION_PROCESS_APPLICATION_PATH \
+    $AUTHORIZATION_SERVER_SERVICE_NAME $AUTHORIZATION_SERVER_APPLICATION_PATH \
+    $BACKEND_FOR_FRONTEND_SERVICE_NAME $BACKEND_FOR_FRONTEND_APPLICATION_PATH \
+    $CATALOG_MANAGEMENT_SERVICE_NAME $CATALOG_MANAGEMENT_APPLICATION_PATH \
+    $CATALOG_PROCESS_SERVICE_NAME $CATALOG_PROCESS_APPLICATION_PATH \
+    $FRONTEND_SERVICE_NAME $FRONTEND_SERVICE_APPLICATION_PATH \
+    $NOTIFIER_SERVICE_NAME $NOTIFIER_APPLICATION_PATH \
+    $PURPOSE_MANAGEMENT_SERVICE_NAME $PURPOSE_MANAGEMENT_APPLICATION_PATH \
+    $PURPOSE_PROCESS_SERVICE_NAME $PURPOSE_PROCESS_APPLICATION_PATH
