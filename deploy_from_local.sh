@@ -76,8 +76,7 @@ function applyKustomizeToDir() {
 
     echo "Apply directory ${dirPath} on Kubernetes"
 
-    # def serviceImageDigest = getDockerImageDigest(serviceName, imageVersion)
-    serviceImageDigest="blabla"
+    serviceImageDigest=$(getDockerImageDigest $AGREEMENT_MANAGEMENT_SERVICE_NAME $AGREEMENT_MANAGEMENT_IMAGE_VERSION)
 
     kubeDirPath='kubernetes/'$dirPath
 
@@ -134,6 +133,18 @@ function prepareDbMigrations() {
     echo 'Migrations configmap created'
 }
 
+function getDockerImageDigest() {
+    serviceName=$1
+    imageVersion=$2
+    
+    # echo "Retrieving digest for service ${serviceName} and version ${imageVersion}..."
+
+    sha256=$(docker manifest inspect $REPOSITORY/$serviceName:$imageVersion | jq .config.digest)
+
+    # echo "Digest retrieved for service ${serviceName} and version ${imageVersion}: ${sha256}"
+
+    echo $sha256
+}
 
 function loadSecret() {
     secretName=$1
@@ -211,13 +222,17 @@ function cleanFiles() {
     fi
 }
 
+aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $REPOSITORY 2>/dev/null 1>&2;
+echo "Logged on ECR"
+
 applyKubeFile 'namespace.yaml'
 applyKubeFile 'roles.yaml'
 loadSecrets
 prepareDbMigrations
 
 applyKubeFile 'frontend/configmap.yaml' $FRONTEND_SERVICE_NAME
-applyKubeFile 'frontend/deployment.yaml' $FRONTEND_SERVICE_NAME "IMAGE_DIGEST_TBD"
+frontendImageDigest=$(getDockerImageDigest $FRONTEND_SERVICE_NAME $FRONTEND_IMAGE_VERSION)
+applyKubeFile 'frontend/deployment.yaml' $FRONTEND_SERVICE_NAME $frontendImageDigest
 applyKubeFile 'frontend/service.yaml' $FRONTEND_SERVICE_NAME
 
 applyKustomizeToDir 'overlays/agreement-management' $AGREEMENT_MANAGEMENT_SERVICE_NAME $AGREEMENT_MANAGEMENT_IMAGE_VERSION
@@ -235,7 +250,8 @@ applyKustomizeToDir 'overlays/api-gateway' $API_GATEWAY_SERVICE_NAME $API_GATEWA
 applyKustomizeToDir 'overlays/notifier' $NOTIFIER_SERVICE_NAME $NOTIFIER_IMAGE_VERSION
 
 applyKubeFile 'jobs/attributes-loader/configmap.yaml' $JOB_ATTRIBUTES_LOADER_SERVICE_NAME
-applyKubeFile 'jobs/attributes-loader/cronjob.yaml' $JOB_ATTRIBUTES_LOADER_SERVICE_NAME "IMAGE_DIGEST_TBD"
+attributesLoaderImageDigest=$(getDockerImageDigest $FRONTEND_SERVICE_NAME $FRONTEND_IMAGE_VERSION)
+applyKubeFile 'jobs/attributes-loader/cronjob.yaml' $JOB_ATTRIBUTES_LOADER_SERVICE_NAME $attributesLoaderImageDigest
 
 createIngress \
     $AGREEMENT_MANAGEMENT_SERVICE_NAME $AGREEMENT_MANAGEMENT_APPLICATION_PATH \
