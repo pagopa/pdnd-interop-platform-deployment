@@ -244,22 +244,24 @@ spec:
           }
         }
         stage('Create Ingress') {
-          createIngress(
-            getVariableFromConf("AGREEMENT_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("AGREEMENT_MANAGEMENT_APPLICATION_PATH"),
-            getVariableFromConf("AGREEMENT_PROCESS_SERVICE_NAME"), getVariableFromConf("AGREEMENT_PROCESS_APPLICATION_PATH"),
-            getVariableFromConf("API_GATEWAY_SERVICE_NAME"), getVariableFromConf("API_GATEWAY_APPLICATION_PATH"),
-            getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_APPLICATION_PATH"),
-            getVariableFromConf("AUTHORIZATION_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_MANAGEMENT_APPLICATION_PATH"),
-            getVariableFromConf("AUTHORIZATION_PROCESS_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_PROCESS_APPLICATION_PATH"),
-            getVariableFromConf("AUTHORIZATION_SERVER_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_SERVER_APPLICATION_PATH"),
-            getVariableFromConf("BACKEND_FOR_FRONTEND_SERVICE_NAME"), getVariableFromConf("BACKEND_FOR_FRONTEND_APPLICATION_PATH"),
-            getVariableFromConf("CATALOG_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("CATALOG_MANAGEMENT_APPLICATION_PATH"),
-            getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"), getVariableFromConf("CATALOG_PROCESS_APPLICATION_PATH"),
-            getVariableFromConf("FRONTEND_SERVICE_NAME"), getVariableFromConf("FRONTEND_SERVICE_APPLICATION_PATH"),
-            getVariableFromConf("NOTIFIER_SERVICE_NAME"), getVariableFromConf("NOTIFIER_APPLICATION_PATH"),
-            getVariableFromConf("PURPOSE_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("PURPOSE_MANAGEMENT_APPLICATION_PATH"),
-            getVariableFromConf("PURPOSE_PROCESS_SERVICE_NAME"), getVariableFromConf("PURPOSE_PROCESS_APPLICATION_PATH"),
-          )
+          steps {
+            createIngress(
+              getVariableFromConf("AGREEMENT_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("AGREEMENT_MANAGEMENT_APPLICATION_PATH"),
+              getVariableFromConf("AGREEMENT_PROCESS_SERVICE_NAME"), getVariableFromConf("AGREEMENT_PROCESS_APPLICATION_PATH"),
+              getVariableFromConf("API_GATEWAY_SERVICE_NAME"), getVariableFromConf("API_GATEWAY_APPLICATION_PATH"),
+              getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_APPLICATION_PATH"),
+              getVariableFromConf("AUTHORIZATION_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_MANAGEMENT_APPLICATION_PATH"),
+              getVariableFromConf("AUTHORIZATION_PROCESS_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_PROCESS_APPLICATION_PATH"),
+              getVariableFromConf("AUTHORIZATION_SERVER_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_SERVER_APPLICATION_PATH"),
+              getVariableFromConf("BACKEND_FOR_FRONTEND_SERVICE_NAME"), getVariableFromConf("BACKEND_FOR_FRONTEND_APPLICATION_PATH"),
+              getVariableFromConf("CATALOG_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("CATALOG_MANAGEMENT_APPLICATION_PATH"),
+              getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"), getVariableFromConf("CATALOG_PROCESS_APPLICATION_PATH"),
+              getVariableFromConf("FRONTEND_SERVICE_NAME"), getVariableFromConf("FRONTEND_SERVICE_APPLICATION_PATH"),
+              getVariableFromConf("NOTIFIER_SERVICE_NAME"), getVariableFromConf("NOTIFIER_APPLICATION_PATH"),
+              getVariableFromConf("PURPOSE_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("PURPOSE_MANAGEMENT_APPLICATION_PATH"),
+              getVariableFromConf("PURPOSE_PROCESS_SERVICE_NAME"), getVariableFromConf("PURPOSE_PROCESS_APPLICATION_PATH"),
+            )
+          }
         }
 
       }
