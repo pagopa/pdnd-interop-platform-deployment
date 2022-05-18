@@ -27,12 +27,12 @@ spec:
     //
     VAULT_TOKEN = credentials('vault-token')
     VAULT_ADDR = credentials('vault-addr')
-    SMTP_CREDENTIALS = credentials('smtp')
     USER_REGISTRY_API_KEY = credentials('user-registry-api-key')
     PARTY_PROCESS_API_KEY = credentials('party-process-api-key')
     PARTY_MANAGEMENT_API_KEY = credentials('party-management-api-key')
     ECR_CREDENTIALS = credentials('ecr-credentials')
-    NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH)
+    NAMESPACE = "fe-test"
+    // NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH)
     REPOSITORY = getVariableFromConf("REPOSITORY")
     CONFIG_FILE = getConfigFileFromStage(STAGE)
   }

@@ -9,7 +9,7 @@ EXTERNAL_INGRESS_CLASS="nginx"
 ### End TODO
 
 REPOSITORY="505630707203.dkr.ecr.eu-central-1.amazonaws.com"
-POSTGRES_HOST="pdnd-interop-test-rds.cfx5ud7lsyvt.eu-central-1.rds.amazonaws.com"
+POSTGRES_HOST="pdnd-interop-aurora-auroradbcluster-9wzdmx7vohc9.cluster-ciwztfqful5r.eu-south-1.rds.amazonaws.com"
 POSTGRES_PORT="5432"
 REPLICAS=1
 
