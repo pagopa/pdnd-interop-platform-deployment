@@ -434,12 +434,6 @@ void loadSecret(String secretName, String... variablesMappings) {
 void loadSecrets() {
   container('kubectl-container') {
     withKubeConfig([credentialsId: 'kube-config']) {
-      sh'''
-        # Cleanup
-        kubectl -n $NAMESPACE delete secrets regcred --ignore-not-found
-        kubectl -n default get secret regcred -o yaml | sed s/"namespace: default"/"namespace: $NAMESPACE"/ |  kubectl apply -n $NAMESPACE -f -
-      '''
-
       loadSecret('user-registry', 'USER_REGISTRY_API_KEY', 'USER_REGISTRY_API_KEY')
       loadSecret('party-process', 'PARTY_PROCESS_API_KEY', 'PARTY_PROCESS_API_KEY')
       loadSecret('party-management', 'PARTY_MANAGEMENT_API_KEY', 'PARTY_MANAGEMENT_API_KEY')
