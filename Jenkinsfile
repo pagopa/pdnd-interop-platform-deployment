@@ -9,9 +9,9 @@ kind: Pod
 spec:
   containers:
     - name: kubectl-container
-      image: bitnami/kubectl:1.23-debian-10
+      image: lachlanevenson/k8s-kubectl:v1.23.6
       command:
-        - cat
+        - apk add bash && cat
       tty: true
 """
         }
