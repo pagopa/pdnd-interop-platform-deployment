@@ -39,10 +39,6 @@ spec:
 
   stages {
     stage('Platform') {
-      // This is required only for kubectl command (we do not need sbt)
-      agent { 
-        label 'sbt-template' 
-      }
       stages {
 
         stage('Debug') {
