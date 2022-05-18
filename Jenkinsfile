@@ -9,7 +9,7 @@ kind: Pod
 spec:
   containers:
     - name: kubectl-container
-      image: bitnami/kubectl:v1.23
+      image: bitnami/kubectl:1.23-debian-10
       command:
         - cat
       tty: true
