@@ -409,9 +409,7 @@ void createIngress(String... variablesMappings) {
     varSize = variablesMappings.size()
     assert(varSize % 2 == 0)
     baseCommand = 'kubectl -n $NAMESPACE create ingress interop-services --class=alb --dry-run=client -o yaml '
-    // TODO Switch to this when API gateway is ready
-    // annotations = '--annotation="alb.ingress.kubernetes.io/scheme=internal" --annotation="alb.ingress.kubernetes.io/target-type=ip" '
-    annotations = '--annotation="alb.ingress.kubernetes.io/scheme=internet-facing" --annotation="alb.ingress.kubernetes.io/target-type=ip" '
+    annotations = '--annotation="alb.ingress.kubernetes.io/scheme=internal" --annotation="alb.ingress.kubernetes.io/target-type=ip" '
 
     rules = ''
     for (i = 0; i < varSize; i += 2) {
