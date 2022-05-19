@@ -3,3 +3,4 @@ resources:
 - service.yaml
 - serviceaccount.yaml
 - configmap.yaml
+- roles.yaml
