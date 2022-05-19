@@ -61,11 +61,6 @@ spec:
               applyKubeFile('namespace.yaml')
           }
         }
-        stage('Create Roles') {
-          steps {
-              applyKubeFile('roles.yaml')
-          }
-        }
         stage('Load Secrets') {
           steps {
               loadSecrets()
