@@ -113,7 +113,7 @@ spec:
               steps {
                 applyKustomizeToDir(
                   'overlays/attribute-registry-management', 
-                  getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_APPLICATION_PATH"), 
+                  getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME"), 
                   getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION")
                 )
               }
