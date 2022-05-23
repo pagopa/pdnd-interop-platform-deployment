@@ -196,6 +196,7 @@ function loadSecrets() {
     loadSecret 'aws' 'AWS_ACCESS_KEY_ID' 'AWS_SECRET_ACCESS_USR' 'AWS_SECRET_ACCESS_KEY' 'AWS_SECRET_ACCESS_PSW' 'AWS_ACCOUNT_ID' 'AWS_ACCOUNT_ID'
     loadSecret 'postgres' 'POSTGRES_USR' 'POSTGRES_CREDENTIALS_USR' 'POSTGRES_PSW' 'POSTGRES_CREDENTIALS_PSW'
     loadSecret 'vault' 'VAULT_ADDR' 'VAULT_ADDR' 'VAULT_TOKEN' 'VAULT_TOKEN'
+    loadSecret 'user-registry-api-key' 'USER_REGISTRY_API_KEY' 'USER_REGISTRY_API_KEY'
 }
 
 function createIngress() {
