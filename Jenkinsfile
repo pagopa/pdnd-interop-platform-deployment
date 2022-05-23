@@ -148,6 +148,12 @@ spec:
               }
             }
             stage('Party Mock Registry') {
+              when { 
+                anyOf {
+                  environment name: 'STAGE', value: 'DEV'
+                  environment name: 'STAGE', value: 'TEST' 
+                }
+              }
               steps {
                 applyKustomizeToDir(
                   'overlays/party-mock-registry', 
