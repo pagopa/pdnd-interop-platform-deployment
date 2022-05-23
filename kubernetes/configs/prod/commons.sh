@@ -1,0 +1,28 @@
+#!/bin/bash
+
+INTERNAL_INGRESS_HOST="gateway-private.test.pdnd-interop.pagopa.it"
+INTERNAL_INGRESS_CLASS="nginx-internal"
+EXTERNAL_INGRESS_HOST="gateway.test.pdnd-interop.pagopa.it"
+EXTERNAL_INGRESS_CLASS="nginx"
+# EXTERNAL_INGRESS_HOST="gateway-private.test.pdnd-interop.pagopa.it"
+# EXTERNAL_INGRESS_CLASS="nginx-internal"
+### End TODO
+
+REPOSITORY="505630707203.dkr.ecr.eu-central-1.amazonaws.com"
+POSTGRES_HOST="interop-rds-prod-auroradbcluster-n6mrmtikvktv.cluster-clwq8rah1dfz.eu-central-1.rds.amazonaws.com"
+POSTGRES_PORT="5432"
+REPLICAS=1
+
+AWS_REGION="eu-central-1"
+PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
+AWS_SQS_DOMAIN="https://sqs.${AWS_REGION}.amazonaws.com"
+
+ENABLED_PROJECTIONS="true"
+WELL_KNOWN_URLS="https://pdnd-interop-test-public.s3.eu-central-1.amazonaws.com/.well-known/jwks.json"
+
+UI_JWT_AUDIENCE="prod.interop.pagopa.it/ui"
+M2M_JWT_AUDIENCE="prod.interop.pagopa.it/m2m"
+INTERNAL_JWT_AUDIENCE="prod.interop.pagopa.it/internal"
+EC_KEYS_IDENTIFIERS="interop-ecdsa-p256-01"
+RSA_KEYS_IDENTIFIERS="interop-rsa4096-01"
+VAULT_SIGNATURE_ROUTE="/v1/transit/sign/"

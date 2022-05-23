@@ -1,14 +1,35 @@
 #!/bin/bash
 
-while getopts ":n:dkh" opt; do
+while getopts ":n:de:kh" opt; do
   case $opt in
     n)
-      NAMESPACE=$OPTARG
+      export NAMESPACE=$OPTARG
       echo "Selected namespace: $NAMESPACE" >&2
       ;;
     d)
       DRYRUN=1
       echo "Dry-run enabled. No file will be applied"
+      ;;
+    e)
+      case $OPTARG in 
+        dev)
+          export LOWERCASE_ENV=dev
+          export CONFIG_FILE='./kubernetes/configs/dev/main.sh'
+          ;;
+        test)
+          export LOWERCASE_ENV=test
+          export CONFIG_FILE='./kubernetes/configs/test/main.sh'
+          ;;
+        prod)
+          export LOWERCASE_ENV=prod
+          export CONFIG_FILE='./kubernetes/configs/prod/main.sh'
+          ;;
+        \?)
+          echo "Invalid environment: -$OPTARG" >&2
+          exit 1
+          ;;
+      esac
+      echo "Selected environment: $OPTARG" >&2
       ;;
     k)
       KEEPFILES=1
@@ -36,9 +57,6 @@ if [ -z ${NAMESPACE} ]; then
   echo "Usage $0 -n namespace [-d] [-k]"
   exit 1
 fi
-
-export NAMESPACE
-export CONFIG_FILE='./kubernetes/configs/test/main.sh'
 
 source $CONFIG_FILE
 
@@ -124,7 +142,7 @@ function prepareDbMigrations() {
         create configmap common-db-migrations \
         --namespace $NAMESPACE \
         --from-file=db/migrations/ \
-        --dry-run \
+        --dry-run=client \
         -o yaml > $outputFileName
         
     kubeApply $outputFileName
@@ -222,20 +240,19 @@ function cleanFiles() {
     fi
 }
 
-# aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $REPOSITORY 2>/dev/null 1>&2;
-# echo "Logged on ECR"
+aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $REPOSITORY 2>/dev/null 1>&2;
+echo "Logged on ECR"
 
 # applyKubeFile 'namespace.yaml'
-# applyKubeFile 'roles.yaml'
-# loadSecrets
-# prepareDbMigrations
+loadSecrets
+prepareDbMigrations
 
 # applyKubeFile 'frontend/configmap.yaml' $FRONTEND_SERVICE_NAME
 # frontendImageDigest=$(getDockerImageDigest $FRONTEND_SERVICE_NAME $FRONTEND_IMAGE_VERSION)
 # applyKubeFile 'frontend/deployment.yaml' $FRONTEND_SERVICE_NAME $frontendImageDigest
 # applyKubeFile 'frontend/service.yaml' $FRONTEND_SERVICE_NAME
 
-# applyKustomizeToDir 'overlays/agreement-management' $AGREEMENT_MANAGEMENT_SERVICE_NAME $AGREEMENT_MANAGEMENT_IMAGE_VERSION
+applyKustomizeToDir 'overlays/agreement-management' $AGREEMENT_MANAGEMENT_SERVICE_NAME $AGREEMENT_MANAGEMENT_IMAGE_VERSION
 # applyKustomizeToDir 'overlays/agreement-process' $AGREEMENT_PROCESS_SERVICE_NAME $AGREEMENT_PROCESS_IMAGE_VERSION
 # applyKustomizeToDir 'overlays/attribute-registry-management' $ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME $ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION
 # applyKustomizeToDir 'overlays/authorization-management' $AUTHORIZATION_MANAGEMENT_SERVICE_NAME $AUTHORIZATION_MANAGEMENT_IMAGE_VERSION
@@ -252,19 +269,20 @@ function cleanFiles() {
 # applyKubeFile 'jobs/attributes-loader/configmap.yaml' $JOB_ATTRIBUTES_LOADER_SERVICE_NAME
 # attributesLoaderImageDigest=$(getDockerImageDigest $FRONTEND_SERVICE_NAME $FRONTEND_IMAGE_VERSION)
 # applyKubeFile 'jobs/attributes-loader/cronjob.yaml' $JOB_ATTRIBUTES_LOADER_SERVICE_NAME $attributesLoaderImageDigest
-
-createIngress \
-    $AGREEMENT_MANAGEMENT_SERVICE_NAME $AGREEMENT_MANAGEMENT_APPLICATION_PATH \
-    $AGREEMENT_PROCESS_SERVICE_NAME $AGREEMENT_PROCESS_APPLICATION_PATH \
-    $API_GATEWAY_SERVICE_NAME $API_GATEWAY_APPLICATION_PATH \
-    $ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME $ATTRIBUTE_REGISTRY_MANAGEMENT_APPLICATION_PATH \
-    $AUTHORIZATION_MANAGEMENT_SERVICE_NAME $AUTHORIZATION_MANAGEMENT_APPLICATION_PATH \
-    $AUTHORIZATION_PROCESS_SERVICE_NAME $AUTHORIZATION_PROCESS_APPLICATION_PATH \
-    $AUTHORIZATION_SERVER_SERVICE_NAME $AUTHORIZATION_SERVER_APPLICATION_PATH \
-    $BACKEND_FOR_FRONTEND_SERVICE_NAME $BACKEND_FOR_FRONTEND_APPLICATION_PATH \
-    $CATALOG_MANAGEMENT_SERVICE_NAME $CATALOG_MANAGEMENT_APPLICATION_PATH \
-    $CATALOG_PROCESS_SERVICE_NAME $CATALOG_PROCESS_APPLICATION_PATH \
-    $FRONTEND_SERVICE_NAME $FRONTEND_SERVICE_APPLICATION_PATH \
-    $NOTIFIER_SERVICE_NAME $NOTIFIER_APPLICATION_PATH \
-    $PURPOSE_MANAGEMENT_SERVICE_NAME $PURPOSE_MANAGEMENT_APPLICATION_PATH \
-    $PURPOSE_PROCESS_SERVICE_NAME $PURPOSE_PROCESS_APPLICATION_PATH
+# 
+# createIngress \
+#     $AGREEMENT_MANAGEMENT_SERVICE_NAME $AGREEMENT_MANAGEMENT_APPLICATION_PATH \
+#     $AGREEMENT_PROCESS_SERVICE_NAME $AGREEMENT_PROCESS_APPLICATION_PATH \
+#     $API_GATEWAY_SERVICE_NAME $API_GATEWAY_APPLICATION_PATH \
+#     $ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME $ATTRIBUTE_REGISTRY_MANAGEMENT_APPLICATION_PATH \
+#     $AUTHORIZATION_MANAGEMENT_SERVICE_NAME $AUTHORIZATION_MANAGEMENT_APPLICATION_PATH \
+#     $AUTHORIZATION_PROCESS_SERVICE_NAME $AUTHORIZATION_PROCESS_APPLICATION_PATH \
+#     $AUTHORIZATION_SERVER_SERVICE_NAME $AUTHORIZATION_SERVER_APPLICATION_PATH \
+#     $BACKEND_FOR_FRONTEND_SERVICE_NAME $BACKEND_FOR_FRONTEND_APPLICATION_PATH \
+#     $CATALOG_MANAGEMENT_SERVICE_NAME $CATALOG_MANAGEMENT_APPLICATION_PATH \
+#     $CATALOG_PROCESS_SERVICE_NAME $CATALOG_PROCESS_APPLICATION_PATH \
+#     $FRONTEND_SERVICE_NAME $FRONTEND_SERVICE_APPLICATION_PATH \
+#     $NOTIFIER_SERVICE_NAME $NOTIFIER_APPLICATION_PATH \
+#     $PURPOSE_MANAGEMENT_SERVICE_NAME $PURPOSE_MANAGEMENT_APPLICATION_PATH \
+#     $PURPOSE_PROCESS_SERVICE_NAME $PURPOSE_PROCESS_APPLICATION_PATH
+# 

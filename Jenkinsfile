@@ -39,8 +39,7 @@ spec:
     PARTY_PROCESS_API_KEY = credentials('party-process-api-key')
     PARTY_MANAGEMENT_API_KEY = credentials('party-management-api-key')
     ECR_CREDENTIALS = credentials('ecr-credentials')
-    NAMESPACE = "fe-test"
-    // NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH)
+    NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH)
     REPOSITORY = getVariableFromConf("REPOSITORY")
     CONFIG_FILE = getConfigFileFromStage(STAGE)
   }
@@ -277,7 +276,7 @@ void applyKubeFile(String fileName, String serviceName = null, String imageDiges
       echo "Apply file ${fileName} on Kubernetes"
 
       echo "Compiling file ${fileName}"
-      sh "SERVICE_NAME=${serviceName} IMAGE_DIGEST=${imageDigest} ./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
+      sh "SERVICE_NAME=${serviceName} IMAGE_DIGEST=${imageDigest} LOWERCASE_ENV=${env.STAGE.toLowerCase()} ./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
       echo "File ${fileName} compiled"
       
       // DEBUG
@@ -377,7 +376,7 @@ void compileDir(String dirPath, String serviceName, String imageVersion, String 
       if [ ! $(basename $f) = "kustomization.yaml" ]
         then
           mkdir -p ''' + serviceName + '/' + dirPath + '''
-          SERVICE_NAME=''' + serviceName + ' IMAGE_VERSION=' + imageVersion + ' IMAGE_DIGEST=' + serviceImageDigest + ' kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ' + serviceName + '''/$f
+          SERVICE_NAME=''' + serviceName + ' IMAGE_VERSION=' + imageVersion + ' IMAGE_DIGEST=' + serviceImageDigest + ' LOWERCASE_ENV=' + env.STAGE.toLowerCase() + ' kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ' + serviceName + '''/$f
         else
           cp $f ''' + serviceName + '''/$f
       fi
@@ -460,7 +459,7 @@ void prepareDbMigrations() {
          create configmap common-db-migrations \
          --namespace $NAMESPACE \
          --from-file=db/migrations/ \
-         --dry-run \
+         --dry-run=client \
          -o yaml | kubectl apply -f -'''
       echo 'Migrations configmap created'
     }
