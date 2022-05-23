@@ -1,9 +1,6 @@
 #!/bin/bash
 
-INTERNAL_INGRESS_HOST="gateway-private.dev.pdnd-interop.pagopa.it"
-EXTERNAL_INGRESS_HOST="gateway-private.dev.pdnd-interop.pagopa.it"
-INTERNAL_INGRESS_CLASS="nginx"
-EXTERNAL_INGRESS_CLASS="nginx"
+DOMAIN_NAME="gateway-private.dev.pdnd-interop.pagopa.it"
 
 REPOSITORY="505630707203.dkr.ecr.eu-central-1.amazonaws.com"
 POSTGRES_HOST="pdnd-interop-dev-rds.c9zr6t2swdpb.eu-central-1.rds.amazonaws.com"
