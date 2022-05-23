@@ -76,8 +76,7 @@ spec:
               environment {
                 SERVICE_NAME = getVariableFromConf("FRONTEND_SERVICE_NAME")
                 IMAGE_VERSION = getVariableFromConf("FRONTEND_IMAGE_VERSION")
-                // IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
-                IMAGE_DIGEST =  "dummy_digest"
+                IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
               }
               steps {
                 applyKubeFile('frontend/configmap.yaml', SERVICE_NAME)
@@ -231,8 +230,7 @@ spec:
                   environment {
                     SERVICE_NAME = getVariableFromConf("JOB_ATTRIBUTES_LOADER_SERVICE_NAME")
                     IMAGE_VERSION = getVariableFromConf("JOB_ATTRIBUTES_LOADER_IMAGE_VERSION")
-                    // IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
-                    IMAGE_DIGEST =  "dummy_digest"
+                    IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
                   }
                   steps {
                     applyKubeFile('jobs/attributes-loader/configmap.yaml', SERVICE_NAME)
@@ -246,19 +244,13 @@ spec:
         stage('Create Ingress') {
           steps {
             createIngress(
-              getVariableFromConf("AGREEMENT_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("AGREEMENT_MANAGEMENT_APPLICATION_PATH"),
               getVariableFromConf("AGREEMENT_PROCESS_SERVICE_NAME"), getVariableFromConf("AGREEMENT_PROCESS_APPLICATION_PATH"),
               getVariableFromConf("API_GATEWAY_SERVICE_NAME"), getVariableFromConf("API_GATEWAY_APPLICATION_PATH"),
-              getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_APPLICATION_PATH"),
-              getVariableFromConf("AUTHORIZATION_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_MANAGEMENT_APPLICATION_PATH"),
               getVariableFromConf("AUTHORIZATION_PROCESS_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_PROCESS_APPLICATION_PATH"),
               getVariableFromConf("AUTHORIZATION_SERVER_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_SERVER_APPLICATION_PATH"),
               getVariableFromConf("BACKEND_FOR_FRONTEND_SERVICE_NAME"), getVariableFromConf("BACKEND_FOR_FRONTEND_APPLICATION_PATH"),
-              getVariableFromConf("CATALOG_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("CATALOG_MANAGEMENT_APPLICATION_PATH"),
               getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"), getVariableFromConf("CATALOG_PROCESS_APPLICATION_PATH"),
               getVariableFromConf("FRONTEND_SERVICE_NAME"), getVariableFromConf("FRONTEND_SERVICE_APPLICATION_PATH"),
-              getVariableFromConf("NOTIFIER_SERVICE_NAME"), getVariableFromConf("NOTIFIER_APPLICATION_PATH"),
-              getVariableFromConf("PURPOSE_MANAGEMENT_SERVICE_NAME"), getVariableFromConf("PURPOSE_MANAGEMENT_APPLICATION_PATH"),
               getVariableFromConf("PURPOSE_PROCESS_SERVICE_NAME"), getVariableFromConf("PURPOSE_PROCESS_APPLICATION_PATH"),
             )
           }
@@ -297,8 +289,7 @@ void applyKustomizeToDir(String dirPath, String serviceName, String imageVersion
 
       echo "Apply directory ${dirPath} on Kubernetes"
 
-      // def serviceImageDigest = getDockerImageDigest(serviceName, imageVersion)
-      def serviceImageDigest = "dummy_digest"
+      def serviceImageDigest = getDockerImageDigest(serviceName, imageVersion)
 
       def kubeDirPath = 'kubernetes/' + dirPath
 
@@ -467,26 +458,26 @@ void prepareDbMigrations() {
 }
 
 
-// String getDockerImageDigest(String serviceName, String imageVersion) {
-//   echo "Retrieving digest for service ${serviceName} and version ${imageVersion}..."
-//     container('kubectl-container') {
+String getDockerImageDigest(String serviceName, String imageVersion) {
+  echo "Retrieving digest for service ${serviceName} and version ${imageVersion}..."
+    container('kubectl-container') {
 
-//       def response = sh(
-//           returnStdout: true, 
-//           script: '''
-//           export AWS_ACCESS_KEY_ID=$ECR_CREDENTIALS_USR
-//           export AWS_SECRET_ACCESS_KEY=$ECR_CREDENTIALS_PSW
-//           aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $REPOSITORY 2>/dev/null 1>&2
-//           docker manifest inspect $REPOSITORY/''' + serviceName + ':' + imageVersion
-//         ).trim()
+      def response = sh(
+          returnStdout: true, 
+          script: '''
+          export AWS_ACCESS_KEY_ID=$ECR_CREDENTIALS_USR
+          export AWS_SECRET_ACCESS_KEY=$ECR_CREDENTIALS_PSW
+          aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $REPOSITORY 2>/dev/null 1>&2
+          docker manifest inspect $REPOSITORY/''' + serviceName + ':' + imageVersion
+        ).trim()
 
-//       def jsonResponse = readJSON text: response
+      def jsonResponse = readJSON text: response
 
-//       def sha256 = jsonResponse.config.digest
+      def sha256 = jsonResponse.config.digest
 
-//       echo "Digest retrieved for service ${serviceName} and version ${imageVersion}: " + sha256
+      echo "Digest retrieved for service ${serviceName} and version ${imageVersion}: " + sha256
 
-//       return sha256
-//     }
+      return sha256
+    }
   
-// }
+}
