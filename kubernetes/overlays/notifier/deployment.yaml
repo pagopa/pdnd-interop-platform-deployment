@@ -91,11 +91,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ACCEPTED_AUDIENCES
-            - name: WELL_KNOWN_URL
+            - name: WELL_KNOWN_URLS
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: WELL_KNOWN_URL  
+                  key: WELL_KNOWN_URLS 
             - name: DYNAMO_TABLE_NAME
               valueFrom:
                 configMapKeyRef:

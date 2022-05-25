@@ -272,73 +272,6 @@ pipeline {
                 }
               }
             }
-            
-            stage('Spid') {
-              when { 
-                anyOf {
-                  environment name: 'STAGE', value: 'DEV'
-                  environment name: 'STAGE', value: 'TEST' 
-                }
-              }
-              environment {
-                SPID_LOGIN_SAML_CERT = credentials('spid-login-saml-cert')
-                SPID_LOGIN_SAML_KEY = credentials('spid-login-saml-key')
-                SPID_LOGIN_JWT_PRIVATE_KEY = credentials('spid-login-jwt-private-key')
-              }
-              
-              stages {
-                stage('Secrets') {
-                  steps {
-                    loadSpidSecrets()
-                  }
-                }
-
-                stage('Redis') {
-                  steps {
-                    applyKubeFile('spid/redis/configmap.yaml', "redis")
-                    applyKubeFile('spid/redis/deployment.yaml', "redis")
-                    applyKubeFile('spid/redis/service.yaml', "redis")
-
-                    waitForServiceReady("redis")
-                  }
-                }
-
-                stage('Login') {
-                  steps {
-                    applyKubeFile('spid/login/ingress.yaml', "hub-spid-login-ms")
-                    applyKubeFile('spid/login/configmap.yaml', "hub-spid-login-ms")
-                    applyKubeFile('spid/login/deployment.yaml', "hub-spid-login-ms")
-                    applyKubeFile('spid/login/service.yaml', "hub-spid-login-ms")
-
-                    waitForServiceReady("hub-spid-login-ms")
-                  }
-                }
-
-                stage('IdP') {
-                  steps {
-                    applyKubeFile('spid/idp/pvc.yaml', "spid-testenv2")
-                    applyKubeFile('spid/idp/ingress.yaml', "spid-testenv2")
-                    applyKubeFile('spid/idp/configmap.yaml', "spid-testenv2")
-                    applyKubeFile('spid/idp/deployment.yaml', "spid-testenv2")
-                    applyKubeFile('spid/idp/service.yaml', "spid-testenv2")
-
-                    waitForServiceReady("spid-testenv2")
-                  }
-                }
-
-                stage('IdP Proxy') {
-                  steps {
-                    applyKubeFile('spid/idp-reverse-proxy/ingress.yaml', "idp-reverse-proxy")
-                    applyKubeFile('spid/idp-reverse-proxy/configmap.yaml', "idp-reverse-proxy")
-                    applyKubeFile('spid/idp-reverse-proxy/deployment.yaml', "idp-reverse-proxy")
-                    applyKubeFile('spid/idp-reverse-proxy/service.yaml', "idp-reverse-proxy")
-
-                    waitForServiceReady("idp-reverse-proxy")
-                  }
-                }
-
-              }
-            }
           }
         }
       }
@@ -514,31 +447,6 @@ void loadSecrets() {
   }
 }
 
-
-void loadSpidSecrets() {
-  container('sbt-container') { // This is required only for kubectl command (sbt is not needed)
-    withKubeConfig([credentialsId: 'kube-config']) {
-      
-      sh'''
-        kubectl -n $NAMESPACE create secret generic spid-login \
-          --save-config \
-          --dry-run=client \
-          --from-file=METADATA_PUBLIC_CERT="$SPID_LOGIN_SAML_CERT" \
-          --from-file=METADATA_PRIVATE_CERT="$SPID_LOGIN_SAML_KEY" \
-          --from-file=JWT_TOKEN_PRIVATE_KEY="$SPID_LOGIN_JWT_PRIVATE_KEY" \
-          -o yaml | kubectl apply -f -
-
-        kubectl -n $NAMESPACE create secret generic idp-http-certs \
-          --save-config \
-          --dry-run=client \
-          --from-file=cert.pem=$SPID_LOGIN_SAML_CERT \
-          --from-file=key.pem=$SPID_LOGIN_SAML_KEY \
-          -o yaml | kubectl apply -f -
-
-      '''
-    }
-  }
-}
 
 String getVariableFromConf(String variableName) {
   def configFile = getConfigFileFromStage(env.STAGE)

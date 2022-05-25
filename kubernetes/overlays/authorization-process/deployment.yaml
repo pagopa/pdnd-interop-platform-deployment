@@ -44,8 +44,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PURPOSE_MANAGEMENT_URL
-            - name: USER_REGISTRY_MANAGEMENT_URL
+            - name: USER_REGISTRY_URL
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: USER_REGISTRY_MANAGEMENT_URL
+                  key: USER_REGISTRY_URL
