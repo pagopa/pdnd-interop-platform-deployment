@@ -156,18 +156,6 @@ pipeline {
                 )
               }
             }
-            stage('Party Management') {
-              steps {
-                applyKustomizeToDir(
-                  'overlays/party-management', 
-                  getVariableFromConf("PARTY_MANAGEMENT_SERVICE_NAME"), 
-                  getVariableFromConf("PARTY_MANAGEMENT_APPLICATION_PATH"), 
-                  getVariableFromConf("PARTY_MANAGEMENT_IMAGE_VERSION"),
-                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
-                )
-              }
-            }
             stage('Party Mock Registry') {
               steps {
                 applyKustomizeToDir(
@@ -177,18 +165,6 @@ pipeline {
                   getVariableFromConf("PARTY_MOCK_REGISTRY_IMAGE_VERSION"),
                   getVariableFromConf("INTERNAL_APPLICATION_HOST"),
                   getVariableFromConf("INTERNAL_INGRESS_CLASS")
-                )
-              }
-            }
-            stage('Party Process') {
-              steps {
-                applyKustomizeToDir(
-                  'overlays/party-process', 
-                  getVariableFromConf("PARTY_PROCESS_SERVICE_NAME"), 
-                  getVariableFromConf("PARTY_PROCESS_APPLICATION_PATH"), 
-                  getVariableFromConf("PARTY_PROCESS_IMAGE_VERSION"),
-                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
                 )
               }
             }
@@ -225,18 +201,6 @@ pipeline {
                   getVariableFromConf("PURPOSE_PROCESS_IMAGE_VERSION"),
                   getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
                   getVariableFromConf("EXTERNAL_INGRESS_CLASS")
-                )
-              }
-            }
-            stage('User Registry Management') {
-              steps {
-                applyKustomizeToDir(
-                  'overlays/user-registry-management', 
-                  getVariableFromConf("USER_REGISTRY_MANAGEMENT_SERVICE_NAME"), 
-                  getVariableFromConf("USER_REGISTRY_MANAGEMENT_APPLICATION_PATH"), 
-                  getVariableFromConf("USER_REGISTRY_MANAGEMENT_IMAGE_VERSION"),
-                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
                 )
               }
             }
@@ -539,6 +503,8 @@ void loadSecrets() {
 
       loadSecret(getVariableFromConf("PARTY_PROCESS_SERVICE_NAME"), 'ONBOARDING_DESTINATION_MAILS', 'ONBOARDING_DESTINATION_MAILS')
       loadSecret('user-registry-api-key', 'USER_REGISTRY_API_KEY', 'USER_REGISTRY_API_KEY')
+      loadSecret('party-process-api-key', 'PARTY_PROCESS_API_KEY', 'PARTY_PROCESS_API_KEY')
+      loadSecret('party-management-api-key', 'PARTY_MANAGEMENT_API_KEY', 'PARTY_MANAGEMENT_API_KEY')
       loadSecret('storage', 'STORAGE_USR', 'AWS_SECRET_ACCESS_USR', 'STORAGE_PSW', 'AWS_SECRET_ACCESS_PSW')
       loadSecret('aws', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_USR', 'AWS_SECRET_ACCESS_KEY', 'AWS_SECRET_ACCESS_PSW', 'AWS_ACCOUNT_ID', 'AWS_ACCOUNT_ID')
       loadSecret('postgres', 'POSTGRES_USR', 'POSTGRES_CREDENTIALS_USR', 'POSTGRES_PSW', 'POSTGRES_CREDENTIALS_PSW')
