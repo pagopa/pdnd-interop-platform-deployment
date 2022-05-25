@@ -53,11 +53,6 @@ The deployment leverages on `kustomize`.
 The frontend is currently deployed as a docker image which contains the `nginx` with ui static files.\
 A file is injected in order to configure the hostname at deployment time and not at build time.
 
-### Identity Provider Reverse Proxy
-The Identity Provider reverse proxy is required in order to avoid exposing IDP admin endpoints, such as users list and creation.\
-The service url is `https://<namespace>-idp.<externalHostName>`\
-This service must be reachable from the Frontend client.
-
 ## Open Points
 Resources created must be deleted manually.\
 Resources:
