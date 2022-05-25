@@ -191,7 +191,7 @@ function loadSecret() {
 }
 
 function loadSecrets() {
-    source ./secrets
+    source ./${LOWERCASE_ENV}-secrets
     loadSecret 'storage' 'STORAGE_USR' 'AWS_SECRET_ACCESS_USR' 'STORAGE_PSW' 'AWS_SECRET_ACCESS_PSW'
     loadSecret 'aws' 'AWS_ACCESS_KEY_ID' 'AWS_SECRET_ACCESS_USR' 'AWS_SECRET_ACCESS_KEY' 'AWS_SECRET_ACCESS_PSW' 'AWS_ACCOUNT_ID' 'AWS_ACCOUNT_ID'
     loadSecret 'postgres' 'POSTGRES_USR' 'POSTGRES_CREDENTIALS_USR' 'POSTGRES_PSW' 'POSTGRES_CREDENTIALS_PSW'
