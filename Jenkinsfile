@@ -14,6 +14,8 @@ pipeline {
     VAULT_ADDR = credentials('vault-addr')
     SMTP_CREDENTIALS = credentials('smtp')
     USER_REGISTRY_API_KEY = credentials('user-registry-api-key')
+    PARTY_PROCESS_API_KEY = credentials('party-process-api-key')
+    PARTY_MANAGEMENT_API_KEY = credentials('party-management-api-key')
     ONBOARDING_DESTINATION_MAILS = credentials('onboarding-destination-mails')
     DOCKER_REGISTRY_CREDENTIALS = credentials('pdnd-nexus')
     ECR_CREDENTIALS = credentials('ecr-credentials')
