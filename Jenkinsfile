@@ -28,9 +28,8 @@ spec:
   environment {
     // STAGE variable should be set as Global Properties
     STAGE = "${env.STAGE}"
-    // TODO Create one set of credentials for each service
     AWS_ACCOUNT_ID = credentials('aws-account-id')
-    AWS_SECRET_ACCESS = credentials('aws-credentials')
+    // TODO Create one set of credentials for each service
     POSTGRES_CREDENTIALS = credentials('postgres-db')
     //
     VAULT_TOKEN = credentials('vault-token')
@@ -274,7 +273,7 @@ void applyKubeFile(String fileName, String serviceName = null, String imageDiges
       echo "Apply file ${fileName} on Kubernetes"
 
       echo "Compiling file ${fileName}"
-      sh "SERVICE_NAME=${serviceName} IMAGE_DIGEST=${imageDigest} LOWERCASE_ENV=${env.STAGE.toLowerCase()} ./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
+      sh "SERVICE_NAME=${serviceName} IMAGE_DIGEST=${imageDigest} LOWERCASE_ENV=${env.STAGE.toLowerCase()} AWS_ACCOUNT_ID=${env.AWS_ACCOUNT_ID} ./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
       echo "File ${fileName} compiled"
       
       // DEBUG
@@ -373,7 +372,7 @@ void compileDir(String dirPath, String serviceName, String imageVersion, String 
       if [ ! $(basename $f) = "kustomization.yaml" ]
         then
           mkdir -p ''' + serviceName + '/' + dirPath + '''
-          SERVICE_NAME=''' + serviceName + ' IMAGE_VERSION=' + imageVersion + ' IMAGE_DIGEST=' + serviceImageDigest + ' LOWERCASE_ENV=' + env.STAGE.toLowerCase() + ' kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ' + serviceName + '''/$f
+          SERVICE_NAME=''' + serviceName + ' IMAGE_VERSION=' + imageVersion + ' IMAGE_DIGEST=' + serviceImageDigest + ' LOWERCASE_ENV=' + env.STAGE.toLowerCase() + ' AWS_ACCOUNT_ID=' + env.AWS_ACCOUNT_ID + ' kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ' + serviceName + '''/$f
         else
           cp $f ''' + serviceName + '''/$f
       fi
@@ -433,8 +432,6 @@ void loadSecrets() {
       loadSecret('user-registry', 'USER_REGISTRY_API_KEY', 'USER_REGISTRY_API_KEY')
       loadSecret('party-process', 'PARTY_PROCESS_API_KEY', 'PARTY_PROCESS_API_KEY')
       loadSecret('party-management', 'PARTY_MANAGEMENT_API_KEY', 'PARTY_MANAGEMENT_API_KEY')
-      loadSecret('storage', 'STORAGE_USR', 'AWS_SECRET_ACCESS_USR', 'STORAGE_PSW', 'AWS_SECRET_ACCESS_PSW')
-      loadSecret('aws', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_USR', 'AWS_SECRET_ACCESS_KEY', 'AWS_SECRET_ACCESS_PSW', 'AWS_ACCOUNT_ID', 'AWS_ACCOUNT_ID')
       loadSecret('postgres', 'POSTGRES_USR', 'POSTGRES_CREDENTIALS_USR', 'POSTGRES_PSW', 'POSTGRES_CREDENTIALS_PSW')
       loadSecret('vault', 'VAULT_ADDR', 'VAULT_ADDR', 'VAULT_TOKEN', 'VAULT_TOKEN')
       loadSecret('smtp', 'SMTP_USR', 'SMTP_CREDENTIALS_USR', 'SMTP_PSW', 'SMTP_CREDENTIALS_PSW')

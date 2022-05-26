@@ -71,12 +71,14 @@ function compileDir() {
     imageVersion=$3
     serviceImageDigest=$4
 
+    eval $(source ./${LOWERCASE_ENV}-secrets; echo awsAccountId=$AWS_ACCOUNT_ID)
+
     for f in $dirPath/*
     do
         if [ ! $(basename $f) = "kustomization.yaml" ]
         then
             mkdir -p $serviceName/$dirPath
-            SERVICE_NAME=$serviceName IMAGE_VERSION=$imageVersion IMAGE_DIGEST=$serviceImageDigest kubernetes/templater.sh $f -s -f $CONFIG_FILE > $serviceName/$f
+            SERVICE_NAME=$serviceName IMAGE_VERSION=$imageVersion IMAGE_DIGEST=$serviceImageDigest AWS_ACCOUNT_ID=$awsAccountId kubernetes/templater.sh $f -s -f $CONFIG_FILE > $serviceName/$f
         else
             cp $f $serviceName/$f
         fi
@@ -126,8 +128,10 @@ function applyKubeFile() {
 
     echo "Apply file ${fileName} on Kubernetes"
 
+    eval $(source ./${LOWERCASE_ENV}-secrets; echo awsAccountId=$AWS_ACCOUNT_ID)
+
     echo "Compiling file ${fileName}"
-    SERVICE_NAME=${serviceName} IMAGE_DIGEST=${imageDigest} ./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${CONFIG_FILE} > ./kubernetes/$(dirname $fileName)/compiled.$(basename $fileName)
+    SERVICE_NAME=${serviceName} IMAGE_DIGEST=${imageDigest} AWS_ACCOUNT_ID=$awsAccountId ./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${CONFIG_FILE} > ./kubernetes/$(dirname $fileName)/compiled.$(basename $fileName)
     echo "File ${fileName} compiled"
     
     kubeApply ./kubernetes/$(dirname $fileName)/compiled.$(basename $fileName)
@@ -192,8 +196,6 @@ function loadSecret() {
 
 function loadSecrets() {
     source ./${LOWERCASE_ENV}-secrets
-    loadSecret 'storage' 'STORAGE_USR' 'AWS_SECRET_ACCESS_USR' 'STORAGE_PSW' 'AWS_SECRET_ACCESS_PSW'
-    loadSecret 'aws' 'AWS_ACCESS_KEY_ID' 'AWS_SECRET_ACCESS_USR' 'AWS_SECRET_ACCESS_KEY' 'AWS_SECRET_ACCESS_PSW' 'AWS_ACCOUNT_ID' 'AWS_ACCOUNT_ID'
     loadSecret 'postgres' 'POSTGRES_USR' 'POSTGRES_CREDENTIALS_USR' 'POSTGRES_PSW' 'POSTGRES_CREDENTIALS_PSW'
     loadSecret 'vault' 'VAULT_ADDR' 'VAULT_ADDR' 'VAULT_TOKEN' 'VAULT_TOKEN'
     loadSecret 'user-registry-api-key' 'USER_REGISTRY_API_KEY' 'USER_REGISTRY_API_KEY'
