@@ -30,8 +30,6 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/dev/catalog_management.sh
 . $(pwd)/kubernetes/configs/dev/catalog_process.sh
 . $(pwd)/kubernetes/configs/dev/frontend.sh
-. $(pwd)/kubernetes/configs/dev/party_management.sh
-. $(pwd)/kubernetes/configs/dev/party_process.sh
 . $(pwd)/kubernetes/configs/dev/party_registry_proxy.sh
 . $(pwd)/kubernetes/configs/dev/purpose_process.sh
 . $(pwd)/kubernetes/configs/dev/notifier.sh
