@@ -24,11 +24,21 @@ spec:
                 secretKeyRef:
                   name: vault
                   key: VAULT_TOKEN
-            - name: RSA_PRIVATE_VAULT_PATH
+            - name: EC_KEYS_IDENTIFIERS
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: INTEROP_RSA_PRIVATE_VAULT_PATH
+                  key: EC_KEYS_IDENTIFIERS
+            - name: RSA_KEYS_IDENTIFIERS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: RSA_KEYS_IDENTIFIERS
+            - name: VAULT_SIGNATURE_ROUTE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: VAULT_SIGNATURE_ROUTE
             - name: GENERATED_JWT_AUDIENCE
               valueFrom:
                 configMapKeyRef:
@@ -44,3 +54,43 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: GENERATED_JWT_ISSUER
+            - name: INTERNAL_JWT_ISSUER
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: INTERNAL_JWT_ISSUER
+            - name: INTERNAL_JWT_SUBJECT
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: INTERNAL_JWT_SUBJECT
+            - name: INTERNAL_JWT_AUDIENCE
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: INTERNAL_JWT_AUDIENCE
+            - name: INTERNAL_JWT_DURATION_SECONDS
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: INTERNAL_JWT_DURATION_SECONDS
+            - name: PARTY_PROCESS_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: PARTY_PROCESS_URL
+            - name: USER_REGISTRY_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: USER_REGISTRY_URL
+            - name: USER_REGISTRY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: user-registry-api-key
+                  key: USER_REGISTRY_API_KEY
+            - name: PARTY_PROCESS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: party-process-api-key
+                  key: PARTY_PROCESS_API_KEY

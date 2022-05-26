@@ -53,28 +53,6 @@ The deployment leverages on `kustomize`.
 The frontend is currently deployed as a docker image which contains the `nginx` with ui static files.\
 A file is injected in order to configure the hostname at deployment time and not at build time.
 
-## SPID Modules
-SPID modules should be deployed only in dev and test environments.
-
-### Service Provider
-[hub-spid-login-ms](https://github.com/pagopa/hub-spid-login-ms) is the Service Provider that manages the login with SPID.\
-The service url is `https://<namespace>.<externalHostName>/hub-spid-login-ms`\
-This service must be reachable from the Frontend client.
-
-### Identity Provider
-[spid-testenv2](https://github.com/italia/spid-testenv2) Identity Provider mock.\
-The service url is `https://<namespace>-idp-admin.<internalHostName>`\
-
-### Identity Provider Reverse Proxy
-The Identity Provider reverse proxy is required in order to avoid exposing IDP admin endpoints, such as users list and creation.\
-The service url is `https://<namespace>-idp.<externalHostName>`\
-This service must be reachable from the Frontend client.
-
-### Redis
-Required by the login module.\
-This service is not reachable outside the namespace.
-
-
 ## Open Points
 Resources created must be deleted manually.\
 Resources:

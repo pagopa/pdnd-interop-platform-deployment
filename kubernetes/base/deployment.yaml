@@ -60,11 +60,11 @@ spec:
                   fieldPath: metadata.namespace
             - name: REQUIRED_CONTACT_POINT_NR
               value: "{{REPLICAS}}"
-            - name: WELL_KNOWN_URL
+            - name: WELL_KNOWN_URLS
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: WELL_KNOWN_URL
+                  key: WELL_KNOWN_URLS
           resources:
             requests:
               memory: "512Mi"

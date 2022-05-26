@@ -14,11 +14,6 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ACCEPTED_AUDIENCES
-            - name: AWS_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: aws
-                  key: AWS_ACCESS_KEY_ID
             - name: USER_REGISTRY_API_KEY
               valueFrom:
                 secretKeyRef:
@@ -49,8 +44,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PURPOSE_MANAGEMENT_URL
-            - name: USER_REGISTRY_MANAGEMENT_URL
+            - name: USER_REGISTRY_URL
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: USER_REGISTRY_MANAGEMENT_URL
+                  key: USER_REGISTRY_URL
