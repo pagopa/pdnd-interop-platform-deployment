@@ -16,7 +16,6 @@ pipeline {
     USER_REGISTRY_API_KEY = credentials('user-registry-api-key')
     PARTY_PROCESS_API_KEY = credentials('party-process-api-key')
     PARTY_MANAGEMENT_API_KEY = credentials('party-management-api-key')
-    ONBOARDING_DESTINATION_MAILS = credentials('onboarding-destination-mails')
     DOCKER_REGISTRY_CREDENTIALS = credentials('pdnd-nexus')
     ECR_CREDENTIALS = credentials('ecr-credentials')
     NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH)
@@ -436,7 +435,6 @@ void loadSecrets() {
         kubectl -n default get secret regcred -o yaml | sed s/"namespace: default"/"namespace: $NAMESPACE"/ |  kubectl apply -n $NAMESPACE -f -
       '''
 
-      loadSecret(getVariableFromConf("PARTY_PROCESS_SERVICE_NAME"), 'ONBOARDING_DESTINATION_MAILS', 'ONBOARDING_DESTINATION_MAILS')
       loadSecret('user-registry-api-key', 'USER_REGISTRY_API_KEY', 'USER_REGISTRY_API_KEY')
       loadSecret('party-process-api-key', 'PARTY_PROCESS_API_KEY', 'PARTY_PROCESS_API_KEY')
       loadSecret('party-management-api-key', 'PARTY_MANAGEMENT_API_KEY', 'PARTY_MANAGEMENT_API_KEY')
