@@ -435,9 +435,9 @@ void loadSecrets() {
         kubectl -n default get secret regcred -o yaml | sed s/"namespace: default"/"namespace: $NAMESPACE"/ |  kubectl apply -n $NAMESPACE -f -
       '''
 
-      loadSecret('user-registry-api-key', 'USER_REGISTRY_API_KEY', 'USER_REGISTRY_API_KEY')
-      loadSecret('party-process-api-key', 'PARTY_PROCESS_API_KEY', 'PARTY_PROCESS_API_KEY')
-      loadSecret('party-management-api-key', 'PARTY_MANAGEMENT_API_KEY', 'PARTY_MANAGEMENT_API_KEY')
+      loadSecret('user-registry', 'USER_REGISTRY_API_KEY', 'USER_REGISTRY_API_KEY')
+      loadSecret('party-process', 'PARTY_PROCESS_API_KEY', 'PARTY_PROCESS_API_KEY')
+      loadSecret('party-management', 'PARTY_MANAGEMENT_API_KEY', 'PARTY_MANAGEMENT_API_KEY')
       loadSecret('storage', 'STORAGE_USR', 'AWS_SECRET_ACCESS_USR', 'STORAGE_PSW', 'AWS_SECRET_ACCESS_PSW')
       loadSecret('aws', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_USR', 'AWS_SECRET_ACCESS_KEY', 'AWS_SECRET_ACCESS_PSW', 'AWS_ACCOUNT_ID', 'AWS_ACCOUNT_ID')
       loadSecret('postgres', 'POSTGRES_USR', 'POSTGRES_CREDENTIALS_USR', 'POSTGRES_PSW', 'POSTGRES_CREDENTIALS_PSW')

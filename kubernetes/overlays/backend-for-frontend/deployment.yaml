@@ -87,10 +87,10 @@ spec:
             - name: USER_REGISTRY_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: user-registry-api-key
+                  name: user-registry
                   key: USER_REGISTRY_API_KEY
             - name: PARTY_PROCESS_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: party-process-api-key
+                  name: party-process
                   key: PARTY_PROCESS_API_KEY
