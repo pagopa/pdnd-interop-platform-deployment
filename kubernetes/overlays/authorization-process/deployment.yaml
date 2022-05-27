@@ -17,7 +17,7 @@ spec:
             - name: USER_REGISTRY_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: user-registry-api-key
+                  name: user-registry
                   key: USER_REGISTRY_API_KEY
             - name: AGREEMENT_MANAGEMENT_URL
               valueFrom:
@@ -49,3 +49,13 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: USER_REGISTRY_MANAGEMENT_URL
+            - name: USER_REGISTRY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: user-registry
+                  key: USER_REGISTRY_API_KEY
+            - name: PARTY_MANAGEMENT_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: party-management
+                  key: PARTY_MANAGEMENT_API_KEY
