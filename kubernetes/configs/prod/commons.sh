@@ -15,6 +15,10 @@ ENABLED_PROJECTIONS="true"
 # TODO Update this when ready
 WELL_KNOWN_URLS="https://pdnd-interop-test-public.s3.eu-central-1.amazonaws.com/.well-known/jwks.json"
 
+INTERNAL_JWT_ISSUER="prod.interop.pagopa.it"
+INTERNAL_JWT_SUBJECT="prod.interop-m2m"
+INTERNAL_JWT_DURATION_SECONDS=3600
+
 UI_JWT_AUDIENCE="prod.interop.pagopa.it/ui"
 M2M_JWT_AUDIENCE="prod.interop.pagopa.it/m2m"
 INTERNAL_JWT_AUDIENCE="prod.interop.pagopa.it/internal"
