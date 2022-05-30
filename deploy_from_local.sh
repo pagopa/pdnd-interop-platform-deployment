@@ -196,9 +196,11 @@ function loadSecret() {
 
 function loadSecrets() {
     source ./${LOWERCASE_ENV}-secrets
+    loadSecret 'user-registry' 'USER_REGISTRY_API_KEY' 'USER_REGISTRY_API_KEY'
+    loadSecret 'party-process' 'PARTY_PROCESS_API_KEY' 'PARTY_PROCESS_API_KEY'
+    loadSecret 'party-management' 'PARTY_MANAGEMENT_API_KEY' 'PARTY_MANAGEMENT_API_KEY'
     loadSecret 'postgres' 'POSTGRES_USR' 'POSTGRES_CREDENTIALS_USR' 'POSTGRES_PSW' 'POSTGRES_CREDENTIALS_PSW'
     loadSecret 'vault' 'VAULT_ADDR' 'VAULT_ADDR' 'VAULT_TOKEN' 'VAULT_TOKEN'
-    loadSecret 'user-registry-api-key' 'USER_REGISTRY_API_KEY' 'USER_REGISTRY_API_KEY'
 }
 
 function createIngress() {

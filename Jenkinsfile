@@ -434,7 +434,6 @@ void loadSecrets() {
       loadSecret('party-management', 'PARTY_MANAGEMENT_API_KEY', 'PARTY_MANAGEMENT_API_KEY')
       loadSecret('postgres', 'POSTGRES_USR', 'POSTGRES_CREDENTIALS_USR', 'POSTGRES_PSW', 'POSTGRES_CREDENTIALS_PSW')
       loadSecret('vault', 'VAULT_ADDR', 'VAULT_ADDR', 'VAULT_TOKEN', 'VAULT_TOKEN')
-      loadSecret('smtp', 'SMTP_USR', 'SMTP_CREDENTIALS_USR', 'SMTP_PSW', 'SMTP_CREDENTIALS_PSW')
     }
   }
 }
