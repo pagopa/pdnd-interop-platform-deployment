@@ -53,8 +53,12 @@ while getopts ":n:de:kh" opt; do
 done
 
 if [ -z ${NAMESPACE} ]; then 
-  echo "namespace parameter is mandatory"
-  echo "Usage $0 -n namespace [-d] [-k]"
+  echo "Namespace parameter is mandatory"
+  exit 1
+fi
+
+if [ -z ${LOWERCASE_ENV} ]; then 
+  echo "Environment parameter is mandatory"
   exit 1
 fi
 
@@ -262,6 +266,7 @@ applyKustomizeToDir 'overlays/agreement-process' $AGREEMENT_PROCESS_SERVICE_NAME
 applyKustomizeToDir 'overlays/attribute-registry-management' $ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME $ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION
 applyKustomizeToDir 'overlays/authorization-management' $AUTHORIZATION_MANAGEMENT_SERVICE_NAME $AUTHORIZATION_MANAGEMENT_IMAGE_VERSION
 applyKustomizeToDir 'overlays/authorization-process' $AUTHORIZATION_PROCESS_SERVICE_NAME $AUTHORIZATION_PROCESS_IMAGE_VERSION
+applyKustomizeToDir 'overlays/authorization-server' $AUTHORIZATION_SERVER_SERVICE_NAME $AUTHORIZATION_SERVER_IMAGE_VERSION
 applyKustomizeToDir 'overlays/catalog-management' $CATALOG_MANAGEMENT_SERVICE_NAME $CATALOG_MANAGEMENT_IMAGE_VERSION
 applyKustomizeToDir 'overlays/catalog-process' $CATALOG_PROCESS_SERVICE_NAME $CATALOG_PROCESS_IMAGE_VERSION
 applyKustomizeToDir 'overlays/party-registry-proxy' $PARTY_REGISTRY_PROXY_SERVICE_NAME $PARTY_REGISTRY_PROXY_IMAGE_VERSION

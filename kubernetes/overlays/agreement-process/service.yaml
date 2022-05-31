@@ -3,7 +3,7 @@ kind: Service
 metadata:
   # Required only until the service is exposed in the LB
   annotations:
-    alb.ingress.kubernetes.io/healthcheck-path: /{{AGREEMENT_PROCESS_SERVICE_NAME}}/{{AGREEMENT_PROCESS_INTERFACE_VERSION}}/status
+    alb.ingress.kubernetes.io/healthcheck-path: /{{AGREEMENT_PROCESS_APPLICATION_PATH}}/{{AGREEMENT_PROCESS_INTERFACE_VERSION}}/status
     alb.ingress.kubernetes.io/healthcheck-port: "8088"
   name: {{AGREEMENT_PROCESS_SERVICE_NAME}}
   namespace: {{NAMESPACE}}
