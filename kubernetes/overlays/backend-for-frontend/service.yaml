@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    alb.ingress.kubernetes.io/healthcheck-path: /{{BACKEND_FOR_FRONTEND_SERVICE_NAME}}/{{BACKEND_FOR_FRONTEND_INTERFACE_VERSION}}/status
+    alb.ingress.kubernetes.io/healthcheck-port: "8088"
+  name: {{BACKEND_FOR_FRONTEND_SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
