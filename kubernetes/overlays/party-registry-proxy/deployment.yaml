@@ -9,7 +9,7 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
-            - name: MAIN_AUDIENCE
+            - name: ACCEPTED_AUDIENCES
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
