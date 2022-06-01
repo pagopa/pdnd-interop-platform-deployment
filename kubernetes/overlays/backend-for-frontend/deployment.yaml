@@ -74,6 +74,11 @@ spec:
                   configMapKeyRef:
                     name: {{SERVICE_NAME}}
                     key: INTERNAL_JWT_DURATION_SECONDS
+            - name: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
             - name: PARTY_PROCESS_URL
               valueFrom:
                   configMapKeyRef:
