@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOMAIN_NAME="gateway-private.dev.pdnd-interop.pagopa.it"
+DOMAIN_NAME="interop.dev.selfcare.pagopa.it"
 
 REPOSITORY="505630707203.dkr.ecr.eu-central-1.amazonaws.com"
 POSTGRES_HOST="pdnd-interop-dev-rds.c9zr6t2swdpb.eu-central-1.rds.amazonaws.com"
