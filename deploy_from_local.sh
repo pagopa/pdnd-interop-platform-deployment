@@ -98,9 +98,10 @@ function applyKustomizeToDir() {
     serviceName=$2
     imageVersion=$3
 
+    echo "********** ${serviceName} **********"
     echo "Apply directory ${dirPath} on Kubernetes"
 
-    serviceImageDigest=$(getDockerImageDigest $AGREEMENT_MANAGEMENT_SERVICE_NAME $AGREEMENT_MANAGEMENT_IMAGE_VERSION)
+    serviceImageDigest=$(getDockerImageDigest $serviceName $imageVersion)
 
     kubeDirPath='kubernetes/'$dirPath
 
@@ -122,6 +123,8 @@ function applyKustomizeToDir() {
 
     kubeApply ${serviceName}/full.${serviceName}.yaml
     cleanFiles ${serviceName}
+
+    echo "************************************"
 }
 
 
@@ -144,6 +147,8 @@ function applyKubeFile() {
 
 
 function prepareDbMigrations() {
+    echo "********** DB Migrations **********"
+
     echo 'Creating migrations configmap...'
     outputFileName='./kubernetes/compiled.dbmigrationconfigmap.yaml'
     kubectl \
@@ -157,6 +162,8 @@ function prepareDbMigrations() {
     cleanFiles $outputFileName
 
     echo 'Migrations configmap created'
+
+    echo "***********************************"
 }
 
 function getDockerImageDigest() {
@@ -199,15 +206,20 @@ function loadSecret() {
 }
 
 function loadSecrets() {
+    echo "********** Secrets **********"
+
     source ./${LOWERCASE_ENV}-secrets
     loadSecret 'user-registry' 'USER_REGISTRY_API_KEY' 'USER_REGISTRY_API_KEY'
     loadSecret 'party-process' 'PARTY_PROCESS_API_KEY' 'PARTY_PROCESS_API_KEY'
     loadSecret 'party-management' 'PARTY_MANAGEMENT_API_KEY' 'PARTY_MANAGEMENT_API_KEY'
     loadSecret 'postgres' 'POSTGRES_USR' 'POSTGRES_CREDENTIALS_USR' 'POSTGRES_PSW' 'POSTGRES_CREDENTIALS_PSW'
     loadSecret 'vault' 'VAULT_ADDR' 'VAULT_ADDR' 'VAULT_TOKEN' 'VAULT_TOKEN'
+
+    echo "*****************************"
 }
 
 function createIngress() {
+    echo "********** Ingress **********"
 
     tuples=("${@}")
     length=${#tuples[@]}
@@ -230,6 +242,8 @@ function createIngress() {
 
     kubeApply $outputFileName
     cleanFiles $outputFileName
+
+    echo "*****************************"
 }
 
 function kubeApply() {
