@@ -249,14 +249,14 @@ spec:
         stage('Create Ingress') {
           steps {
             createIngress(
-              getVariableFromConf("AGREEMENT_PROCESS_SERVICE_NAME"), getVariableFromConf("AGREEMENT_PROCESS_APPLICATION_PATH"),
-              getVariableFromConf("API_GATEWAY_SERVICE_NAME"), getVariableFromConf("API_GATEWAY_APPLICATION_PATH"),
-              getVariableFromConf("AUTHORIZATION_PROCESS_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_PROCESS_APPLICATION_PATH"),
-              getVariableFromConf("AUTHORIZATION_SERVER_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_SERVER_APPLICATION_PATH"),
-              getVariableFromConf("BACKEND_FOR_FRONTEND_SERVICE_NAME"), getVariableFromConf("BACKEND_FOR_FRONTEND_APPLICATION_PATH"),
-              getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"), getVariableFromConf("CATALOG_PROCESS_APPLICATION_PATH"),
-              getVariableFromConf("FRONTEND_SERVICE_NAME"), getVariableFromConf("FRONTEND_SERVICE_APPLICATION_PATH"),
-              getVariableFromConf("PURPOSE_PROCESS_SERVICE_NAME"), getVariableFromConf("PURPOSE_PROCESS_APPLICATION_PATH"),
+              getVariableFromConf("AGREEMENT_PROCESS_SERVICE_NAME"), getVariableFromConf("AGREEMENT_PROCESS_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
+              getVariableFromConf("API_GATEWAY_SERVICE_NAME"), getVariableFromConf("API_GATEWAY_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
+              getVariableFromConf("AUTHORIZATION_PROCESS_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_PROCESS_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
+              getVariableFromConf("AUTHORIZATION_SERVER_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_SERVER_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
+              getVariableFromConf("BACKEND_FOR_FRONTEND_SERVICE_NAME"), getVariableFromConf("BACKEND_FOR_FRONTEND_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
+              getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"), getVariableFromConf("CATALOG_PROCESS_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
+              getVariableFromConf("FRONTEND_SERVICE_NAME"), getVariableFromConf("FRONTEND_SERVICE_APPLICATION_PATH"), getVariableFromConf("FRONTEND_SERVICE_PORT"),
+              getVariableFromConf("PURPOSE_PROCESS_SERVICE_NAME"), getVariableFromConf("PURPOSE_PROCESS_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
             )
           }
         }
@@ -400,15 +400,16 @@ String normalizeNamespaceName(String namespace) {
      .toLowerCase()
 }
 
+// Params are triplets of (serviceName, applicationPath, servicePort)
 void createIngress(String... variablesMappings) {
     varSize = variablesMappings.size()
-    assert(varSize % 2 == 0)
+    assert(varSize % 3 == 0)
     baseCommand = 'kubectl -n $NAMESPACE create ingress interop-services --class=alb --dry-run=client -o yaml '
     annotations = '--annotation="alb.ingress.kubernetes.io/scheme=internal" --annotation="alb.ingress.kubernetes.io/target-type=ip" '
 
     rules = ''
     for (i = 0; i < varSize; i += 2) {
-        rules = rules + '--rule="/' + variablesMappings[i+1] + '*=' + variablesMappings[i] + ':8088" '
+        rules = rules + '--rule="/' + variablesMappings[i+1] + '*=' + variablesMappings[i] + ':' + variablesMappings[i+2] + '" '
     }
 
     sh(baseCommand + annotations + rules + ' | kubectl apply -f -')

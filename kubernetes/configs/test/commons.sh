@@ -6,6 +6,7 @@ REPOSITORY="505630707203.dkr.ecr.eu-central-1.amazonaws.com"
 POSTGRES_HOST="interop-rds-test-auroradbcluster-u2a45bkp2iqr.cluster-cfx5ud7lsyvt.eu-central-1.rds.amazonaws.com"
 POSTGRES_PORT="5432"
 REPLICAS=1
+BACKEND_SERVICE_PORT="8088"
 
 AWS_REGION="eu-central-1"
 PERSISTENCE_QUEUE_NAME="${NAMESPACE}-persistence-events.fifo"

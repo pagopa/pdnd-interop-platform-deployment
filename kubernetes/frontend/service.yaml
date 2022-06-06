@@ -3,7 +3,7 @@ kind: Service
 metadata:
   annotations:
     alb.ingress.kubernetes.io/healthcheck-path: /ui
-    alb.ingress.kubernetes.io/healthcheck-port: "8088"
+    alb.ingress.kubernetes.io/healthcheck-port: "80"
     alb.ingress.kubernetes.io/success-codes: '301'
   labels:
     prometheus: "true"
@@ -12,7 +12,7 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: 8088
+    - port: 80
       targetPort: 80
       protocol: TCP
       name: http
