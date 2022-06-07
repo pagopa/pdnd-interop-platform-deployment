@@ -11,9 +11,9 @@ BACKEND_SERVICE_PORT="8088"
 AWS_REGION="eu-central-1"
 PERSISTENCE_QUEUE_NAME="${NAMESPACE}-persistence-events.fifo"
 AWS_SQS_DOMAIN="https://sqs.${AWS_REGION}.amazonaws.com"
-
+g
 ENABLED_PROJECTIONS="true"
-WELL_KNOWN_URLS="https://pdnd-interop-test-public.s3.eu-central-1.amazonaws.com/.well-known/jwks.json"
+WELL_KNOWN_URLS="https://interop.selfcare.pagopa.it/.well-known/jwks.json"
 
 UI_JWT_AUDIENCE="test.interop.pagopa.it/ui"
 M2M_JWT_AUDIENCE="test.interop.pagopa.it/m2m"
