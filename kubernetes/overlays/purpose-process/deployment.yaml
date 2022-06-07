@@ -14,16 +14,6 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ACCEPTED_AUDIENCES
-            - name: AWS_SECRET_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: aws
-                  key: AWS_SECRET_ACCESS_KEY
-            - name: AWS_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: aws
-                  key: AWS_ACCESS_KEY_ID
             - name: AGREEMENT_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
@@ -64,16 +54,6 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: STORAGE_ENDPOINT
-            - name: STORAGE_CREDENTIAL_ID
-              valueFrom:
-                secretKeyRef:
-                  name: storage
-                  key: STORAGE_USR
-            - name: STORAGE_CREDENTIAL_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: storage
-                  key: STORAGE_PSW
             - name: RISK_ANALYSIS_DOCS_PATH
               valueFrom:
                 configMapKeyRef:

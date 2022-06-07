@@ -1,3 +1,4 @@
 compiled.*
 .metals/
 .vscode/
+*secrets

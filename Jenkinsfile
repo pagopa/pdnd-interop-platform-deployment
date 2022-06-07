@@ -1,22 +1,42 @@
 pipeline {
 
-  agent any
+    agent {
+        kubernetes {
+            label "kubectl-template"
+            yaml """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+    - name: kubectl-container
+      image: lachlanevenson/k8s-kubectl:v1.23.6
+      resources:
+        requests:
+          cpu: 1
+          memory: 1Gi
+        limits:
+          cpu: 1
+          memory: 1Gi
+      command:
+        - /bin/ash
+      args: [ "-c", "apk add bash && cat"]
+      tty: true
+"""
+        }
+    }
 
   environment {
     // STAGE variable should be set as Global Properties
     STAGE = "${env.STAGE}"
-    // TODO Create one set of credentials for each service
     AWS_ACCOUNT_ID = credentials('aws-account-id')
-    AWS_SECRET_ACCESS = credentials('aws-credentials')
+    // TODO Create one set of credentials for each service
     POSTGRES_CREDENTIALS = credentials('postgres-db')
     //
     VAULT_TOKEN = credentials('vault-token')
     VAULT_ADDR = credentials('vault-addr')
-    SMTP_CREDENTIALS = credentials('smtp')
     USER_REGISTRY_API_KEY = credentials('user-registry-api-key')
     PARTY_PROCESS_API_KEY = credentials('party-process-api-key')
     PARTY_MANAGEMENT_API_KEY = credentials('party-management-api-key')
-    DOCKER_REGISTRY_CREDENTIALS = credentials('pdnd-nexus')
     ECR_CREDENTIALS = credentials('ecr-credentials')
     NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH)
     REPOSITORY = getVariableFromConf("REPOSITORY")
@@ -25,10 +45,6 @@ pipeline {
 
   stages {
     stage('Platform') {
-      // This is required only for kubectl command (we do not need sbt)
-      agent { 
-        label 'sbt-template' 
-      }
       stages {
 
         stage('Debug') {
@@ -41,11 +57,6 @@ pipeline {
         stage('Create Namespace') {
           steps {
               applyKubeFile('namespace.yaml')
-          }
-        }
-        stage('Create Roles') {
-          steps {
-              applyKubeFile('roles.yaml')
           }
         }
         stage('Load Secrets') {
@@ -67,7 +78,6 @@ pipeline {
                 IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
               }
               steps {
-                applyKubeFile('frontend/ingress.yaml', SERVICE_NAME)
                 applyKubeFile('frontend/configmap.yaml', SERVICE_NAME)
                 applyKubeFile('frontend/deployment.yaml', SERVICE_NAME, IMAGE_DIGEST)
                 applyKubeFile('frontend/service.yaml', SERVICE_NAME)
@@ -78,10 +88,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/agreement-management', 
                   getVariableFromConf("AGREEMENT_MANAGEMENT_SERVICE_NAME"), 
-                  getVariableFromConf("AGREEMENT_MANAGEMENT_APPLICATION_PATH"), 
-                  getVariableFromConf("AGREEMENT_MANAGEMENT_IMAGE_VERSION"),
-                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
+                  getVariableFromConf("AGREEMENT_MANAGEMENT_IMAGE_VERSION")
                 )
               }
             }
@@ -90,10 +97,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/agreement-process', 
                   getVariableFromConf("AGREEMENT_PROCESS_SERVICE_NAME"),
-                  getVariableFromConf("AGREEMENT_PROCESS_APPLICATION_PATH"), 
-                  getVariableFromConf("AGREEMENT_PROCESS_IMAGE_VERSION"),
-                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+                  getVariableFromConf("AGREEMENT_PROCESS_IMAGE_VERSION")
                 )
               }
             }
@@ -101,11 +105,8 @@ pipeline {
               steps {
                 applyKustomizeToDir(
                   'overlays/attribute-registry-management', 
-                  getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME"),
-                  getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_APPLICATION_PATH"), 
-                  getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION"),
-                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+                  getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME"), 
+                  getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION")
                 )
               }
             }
@@ -114,10 +115,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/authorization-management', 
                   getVariableFromConf("AUTHORIZATION_MANAGEMENT_SERVICE_NAME"),
-                  getVariableFromConf("AUTHORIZATION_MANAGEMENT_APPLICATION_PATH"), 
-                  getVariableFromConf("AUTHORIZATION_MANAGEMENT_IMAGE_VERSION"),
-                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
+                  getVariableFromConf("AUTHORIZATION_MANAGEMENT_IMAGE_VERSION")
                 )
               }
             }
@@ -126,10 +124,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/authorization-process', 
                   getVariableFromConf("AUTHORIZATION_PROCESS_SERVICE_NAME"),
-                  getVariableFromConf("AUTHORIZATION_PROCESS_APPLICATION_PATH"), 
-                  getVariableFromConf("AUTHORIZATION_PROCESS_IMAGE_VERSION"),
-                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+                  getVariableFromConf("AUTHORIZATION_PROCESS_IMAGE_VERSION")
                 )
               }
             }
@@ -138,10 +133,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/catalog-management', 
                   getVariableFromConf("CATALOG_MANAGEMENT_SERVICE_NAME"),
-                  getVariableFromConf("CATALOG_MANAGEMENT_APPLICATION_PATH"), 
-                  getVariableFromConf("CATALOG_MANAGEMENT_IMAGE_VERSION"),
-                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
+                  getVariableFromConf("CATALOG_MANAGEMENT_IMAGE_VERSION")
                 )
               }
             }
@@ -150,22 +142,22 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/catalog-process', 
                   getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"),
-                  getVariableFromConf("CATALOG_PROCESS_APPLICATION_PATH"), 
-                  getVariableFromConf("CATALOG_PROCESS_IMAGE_VERSION"),
-                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+                  getVariableFromConf("CATALOG_PROCESS_IMAGE_VERSION")
                 )
               }
             }
             stage('Party Mock Registry') {
+              when { 
+                anyOf {
+                  environment name: 'STAGE', value: 'DEV'
+                  environment name: 'STAGE', value: 'TEST' 
+                }
+              }
               steps {
                 applyKustomizeToDir(
                   'overlays/party-mock-registry', 
                   getVariableFromConf("PARTY_MOCK_REGISTRY_SERVICE_NAME"), 
-                  getVariableFromConf("PARTY_MOCK_REGISTRY_APPLICATION_PATH"), 
-                  getVariableFromConf("PARTY_MOCK_REGISTRY_IMAGE_VERSION"),
-                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
+                  getVariableFromConf("PARTY_MOCK_REGISTRY_IMAGE_VERSION")
                 )
               }
             }
@@ -174,10 +166,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/party-registry-proxy', 
                   getVariableFromConf("PARTY_REGISTRY_PROXY_SERVICE_NAME"), 
-                  getVariableFromConf("PARTY_REGISTRY_PROXY_APPLICATION_PATH"), 
-                  getVariableFromConf("PARTY_REGISTRY_PROXY_IMAGE_VERSION"),
-                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
+                  getVariableFromConf("PARTY_REGISTRY_PROXY_IMAGE_VERSION")
                 )
               }
             }
@@ -186,10 +175,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/purpose-management', 
                   getVariableFromConf("PURPOSE_MANAGEMENT_SERVICE_NAME"), 
-                  getVariableFromConf("PURPOSE_MANAGEMENT_APPLICATION_PATH"), 
-                  getVariableFromConf("PURPOSE_MANAGEMENT_IMAGE_VERSION"),
-                  getVariableFromConf("INTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("INTERNAL_INGRESS_CLASS")
+                  getVariableFromConf("PURPOSE_MANAGEMENT_IMAGE_VERSION")
                 )
               }
             }
@@ -198,10 +184,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/purpose-process', 
                   getVariableFromConf("PURPOSE_PROCESS_SERVICE_NAME"), 
-                  getVariableFromConf("PURPOSE_PROCESS_APPLICATION_PATH"), 
-                  getVariableFromConf("PURPOSE_PROCESS_IMAGE_VERSION"),
-                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+                  getVariableFromConf("PURPOSE_PROCESS_IMAGE_VERSION")
                 )
               }
             }
@@ -211,10 +194,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/backend-for-frontend', 
                   getVariableFromConf("BACKEND_FOR_FRONTEND_SERVICE_NAME"),
-                  getVariableFromConf("BACKEND_FOR_FRONTEND_SERVICE_PATH"),
-                  getVariableFromConf("BACKEND_FOR_FRONTEND_IMAGE_VERSION"),
-                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+                  getVariableFromConf("BACKEND_FOR_FRONTEND_IMAGE_VERSION")
                 )
               }
             }
@@ -224,10 +204,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/api-gateway', 
                   getVariableFromConf("API_GATEWAY_SERVICE_NAME"),
-                  getVariableFromConf("API_GATEWAY_APPLICATION_PATH"),
-                  getVariableFromConf("API_GATEWAY_IMAGE_VERSION"),
-                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+                  getVariableFromConf("API_GATEWAY_IMAGE_VERSION")
                 )
               }
             }
@@ -237,10 +214,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/authorization-server', 
                   getVariableFromConf("AUTHORIZATION_SERVER_SERVICE_NAME"),
-                  getVariableFromConf("AUTHORIZATION_SERVER_APPLICATION_PATH"),
-                  getVariableFromConf("AUTHORIZATION_SERVER_IMAGE_VERSION"),
-                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+                  getVariableFromConf("AUTHORIZATION_SERVER_IMAGE_VERSION")
                 )
               }
             }
@@ -250,10 +224,7 @@ pipeline {
                 applyKustomizeToDir(
                   'overlays/notifier', 
                   getVariableFromConf("NOTIFIER_SERVICE_NAME"),
-                  getVariableFromConf("NOTIFIER_APPLICATION_PATH"),
-                  getVariableFromConf("NOTIFIER_IMAGE_VERSION"),
-                  getVariableFromConf("EXTERNAL_APPLICATION_HOST"),
-                  getVariableFromConf("EXTERNAL_INGRESS_CLASS")
+                  getVariableFromConf("NOTIFIER_IMAGE_VERSION")
                 )
               }
             }
@@ -275,19 +246,34 @@ pipeline {
             }
           }
         }
+        stage('Create Ingress') {
+          steps {
+            createIngress(
+              getVariableFromConf("AGREEMENT_PROCESS_SERVICE_NAME"), getVariableFromConf("AGREEMENT_PROCESS_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
+              getVariableFromConf("API_GATEWAY_SERVICE_NAME"), getVariableFromConf("API_GATEWAY_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
+              getVariableFromConf("AUTHORIZATION_PROCESS_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_PROCESS_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
+              getVariableFromConf("AUTHORIZATION_SERVER_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_SERVER_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
+              getVariableFromConf("BACKEND_FOR_FRONTEND_SERVICE_NAME"), getVariableFromConf("BACKEND_FOR_FRONTEND_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
+              getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"), getVariableFromConf("CATALOG_PROCESS_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
+              getVariableFromConf("FRONTEND_SERVICE_NAME"), getVariableFromConf("FRONTEND_SERVICE_APPLICATION_PATH"), getVariableFromConf("FRONTEND_SERVICE_PORT"),
+              getVariableFromConf("PURPOSE_PROCESS_SERVICE_NAME"), getVariableFromConf("PURPOSE_PROCESS_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
+            )
+          }
+        }
+
       }
     }
   }
 }
 
 void applyKubeFile(String fileName, String serviceName = null, String imageDigest = null) {
-  container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
+  container('kubectl-container') {
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Apply file ${fileName} on Kubernetes"
 
       echo "Compiling file ${fileName}"
-      sh "SERVICE_NAME=${serviceName} IMAGE_DIGEST=${imageDigest} ./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
+      sh "SERVICE_NAME=${serviceName} IMAGE_DIGEST=${imageDigest} LOWERCASE_ENV=${env.STAGE.toLowerCase()} AWS_ACCOUNT_ID=${env.AWS_ACCOUNT_ID} ./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
       echo "File ${fileName} compiled"
       
       // DEBUG
@@ -302,8 +288,8 @@ void applyKubeFile(String fileName, String serviceName = null, String imageDiges
 }
 
 // dirPath starting from kubernetes folder (e.g. overlays/party-management)
-void applyKustomizeToDir(String dirPath, String serviceName, String applicationPath, String imageVersion, String hostname, String ingressClass) {
-  container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
+void applyKustomizeToDir(String dirPath, String serviceName, String imageVersion) {
+  container('kubectl-container') {
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Apply directory ${dirPath} on Kubernetes"
@@ -313,15 +299,15 @@ void applyKustomizeToDir(String dirPath, String serviceName, String applicationP
       def kubeDirPath = 'kubernetes/' + dirPath
 
       echo "Compiling base files"
-      compileDir("kubernetes/base", serviceName, applicationPath, imageVersion, hostname, ingressClass, serviceImageDigest)
+      compileDir("kubernetes/base", serviceName, imageVersion, serviceImageDigest)
       echo "Base files compiled"
 
       echo "Compiling common files"
-      compileDir("kubernetes/commons/database", serviceName, applicationPath, imageVersion, hostname, ingressClass, serviceImageDigest)
+      compileDir("kubernetes/commons/database", serviceName, imageVersion, serviceImageDigest)
       echo "Common files compiled"
 
       echo "Compiling directory ${dirPath}"
-      compileDir(kubeDirPath, serviceName, applicationPath, imageVersion, hostname, ingressClass, serviceImageDigest)
+      compileDir(kubeDirPath, serviceName, imageVersion, serviceImageDigest)
       echo "Directory ${dirPath} compiled"
       
       echo "Applying Kustomization for ${serviceName}"
@@ -346,7 +332,7 @@ void applyKustomizeToDir(String dirPath, String serviceName, String applicationP
 }
 
 void waitForServiceReady(String serviceName) {
-  container('sbt-container') { // This is required only for kubectl command (we do not need sbt)
+  container('kubectl-container') {
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Waiting for completion of ${serviceName}..."
@@ -379,14 +365,14 @@ void waitForServiceReady(String serviceName) {
  * Compile each file in the directory replacing placeholders with actual values.
  * Note: kustomization.yaml is skipped because does not have placeholders
  */ 
-void compileDir(String dirPath, String serviceName, String applicationPath, String imageVersion, String hostname, String ingressClass, String serviceImageDigest) {
+void compileDir(String dirPath, String serviceName, String imageVersion, String serviceImageDigest) {
   sh '''
   for f in ''' + dirPath + '''/*
   do
       if [ ! $(basename $f) = "kustomization.yaml" ]
         then
           mkdir -p ''' + serviceName + '/' + dirPath + '''
-          SERVICE_NAME=''' + serviceName + ' APPLICATION_PATH=' + applicationPath + ' IMAGE_VERSION=' + imageVersion + ' IMAGE_DIGEST=' + serviceImageDigest + ' APPLICATION_HOST=' + hostname + ' INGRESS_CLASS=' + ingressClass + ' kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ' + serviceName + '''/$f
+          SERVICE_NAME=''' + serviceName + ' IMAGE_VERSION=' + imageVersion + ' IMAGE_DIGEST=' + serviceImageDigest + ' LOWERCASE_ENV=' + env.STAGE.toLowerCase() + ' AWS_ACCOUNT_ID=' + env.AWS_ACCOUNT_ID + ' kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ' + serviceName + '''/$f
         else
           cp $f ''' + serviceName + '''/$f
       fi
@@ -414,6 +400,21 @@ String normalizeNamespaceName(String namespace) {
      .toLowerCase()
 }
 
+// Params are triplets of (serviceName, applicationPath, servicePort)
+void createIngress(String... variablesMappings) {
+    varSize = variablesMappings.size()
+    assert(varSize % 3 == 0)
+    baseCommand = 'kubectl -n $NAMESPACE create ingress interop-services --class=alb --dry-run=client -o yaml '
+    annotations = '--annotation="alb.ingress.kubernetes.io/scheme=internal" --annotation="alb.ingress.kubernetes.io/target-type=ip" '
+
+    rules = ''
+    for (i = 0; i < varSize; i += 2) {
+        rules = rules + '--rule="/' + variablesMappings[i+1] + '*=' + variablesMappings[i] + ':' + variablesMappings[i+2] + '" '
+    }
+
+    sh(baseCommand + annotations + rules + ' | kubectl apply -f -')
+}
+
 void loadSecret(String secretName, String... variablesMappings) {
     varSize = variablesMappings.size()
     assert(varSize % 2 == 0)
@@ -427,22 +428,13 @@ void loadSecret(String secretName, String... variablesMappings) {
 }
 
 void loadSecrets() {
-  container('sbt-container') { // This is required only for kubectl command (sbt is not needed)
+  container('kubectl-container') {
     withKubeConfig([credentialsId: 'kube-config']) {
-      sh'''
-        # Cleanup
-        kubectl -n $NAMESPACE delete secrets regcred --ignore-not-found
-        kubectl -n default get secret regcred -o yaml | sed s/"namespace: default"/"namespace: $NAMESPACE"/ |  kubectl apply -n $NAMESPACE -f -
-      '''
-
       loadSecret('user-registry', 'USER_REGISTRY_API_KEY', 'USER_REGISTRY_API_KEY')
       loadSecret('party-process', 'PARTY_PROCESS_API_KEY', 'PARTY_PROCESS_API_KEY')
       loadSecret('party-management', 'PARTY_MANAGEMENT_API_KEY', 'PARTY_MANAGEMENT_API_KEY')
-      loadSecret('storage', 'STORAGE_USR', 'AWS_SECRET_ACCESS_USR', 'STORAGE_PSW', 'AWS_SECRET_ACCESS_PSW')
-      loadSecret('aws', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_USR', 'AWS_SECRET_ACCESS_KEY', 'AWS_SECRET_ACCESS_PSW', 'AWS_ACCOUNT_ID', 'AWS_ACCOUNT_ID')
       loadSecret('postgres', 'POSTGRES_USR', 'POSTGRES_CREDENTIALS_USR', 'POSTGRES_PSW', 'POSTGRES_CREDENTIALS_PSW')
       loadSecret('vault', 'VAULT_ADDR', 'VAULT_ADDR', 'VAULT_TOKEN', 'VAULT_TOKEN')
-      loadSecret('smtp', 'SMTP_USR', 'SMTP_CREDENTIALS_USR', 'SMTP_PSW', 'SMTP_CREDENTIALS_PSW')
     }
   }
 }
@@ -454,14 +446,14 @@ String getVariableFromConf(String variableName) {
 }
 
 void prepareDbMigrations() {
-  container('sbt-container') { // This is required only for kubectl command (sbt is not needed)
+  container('kubectl-container') {
     withKubeConfig([credentialsId: 'kube-config']) {
       echo 'Creating migrations configmap...'
       sh'''kubectl \
          create configmap common-db-migrations \
          --namespace $NAMESPACE \
          --from-file=db/migrations/ \
-         --dry-run \
+         --dry-run=client \
          -o yaml | kubectl apply -f -'''
       echo 'Migrations configmap created'
     }
@@ -471,7 +463,7 @@ void prepareDbMigrations() {
 
 String getDockerImageDigest(String serviceName, String imageVersion) {
   echo "Retrieving digest for service ${serviceName} and version ${imageVersion}..."
-    container('sbt-container') { // This is required only for docker command (sbt is not needed)
+    container('kubectl-container') {
 
       def response = sh(
           returnStdout: true, 

@@ -18,8 +18,7 @@ spec:
       annotations:
         digest: {{IMAGE_DIGEST}} # Used to force deployment on same image version but different content
     spec:
-      imagePullSecrets:
-        - name: regcred
+      serviceAccountName: {{SERVICE_NAME}}
       containers:
         - name: {{SERVICE_NAME}}
           image: {{REPOSITORY}}/{{SERVICE_NAME}}:{{IMAGE_VERSION}}
@@ -32,20 +31,25 @@ spec:
               port: management
             periodSeconds: 10
             failureThreshold: 5
-            initialDelaySeconds: 30
           livenessProbe:
             httpGet:
               path: "/alive"
               port: management
             periodSeconds: 10
             failureThreshold: 5
-            initialDelaySeconds: 30
+          startupProbe:
+            httpGet:
+              path: "/alive"
+              port: management
+            periodSeconds: 20
+            failureThreshold: 15
+            initialDelaySeconds: 60
           ports:
             - name: management
               containerPort: 8558
               protocol: TCP
             - name: http
-              containerPort: 8088
+              containerPort: {{BACKEND_SERVICE_PORT}}
               protocol: TCP
             - name: monitoring
               containerPort: 9095
@@ -67,8 +71,8 @@ spec:
                   key: WELL_KNOWN_URLS
           resources:
             requests:
-              memory: "512Mi"
-              cpu: "30m"
+              memory: "1Gi"
+              cpu: "500m"
             limits:
               memory: "2Gi"
               cpu: "2"
