@@ -11,7 +11,7 @@ BACKEND_SERVICE_PORT="8088"
 AWS_REGION="eu-central-1"
 PERSISTENCE_QUEUE_NAME="${NAMESPACE}-persistence-events.fifo"
 AWS_SQS_DOMAIN="https://sqs.${AWS_REGION}.amazonaws.com"
-g
+
 ENABLED_PROJECTIONS="true"
 WELL_KNOWN_URLS="https://interop.selfcare.pagopa.it/.well-known/jwks.json"
 
