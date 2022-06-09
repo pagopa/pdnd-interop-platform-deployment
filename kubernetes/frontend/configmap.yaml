@@ -9,11 +9,11 @@ data:
         listen       80;
         listen  [::]:80;
         server_name  localhost;
+        absolute_redirect off;
 
         location /ui {
             root   /usr/share/nginx/html;
-            index  index.html;
-            try_files $uri $uri/ /ui/index.html;
+            try_files $uri /ui/index.html =404;
         }
 
         error_page   500 502 503 504  /50x.html;
