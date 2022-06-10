@@ -239,6 +239,7 @@ spec:
                   }
                   steps {
                     applyKubeFile('jobs/attributes-loader/configmap.yaml', SERVICE_NAME)
+                    applyKubeFile('jobs/attributes-loader/serviceaccount.yaml', SERVICE_NAME)
                     applyKubeFile('jobs/attributes-loader/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST)
                   }
                 }
