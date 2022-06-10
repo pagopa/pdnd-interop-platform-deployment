@@ -271,6 +271,10 @@ echo "Logged on ECR"
 loadSecrets
 prepareDbMigrations
 
+if [ ${LOWERCASE_ENV} != 'prod' ]; then 
+  applyKustomizeToDir 'overlays/party-mock-registry' $PARTY_MOCK_REGISTRY_SERVICE_NAME $PARTY_MOCK_REGISTRY_IMAGE_VERSION
+fi
+
 applyKubeFile 'frontend/configmap.yaml' $FRONTEND_SERVICE_NAME
 frontendImageDigest=$(getDockerImageDigest $FRONTEND_SERVICE_NAME $FRONTEND_IMAGE_VERSION)
 applyKubeFile 'frontend/deployment.yaml' $FRONTEND_SERVICE_NAME $frontendImageDigest
