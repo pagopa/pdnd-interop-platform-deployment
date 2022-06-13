@@ -19,7 +19,7 @@ UI_JWT_AUDIENCE="test.interop.pagopa.it/ui"
 M2M_JWT_AUDIENCE="test.interop.pagopa.it/m2m"
 INTERNAL_JWT_AUDIENCE="test.interop.pagopa.it/internal"
 EC_KEYS_IDENTIFIERS="interop-ecdsa-p256-01"
-RSA_KEYS_IDENTIFIERS="interop-rsa4096-01"
+RSA_KEYS_IDENTIFIERS="32d8a321-1568-44f5-9558-a9072f519d2d"
 VAULT_SIGNATURE_ROUTE="/v1/transit/sign/"
 
 PARTY_PROCESS_URL="https://api.uat.selfcare.pagopa.it/external/party-process/v1"
