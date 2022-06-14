@@ -267,7 +267,7 @@ function cleanFiles() {
 aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $REPOSITORY 2>/dev/null 1>&2;
 echo "Logged on ECR"
 
-# applyKubeFile 'namespace.yaml'
+applyKubeFile 'namespace.yaml'
 loadSecrets
 prepareDbMigrations
 
