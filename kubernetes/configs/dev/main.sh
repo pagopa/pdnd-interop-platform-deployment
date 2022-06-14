@@ -25,6 +25,7 @@ PURPOSE_PROCESS_INTERFACE_VERSION=$(shortVersion $PURPOSE_PROCESS_IMAGE_VERSION)
 NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 BACKEND_FOR_FRONTEND_INTERFACE_VERSION=$(shortVersion $BACKEND_FOR_FRONTEND_IMAGE_VERSION)
 
+. $(pwd)/kubernetes/configs/dev/authorization_management.sh
 . $(pwd)/kubernetes/configs/dev/authorization_server.sh
 . $(pwd)/kubernetes/configs/dev/attributes_loader.sh
 . $(pwd)/kubernetes/configs/dev/backend_for_frontend.sh
