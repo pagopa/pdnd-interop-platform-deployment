@@ -19,7 +19,7 @@ spec:
           memory: 1Gi
       command:
         - /bin/ash
-      args: [ "-c", "apk add bash && cat"]
+      args: [ "-c", "apk add bash docker aws-cli && cat"]
       tty: true
 """
         }
@@ -409,7 +409,7 @@ void createIngress(String... variablesMappings) {
     annotations = '--annotation="alb.ingress.kubernetes.io/scheme=internal" --annotation="alb.ingress.kubernetes.io/target-type=ip" '
 
     rules = ''
-    for (i = 0; i < varSize; i += 2) {
+    for (i = 0; i < varSize; i += 3) {
         rules = rules + '--rule="/' + variablesMappings[i+1] + '*=' + variablesMappings[i] + ':' + variablesMappings[i+2] + '" '
     }
 
