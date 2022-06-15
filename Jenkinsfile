@@ -19,7 +19,7 @@ spec:
           memory: 1Gi
       command:
         - /bin/ash
-      args: [ "-c", "apk add bash && cat"]
+      args: [ "-c", "apk add bash docker aws-cli && cat"]
       tty: true
 """
         }
