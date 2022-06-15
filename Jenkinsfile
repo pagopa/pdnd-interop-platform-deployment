@@ -403,17 +403,21 @@ String normalizeNamespaceName(String namespace) {
 
 // Params are triplets of (serviceName, applicationPath, servicePort)
 void createIngress(String... variablesMappings) {
-    varSize = variablesMappings.size()
-    assert(varSize % 3 == 0)
-    baseCommand = 'kubectl -n $NAMESPACE create ingress interop-services --class=alb --dry-run=client -o yaml '
-    annotations = '--annotation="alb.ingress.kubernetes.io/scheme=internal" --annotation="alb.ingress.kubernetes.io/target-type=ip" '
+  container('kubectl-container') {
+    withKubeConfig([credentialsId: 'kube-config']) {
+      varSize = variablesMappings.size()
+      assert(varSize % 3 == 0)
+      baseCommand = 'kubectl -n $NAMESPACE create ingress interop-services --class=alb --dry-run=client -o yaml '
+      annotations = '--annotation="alb.ingress.kubernetes.io/scheme=internal" --annotation="alb.ingress.kubernetes.io/target-type=ip" '
 
-    rules = ''
-    for (i = 0; i < varSize; i += 3) {
-        rules = rules + '--rule="/' + variablesMappings[i+1] + '*=' + variablesMappings[i] + ':' + variablesMappings[i+2] + '" '
+      rules = ''
+      for (i = 0; i < varSize; i += 3) {
+          rules = rules + '--rule="/' + variablesMappings[i+1] + '*=' + variablesMappings[i] + ':' + variablesMappings[i+2] + '" '
+      }
+
+      sh(baseCommand + annotations + rules + ' | kubectl apply -f -')
     }
-
-    sh(baseCommand + annotations + rules + ' | kubectl apply -f -')
+  }
 }
 
 void loadSecret(String secretName, String... variablesMappings) {
