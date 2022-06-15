@@ -19,6 +19,7 @@ spec:
       template:
         spec:
           restartPolicy: OnFailure
+          serviceAccountName: {{SERVICE_NAME}}
           containers:
             - name: {{SERVICE_NAME}}
               image: {{REPOSITORY}}/{{SERVICE_NAME}}:{{JOB_ATTRIBUTES_LOADER_IMAGE_VERSION}}
