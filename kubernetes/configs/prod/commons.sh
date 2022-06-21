@@ -13,7 +13,7 @@ PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
 AWS_SQS_DOMAIN="https://sqs.${AWS_REGION}.amazonaws.com"
 
 ENABLED_PROJECTIONS="true"
-WELL_KNOWN_URLS="https://interop.uat.selfcare.pagopa.it/.well-known/jwks.json"
+WELL_KNOWN_URLS="https://interop.selfcare.pagopa.it/.well-known/jwks.json"
 
 INTERNAL_JWT_ISSUER="prod.interop.pagopa.it"
 INTERNAL_JWT_SUBJECT="prod.interop-m2m"
