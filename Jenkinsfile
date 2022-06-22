@@ -38,7 +38,7 @@ spec:
     PARTY_PROCESS_API_KEY = credentials('party-process-api-key')
     PARTY_MANAGEMENT_API_KEY = credentials('party-management-api-key')
     ECR_CREDENTIALS = credentials('ecr-credentials')
-    NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH)
+    NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH, "${env.STAGE}")
     REPOSITORY = getVariableFromConf("REPOSITORY")
     CONFIG_FILE = getConfigFileFromStage(STAGE)
   }
@@ -394,11 +394,16 @@ String getConfigFileFromStage(String stage) {
   } 
 }
 
-String normalizeNamespaceName(String namespace) {
-  return namespace
-     .replace('_', '-')
-     .replace('.', '-')
-     .toLowerCase()
+String normalizeNamespaceName(String namespace, String stage) {
+  switch (stage) {
+    case 'PROD':
+      return 'prod'
+    default:
+      return namespace
+        .replace('_', '-')
+        .replace('.', '-')
+        .toLowerCase()
+  }
 }
 
 // Params are triplets of (serviceName, applicationPath, servicePort)
