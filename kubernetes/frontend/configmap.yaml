@@ -17,6 +17,7 @@ data:
             sub_filter_types *;
             sub_filter **CSP_NONCE** $request_id;
             add_header Content-Security-Policy "script-src 'nonce-$request_id' 'strict-dynamic' 'unsafe-inline' https:; object-src 'none'; base-uri 'self'; default-src 'self' {{PUBLIC_BUCKET_URL}}; style-src 'self' 'unsafe-inline'";
+            rewrite /ui/index.html /ui permanent;
             try_files $uri /ui/index.html =404;
         }
 
@@ -35,6 +36,10 @@ data:
       SELFCARE_LOGIN_URL: "{{SELFCARE_LOGIN_URL}}",
       INTEROP_RESOURCES_BASE_URL: "{{PUBLIC_BUCKET_URL}}",
       BACKEND_FOR_FRONTEND_URL: "https://{{EXTERNAL_APPLICATION_HOST}}/{{BACKEND_FOR_FRONTEND_APPLICATION_PATH}}/{{BACKEND_FOR_FRONTEND_INTERFACE_VERSION}}",
+<<<<<<< HEAD
       MIXPANEL_PROJECT_ID: "{{MIXPANEL_PROJECT_ID}}",
       ONETRUST_DOMAIN_SCRIPT_ID: "{{ONETRUST_DOMAIN_SCRIPT_ID}}"
+=======
+      MIXPANEL_PROJECT_ID: "{{MIXPANEL_PROJECT_ID}}"
+>>>>>>> 1.0.x
     }
