@@ -6,7 +6,7 @@ metadata:
   name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 spec:
-  schedule: "* 6 * * *"
+  schedule: "0 */1 * * *"
   failedJobsHistoryLimit: 1
   successfulJobsHistoryLimit: 0
   jobTemplate:
@@ -30,36 +30,26 @@ spec:
                   valueFrom:
                     fieldRef:
                       fieldPath: metadata.namespace
-                - name: STORAGE_ENDPOINT
+                - name: TOKENS_JOB_BUCKET
                   valueFrom:
                     configMapKeyRef:
                       name: {{SERVICE_NAME}}
-                      key: STORAGE_ENDPOINT
-                - name: AWS_REGION
+                      key: TOKENS_JOB_BUCKET
+                - name: TOKENS_JOB_BASE_DOCS_PATH
                   valueFrom:
                     configMapKeyRef:
                       name: {{SERVICE_NAME}}
-                      key: AWS_REGION
-                - name: AWS_ACCESS_KEY_ID
+                      key: TOKENS_JOB_BASE_DOCS_PATH
+                - name: QUEUE_VISIBILITY_TIMEOUT_IN_SECONDS
                   valueFrom:
                     configMapKeyRef:
                       name: {{SERVICE_NAME}}
-                      key: AWS_ACCESS_KEY_ID
-                - name: AWS_SECRET_ACCESS_KEY
+                      key: QUEUE_VISIBILITY_TIMEOUT_IN_SECONDS
+                - name: MAX_NUMBER_OF_MESSAGES_PER_FILE
                   valueFrom:
                     configMapKeyRef:
                       name: {{SERVICE_NAME}}
-                      key: AWS_SECRET_ACCESS_KEY
-                - name: TOKEN_JOB_STORAGE_CONTAINER
-                  valueFrom:
-                    configMapKeyRef:
-                      name: {{SERVICE_NAME}}
-                      key: TOKEN_JOB_STORAGE_CONTAINER
-                - name: STORAGE_TYPE
-                  valueFrom:
-                    configMapKeyRef:
-                      name: {{SERVICE_NAME}}
-                      key: STORAGE_TYPE
+                      key: MAX_NUMBER_OF_MESSAGES_PER_FILE
                 - name: JWT_QUEUE_URL
                   value: "{{AWS_SQS_DOMAIN}}/$(AWS_ACCOUNT_ID)/{{JWT_QUEUE_URL}}"            
               resources:

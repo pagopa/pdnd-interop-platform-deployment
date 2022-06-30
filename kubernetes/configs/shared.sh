@@ -25,7 +25,7 @@ NOTIFIER_SERVICE_NAME="interop-be-notifier"
 FRONTEND_SERVICE_NAME="interop-frontend"
 
 JOB_ATTRIBUTES_LOADER_SERVICE_NAME="interop-be-attributes-loader"
-JOB_TOKEN_READER_SERVICE_NAME="interop-be-token-reader"
+JOB_DETAILS_PERSISTER_SERVICE_NAME="interop-be-token-details-persister"
 
 AGREEMENT_MANAGEMENT_APPLICATION_PATH="agreement-management"
 AGREEMENT_PROCESS_APPLICATION_PATH="agreement-process"

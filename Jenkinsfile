@@ -244,15 +244,16 @@ spec:
                   }
                 }
 
-                stage('Token Reader') {
+                stage('Token Details Persister') {
                   environment {
-                    SERVICE_NAME = getVariableFromConf("JOB_TOKEN_READER_SERVICE_NAME")
-                    IMAGE_VERSION = getVariableFromConf("JOB_TOKEN_READER_IMAGE_VERSION")
+                    SERVICE_NAME = getVariableFromConf("JOB_DETAILS_PERSISTER_SERVICE_NAME")
+                    IMAGE_VERSION = getVariableFromConf("JOB_DETAILS_PERSISTER_IMAGE_VERSION")
                     IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
                   }
                   steps {
-                    applyKubeFile('jobs/token-reader/configmap.yaml', SERVICE_NAME)
-                    applyKubeFile('jobs/token-reader/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST)
+                    applyKubeFile('jobs/token-details-persister/configmap.yaml', SERVICE_NAME)
+                    applyKubeFile('jobs/token-details-persister/serviceaccount.yaml', SERVICE_NAME)
+                    applyKubeFile('jobs/token-details-persister/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST)
                   }
                 }
               }
