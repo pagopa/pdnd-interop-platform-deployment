@@ -24,23 +24,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PURPOSE_MANAGEMENT_URL
-            - name: AWS_SECRET_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: aws
-                  key: AWS_SECRET_ACCESS_KEY
-            - name: AWS_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: aws
-                  key: AWS_ACCESS_KEY_ID
-            - name: AWS_REGION
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: AWS_REGION
             - name: PERSISTENCE_EVENTS_QUEUE_URL
-              value: "{{AWS_SQS_DOMAIN}}/$(AWS_ACCOUNT_ID)/{{PERSISTENCE_QUEUE_NAME}}"
+              value: "{{AWS_SQS_DOMAIN}}/{{AWS_ACCOUNT_ID}}/{{PERSISTENCE_QUEUE_NAME}}"
             - name: VAULT_ADDR
               valueFrom:
                 secretKeyRef:
@@ -91,11 +76,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ACCEPTED_AUDIENCES
-            - name: WELL_KNOWN_URL
+            - name: WELL_KNOWN_URLS
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: WELL_KNOWN_URL  
+                  key: WELL_KNOWN_URLS 
             - name: DYNAMO_TABLE_NAME
               valueFrom:
                 configMapKeyRef:

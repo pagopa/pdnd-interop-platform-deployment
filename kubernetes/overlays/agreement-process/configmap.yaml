@@ -5,3 +5,4 @@ metadata:
   namespace: {{NAMESPACE}}
 data:
   ACCEPTED_AUDIENCES: "{{UI_JWT_AUDIENCE}}"
+  PARTY_MANAGEMENT_URL: "{{PARTY_MANAGEMENT_URL}}"

@@ -54,3 +54,48 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: GENERATED_JWT_ISSUER
+            - name: INTERNAL_JWT_ISSUER
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: INTERNAL_JWT_ISSUER
+            - name: INTERNAL_JWT_SUBJECT
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: INTERNAL_JWT_SUBJECT
+            - name: INTERNAL_JWT_AUDIENCE
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: INTERNAL_JWT_AUDIENCE
+            - name: INTERNAL_JWT_DURATION_SECONDS
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: INTERNAL_JWT_DURATION_SECONDS
+            - name: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
+            - name: PARTY_PROCESS_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: PARTY_PROCESS_URL
+            - name: USER_REGISTRY_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: USER_REGISTRY_URL
+            - name: USER_REGISTRY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: user-registry
+                  key: USER_REGISTRY_API_KEY
+            - name: PARTY_PROCESS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: party-process
+                  key: PARTY_PROCESS_API_KEY

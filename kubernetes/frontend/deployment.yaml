@@ -17,8 +17,6 @@ spec:
       annotations:
         digest: {{IMAGE_DIGEST}} # Used to force deployment on same image version but different content
     spec:
-      imagePullSecrets:
-        - name: regcred
       containers:
         - name: {{SERVICE_NAME}}
           image: {{REPOSITORY}}/{{SERVICE_NAME}}:{{FRONTEND_IMAGE_VERSION}}
