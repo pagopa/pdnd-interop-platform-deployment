@@ -396,6 +396,10 @@ String getConfigFileFromStage(String stage) {
 
 String normalizeNamespaceName(String namespace, String stage) {
   switch (stage) {
+    case 'DEV':
+      return 'dev'
+    case 'TEST':
+      return 'fe-test'
     case 'PROD':
       return 'prod'
     default:
