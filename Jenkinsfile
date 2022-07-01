@@ -243,6 +243,19 @@ spec:
                     applyKubeFile('jobs/attributes-loader/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST)
                   }
                 }
+
+                stage('Token Details Persister') {
+                  environment {
+                    SERVICE_NAME = getVariableFromConf("JOB_DETAILS_PERSISTER_SERVICE_NAME")
+                    IMAGE_VERSION = getVariableFromConf("JOB_DETAILS_PERSISTER_IMAGE_VERSION")
+                    IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
+                  }
+                  steps {
+                    applyKubeFile('jobs/token-details-persister/configmap.yaml', SERVICE_NAME)
+                    applyKubeFile('jobs/token-details-persister/serviceaccount.yaml', SERVICE_NAME)
+                    applyKubeFile('jobs/token-details-persister/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST)
+                  }
+                }
               }
             }
           }
@@ -396,6 +409,10 @@ String getConfigFileFromStage(String stage) {
 
 String normalizeNamespaceName(String namespace, String stage) {
   switch (stage) {
+    case 'DEV':
+      return 'dev'
+    case 'TEST':
+      return 'fe-test'
     case 'PROD':
       return 'prod'
     default:
