@@ -36,3 +36,4 @@ BACKEND_FOR_FRONTEND_INTERFACE_VERSION=$(shortVersion $BACKEND_FOR_FRONTEND_IMAG
 . $(pwd)/kubernetes/configs/prod/party_registry_proxy.sh
 . $(pwd)/kubernetes/configs/prod/purpose_process.sh
 . $(pwd)/kubernetes/configs/prod/notifier.sh
+. $(pwd)/kubernetes/configs/prod/token_details_persister.sh
