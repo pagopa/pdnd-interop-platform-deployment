@@ -1,0 +1,61 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  labels:
+    app: {{SERVICE_NAME}}
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  schedule: "0 */1 * * *"
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 0
+  jobTemplate:
+    metadata:
+      labels:
+        app: {{SERVICE_NAME}}
+      annotations:
+        digest: {{IMAGE_DIGEST}} # Used to force deployment on same image version but different content
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: {{SERVICE_NAME}}
+              image: {{REPOSITORY}}/{{SERVICE_NAME}}:{{JOB_TOKEN_READER_IMAGE_VERSION}}
+              imagePullPolicy: Always
+              command: ["bin/{{SERVICE_NAME}}"]
+              args: ["-Dconfig.override_with_env_vars=true"]
+              env:
+                - name: NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: TOKENS_JOB_BUCKET
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: TOKENS_JOB_BUCKET
+                - name: TOKENS_JOB_BASE_DOCS_PATH
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: TOKENS_JOB_BASE_DOCS_PATH
+                - name: QUEUE_VISIBILITY_TIMEOUT_IN_SECONDS
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: QUEUE_VISIBILITY_TIMEOUT_IN_SECONDS
+                - name: MAX_NUMBER_OF_MESSAGES_PER_FILE
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: MAX_NUMBER_OF_MESSAGES_PER_FILE
+                - name: JWT_QUEUE_URL
+                  value: "{{AWS_SQS_DOMAIN}}/$(AWS_ACCOUNT_ID)/{{JWT_QUEUE_URL}}"            
+              resources:
+                requests:
+                  memory: "512Mi"
+                  cpu: "30m"
+                limits:
+                  memory: "1Gi"
+                  cpu: "500m"
