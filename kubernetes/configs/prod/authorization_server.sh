@@ -1,9 +1,9 @@
 #!/bin/bash
 
 INTEROP_JWT_DURATION_SECONDS=600
-INTEROP_JWT_ISSUER="prod.interop.pagopa.it"
+INTEROP_JWT_ISSUER="interop.selfcare.pagopa.it"
 
-CLIENT_ASSERTION_JWT_AUDIENCE="prod.interop.pagopa.it/client-assertion"
+CLIENT_ASSERTION_JWT_AUDIENCE="interop.selfcare.pagopa.it/client-assertion"
 
 AUTHORIZATION_SERVER_CPU_REQUEST="4"
 AUTHORIZATION_SERVER_MEMORY_REQUEST="8Gi"
