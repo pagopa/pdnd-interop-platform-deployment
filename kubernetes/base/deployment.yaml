@@ -71,8 +71,8 @@ spec:
                   key: WELL_KNOWN_URLS
           resources:
             requests:
-              memory: "1Gi"
-              cpu: "500m"
+              cpu: "{{SERVICE_RESOURCE_CPU}}"
+              memory: "{{SERVICE_RESOURCE_MEM}}"
             limits:
-              memory: "2Gi"
-              cpu: "2"
+              cpu: "{{SERVICE_RESOURCE_CPU}}"
+              memory: "{{SERVICE_RESOURCE_MEM}}"

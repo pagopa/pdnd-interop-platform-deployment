@@ -74,6 +74,8 @@ function compileDir() {
     serviceName=$2
     imageVersion=$3
     serviceImageDigest=$4
+    resourceCpu=$5
+    resourceMem=$6
 
     eval $(source ./${LOWERCASE_ENV}-secrets; echo awsAccountId=$AWS_ACCOUNT_ID)
 
@@ -82,7 +84,13 @@ function compileDir() {
         if [ ! $(basename $f) = "kustomization.yaml" ]
         then
             mkdir -p $serviceName/$dirPath
-            SERVICE_NAME=$serviceName IMAGE_VERSION=$imageVersion IMAGE_DIGEST=$serviceImageDigest AWS_ACCOUNT_ID=$awsAccountId kubernetes/templater.sh $f -s -f $CONFIG_FILE > $serviceName/$f
+            SERVICE_NAME=$serviceName \
+            IMAGE_VERSION=$imageVersion \
+            IMAGE_DIGEST=$serviceImageDigest \
+            SERVICE_RESOURCE_CPU=${resourceCpu} \
+            SERVICE_RESOURCE_MEM=${resourceMem} \
+            AWS_ACCOUNT_ID=$awsAccountId \
+            kubernetes/templater.sh $f -s -f $CONFIG_FILE > $serviceName/$f
         else
             cp $f $serviceName/$f
         fi
@@ -97,6 +105,8 @@ function applyKustomizeToDir() {
     dirPath=$1
     serviceName=$2
     imageVersion=$3
+    resourceCpu=$4
+    resourceMem=$5
 
     echo "********** ${serviceName} **********"
     echo "Apply directory ${dirPath} on Kubernetes"
@@ -106,15 +116,15 @@ function applyKustomizeToDir() {
     kubeDirPath='kubernetes/'$dirPath
 
     echo "Compiling base files"
-    compileDir "kubernetes/base" $serviceName $imageVersion $serviceImageDigest
+    compileDir "kubernetes/base" $serviceName $imageVersion $serviceImageDigest $resourceCpu $resourceMem
     echo "Base files compiled"
 
     echo "Compiling common files"
-    compileDir "kubernetes/commons/database" $serviceName $imageVersion $serviceImageDigest
+    compileDir "kubernetes/commons/database" $serviceName $imageVersion $serviceImageDigest $resourceCpu $resourceMem
     echo "Common files compiled"
 
     echo "Compiling directory ${dirPath}"
-    compileDir $kubeDirPath $serviceName $imageVersion $serviceImageDigest
+    compileDir $kubeDirPath $serviceName $imageVersion $serviceImageDigest $resourceCpu $resourceMem
     echo "Directory ${dirPath} compiled"
     
     echo "Applying Kustomization for ${serviceName}"
@@ -132,13 +142,20 @@ function applyKubeFile() {
     fileName=$1
     serviceName=$2
     imageDigest=$3
+    resourceCpu=$4
+    resourceMem=$5
 
     echo "Apply file ${fileName} on Kubernetes"
 
     eval $(source ./${LOWERCASE_ENV}-secrets; echo awsAccountId=$AWS_ACCOUNT_ID)
 
     echo "Compiling file ${fileName}"
-    SERVICE_NAME=${serviceName} IMAGE_DIGEST=${imageDigest} AWS_ACCOUNT_ID=$awsAccountId ./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${CONFIG_FILE} > ./kubernetes/$(dirname $fileName)/compiled.$(basename $fileName)
+    SERVICE_NAME=${serviceName} \
+    IMAGE_DIGEST=${imageDigest} \
+    AWS_ACCOUNT_ID=$awsAccountId \
+    ./kubernetes/templater.sh ./kubernetes/${fileName} \
+    -s \
+    -f ${CONFIG_FILE} > ./kubernetes/$(dirname $fileName)/compiled.$(basename $fileName)
     echo "File ${fileName} compiled"
     
     kubeApply ./kubernetes/$(dirname $fileName)/compiled.$(basename $fileName)
@@ -272,33 +289,33 @@ loadSecrets
 prepareDbMigrations
 
 if [ ${LOWERCASE_ENV} != 'prod' ]; then 
-  applyKustomizeToDir 'overlays/party-mock-registry' $PARTY_MOCK_REGISTRY_SERVICE_NAME $PARTY_MOCK_REGISTRY_IMAGE_VERSION
+  applyKustomizeToDir 'overlays/party-mock-registry' $PARTY_MOCK_REGISTRY_SERVICE_NAME $PARTY_MOCK_REGISTRY_IMAGE_VERSION $PARTY_MOCK_REGISTRY_RESOURCE_CPU $PARTY_MOCK_REGISTRY_RESOURCE_MEM
 fi
 
 applyKubeFile 'frontend/configmap.yaml' $FRONTEND_SERVICE_NAME
 frontendImageDigest=$(getDockerImageDigest $FRONTEND_SERVICE_NAME $FRONTEND_IMAGE_VERSION)
-applyKubeFile 'frontend/deployment.yaml' $FRONTEND_SERVICE_NAME $frontendImageDigest
+applyKubeFile 'frontend/deployment.yaml' $FRONTEND_SERVICE_NAME $frontendImageDigest $FRONTEND_RESOURCE_CPU $FRONTEND_RESOURCE_MEM
 applyKubeFile 'frontend/service.yaml' $FRONTEND_SERVICE_NAME
 
-applyKustomizeToDir 'overlays/agreement-management' $AGREEMENT_MANAGEMENT_SERVICE_NAME $AGREEMENT_MANAGEMENT_IMAGE_VERSION
-applyKustomizeToDir 'overlays/agreement-process' $AGREEMENT_PROCESS_SERVICE_NAME $AGREEMENT_PROCESS_IMAGE_VERSION
-applyKustomizeToDir 'overlays/attribute-registry-management' $ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME $ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION
-applyKustomizeToDir 'overlays/authorization-management' $AUTHORIZATION_MANAGEMENT_SERVICE_NAME $AUTHORIZATION_MANAGEMENT_IMAGE_VERSION
-applyKustomizeToDir 'overlays/authorization-process' $AUTHORIZATION_PROCESS_SERVICE_NAME $AUTHORIZATION_PROCESS_IMAGE_VERSION
-applyKustomizeToDir 'overlays/authorization-server' $AUTHORIZATION_SERVER_SERVICE_NAME $AUTHORIZATION_SERVER_IMAGE_VERSION
-applyKustomizeToDir 'overlays/catalog-management' $CATALOG_MANAGEMENT_SERVICE_NAME $CATALOG_MANAGEMENT_IMAGE_VERSION
-applyKustomizeToDir 'overlays/catalog-process' $CATALOG_PROCESS_SERVICE_NAME $CATALOG_PROCESS_IMAGE_VERSION
-applyKustomizeToDir 'overlays/party-registry-proxy' $PARTY_REGISTRY_PROXY_SERVICE_NAME $PARTY_REGISTRY_PROXY_IMAGE_VERSION
-applyKustomizeToDir 'overlays/purpose-management' $PURPOSE_MANAGEMENT_SERVICE_NAME $PURPOSE_MANAGEMENT_IMAGE_VERSION
-applyKustomizeToDir 'overlays/purpose-process' $PURPOSE_PROCESS_SERVICE_NAME $PURPOSE_PROCESS_IMAGE_VERSION
-applyKustomizeToDir 'overlays/backend-for-frontend' $BACKEND_FOR_FRONTEND_SERVICE_NAME $BACKEND_FOR_FRONTEND_IMAGE_VERSION
-applyKustomizeToDir 'overlays/api-gateway' $API_GATEWAY_SERVICE_NAME $API_GATEWAY_IMAGE_VERSION
-applyKustomizeToDir 'overlays/notifier' $NOTIFIER_SERVICE_NAME $NOTIFIER_IMAGE_VERSION
+applyKustomizeToDir 'overlays/agreement-management' $AGREEMENT_MANAGEMENT_SERVICE_NAME $AGREEMENT_MANAGEMENT_IMAGE_VERSION $AGREEMENT_MANAGEMENT_RESOURCE_CPU $AGREEMENT_MANAGEMENT_RESOURCE_MEM
+applyKustomizeToDir 'overlays/agreement-process' $AGREEMENT_PROCESS_SERVICE_NAME $AGREEMENT_PROCESS_IMAGE_VERSION $AGREEMENT_PROCESS_RESOURCE_CPU $AGREEMENT_PROCESS_RESOURCE_MEM
+applyKustomizeToDir 'overlays/attribute-registry-management' $ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME $ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION $ATTRIBUTE_REGISTRY_MANAGEMENT_RESURCE_CPU $ATTRIBUTE_REGISTRY_MANAGEMENT_RESURCE_MEM
+applyKustomizeToDir 'overlays/authorization-management' $AUTHORIZATION_MANAGEMENT_SERVICE_NAME $AUTHORIZATION_MANAGEMENT_IMAGE_VERSION $AUTHORIZATION_MANAGEMENT_RESOURCE_CPU $AUTHORIZATION_MANAGEMENT_RESOURCE_MEM
+applyKustomizeToDir 'overlays/authorization-process' $AUTHORIZATION_PROCESS_SERVICE_NAME $AUTHORIZATION_PROCESS_IMAGE_VERSION $AUTHORIZATION_PROCESS_RESOURCE_CPU $AUTHORIZATION_PROCESS_RESOURCE_MEM
+applyKustomizeToDir 'overlays/authorization-server' $AUTHORIZATION_SERVER_SERVICE_NAME $AUTHORIZATION_SERVER_IMAGE_VERSION $AUTHORIZATION_SERVER_RESOURCE_CPU $AUTHORIZATION_SERVER_RESOURCE_MEM
+applyKustomizeToDir 'overlays/catalog-management' $CATALOG_MANAGEMENT_SERVICE_NAME $CATALOG_MANAGEMENT_IMAGE_VERSION $CATALOG_MANAGEMENT_RESOURCE_CPU $CATALOG_MANAGEMENT_RESOURCE_MEM
+applyKustomizeToDir 'overlays/catalog-process' $CATALOG_PROCESS_SERVICE_NAME $CATALOG_PROCESS_IMAGE_VERSION $CATALOG_PROCESS_RESOURCE_CPU $CATALOG_PROCESS_RESOURCE_MEM
+applyKustomizeToDir 'overlays/party-registry-proxy' $PARTY_REGISTRY_PROXY_SERVICE_NAME $PARTY_REGISTRY_PROXY_IMAGE_VERSION $PARTY_REGISTRY_PROXY_RESOURCE_CPU $PARTY_REGISTRY_PROXY_RESOURCE_MEM
+applyKustomizeToDir 'overlays/purpose-management' $PURPOSE_MANAGEMENT_SERVICE_NAME $PURPOSE_MANAGEMENT_IMAGE_VERSION $PURPOSE_MANAGEMENT_RESOURCE_CPU $PURPOSE_MANAGEMENT_RESOURCE_MEM
+applyKustomizeToDir 'overlays/purpose-process' $PURPOSE_PROCESS_SERVICE_NAME $PURPOSE_PROCESS_IMAGE_VERSION $PURPOSE_PROCESS_RESOURCE_CPU $PURPOSE_PROCESS_RESOURCE_MEM
+applyKustomizeToDir 'overlays/backend-for-frontend' $BACKEND_FOR_FRONTEND_SERVICE_NAME $BACKEND_FOR_FRONTEND_IMAGE_VERSION $BACKEND_FOR_FRONTEND_RESOURCE_CPU $BACKEND_FOR_FRONTEND_RESOURCE_MEM
+applyKustomizeToDir 'overlays/api-gateway' $API_GATEWAY_SERVICE_NAME $API_GATEWAY_IMAGE_VERSION $API_GATEWAY_RESOURCE_CPU $API_GATEWAY_RESOURCE_MEM
+applyKustomizeToDir 'overlays/notifier' $NOTIFIER_SERVICE_NAME $NOTIFIER_IMAGE_VERSION $NOTIFIER_RESOURCE_CPU $NOTIFIER_RESOURCE_MEM
 
 applyKubeFile 'jobs/attributes-loader/configmap.yaml' $JOB_ATTRIBUTES_LOADER_SERVICE_NAME
 applyKubeFile 'jobs/attributes-loader/serviceaccount.yaml' $JOB_ATTRIBUTES_LOADER_SERVICE_NAME
 attributesLoaderImageDigest=$(getDockerImageDigest $FRONTEND_SERVICE_NAME $FRONTEND_IMAGE_VERSION)
-applyKubeFile 'jobs/attributes-loader/cronjob.yaml' $JOB_ATTRIBUTES_LOADER_SERVICE_NAME $attributesLoaderImageDigest
+applyKubeFile 'jobs/attributes-loader/cronjob.yaml' $JOB_ATTRIBUTES_LOADER_SERVICE_NAME $attributesLoaderImageDigest $JOB_ATTRIBUTES_LOADER_RESOURCE_CPU $JOB_ATTRIBUTES_LOADER_RESOURCE_MEM
 
 createIngress \
     $AGREEMENT_PROCESS_SERVICE_NAME $AGREEMENT_PROCESS_APPLICATION_PATH $BACKEND_SERVICE_PORT \
