@@ -297,13 +297,8 @@ applyKustomizeToDir 'overlays/notifier' $NOTIFIER_SERVICE_NAME $NOTIFIER_IMAGE_V
 
 applyKubeFile 'jobs/attributes-loader/configmap.yaml' $JOB_ATTRIBUTES_LOADER_SERVICE_NAME
 applyKubeFile 'jobs/attributes-loader/serviceaccount.yaml' $JOB_ATTRIBUTES_LOADER_SERVICE_NAME
-attributesLoaderImageDigest=$(getDockerImageDigest $JOB_ATTRIBUTES_LOADER_SERVICE_NAME $JOB_ATTRIBUTES_LOADER_IMAGE_VERSION)
+attributesLoaderImageDigest=$(getDockerImageDigest $FRONTEND_SERVICE_NAME $FRONTEND_IMAGE_VERSION)
 applyKubeFile 'jobs/attributes-loader/cronjob.yaml' $JOB_ATTRIBUTES_LOADER_SERVICE_NAME $attributesLoaderImageDigest
-
-applyKubeFile 'jobs/token-details-persister/configmap.yaml' $JOB_DETAILS_PERSISTER_SERVICE_NAME
-applyKubeFile 'jobs/token-details-persister/serviceaccount.yaml' $JOB_DETAILS_PERSISTER_SERVICE_NAME
-jobDetailsPersisterImageDigest=$(getDockerImageDigest $JOB_DETAILS_PERSISTER_SERVICE_NAME $JOB_DETAILS_PERSISTER_IMAGE_VERSION)
-applyKubeFile 'jobs/token-details-persister/cronjob.yaml' $JOB_DETAILS_PERSISTER_SERVICE_NAME $jobDetailsPersisterImageDigest
 
 createIngress \
     $AGREEMENT_PROCESS_SERVICE_NAME $AGREEMENT_PROCESS_APPLICATION_PATH $BACKEND_SERVICE_PORT \
