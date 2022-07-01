@@ -1,8 +1,8 @@
 #!/bin/bash
 
 . $(pwd)/kubernetes/configs/shared.sh
-. $(pwd)/kubernetes/configs/versions.sh
 
+. $(pwd)/kubernetes/configs/prod/versions.sh
 . $(pwd)/kubernetes/configs/prod/commons.sh
 
 
