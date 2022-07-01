@@ -19,6 +19,7 @@ data:
             add_header Content-Security-Policy-Report-Only "default-src 'self' {{PUBLIC_BUCKET_URL}}; object-src 'none'; connect-src 'self' https://api-eu.mixpanel.com/track/; script-src 'self' 'nonce-$request_id'; style-src 'self' 'unsafe-inline'; worker-src 'none'; font-src 'self'; img-src 'self' data:";
             add_header Strict-Transport-Security "max-age=31536000";
             add_header X-Content-Type-Options "nosniff";
+            add_header X-Frame-Options "SAMEORIGIN";
             add_header Referrer-Policy "no-referrer";
             rewrite /ui/index.html /ui permanent;
             try_files $uri /ui/index.html =404;
