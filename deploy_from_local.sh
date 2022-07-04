@@ -213,6 +213,7 @@ function loadSecrets() {
     loadSecret 'party-process' 'PARTY_PROCESS_API_KEY' 'PARTY_PROCESS_API_KEY'
     loadSecret 'party-management' 'PARTY_MANAGEMENT_API_KEY' 'PARTY_MANAGEMENT_API_KEY'
     loadSecret 'postgres' 'POSTGRES_USR' 'POSTGRES_CREDENTIALS_USR' 'POSTGRES_PSW' 'POSTGRES_CREDENTIALS_PSW'
+    loadSecret 'documentdb' 'DOCUMENTDB_USR' 'DOCUMENTDB_CREDENTIALS_USR' 'DOCUMENTDB_PSW' 'DOCUMENTDB_CREDENTIALS_PSW'
     loadSecret 'vault' 'VAULT_ADDR' 'VAULT_ADDR' 'VAULT_TOKEN' 'VAULT_TOKEN'
 
     echo "*****************************"

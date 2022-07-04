@@ -31,6 +31,7 @@ spec:
     AWS_ACCOUNT_ID = credentials('aws-account-id')
     // TODO Create one set of credentials for each service
     POSTGRES_CREDENTIALS = credentials('postgres-db')
+    DOCUMENTDB_CREDENTIALS = credentials('documentdb')
     //
     VAULT_TOKEN = credentials('vault-token')
     VAULT_ADDR = credentials('vault-addr')
@@ -461,6 +462,7 @@ void loadSecrets() {
       loadSecret('party-process', 'PARTY_PROCESS_API_KEY', 'PARTY_PROCESS_API_KEY')
       loadSecret('party-management', 'PARTY_MANAGEMENT_API_KEY', 'PARTY_MANAGEMENT_API_KEY')
       loadSecret('postgres', 'POSTGRES_USR', 'POSTGRES_CREDENTIALS_USR', 'POSTGRES_PSW', 'POSTGRES_CREDENTIALS_PSW')
+      loadSecret('documentdb', 'DOCUMENTDB_USR', 'DOCUMENTDB_CREDENTIALS_USR', 'DOCUMENTDB_PSW', 'DOCUMENTDB_CREDENTIALS_PSW')
       loadSecret('vault', 'VAULT_ADDR', 'VAULT_ADDR', 'VAULT_TOKEN', 'VAULT_TOKEN')
     }
   }

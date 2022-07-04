@@ -55,15 +55,9 @@ spec:
         - name: {{SERVICE_NAME}}
           env:
             - name: POSTGRES_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: POSTGRES_HOST
+              value: "{{POSTGRES_HOST}}"
             - name: POSTGRES_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: POSTGRES_PORT
+              value: "{{POSTGRES_PORT}}"
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
