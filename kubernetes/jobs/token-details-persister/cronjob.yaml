@@ -19,6 +19,8 @@ spec:
       template:
         spec:
           restartPolicy: OnFailure
+          serviceAccountName: {{SERVICE_NAME}}
+          automountServiceAccountToken: false #Opinionated, but it makes the job work see: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
           containers:
             - name: {{SERVICE_NAME}}
               image: {{REPOSITORY}}/{{SERVICE_NAME}}:{{JOB_DETAILS_PERSISTER_IMAGE_VERSION}}
@@ -50,12 +52,17 @@ spec:
                     configMapKeyRef:
                       name: {{SERVICE_NAME}}
                       key: MAX_NUMBER_OF_MESSAGES_PER_FILE
+                - name: JWT_QUEUE_NAME
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: JWT_QUEUE_NAME
                 - name: JWT_QUEUE_URL
-                  value: "{{AWS_SQS_DOMAIN}}/$(AWS_ACCOUNT_ID)/{{JWT_QUEUE_URL}}"            
+                  value: "{{AWS_SQS_DOMAIN}}/{{AWS_ACCOUNT_ID}}/$(JWT_QUEUE_NAME)"
               resources:
                 requests:
                   memory: "512Mi"
-                  cpu: "30m"
+                  cpu: "1000m"
                 limits:
-                  memory: "1Gi"
-                  cpu: "500m"
+                  memory: "2Gi"
+                  cpu: "2000m"
