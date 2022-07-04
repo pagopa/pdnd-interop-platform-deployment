@@ -111,7 +111,6 @@ function applyKustomizeToDir() {
 
     echo "Compiling common files"
     compileDir "kubernetes/commons/database" $serviceName $imageVersion $serviceImageDigest
-    compileDir "kubernetes/commons/read-model" $serviceName $imageVersion $serviceImageDigest
     echo "Common files compiled"
 
     echo "Compiling directory ${dirPath}"
