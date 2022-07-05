@@ -320,7 +320,7 @@ applyKubeFile 'jobs/attributes-loader/cronjob.yaml' $JOB_ATTRIBUTES_LOADER_SERVI
 applyKubeFile 'jobs/token-details-persister/configmap.yaml' $JOB_DETAILS_PERSISTER_SERVICE_NAME
 applyKubeFile 'jobs/token-details-persister/serviceaccount.yaml' $JOB_DETAILS_PERSISTER_SERVICE_NAME
 jobDetailsPersisterImageDigest=$(getDockerImageDigest $JOB_DETAILS_PERSISTER_SERVICE_NAME $JOB_DETAILS_PERSISTER_IMAGE_VERSION)
-applyKubeFile 'jobs/token-details-persister/cronjob.yaml' $JOB_DETAILS_PERSISTER_SERVICE_NAME $jobDetailsPersisterImageDigest
+applyKubeFile 'jobs/token-details-persister/cronjob.yaml' $JOB_DETAILS_PERSISTER_SERVICE_NAME $jobDetailsPersisterImageDigest $JOB_DETAILS_PERSISTER_RESOURCE_CPU $JOB_DETAILS_PERSISTER_RESOURCE_MEM
 
 createIngress \
     $AGREEMENT_PROCESS_SERVICE_NAME $AGREEMENT_PROCESS_APPLICATION_PATH $BACKEND_SERVICE_PORT \

@@ -283,11 +283,13 @@ spec:
                     SERVICE_NAME = getVariableFromConf("JOB_DETAILS_PERSISTER_SERVICE_NAME")
                     IMAGE_VERSION = getVariableFromConf("JOB_DETAILS_PERSISTER_IMAGE_VERSION")
                     IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
+                    RESOURCE_CPU = getVariableFromConf("JOB_DETAILS_PERSISTER_RESOURCE_CPU")
+                    RESOURCE_MEM = getVariableFromConf("JOB_DETAILS_PERSISTER_RESOURCE_MEM")
                   }
                   steps {
                     applyKubeFile('jobs/token-details-persister/configmap.yaml', SERVICE_NAME)
                     applyKubeFile('jobs/token-details-persister/serviceaccount.yaml', SERVICE_NAME)
-                    applyKubeFile('jobs/token-details-persister/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST)
+                    applyKubeFile('jobs/token-details-persister/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST, RESOURCE_CPU, RESOURCE_MEM)
                   }
                 }
               }
