@@ -31,6 +31,7 @@ BACKEND_FOR_FRONTEND_INTERFACE_VERSION=$(shortVersion $BACKEND_FOR_FRONTEND_IMAG
 . $(pwd)/kubernetes/configs/prod/authorization_management.sh
 . $(pwd)/kubernetes/configs/prod/authorization_process.sh
 . $(pwd)/kubernetes/configs/prod/authorization_server.sh
+. $(pwd)/kubernetes/configs/prod/attribute_registry_management.sh
 . $(pwd)/kubernetes/configs/prod/attributes_loader.sh
 . $(pwd)/kubernetes/configs/prod/backend_for_frontend.sh
 . $(pwd)/kubernetes/configs/prod/catalog_management.sh
