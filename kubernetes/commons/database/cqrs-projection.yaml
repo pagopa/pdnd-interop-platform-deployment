@@ -15,6 +15,11 @@ spec:
               value: "{{CQRS_PROJECTION_DB_PORT}}"
             - name: CQRS_PROJECTION_DB_NAME
               value: "{{CQRS_PROJECTION_DB_NAME}}"
+            - name: CQRS_PROJECTION_COLLECTION_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: CQRS_PROJECTION_COLLECTION_NAME
             - name: CQRS_PROJECTION_DB_USER
               valueFrom:
                 secretKeyRef:
