@@ -81,10 +81,10 @@ spec:
                     configMapKeyRef:
                       name: {{SERVICE_NAME}}
                       key: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
-          resources:
-            requests:
-              cpu: "{{SERVICE_RESOURCE_CPU}}"
-              memory: "{{SERVICE_RESOURCE_MEM}}"
-            limits:
-              cpu: "{{SERVICE_RESOURCE_CPU}}"
-              memory: "{{SERVICE_RESOURCE_MEM}}"
+              resources:
+                requests:
+                  cpu: "{{SERVICE_RESOURCE_CPU}}"
+                  memory: "{{SERVICE_RESOURCE_MEM}}"
+                limits:
+                  cpu: "{{SERVICE_RESOURCE_CPU}}"
+                  memory: "{{SERVICE_RESOURCE_MEM}}"
