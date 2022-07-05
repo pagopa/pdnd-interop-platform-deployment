@@ -31,12 +31,14 @@ BACKEND_FOR_FRONTEND_INTERFACE_VERSION=$(shortVersion $BACKEND_FOR_FRONTEND_IMAG
 . $(pwd)/kubernetes/configs/dev/authorization_management.sh
 . $(pwd)/kubernetes/configs/dev/authorization_process.sh
 . $(pwd)/kubernetes/configs/dev/authorization_server.sh
+. $(pwd)/kubernetes/configs/dev/attribute_registry_management.sh
 . $(pwd)/kubernetes/configs/dev/attributes_loader.sh
 . $(pwd)/kubernetes/configs/dev/backend_for_frontend.sh
 . $(pwd)/kubernetes/configs/dev/catalog_management.sh
 . $(pwd)/kubernetes/configs/dev/catalog_process.sh
 . $(pwd)/kubernetes/configs/dev/frontend.sh
 . $(pwd)/kubernetes/configs/dev/party_registry_proxy.sh
+. $(pwd)/kubernetes/configs/dev/party_mock_registry.sh
 . $(pwd)/kubernetes/configs/dev/purpose_management.sh
 . $(pwd)/kubernetes/configs/dev/purpose_process.sh
 . $(pwd)/kubernetes/configs/dev/notifier.sh

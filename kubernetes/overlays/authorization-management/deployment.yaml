@@ -19,11 +19,4 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ENABLED_PROJECTIONS
-          resources:
-            requests:
-              cpu: "{{AUTHORIZATION_MANAGEMENT_CPU_REQUEST}}"
-              memory: "{{AUTHORIZATION_MANAGEMENT_MEMORY_REQUEST}}"
-            limits:
-              cpu: "{{AUTHORIZATION_MANAGEMENT_CPU_LIMIT}}"
-              memory: "{{AUTHORIZATION_MANAGEMENT_MEMORY_LIMIT}}"
 
