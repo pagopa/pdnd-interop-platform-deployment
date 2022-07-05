@@ -76,10 +76,12 @@ spec:
                 SERVICE_NAME = getVariableFromConf("FRONTEND_SERVICE_NAME")
                 IMAGE_VERSION = getVariableFromConf("FRONTEND_IMAGE_VERSION")
                 IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
+                RESOURCE_CPU = getVariableFromConf("FRONTEND_RESOURCE_CPU")
+                RESOURCE_MEM = getVariableFromConf("FRONTEND_RESOURCE_MEM")
               }
               steps {
                 applyKubeFile('frontend/configmap.yaml', SERVICE_NAME)
-                applyKubeFile('frontend/deployment.yaml', SERVICE_NAME, IMAGE_DIGEST)
+                applyKubeFile('frontend/deployment.yaml', SERVICE_NAME, IMAGE_DIGEST, RESOURCE_CPU, RESOURCE_MEM)
                 applyKubeFile('frontend/service.yaml', SERVICE_NAME)
               }
             }
@@ -88,7 +90,9 @@ spec:
                 applyKustomizeToDir(
                   'overlays/agreement-management', 
                   getVariableFromConf("AGREEMENT_MANAGEMENT_SERVICE_NAME"), 
-                  getVariableFromConf("AGREEMENT_MANAGEMENT_IMAGE_VERSION")
+                  getVariableFromConf("AGREEMENT_MANAGEMENT_IMAGE_VERSION"),
+                  getVariableFromConf("AGREEMENT_MANAGEMENT_RESOURCE_CPU"),
+                  getVariableFromConf("AGREEMENT_MANAGEMENT_RESOURCE_MEM")
                 )
               }
             }
@@ -97,7 +101,9 @@ spec:
                 applyKustomizeToDir(
                   'overlays/agreement-process', 
                   getVariableFromConf("AGREEMENT_PROCESS_SERVICE_NAME"),
-                  getVariableFromConf("AGREEMENT_PROCESS_IMAGE_VERSION")
+                  getVariableFromConf("AGREEMENT_PROCESS_IMAGE_VERSION"),
+                  getVariableFromConf("AGREEMENT_PROCESS_RESOURCE_CPU"),
+                  getVariableFromConf("AGREEMENT_PROCESS_RESOURCE_MEM")
                 )
               }
             }
@@ -106,7 +112,9 @@ spec:
                 applyKustomizeToDir(
                   'overlays/attribute-registry-management', 
                   getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME"), 
-                  getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION")
+                  getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION"),
+                  getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_RESOURCE_CPU"),
+                  getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_RESOURCE_MEM")
                 )
               }
             }
@@ -115,7 +123,9 @@ spec:
                 applyKustomizeToDir(
                   'overlays/authorization-management', 
                   getVariableFromConf("AUTHORIZATION_MANAGEMENT_SERVICE_NAME"),
-                  getVariableFromConf("AUTHORIZATION_MANAGEMENT_IMAGE_VERSION")
+                  getVariableFromConf("AUTHORIZATION_MANAGEMENT_IMAGE_VERSION"),
+                  getVariableFromConf("AUTHORIZATION_MANAGEMENT_RESOURCE_CPU"),
+                  getVariableFromConf("AUTHORIZATION_MANAGEMENT_RESOURCE_MEM")
                 )
               }
             }
@@ -124,7 +134,9 @@ spec:
                 applyKustomizeToDir(
                   'overlays/authorization-process', 
                   getVariableFromConf("AUTHORIZATION_PROCESS_SERVICE_NAME"),
-                  getVariableFromConf("AUTHORIZATION_PROCESS_IMAGE_VERSION")
+                  getVariableFromConf("AUTHORIZATION_PROCESS_IMAGE_VERSION"),
+                  getVariableFromConf("AUTHORIZATION_PROCESS_RESOURCE_CPU"),
+                  getVariableFromConf("AUTHORIZATION_PROCESS_RESOURCE_MEM")
                 )
               }
             }
@@ -133,7 +145,9 @@ spec:
                 applyKustomizeToDir(
                   'overlays/catalog-management', 
                   getVariableFromConf("CATALOG_MANAGEMENT_SERVICE_NAME"),
-                  getVariableFromConf("CATALOG_MANAGEMENT_IMAGE_VERSION")
+                  getVariableFromConf("CATALOG_MANAGEMENT_IMAGE_VERSION"),
+                  getVariableFromConf("CATALOG_MANAGEMENT_RESOURCE_CPU"),
+                  getVariableFromConf("CATALOG_MANAGEMENT_RESOURCE_MEM")
                 )
               }
             }
@@ -142,7 +156,9 @@ spec:
                 applyKustomizeToDir(
                   'overlays/catalog-process', 
                   getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"),
-                  getVariableFromConf("CATALOG_PROCESS_IMAGE_VERSION")
+                  getVariableFromConf("CATALOG_PROCESS_IMAGE_VERSION"),
+                  getVariableFromConf("CATALOG_PROCESS_RESOURCE_CPU"),
+                  getVariableFromConf("CATALOG_PROCESS_RESOURCE_MEM")
                 )
               }
             }
@@ -157,7 +173,9 @@ spec:
                 applyKustomizeToDir(
                   'overlays/party-mock-registry', 
                   getVariableFromConf("PARTY_MOCK_REGISTRY_SERVICE_NAME"), 
-                  getVariableFromConf("PARTY_MOCK_REGISTRY_IMAGE_VERSION")
+                  getVariableFromConf("PARTY_MOCK_REGISTRY_IMAGE_VERSION"),
+                  getVariableFromConf("PARTY_MOCK_REGISTRY_RESOURCE_CPU"),
+                  getVariableFromConf("PARTY_MOCK_REGISTRY_RESOURCE_MEM")
                 )
               }
             }
@@ -166,7 +184,9 @@ spec:
                 applyKustomizeToDir(
                   'overlays/party-registry-proxy', 
                   getVariableFromConf("PARTY_REGISTRY_PROXY_SERVICE_NAME"), 
-                  getVariableFromConf("PARTY_REGISTRY_PROXY_IMAGE_VERSION")
+                  getVariableFromConf("PARTY_REGISTRY_PROXY_IMAGE_VERSION"),
+                  getVariableFromConf("PARTY_REGISTRY_PROXY_RESOURCE_CPU"),
+                  getVariableFromConf("PARTY_REGISTRY_PROXY_RESOURCE_MEM")
                 )
               }
             }
@@ -175,7 +195,9 @@ spec:
                 applyKustomizeToDir(
                   'overlays/purpose-management', 
                   getVariableFromConf("PURPOSE_MANAGEMENT_SERVICE_NAME"), 
-                  getVariableFromConf("PURPOSE_MANAGEMENT_IMAGE_VERSION")
+                  getVariableFromConf("PURPOSE_MANAGEMENT_IMAGE_VERSION"),
+                  getVariableFromConf("PURPOSE_MANAGEMENT_RESOURCE_CPU"),
+                  getVariableFromConf("PURPOSE_MANAGEMENT_RESOURCE_MEM")
                 )
               }
             }
@@ -184,7 +206,9 @@ spec:
                 applyKustomizeToDir(
                   'overlays/purpose-process', 
                   getVariableFromConf("PURPOSE_PROCESS_SERVICE_NAME"), 
-                  getVariableFromConf("PURPOSE_PROCESS_IMAGE_VERSION")
+                  getVariableFromConf("PURPOSE_PROCESS_IMAGE_VERSION"),
+                  getVariableFromConf("PURPOSE_PROCESS_RESOURCE_CPU"),
+                  getVariableFromConf("PURPOSE_PROCESS_RESOURCE_MEM")
                 )
               }
             }
@@ -194,7 +218,9 @@ spec:
                 applyKustomizeToDir(
                   'overlays/backend-for-frontend', 
                   getVariableFromConf("BACKEND_FOR_FRONTEND_SERVICE_NAME"),
-                  getVariableFromConf("BACKEND_FOR_FRONTEND_IMAGE_VERSION")
+                  getVariableFromConf("BACKEND_FOR_FRONTEND_IMAGE_VERSION"),
+                  getVariableFromConf("BACKEND_FOR_FRONTEND_RESOURCE_CPU"),
+                  getVariableFromConf("BACKEND_FOR_FRONTEND_RESOURCE_MEM")
                 )
               }
             }
@@ -204,7 +230,9 @@ spec:
                 applyKustomizeToDir(
                   'overlays/api-gateway', 
                   getVariableFromConf("API_GATEWAY_SERVICE_NAME"),
-                  getVariableFromConf("API_GATEWAY_IMAGE_VERSION")
+                  getVariableFromConf("API_GATEWAY_IMAGE_VERSION"),
+                  getVariableFromConf("API_GATEWAY_RESOURCE_CPU"),
+                  getVariableFromConf("API_GATEWAY_RESOURCE_MEM")
                 )
               }
             }
@@ -214,7 +242,9 @@ spec:
                 applyKustomizeToDir(
                   'overlays/authorization-server', 
                   getVariableFromConf("AUTHORIZATION_SERVER_SERVICE_NAME"),
-                  getVariableFromConf("AUTHORIZATION_SERVER_IMAGE_VERSION")
+                  getVariableFromConf("AUTHORIZATION_SERVER_IMAGE_VERSION"),
+                  getVariableFromConf("AUTHORIZATION_SERVER_RESOURCE_CPU"),
+                  getVariableFromConf("AUTHORIZATION_SERVER_RESOURCE_MEM")
                 )
               }
             }
@@ -224,7 +254,9 @@ spec:
                 applyKustomizeToDir(
                   'overlays/notifier', 
                   getVariableFromConf("NOTIFIER_SERVICE_NAME"),
-                  getVariableFromConf("NOTIFIER_IMAGE_VERSION")
+                  getVariableFromConf("NOTIFIER_IMAGE_VERSION"),
+                  getVariableFromConf("NOTIFIER_RESOURCE_CPU"),
+                  getVariableFromConf("NOTIFIER_RESOURCE_MEM")
                 )
               }
             }
@@ -236,11 +268,13 @@ spec:
                     SERVICE_NAME = getVariableFromConf("JOB_ATTRIBUTES_LOADER_SERVICE_NAME")
                     IMAGE_VERSION = getVariableFromConf("JOB_ATTRIBUTES_LOADER_IMAGE_VERSION")
                     IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
+                    RESOURCE_CPU = getVariableFromConf("JOB_ATTRIBUTES_LOADER_RESOURCE_CPU")
+                    RESOURCE_MEM = getVariableFromConf("JOB_ATTRIBUTES_LOADER_RESOURCE_MEM")
                   }
                   steps {
                     applyKubeFile('jobs/attributes-loader/configmap.yaml', SERVICE_NAME)
                     applyKubeFile('jobs/attributes-loader/serviceaccount.yaml', SERVICE_NAME)
-                    applyKubeFile('jobs/attributes-loader/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST)
+                    applyKubeFile('jobs/attributes-loader/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST, RESOURCE_CPU, RESOURCE_MEM)
                   }
                 }
 
@@ -249,11 +283,13 @@ spec:
                     SERVICE_NAME = getVariableFromConf("JOB_DETAILS_PERSISTER_SERVICE_NAME")
                     IMAGE_VERSION = getVariableFromConf("JOB_DETAILS_PERSISTER_IMAGE_VERSION")
                     IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
+                    RESOURCE_CPU = getVariableFromConf("JOB_DETAILS_PERSISTER_RESOURCE_CPU")
+                    RESOURCE_MEM = getVariableFromConf("JOB_DETAILS_PERSISTER_RESOURCE_MEM")
                   }
                   steps {
                     applyKubeFile('jobs/token-details-persister/configmap.yaml', SERVICE_NAME)
                     applyKubeFile('jobs/token-details-persister/serviceaccount.yaml', SERVICE_NAME)
-                    applyKubeFile('jobs/token-details-persister/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST)
+                    applyKubeFile('jobs/token-details-persister/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST, RESOURCE_CPU, RESOURCE_MEM)
                   }
                 }
               }
@@ -280,14 +316,23 @@ spec:
   }
 }
 
-void applyKubeFile(String fileName, String serviceName = null, String imageDigest = null) {
+void applyKubeFile(String fileName, String serviceName = null, String imageDigest = null, String resourceCpu = null, String resourceMem = null) {
   container('kubectl-container') {
     withKubeConfig([credentialsId: 'kube-config']) {
 
       echo "Apply file ${fileName} on Kubernetes"
 
       echo "Compiling file ${fileName}"
-      sh "SERVICE_NAME=${serviceName} IMAGE_DIGEST=${imageDigest} LOWERCASE_ENV=${env.STAGE.toLowerCase()} AWS_ACCOUNT_ID=${env.AWS_ACCOUNT_ID} ./kubernetes/templater.sh ./kubernetes/${fileName} -s -f ${env.CONFIG_FILE} > ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
+      sh """SERVICE_NAME=${serviceName} \
+        IMAGE_DIGEST=${imageDigest} \
+        SERVICE_RESOURCE_CPU=${resourceCpu} \
+        SERVICE_RESOURCE_MEM=${resourceMem} \
+        LOWERCASE_ENV=${env.STAGE.toLowerCase()} \
+        AWS_ACCOUNT_ID=${env.AWS_ACCOUNT_ID} \ 
+        ./kubernetes/templater.sh ./kubernetes/${fileName} \
+        -s \
+        -f ${env.CONFIG_FILE} > ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
+        """
       echo "File ${fileName} compiled"
       
       // DEBUG
@@ -302,7 +347,7 @@ void applyKubeFile(String fileName, String serviceName = null, String imageDiges
 }
 
 // dirPath starting from kubernetes folder (e.g. overlays/party-management)
-void applyKustomizeToDir(String dirPath, String serviceName, String imageVersion) {
+void applyKustomizeToDir(String dirPath, String serviceName, String imageVersion, String resourceCpu, String resourceMem) {
   container('kubectl-container') {
     withKubeConfig([credentialsId: 'kube-config']) {
 
@@ -313,15 +358,15 @@ void applyKustomizeToDir(String dirPath, String serviceName, String imageVersion
       def kubeDirPath = 'kubernetes/' + dirPath
 
       echo "Compiling base files"
-      compileDir("kubernetes/base", serviceName, imageVersion, serviceImageDigest)
+      compileDir("kubernetes/base", serviceName, imageVersion, serviceImageDigest, resourceCpu, resourceMem)
       echo "Base files compiled"
 
       echo "Compiling common files"
-      compileDir("kubernetes/commons/database", serviceName, imageVersion, serviceImageDigest)
+      compileDir("kubernetes/commons/database", serviceName, imageVersion, serviceImageDigest, resourceCpu, resourceMem)
       echo "Common files compiled"
 
       echo "Compiling directory ${dirPath}"
-      compileDir(kubeDirPath, serviceName, imageVersion, serviceImageDigest)
+      compileDir(kubeDirPath, serviceName, imageVersion, serviceImageDigest, resourceCpu, resourceMem)
       echo "Directory ${dirPath} compiled"
       
       echo "Applying Kustomization for ${serviceName}"
@@ -379,14 +424,21 @@ void waitForServiceReady(String serviceName) {
  * Compile each file in the directory replacing placeholders with actual values.
  * Note: kustomization.yaml is skipped because does not have placeholders
  */ 
-void compileDir(String dirPath, String serviceName, String imageVersion, String serviceImageDigest) {
+void compileDir(String dirPath, String serviceName, String imageVersion, String serviceImageDigest, String resourceCpu, String resourceMem) {
   sh '''
   for f in ''' + dirPath + '''/*
   do
       if [ ! $(basename $f) = "kustomization.yaml" ]
         then
           mkdir -p ''' + serviceName + '/' + dirPath + '''
-          SERVICE_NAME=''' + serviceName + ' IMAGE_VERSION=' + imageVersion + ' IMAGE_DIGEST=' + serviceImageDigest + ' LOWERCASE_ENV=' + env.STAGE.toLowerCase() + ' AWS_ACCOUNT_ID=' + env.AWS_ACCOUNT_ID + ' kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ' + serviceName + '''/$f
+          SERVICE_NAME=''' + serviceName + 
+            ' IMAGE_VERSION=' + imageVersion + 
+            ' IMAGE_DIGEST=' + serviceImageDigest + 
+            ' SERVICE_RESOURCE_CPU=' + resourceCpu + 
+            ' SERVICE_RESOURCE_MEM=' + resourceMem + 
+            ' LOWERCASE_ENV=' + env.STAGE.toLowerCase() + 
+            ' AWS_ACCOUNT_ID=' + env.AWS_ACCOUNT_ID + 
+            ' kubernetes/templater.sh $f -s -f ' + env.CONFIG_FILE + ' > ' + serviceName + '''/$f
         else
           cp $f ''' + serviceName + '''/$f
       fi
