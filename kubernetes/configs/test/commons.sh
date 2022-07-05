@@ -12,7 +12,7 @@ REPLICAS=1
 BACKEND_SERVICE_PORT="8088"
 
 AWS_REGION="eu-central-1"
-PERSISTENCE_QUEUE_NAME="${NAMESPACE}-persistence-events.fifo"
+PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
 AWS_SQS_DOMAIN="https://sqs.${AWS_REGION}.amazonaws.com"
 
 ENABLED_PROJECTIONS="true"
