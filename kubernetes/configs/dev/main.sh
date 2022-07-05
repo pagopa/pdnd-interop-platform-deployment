@@ -1,8 +1,8 @@
 #!/bin/bash
 
 . $(pwd)/kubernetes/configs/shared.sh
-. $(pwd)/kubernetes/configs/versions.sh
 
+. $(pwd)/kubernetes/configs/dev/versions.sh
 . $(pwd)/kubernetes/configs/dev/commons.sh
 
 # Calculated
@@ -40,3 +40,4 @@ BACKEND_FOR_FRONTEND_INTERFACE_VERSION=$(shortVersion $BACKEND_FOR_FRONTEND_IMAG
 . $(pwd)/kubernetes/configs/dev/purpose_management.sh
 . $(pwd)/kubernetes/configs/dev/purpose_process.sh
 . $(pwd)/kubernetes/configs/dev/notifier.sh
+. $(pwd)/kubernetes/configs/dev/token_details_persister.sh

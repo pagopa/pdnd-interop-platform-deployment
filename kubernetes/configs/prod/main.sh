@@ -1,8 +1,8 @@
 #!/bin/bash
 
 . $(pwd)/kubernetes/configs/shared.sh
-. $(pwd)/kubernetes/configs/versions.sh
 
+. $(pwd)/kubernetes/configs/prod/versions.sh
 . $(pwd)/kubernetes/configs/prod/commons.sh
 
 
@@ -15,7 +15,6 @@ ATTRIBUTE_REGISTRY_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $ATTRIBUTE_REGIST
 AUTHORIZATION_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $AUTHORIZATION_MANAGEMENT_IMAGE_VERSION)
 CATALOG_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $CATALOG_MANAGEMENT_IMAGE_VERSION)
 PARTY_REGISTRY_PROXY_INTERFACE_VERSION=$(shortVersion $PARTY_REGISTRY_PROXY_IMAGE_VERSION)
-PARTY_MOCK_REGISTRY_INTERFACE_VERSION=$(shortVersion $PARTY_MOCK_REGISTRY_IMAGE_VERSION)
 PURPOSE_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $PURPOSE_MANAGEMENT_IMAGE_VERSION)
 
 API_GATEWAY_INTERFACE_VERSION=$(shortVersion $API_GATEWAY_IMAGE_VERSION)
@@ -41,3 +40,4 @@ BACKEND_FOR_FRONTEND_INTERFACE_VERSION=$(shortVersion $BACKEND_FOR_FRONTEND_IMAG
 . $(pwd)/kubernetes/configs/prod/purpose_management.sh
 . $(pwd)/kubernetes/configs/prod/purpose_process.sh
 . $(pwd)/kubernetes/configs/prod/notifier.sh
+. $(pwd)/kubernetes/configs/prod/token_details_persister.sh

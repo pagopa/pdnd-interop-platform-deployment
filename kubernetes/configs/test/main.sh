@@ -1,8 +1,8 @@
 #!/bin/bash
 
 . $(pwd)/kubernetes/configs/shared.sh
-. $(pwd)/kubernetes/configs/versions.sh
 
+. $(pwd)/kubernetes/configs/test/versions.sh
 . $(pwd)/kubernetes/configs/test/commons.sh
 
 
@@ -41,3 +41,4 @@ BACKEND_FOR_FRONTEND_INTERFACE_VERSION=$(shortVersion $BACKEND_FOR_FRONTEND_IMAG
 . $(pwd)/kubernetes/configs/test/purpose_management.sh
 . $(pwd)/kubernetes/configs/test/purpose_process.sh
 . $(pwd)/kubernetes/configs/test/notifier.sh
+. $(pwd)/kubernetes/configs/test/token_details_persister.sh
