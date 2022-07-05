@@ -86,10 +86,3 @@ spec:
                   key: GENERATED_JWT_QUEUE_NAME
             - name: JWT_QUEUE_URL
               value: "{{AWS_SQS_DOMAIN}}/{{AWS_ACCOUNT_ID}}/$(GENERATED_JWT_QUEUE_NAME)"
-          resources:
-            requests:
-              cpu: "{{AUTHORIZATION_SERVER_CPU_REQUEST}}"
-              memory: "{{AUTHORIZATION_SERVER_MEMORY_REQUEST}}"
-            limits:
-              cpu: "{{AUTHORIZATION_SERVER_CPU_LIMIT}}"
-              memory: "{{AUTHORIZATION_SERVER_MEMORY_LIMIT}}"

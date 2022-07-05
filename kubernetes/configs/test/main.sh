@@ -26,14 +26,21 @@ PURPOSE_PROCESS_INTERFACE_VERSION=$(shortVersion $PURPOSE_PROCESS_IMAGE_VERSION)
 NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 BACKEND_FOR_FRONTEND_INTERFACE_VERSION=$(shortVersion $BACKEND_FOR_FRONTEND_IMAGE_VERSION)
 
+. $(pwd)/kubernetes/configs/test/agreement_management.sh
+. $(pwd)/kubernetes/configs/test/agreement_process.sh
+. $(pwd)/kubernetes/configs/test/api_gateway.sh
 . $(pwd)/kubernetes/configs/test/authorization_management.sh
+. $(pwd)/kubernetes/configs/test/authorization_process.sh
 . $(pwd)/kubernetes/configs/test/authorization_server.sh
+. $(pwd)/kubernetes/configs/test/attribute_registry_management.sh
 . $(pwd)/kubernetes/configs/test/attributes_loader.sh
 . $(pwd)/kubernetes/configs/test/backend_for_frontend.sh
 . $(pwd)/kubernetes/configs/test/catalog_management.sh
 . $(pwd)/kubernetes/configs/test/catalog_process.sh
 . $(pwd)/kubernetes/configs/test/frontend.sh
 . $(pwd)/kubernetes/configs/test/party_registry_proxy.sh
+. $(pwd)/kubernetes/configs/test/party_mock_registry.sh
+. $(pwd)/kubernetes/configs/test/purpose_management.sh
 . $(pwd)/kubernetes/configs/test/purpose_process.sh
 . $(pwd)/kubernetes/configs/test/notifier.sh
-. $(pwd)/kubernetes/configs/dev/token_details_persister.sh
+. $(pwd)/kubernetes/configs/test/token_details_persister.sh

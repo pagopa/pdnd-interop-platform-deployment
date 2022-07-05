@@ -83,8 +83,8 @@ spec:
                       key: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
               resources:
                 requests:
-                  memory: "512Mi"
-                  cpu: "30m"
+                  cpu: "{{SERVICE_RESOURCE_CPU}}"
+                  memory: "{{SERVICE_RESOURCE_MEM}}"
                 limits:
-                  memory: "1Gi"
-                  cpu: "500m"
+                  cpu: "{{SERVICE_RESOURCE_CPU}}"
+                  memory: "{{SERVICE_RESOURCE_MEM}}"

@@ -25,14 +25,20 @@ PURPOSE_PROCESS_INTERFACE_VERSION=$(shortVersion $PURPOSE_PROCESS_IMAGE_VERSION)
 NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 BACKEND_FOR_FRONTEND_INTERFACE_VERSION=$(shortVersion $BACKEND_FOR_FRONTEND_IMAGE_VERSION)
 
+. $(pwd)/kubernetes/configs/prod/agreement_management.sh
+. $(pwd)/kubernetes/configs/prod/agreement_process.sh
+. $(pwd)/kubernetes/configs/prod/api_gateway.sh
 . $(pwd)/kubernetes/configs/prod/authorization_management.sh
+. $(pwd)/kubernetes/configs/prod/authorization_process.sh
 . $(pwd)/kubernetes/configs/prod/authorization_server.sh
+. $(pwd)/kubernetes/configs/prod/attribute_registry_management.sh
 . $(pwd)/kubernetes/configs/prod/attributes_loader.sh
 . $(pwd)/kubernetes/configs/prod/backend_for_frontend.sh
 . $(pwd)/kubernetes/configs/prod/catalog_management.sh
 . $(pwd)/kubernetes/configs/prod/catalog_process.sh
 . $(pwd)/kubernetes/configs/prod/frontend.sh
 . $(pwd)/kubernetes/configs/prod/party_registry_proxy.sh
+. $(pwd)/kubernetes/configs/prod/purpose_management.sh
 . $(pwd)/kubernetes/configs/prod/purpose_process.sh
 . $(pwd)/kubernetes/configs/prod/notifier.sh
 . $(pwd)/kubernetes/configs/prod/token_details_persister.sh
