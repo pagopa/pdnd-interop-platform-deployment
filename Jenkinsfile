@@ -331,8 +331,7 @@ void applyKubeFile(String fileName, String serviceName = null, String imageDiges
         AWS_ACCOUNT_ID=${env.AWS_ACCOUNT_ID} \ 
         ./kubernetes/templater.sh ./kubernetes/${fileName} \
         -s \
-        -f ${env.CONFIG_FILE} > ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
-        """
+        -f ${env.CONFIG_FILE} > ./kubernetes/""" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
       echo "File ${fileName} compiled"
       
       // DEBUG
