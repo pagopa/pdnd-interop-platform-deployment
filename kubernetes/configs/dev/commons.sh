@@ -22,7 +22,7 @@ INTERNAL_JWT_DURATION_SECONDS=3600
 UI_JWT_AUDIENCE="dev.interop.pagopa.it/ui"
 M2M_JWT_AUDIENCE="dev.interop.pagopa.it/m2m"
 INTERNAL_JWT_AUDIENCE="dev.interop.pagopa.it/internal"
-RSA_KEYS_IDENTIFIERS="interop-rsa2048-dev"
+RSA_KEYS_IDENTIFIERS="17c1177f-d7dc-4181-9f54-6fd416bf229b"
 VAULT_SIGNATURE_ROUTE="/v1/transit/sign/"
 
 PARTY_PROCESS_URL="https://api.dev.selfcare.pagopa.it/external/party-process/v1"
