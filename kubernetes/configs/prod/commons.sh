@@ -5,6 +5,9 @@ DOMAIN_NAME="interop.selfcare.pagopa.it"
 REPOSITORY="505630707203.dkr.ecr.eu-central-1.amazonaws.com"
 POSTGRES_HOST="interop-rds-prod-auroradbcluster-n6mrmtikvktv.cluster-clwq8rah1dfz.eu-central-1.rds.amazonaws.com"
 POSTGRES_PORT="5432"
+CQRS_PROJECTION_DB_HOST=""
+CQRS_PROJECTION_DB_PORT="27017"
+CQRS_PROJECTION_DB_NAME="read-model"
 REPLICAS=2
 BACKEND_SERVICE_PORT="8088"
 
