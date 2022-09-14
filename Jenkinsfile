@@ -214,6 +214,29 @@ spec:
               }
             }
 
+            stage('Tenant Management') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/tenant-management', 
+                  getVariableFromConf("TENANT_MANAGEMENT_SERVICE_NAME"), 
+                  getVariableFromConf("TENANT_MANAGEMENT_IMAGE_VERSION"),
+                  getVariableFromConf("TENANT_MANAGEMENT_RESOURCE_CPU"),
+                  getVariableFromConf("TENANT_MANAGEMENT_RESOURCE_MEM")
+                )
+              }
+            }
+            stage('Tenant Process') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/tenant-process', 
+                  getVariableFromConf("TENANT_PROCESS_SERVICE_NAME"), 
+                  getVariableFromConf("TENANT_PROCESS_IMAGE_VERSION"),
+                  getVariableFromConf("TENANT_PROCESS_RESOURCE_CPU"),
+                  getVariableFromConf("TENANT_PROCESS_RESOURCE_MEM")
+                )
+              }
+            }
+
             stage('Backend for Frontend') {
               steps {
                 applyKustomizeToDir(
@@ -293,6 +316,22 @@ spec:
                     applyKubeFile('jobs/token-details-persister/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST, RESOURCE_CPU, RESOURCE_MEM)
                   }
                 }
+
+                stage('Tenants Certified Attributes UPDATER') {
+                  environment {
+                    SERVICE_NAME = getVariableFromConf("JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_SERVICE_NAME")
+                    IMAGE_VERSION = getVariableFromConf("JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_IMAGE_VERSION")
+                    IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
+                    RESOURCE_CPU = getVariableFromConf("JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_RESOURCE_CPU")
+                    RESOURCE_MEM = getVariableFromConf("JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_RESOURCE_MEM")
+                  }
+                  steps {
+                    applyKubeFile('jobs/attributes-loader/configmap.yaml', SERVICE_NAME)
+                    applyKubeFile('jobs/attributes-loader/serviceaccount.yaml', SERVICE_NAME)
+                    applyKubeFile('jobs/attributes-loader/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST, RESOURCE_CPU, RESOURCE_MEM)
+                  }
+                }
+
               }
             }
           }
