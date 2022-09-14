@@ -326,9 +326,9 @@ spec:
                     RESOURCE_MEM = getVariableFromConf("JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_RESOURCE_MEM")
                   }
                   steps {
-                    applyKubeFile('jobs/attributes-loader/configmap.yaml', SERVICE_NAME)
-                    applyKubeFile('jobs/attributes-loader/serviceaccount.yaml', SERVICE_NAME)
-                    applyKubeFile('jobs/attributes-loader/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST, RESOURCE_CPU, RESOURCE_MEM)
+                    applyKubeFile('jobs/tenants-certified-attributes-updater/configmap.yaml', SERVICE_NAME)
+                    applyKubeFile('jobs/tenants-certified-attributes-updater/serviceaccount.yaml', SERVICE_NAME)
+                    applyKubeFile('jobs/tenants-certified-attributes-updater/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST, RESOURCE_CPU, RESOURCE_MEM)
                   }
                 }
 
