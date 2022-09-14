@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+data:
+  POSTGRES_DB: "persistence_management"
+  POSTGRES_SCHEMA: "{{NAMESPACE}}_tenant"
+  CQRS_PROJECTION_COLLECTION_NAME: "tenants"
+  PERSISTENCE_EVENTS_QUEUE_URL: "{{PERSISTENCE_EVENTS_QUEUE_URL}}"
+  ACCEPTED_AUDIENCES: "{{UI_JWT_AUDIENCE}},{{M2M_JWT_AUDIENCE}},{{INTERNAL_JWT_AUDIENCE}}"
