@@ -89,6 +89,11 @@ spec:
                   configMapKeyRef:
                     name: {{SERVICE_NAME}}
                     key: CATALOG_MANAGEMENT_URL
+            - name: TENANT_MANAGEMENT_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: TENANT_MANAGEMENT_URL
             - name: PARTY_PROCESS_URL
               valueFrom:
                   configMapKeyRef:
