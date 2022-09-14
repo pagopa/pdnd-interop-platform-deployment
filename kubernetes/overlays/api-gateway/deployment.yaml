@@ -44,16 +44,6 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PURPOSE_MANAGEMENT_URL
-            - name: TENANT_MANAGEMENT_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: TENANT_MANAGEMENT_URL
-            - name: TENANT_PROCESS_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: TENANT_PROCESS_URL
             - name: NOTIFIER_URL
               valueFrom:
                 configMapKeyRef:
