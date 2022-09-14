@@ -19,4 +19,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: TENANT_MANAGEMENT_URL
-    
+            - name: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
