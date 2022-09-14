@@ -317,7 +317,7 @@ spec:
                   }
                 }
 
-                stage('Tenants Certified Attributes UPDATER') {
+                stage('Tenants Certified Attributes Updater') {
                   environment {
                     SERVICE_NAME = getVariableFromConf("JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_SERVICE_NAME")
                     IMAGE_VERSION = getVariableFromConf("JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_IMAGE_VERSION")
