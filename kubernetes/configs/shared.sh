@@ -28,7 +28,7 @@ FRONTEND_SERVICE_NAME="interop-frontend"
 
 JOB_ATTRIBUTES_LOADER_SERVICE_NAME="interop-be-attributes-loader"
 JOB_DETAILS_PERSISTER_SERVICE_NAME="interop-be-token-details-persister"
-JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_SERVICE_NAME="interop-be-tenants-certified-attributes-updater"
+JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_SERVICE_NAME="interop-be-tenants-cert-attr-updater"
 
 AGREEMENT_MANAGEMENT_APPLICATION_PATH="agreement-management"
 AGREEMENT_PROCESS_APPLICATION_PATH="agreement-process"
