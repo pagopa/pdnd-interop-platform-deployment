@@ -41,32 +41,32 @@ spec:
                     secretKeyRef:
                       name: vault
                       key: VAULT_TOKEN
-            - name: CQRS_PROJECTION_DB_HOST
-              value: "{{CQRS_PROJECTION_DB_HOST}}"
-            - name: CQRS_PROJECTION_DB_PORT
-              value: "{{CQRS_PROJECTION_DB_PORT}}"
-            - name: CQRS_PROJECTION_DB_NAME
-              value: "{{CQRS_PROJECTION_DB_NAME}}"
-            - name: ATTRIBUTES_COLLECTION_NAME
-              valueFrom:
-                  configMapKeyRef:
-                    name: {{SERVICE_NAME}}
-                    key: ATTRIBUTES_COLLECTION_NAME
-            - name: TENANTS_COLLECTION_NAME
-              valueFrom:
-                  configMapKeyRef:
-                    name: {{SERVICE_NAME}}
-                    key: TENANTS_COLLECTION_NAME
-            - name: CQRS_PROJECTION_DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: documentdb
-                  key: DOCUMENTDB_USR
-            - name: CQRS_PROJECTION_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: documentdb
-                  key: DOCUMENTDB_PSW
+                - name: CQRS_PROJECTION_DB_HOST
+                  value: "{{CQRS_PROJECTION_DB_HOST}}"
+                - name: CQRS_PROJECTION_DB_PORT
+                  value: "{{CQRS_PROJECTION_DB_PORT}}"
+                - name: CQRS_PROJECTION_DB_NAME
+                  value: "{{CQRS_PROJECTION_DB_NAME}}"
+                - name: ATTRIBUTES_COLLECTION_NAME
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: ATTRIBUTES_COLLECTION_NAME
+                - name: TENANTS_COLLECTION_NAME
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: TENANTS_COLLECTION_NAME
+                - name: CQRS_PROJECTION_DB_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: documentdb
+                      key: DOCUMENTDB_USR
+                - name: CQRS_PROJECTION_DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: documentdb
+                      key: DOCUMENTDB_PSW
                 - name: JWT_ISSUER
                   valueFrom:
                     configMapKeyRef:
