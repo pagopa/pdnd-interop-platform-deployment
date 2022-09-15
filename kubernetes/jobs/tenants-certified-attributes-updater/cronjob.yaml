@@ -41,6 +41,16 @@ spec:
                     secretKeyRef:
                       name: vault
                       key: VAULT_TOKEN
+                - name: VAULT_ADDR
+                  valueFrom:
+                    secretKeyRef:
+                      name: vault
+                      key: VAULT_ADDR
+                - name: VAULT_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: vault
+                      key: VAULT_TOKEN
                 - name: JWT_ISSUER
                   valueFrom:
                     configMapKeyRef:
