@@ -1,0 +1,121 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  labels:
+    app: {{SERVICE_NAME}}
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  schedule: "0 6 * * *"
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 0
+  jobTemplate:
+    metadata:
+      labels:
+        app: {{SERVICE_NAME}}
+      annotations:
+        digest: {{IMAGE_DIGEST}} # Used to force deployment on same image version but different content
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          serviceAccountName: {{SERVICE_NAME}}
+          containers:
+            - name: {{SERVICE_NAME}}
+              image: {{REPOSITORY}}/{{SERVICE_NAME}}:{{JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_IMAGE_VERSION}}
+              imagePullPolicy: Always
+              command: ["bin/{{SERVICE_NAME}}"]
+              args: ["-Dconfig.override_with_env_vars=true"]
+              env:
+                - name: NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: VAULT_ADDR
+                  valueFrom:
+                    secretKeyRef:
+                      name: vault
+                      key: VAULT_ADDR
+                - name: VAULT_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: vault
+                      key: VAULT_TOKEN
+                - name: CQRS_PROJECTION_DB_HOST
+                  value: "{{CQRS_PROJECTION_DB_HOST}}"
+                - name: CQRS_PROJECTION_DB_PORT
+                  value: "{{CQRS_PROJECTION_DB_PORT}}"
+                - name: CQRS_PROJECTION_DB_NAME
+                  value: "{{CQRS_PROJECTION_DB_NAME}}"
+                - name: ATTRIBUTES_COLLECTION_NAME
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: ATTRIBUTES_COLLECTION_NAME
+                - name: TENANTS_COLLECTION_NAME
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: TENANTS_COLLECTION_NAME
+                - name: CQRS_PROJECTION_DB_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: documentdb
+                      key: DOCUMENTDB_USR
+                - name: CQRS_PROJECTION_DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: documentdb
+                      key: DOCUMENTDB_PSW
+                - name: JWT_ISSUER
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: JWT_ISSUER
+                - name: JWT_SUBJECT
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: JWT_SUBJECT
+                - name: JWT_AUDIENCE
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: JWT_AUDIENCE
+                - name: JWT_DURATION_SECONDS
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: JWT_DURATION_SECONDS
+                - name: EC_KEYS_IDENTIFIERS
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: EC_KEYS_IDENTIFIERS
+                - name: RSA_KEYS_IDENTIFIERS
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: RSA_KEYS_IDENTIFIERS
+                - name: VAULT_SIGNATURE_ROUTE
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: VAULT_SIGNATURE_ROUTE
+                - name: PARTY_REGISTRY_PROXY_URL
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: PARTY_REGISTRY_PROXY_URL
+                - name: TENANT_PROCESS_URL
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: TENANT_PROCESS_URL
+              resources:
+                requests:
+                  cpu: "{{SERVICE_RESOURCE_CPU}}"
+                  memory: "{{SERVICE_RESOURCE_MEM}}"
+                limits:
+                  cpu: "{{SERVICE_RESOURCE_CPU}}"
+                  memory: "{{SERVICE_RESOURCE_MEM}}"
