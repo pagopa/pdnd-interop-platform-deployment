@@ -86,6 +86,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: NOTIFICATION_DYNAMO_TABLE_NAME
+            - name: DYNAMO_INVERTED_INDEX_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: NOTIFICATION_DYNAMO_INVERTED_INDEX_NAME
             - name: QUEUE_READER_THREAD_POOL_SIZE
               valueFrom:
                 configMapKeyRef:
