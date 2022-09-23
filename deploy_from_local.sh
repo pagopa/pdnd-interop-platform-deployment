@@ -121,6 +121,7 @@ function applyKustomizeToDir() {
 
     echo "Compiling common files"
     compileDir "kubernetes/commons/database" $serviceName $imageVersion $serviceImageDigest $resourceCpu $resourceMem
+    compileDir "kubernetes/commons/rate-limiting" $serviceName $imageVersion $serviceImageDigest $resourceCpu $resourceMem
     echo "Common files compiled"
 
     echo "Compiling directory ${dirPath}"
@@ -333,8 +334,8 @@ applyKubeFile 'jobs/tenants-certified-attributes-updater/serviceaccount.yaml' $J
 jobTenantsCertAttrUpdaterImageDigest=$(getDockerImageDigest $JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_SERVICE_NAME $JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_VERSION)
 applyKubeFile 'jobs/tenants-certified-attributes-updater/cronjob.yaml' $JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_SERVICE_NAME $jobTenantsCertAttrUpdaterImageDigest $JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_RESOURCE_CPU $JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_RESOURCE_MEM
 
-applyKubeFile 'thirdparty/redis/configmap.yaml' $REDIS_SERVICE_NAME
 applyKubeFile 'thirdparty/redis/deployment.yaml' $REDIS_SERVICE_NAME "" $REDIS_RESOURCE_CPU $REDIS_RESOURCE_MEM
+applyKubeFile 'thirdparty/redis/service.yaml' $REDIS_SERVICE_NAME
 
 createIngress \
     $AGREEMENT_PROCESS_SERVICE_NAME $AGREEMENT_PROCESS_APPLICATION_PATH $BACKEND_SERVICE_PORT \
