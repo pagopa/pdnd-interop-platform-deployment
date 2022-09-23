@@ -334,6 +334,22 @@ spec:
 
               }
             }
+
+            stage('Redis') {
+              environment {
+                SERVICE_NAME = getVariableFromConf("REDIS_SERVICE_NAME")
+                RESOURCE_CPU = getVariableFromConf("REDIS_RESOURCE_CPU")
+                RESOURCE_MEM = getVariableFromConf("REDIS_RESOURCE_MEM")
+              }
+              steps {
+                applyKubeFile('thirdparty/redis/configmap.yaml', SERVICE_NAME)
+                applyKubeFile('thirdparty/redis/deployment.yaml', SERVICE_NAME, "", RESOURCE_CPU, RESOURCE_MEM)
+                applyKubeFile('thirdparty/redis/service.yaml', SERVICE_NAME)
+
+                waitForServiceReady(SERVICE_NAME)
+              }
+            }
+
           }
         }
         stage('Create Ingress') {

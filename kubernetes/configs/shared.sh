@@ -30,6 +30,8 @@ JOB_ATTRIBUTES_LOADER_SERVICE_NAME="interop-be-attributes-loader"
 JOB_DETAILS_PERSISTER_SERVICE_NAME="interop-be-token-details-persister"
 JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_SERVICE_NAME="interop-be-tenants-cert-attr-updater"
 
+REDIS_SERVICE_NAME="redis"
+
 AGREEMENT_MANAGEMENT_APPLICATION_PATH="agreement-management"
 AGREEMENT_PROCESS_APPLICATION_PATH="agreement-process"
 ATTRIBUTE_REGISTRY_MANAGEMENT_APPLICATION_PATH="attribute-registry-management"

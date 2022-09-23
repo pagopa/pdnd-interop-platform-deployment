@@ -48,3 +48,5 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/prod/tenants-certified-attributes-updater.sh
 . $(pwd)/kubernetes/configs/prod/notifier.sh
 . $(pwd)/kubernetes/configs/prod/token_details_persister.sh
+
+. $(pwd)/kubernetes/configs/prod/redis.sh
