@@ -334,6 +334,21 @@ spec:
 
               }
             }
+
+            stage('Redis') {
+              environment {
+                SERVICE_NAME = getVariableFromConf("REDIS_SERVICE_NAME")
+                RESOURCE_CPU = getVariableFromConf("REDIS_RESOURCE_CPU")
+                RESOURCE_MEM = getVariableFromConf("REDIS_RESOURCE_MEM")
+              }
+              steps {
+                applyKubeFile('thirdparty/redis/deployment.yaml', SERVICE_NAME, "", RESOURCE_CPU, RESOURCE_MEM)
+                applyKubeFile('thirdparty/redis/service.yaml', SERVICE_NAME)
+
+                waitForServiceReady(SERVICE_NAME)
+              }
+            }
+
           }
         }
         stage('Create Ingress') {
@@ -402,6 +417,7 @@ void applyKustomizeToDir(String dirPath, String serviceName, String imageVersion
 
       echo "Compiling common files"
       compileDir("kubernetes/commons/database", serviceName, imageVersion, serviceImageDigest, resourceCpu, resourceMem)
+      compileDir("kubernetes/commons/rate-limiting", serviceName, imageVersion, serviceImageDigest, resourceCpu, resourceMem)
       echo "Common files compiled"
 
       echo "Compiling directory ${dirPath}"

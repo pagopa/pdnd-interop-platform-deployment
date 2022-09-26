@@ -27,6 +27,7 @@ API_GATEWAY_INTERFACE_VERSION=$(shortVersion $API_GATEWAY_IMAGE_VERSION)
 BACKEND_FOR_FRONTEND_INTERFACE_VERSION=$(shortVersion $BACKEND_FOR_FRONTEND_IMAGE_VERSION)
 NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 
+. $(pwd)/kubernetes/configs/prod/redis.sh
 
 . $(pwd)/kubernetes/configs/prod/agreement_management.sh
 . $(pwd)/kubernetes/configs/prod/agreement_process.sh
