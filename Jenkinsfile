@@ -519,7 +519,7 @@ String normalizeNamespaceName(String namespace, String stage) {
     case 'DEV':
       return 'dev'
     case 'TEST':
-      return 'fe-test'
+      return 'test'
     case 'PROD':
       return 'prod'
     default:
