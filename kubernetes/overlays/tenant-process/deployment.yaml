@@ -24,3 +24,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
+            - name: AGREEMENT_PROCESS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: AGREEMENT_PROCESS_URL
