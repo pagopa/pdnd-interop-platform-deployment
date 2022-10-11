@@ -49,3 +49,18 @@ spec:
                 secretKeyRef:
                   name: party-management
                   key: PARTY_MANAGEMENT_API_KEY
+            - name: STORAGE_TYPE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: STORAGE_TYPE
+            - name: STORAGE_CONTAINER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: STORAGE_CONTAINER
+            - name: STORAGE_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: STORAGE_ENDPOINT
