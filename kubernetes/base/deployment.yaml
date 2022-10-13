@@ -69,6 +69,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: WELL_KNOWN_URLS
+            - name: SWAGGER_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SWAGGER_ENABLED
           resources:
             requests:
               cpu: "{{SERVICE_RESOURCE_CPU}}"
