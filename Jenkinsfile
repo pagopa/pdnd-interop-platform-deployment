@@ -30,15 +30,18 @@ spec:
     STAGE = "${env.STAGE}"
     AWS_ACCOUNT_ID = credentials('aws-account-id')
     // TODO Create one set of credentials for each service
-    POSTGRES_CREDENTIALS = credentials('postgres-db')
-    DOCUMENTDB_CREDENTIALS = credentials('documentdb')
+    POSTGRES_CREDENTIALS_USR = credentials('postgres-db-username')
+    POSTGRES_CREDENTIALS_PSW = credentials('postgres-db-password')
+    DOCUMENTDB_CREDENTIALS_USR = credentials('documentdb-username')
+    DOCUMENTDB_CREDENTIALS_PSW = credentials('documentdb-password')
     //
     VAULT_TOKEN = credentials('vault-token')
     VAULT_ADDR = credentials('vault-addr')
     USER_REGISTRY_API_KEY = credentials('user-registry-api-key')
     PARTY_PROCESS_API_KEY = credentials('party-process-api-key')
     PARTY_MANAGEMENT_API_KEY = credentials('party-management-api-key')
-    ECR_CREDENTIALS = credentials('ecr-credentials')
+    ECR_CREDENTIALS_USR = credentials('ecr-credentials-username')
+    ECR_CREDENTIALS_PSW = credentials('ecr-credentials-password')
     NAMESPACE = normalizeNamespaceName(env.GIT_LOCAL_BRANCH, "${env.STAGE}")
     REPOSITORY = getVariableFromConf("REPOSITORY")
     CONFIG_FILE = getConfigFileFromStage(STAGE)
