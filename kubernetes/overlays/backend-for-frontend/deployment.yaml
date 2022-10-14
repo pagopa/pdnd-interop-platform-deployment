@@ -119,3 +119,13 @@ spec:
                 secretKeyRef:
                   name: party-process
                   key: PARTY_PROCESS_API_KEY
+            - name: STORAGE_CONTAINER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: STORAGE_CONTAINER
+            - name: CONSUMER_DOCS_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: CONSUMER_DOCS_PATH
