@@ -7,6 +7,7 @@ pipeline {
 apiVersion: v1
 kind: Pod
 spec:
+  serviceAccountName: jenkins
   containers:
     - name: kubectl-container
       image: lachlanevenson/k8s-kubectl:v1.23.6
@@ -376,72 +377,65 @@ spec:
 
 void applyKubeFile(String fileName, String serviceName = null, String imageDigest = null, String resourceCpu = null, String resourceMem = null) {
   container('kubectl-container') {
-    withKubeConfig([credentialsId: 'kube-config']) {
+    echo "Apply file ${fileName} on Kubernetes"
 
-      echo "Apply file ${fileName} on Kubernetes"
+    echo "Compiling file ${fileName}"
+    sh """SERVICE_NAME=${serviceName} \
+      IMAGE_DIGEST=${imageDigest} \
+      SERVICE_RESOURCE_CPU=${resourceCpu} \
+      SERVICE_RESOURCE_MEM=${resourceMem} \
+      LOWERCASE_ENV=${env.STAGE.toLowerCase()} \
+      AWS_ACCOUNT_ID=${env.AWS_ACCOUNT_ID} \
+      ./kubernetes/templater.sh ./kubernetes/${fileName} \
+      -s \
+      -f ${env.CONFIG_FILE} > ./kubernetes/""" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
+    echo "File ${fileName} compiled"
+    
+    // DEBUG
+    sh "cat ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
 
-      echo "Compiling file ${fileName}"
-      sh """SERVICE_NAME=${serviceName} \
-        IMAGE_DIGEST=${imageDigest} \
-        SERVICE_RESOURCE_CPU=${resourceCpu} \
-        SERVICE_RESOURCE_MEM=${resourceMem} \
-        LOWERCASE_ENV=${env.STAGE.toLowerCase()} \
-        AWS_ACCOUNT_ID=${env.AWS_ACCOUNT_ID} \
-        ./kubernetes/templater.sh ./kubernetes/${fileName} \
-        -s \
-        -f ${env.CONFIG_FILE} > ./kubernetes/""" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
-      echo "File ${fileName} compiled"
-      
-      // DEBUG
-      sh "cat ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
-
-      echo "Applying file ${fileName}"
-      sh "kubectl apply -f ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
-      echo "File ${fileName} applied"
-
-    }
+    echo "Applying file ${fileName}"
+    sh "kubectl apply -f ./kubernetes/" + '$(dirname ' + fileName + ')/compiled.$(basename ' + fileName + ')'
+    echo "File ${fileName} applied"
   }
 }
 
 // dirPath starting from kubernetes folder (e.g. overlays/party-management)
 void applyKustomizeToDir(String dirPath, String serviceName, String imageVersion, String resourceCpu, String resourceMem) {
   container('kubectl-container') {
-    withKubeConfig([credentialsId: 'kube-config']) {
+    echo "Apply directory ${dirPath} on Kubernetes"
 
-      echo "Apply directory ${dirPath} on Kubernetes"
+    def serviceImageDigest = getDockerImageDigest(serviceName, imageVersion)
 
-      def serviceImageDigest = getDockerImageDigest(serviceName, imageVersion)
+    def kubeDirPath = 'kubernetes/' + dirPath
 
-      def kubeDirPath = 'kubernetes/' + dirPath
+    echo "Compiling base files"
+    compileDir("kubernetes/base", serviceName, imageVersion, serviceImageDigest, resourceCpu, resourceMem)
+    echo "Base files compiled"
 
-      echo "Compiling base files"
-      compileDir("kubernetes/base", serviceName, imageVersion, serviceImageDigest, resourceCpu, resourceMem)
-      echo "Base files compiled"
+    echo "Compiling common files"
+    compileDir("kubernetes/commons/database", serviceName, imageVersion, serviceImageDigest, resourceCpu, resourceMem)
+    compileDir("kubernetes/commons/rate-limiting", serviceName, imageVersion, serviceImageDigest, resourceCpu, resourceMem)
+    echo "Common files compiled"
 
-      echo "Compiling common files"
-      compileDir("kubernetes/commons/database", serviceName, imageVersion, serviceImageDigest, resourceCpu, resourceMem)
-      compileDir("kubernetes/commons/rate-limiting", serviceName, imageVersion, serviceImageDigest, resourceCpu, resourceMem)
-      echo "Common files compiled"
+    echo "Compiling directory ${dirPath}"
+    compileDir(kubeDirPath, serviceName, imageVersion, serviceImageDigest, resourceCpu, resourceMem)
+    echo "Directory ${dirPath} compiled"
+    
+    echo "Applying Kustomization for ${serviceName}"
+    sh 'kubectl kustomize --load-restrictor LoadRestrictionsNone ' + serviceName + '/' + kubeDirPath + ' > ' + serviceName + '/full.' + serviceName + '.yaml'
+    echo "Kustomization for ${serviceName} applied"
 
-      echo "Compiling directory ${dirPath}"
-      compileDir(kubeDirPath, serviceName, imageVersion, serviceImageDigest, resourceCpu, resourceMem)
-      echo "Directory ${dirPath} compiled"
-      
-      echo "Applying Kustomization for ${serviceName}"
-      sh 'kubectl kustomize --load-restrictor LoadRestrictionsNone ' + serviceName + '/' + kubeDirPath + ' > ' + serviceName + '/full.' + serviceName + '.yaml'
-      echo "Kustomization for ${serviceName} applied"
+    // DEBUG
+    sh "cat ${serviceName}/full.${serviceName}.yaml"
 
-      // DEBUG
-      sh "cat ${serviceName}/full.${serviceName}.yaml"
+    echo "Applying files for ${serviceName}"
+    sh "kubectl apply -f ${serviceName}/full.${serviceName}.yaml"
+    echo "Files for ${serviceName} applied"
 
-      echo "Applying files for ${serviceName}"
-      sh "kubectl apply -f ${serviceName}/full.${serviceName}.yaml"
-      echo "Files for ${serviceName} applied"
-
-      echo "Removing folder"
-      sh "rm -rf ${serviceName}"
-      echo "Folder removed"
-    }
+    echo "Removing folder"
+    sh "rm -rf ${serviceName}"
+    echo "Folder removed"
   }
 
   waitForServiceReady(serviceName)
@@ -450,31 +444,28 @@ void applyKustomizeToDir(String dirPath, String serviceName, String imageVersion
 
 void waitForServiceReady(String serviceName) {
   container('kubectl-container') {
-    withKubeConfig([credentialsId: 'kube-config']) {
+    echo "Waiting for completion of ${serviceName}..."
+    // TODO Pod waiting
+    // Not ideal, but the wait command fails if the resource has not been created yet
+    // See https://github.com/kubernetes/kubernetes/issues/83242
 
-      echo "Waiting for completion of ${serviceName}..."
-      // TODO Pod waiting
-      // Not ideal, but the wait command fails if the resource has not been created yet
-      // See https://github.com/kubernetes/kubernetes/issues/83242
+    // Wait for pod creation
+    sh'''
+      retry=0
+      result=0
+      maxRetries=10
+      while [ "$result" -lt 1 -a "$retry" -lt "$maxRetries" ] ; do
+        echo "Waiting for pod creation of service ${serviceName}..."
+        sleep 3
+        result=$(kubectl --namespace=\$NAMESPACE get pod -l app=''' + serviceName + ' 2>/dev/null  | grep ' + serviceName + ''' | wc -l)
+        retry=$((retry+1))
+      done
+    '''
 
-      // Wait for pod creation
-      sh'''
-        retry=0
-        result=0
-        maxRetries=10
-        while [ "$result" -lt 1 -a "$retry" -lt "$maxRetries" ] ; do
-          echo "Waiting for pod creation of service ${serviceName}..."
-          sleep 3
-          result=$(kubectl --namespace=\$NAMESPACE get pod -l app=''' + serviceName + ' 2>/dev/null  | grep ' + serviceName + ''' | wc -l)
-          retry=$((retry+1))
-        done
-      '''
+    // Wait for pod readiness
+    sh "kubectl wait --for condition=Ready pod -l app=${serviceName} --namespace=\$NAMESPACE --timeout=120s"
 
-      // Wait for pod readiness
-      sh "kubectl wait --for condition=Ready pod -l app=${serviceName} --namespace=\$NAMESPACE --timeout=120s"
-
-      echo "Apply of ${serviceName} completed"
-    }
+    echo "Apply of ${serviceName} completed"
   }
 }
 
@@ -536,19 +527,17 @@ String normalizeNamespaceName(String namespace, String stage) {
 // Params are triplets of (serviceName, applicationPath, servicePort)
 void createIngress(String... variablesMappings) {
   container('kubectl-container') {
-    withKubeConfig([credentialsId: 'kube-config']) {
-      varSize = variablesMappings.size()
-      assert(varSize % 3 == 0)
-      baseCommand = 'kubectl -n $NAMESPACE create ingress interop-services --class=alb --dry-run=client -o yaml '
-      annotations = '--annotation="alb.ingress.kubernetes.io/scheme=internal" --annotation="alb.ingress.kubernetes.io/target-type=ip" '
+    varSize = variablesMappings.size()
+    assert(varSize % 3 == 0)
+    baseCommand = 'kubectl -n $NAMESPACE create ingress interop-services --class=alb --dry-run=client -o yaml '
+    annotations = '--annotation="alb.ingress.kubernetes.io/scheme=internal" --annotation="alb.ingress.kubernetes.io/target-type=ip" '
 
-      rules = ''
-      for (i = 0; i < varSize; i += 3) {
-          rules = rules + '--rule="/' + variablesMappings[i+1] + '*=' + variablesMappings[i] + ':' + variablesMappings[i+2] + '" '
-      }
-
-      sh(baseCommand + annotations + rules + ' | kubectl apply -f -')
+    rules = ''
+    for (i = 0; i < varSize; i += 3) {
+        rules = rules + '--rule="/' + variablesMappings[i+1] + '*=' + variablesMappings[i] + ':' + variablesMappings[i+2] + '" '
     }
+
+    sh(baseCommand + annotations + rules + ' | kubectl apply -f -')
   }
 }
 
@@ -566,14 +555,12 @@ void loadSecret(String secretName, String... variablesMappings) {
 
 void loadSecrets() {
   container('kubectl-container') {
-    withKubeConfig([credentialsId: 'kube-config']) {
-      loadSecret('user-registry', 'USER_REGISTRY_API_KEY', 'USER_REGISTRY_API_KEY')
-      loadSecret('party-process', 'PARTY_PROCESS_API_KEY', 'PARTY_PROCESS_API_KEY')
-      loadSecret('party-management', 'PARTY_MANAGEMENT_API_KEY', 'PARTY_MANAGEMENT_API_KEY')
-      loadSecret('postgres', 'POSTGRES_USR', 'POSTGRES_CREDENTIALS_USR', 'POSTGRES_PSW', 'POSTGRES_CREDENTIALS_PSW')
-      loadSecret('documentdb', 'DOCUMENTDB_USR', 'DOCUMENTDB_CREDENTIALS_USR', 'DOCUMENTDB_PSW', 'DOCUMENTDB_CREDENTIALS_PSW')
-      loadSecret('vault', 'VAULT_ADDR', 'VAULT_ADDR', 'VAULT_TOKEN', 'VAULT_TOKEN')
-    }
+    loadSecret('user-registry', 'USER_REGISTRY_API_KEY', 'USER_REGISTRY_API_KEY')
+    loadSecret('party-process', 'PARTY_PROCESS_API_KEY', 'PARTY_PROCESS_API_KEY')
+    loadSecret('party-management', 'PARTY_MANAGEMENT_API_KEY', 'PARTY_MANAGEMENT_API_KEY')
+    loadSecret('postgres', 'POSTGRES_USR', 'POSTGRES_CREDENTIALS_USR', 'POSTGRES_PSW', 'POSTGRES_CREDENTIALS_PSW')
+    loadSecret('documentdb', 'DOCUMENTDB_USR', 'DOCUMENTDB_CREDENTIALS_USR', 'DOCUMENTDB_PSW', 'DOCUMENTDB_CREDENTIALS_PSW')
+    loadSecret('vault', 'VAULT_ADDR', 'VAULT_ADDR', 'VAULT_TOKEN', 'VAULT_TOKEN')
   }
 }
 
@@ -585,16 +572,14 @@ String getVariableFromConf(String variableName) {
 
 void prepareDbMigrations() {
   container('kubectl-container') {
-    withKubeConfig([credentialsId: 'kube-config']) {
-      echo 'Creating migrations configmap...'
-      sh'''kubectl \
-         create configmap common-db-migrations \
-         --namespace $NAMESPACE \
-         --from-file=db/migrations/ \
-         --dry-run=client \
-         -o yaml | kubectl apply -f -'''
-      echo 'Migrations configmap created'
-    }
+    echo 'Creating migrations configmap...'
+    sh'''kubectl \
+        create configmap common-db-migrations \
+        --namespace $NAMESPACE \
+        --from-file=db/migrations/ \
+        --dry-run=client \
+        -o yaml | kubectl apply -f -'''
+    echo 'Migrations configmap created'
   }
 }
 
