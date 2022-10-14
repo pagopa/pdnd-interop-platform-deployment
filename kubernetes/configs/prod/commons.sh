@@ -17,6 +17,7 @@ AWS_SQS_DOMAIN="https://sqs.${AWS_REGION}.amazonaws.com"
 
 ENABLED_PROJECTIONS="true"
 WELL_KNOWN_URLS="https://interop.selfcare.pagopa.it/.well-known/jwks.json"
+SWAGGER_ENABLED="false"
 
 INTERNAL_JWT_ISSUER="interop.selfcare.pagopa.it"
 INTERNAL_JWT_SUBJECT="interop-m2m"
