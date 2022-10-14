@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOMAIN_NAME="interop.dev.selfcare.pagopa.it"
+DOMAIN_NAME="selfcare.dev.interop.pagopa.it"
 
 REPOSITORY="505630707203.dkr.ecr.eu-central-1.amazonaws.com"
 POSTGRES_HOST="interop-rds-dev-auroradbcluster-1ws49gkll6459.cluster-c9zr6t2swdpb.eu-central-1.rds.amazonaws.com"
@@ -16,7 +16,7 @@ PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
 AWS_SQS_DOMAIN="https://sqs.${AWS_REGION}.amazonaws.com"
 
 ENABLED_PROJECTIONS="true"
-WELL_KNOWN_URLS="https://interop.dev.selfcare.pagopa.it/.well-known/jwks.json"
+WELL_KNOWN_URLS="https://dev.interop.pagopa.it/.well-known/jwks.json"
 SWAGGER_ENABLED="true"
 
 INTERNAL_JWT_ISSUER="dev.interop.pagopa.it"
