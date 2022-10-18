@@ -29,6 +29,6 @@ INTERNAL_JWT_AUDIENCE="dev.interop.pagopa.it/internal"
 RSA_KEYS_IDENTIFIERS="17c1177f-d7dc-4181-9f54-6fd416bf229b"
 VAULT_SIGNATURE_ROUTE="/v1/transit/sign/"
 
-PARTY_PROCESS_URL="https://api.dev.selfcare.pagopa.it/external/party-process/v1"
-PARTY_MANAGEMENT_URL="https://api.dev.selfcare.pagopa.it/external/party-management/v1"
+PARTY_PROCESS_URL="https://api.uat.selfcare.pagopa.it/external/party-process/v1"
+PARTY_MANAGEMENT_URL="https://api.uat.selfcare.pagopa.it/external/party-management/v1"
 USER_REGISTRY_URL="https://api.uat.pdv.pagopa.it/user-registry/v1"
