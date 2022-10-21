@@ -17,6 +17,9 @@ spec:
         digest: {{IMAGE_DIGEST}} # Used to force deployment on same image version but different content
     spec:
       template:
+        metadata:
+          labels:
+            app: {{SERVICE_NAME}}
         spec:
           restartPolicy: OnFailure
           serviceAccountName: {{SERVICE_NAME}}
