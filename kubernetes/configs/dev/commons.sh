@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOMAIN_NAME="selfcare.dev.interop.pagopa.it"
+DOMAIN_NAME="dev.interop.pagopa.it"
 
 REPOSITORY="505630707203.dkr.ecr.eu-central-1.amazonaws.com"
 POSTGRES_HOST="interop-rds-dev-auroradbcluster-1ws49gkll6459.cluster-c9zr6t2swdpb.eu-central-1.rds.amazonaws.com"
