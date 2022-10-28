@@ -39,3 +39,5 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ENABLED_PROJECTIONS
+            - name: PERSISTENCE_EVENTS_QUEUE_URL
+              value: "{{AWS_SQS_DOMAIN}}/{{AWS_ACCOUNT_ID}}/{{PERSISTENCE_QUEUE_NAME}}"
