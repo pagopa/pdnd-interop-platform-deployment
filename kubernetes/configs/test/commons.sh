@@ -17,7 +17,7 @@ AWS_SQS_DOMAIN="https://sqs.${AWS_REGION}.amazonaws.com"
 
 ENABLED_PROJECTIONS="true"
 WELL_KNOWN_URLS="https://uat.interop.pagopa.it/.well-known/jwks.json"
-SWAGGER_ENABLED="true"
+DEV_ENDPOINTS_ENABLED="true"
 
 UI_JWT_AUDIENCE="uat.interop.pagopa.it/ui"
 M2M_JWT_AUDIENCE="uat.interop.pagopa.it/m2m"
