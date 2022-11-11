@@ -656,7 +656,7 @@ void createReadModelUser(String user, String password, String role) {
         --eval 'use admin; if(db.getUser("''' + urlEncode(user) + '''") == null) { db.createUser({
           user: "''' + urlEncode(user) + '''",
           pwd: "''' + urlEncode(password) + '''",
-          roles: [ {role: "''' + role + '''", db: "$READ_MODEL_DB_NAME"} ]
+          roles: [ {role: "''' + role + '", db: "' + env.READ_MODEL_DB_NAME + '''"} ]
         }})' && set -x
     '''
     echo "User created in read model"
