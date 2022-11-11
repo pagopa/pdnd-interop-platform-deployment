@@ -193,6 +193,7 @@ function createReadModelUser(String user, String password, String role) {
     role=$3
     
     echo "********** MongoDB User Creation **********"
+
     echo "Creating user in read model..."
     encodedAdminUser=$(urlEncode $READ_MODEL_CREDENTIALS_ADMIN_USR)
     encodedAdminPassword=$(urlEncode $READ_MODEL_CREDENTIALS_ADMIN_PSW)
@@ -207,6 +208,8 @@ function createReadModelUser(String user, String password, String role) {
         })}"
 
     echo "User created in read model"
+    echo "*******************************************"
+
 }
 
 function urlEncode() {
