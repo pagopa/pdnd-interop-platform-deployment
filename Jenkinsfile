@@ -90,6 +90,11 @@ spec:
 """
               }
           }
+          environment {
+            READ_MODEL_DB_HOST = getVariableFromConf("READ_MODEL_DB_HOST")
+            READ_MODEL_DB_PORT = getVariableFromConf("READ_MODEL_DB_PORT")
+            READ_MODEL_DB_NAME = getVariableFromConf("READ_MODEL_DB_NAME")
+          }
           steps {
             createReadModelUser(READ_MODEL_CREDENTIALS_RO_USR, READ_MODEL_CREDENTIALS_RO_PSW, "read")
           }
