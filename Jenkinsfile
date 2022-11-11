@@ -663,7 +663,7 @@ String urlEncode(String str) {
   sh(
     returnStdout: true, 
     script: "echo ${str}" + ''' | sed \
-          -e 's/%/%25/g' \
+                    -e 's/%/%25/g' \
           -e 's/ /%20/g' \
           -e 's/!/%21/g' \
           -e 's/"/%22/g' \
@@ -681,12 +681,12 @@ String urlEncode(String str) {
           -e 's/\$/%24/g' \
           -e 's/&/%26/g' \
           -e 's/*/%2a/g' \
-          -e 's/./%2e/g' \
+          -e 's/\./%2e/g' \
           -e 's_/_%2f_g' \
-          -e 's/[/%5b/g' \
+          -e 's/\[/%5b/g' \
           -e 's/\\/%5c/g' \
           -e 's/]/%5d/g' \
-          -e 's/^/%5e/g' \
+          -e 's/\^/%5e/g' \
           -e 's/_/%5f/g' \
           -e 's/`/%60/g' \
           -e 's/{/%7b/g' \
