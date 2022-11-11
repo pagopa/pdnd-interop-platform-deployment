@@ -652,12 +652,12 @@ String getDockerImageDigest(String serviceName, String imageVersion) {
 void createReadModelUser(String user, String password, String role) {
   container('mongodb-migrations') {
     echo "Creating user in read model..."
-    sh'''mongosh 'mongodb://''' + urlEncode(env.READ_MODEL_CREDENTIALS_ADMIN_USR) + ':' + urlEncode(env.READ_MODEL_CREDENTIALS_ADMIN_PSW) + """@$READ_MODEL_DB_HOST:$READ_MODEL_DB_PORT/$READ_MODEL_DB_NAME?replicaSet=rs0&readPreference=secondaryPreferred' \
-        --eval 'use $READ_MODEL_DB_NAME; db.createUser({""" + '''
+    sh'''set +x && mongosh 'mongodb://''' + urlEncode(env.READ_MODEL_CREDENTIALS_ADMIN_USR) + ':' + urlEncode(env.READ_MODEL_CREDENTIALS_ADMIN_PSW) + """@$READ_MODEL_DB_HOST:$READ_MODEL_DB_PORT/$READ_MODEL_DB_NAME?replicaSet=rs0&readPreference=secondaryPreferred' """ + '''\
+        --eval 'use admin; if(db.getUser("''' + urlEncode(user) + '''") == null) { db.createUser({
           user: "''' + urlEncode(user) + '''",
           pwd: "''' + urlEncode(password) + '''",
-          roles: [ "''' + role + '''" ]
-        })'
+          roles: [ {role: "''' + role + '''", db: "$READ_MODEL_DB_NAME"} ]
+        }})' && set -x
     '''
     echo "User created in read model"
   }
