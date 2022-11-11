@@ -10,11 +10,11 @@ spec:
         - name: {{SERVICE_NAME}}
           env:
             - name: READ_MODEL_DB_HOST
-              value: "{{READ_MODEL_DB_HOST}}"
+              value: "{{CQRS_PROJECTION_DB_HOST}}"
             - name: READ_MODEL_DB_PORT
-              value: "{{READ_MODEL_DB_PORT}}"
+              value: "{{CQRS_PROJECTION_DB_PORT}}"
             - name: READ_MODEL_DB_NAME
-              value: "{{READ_MODEL_DB_NAME}}"
+              value: "{{CQRS_PROJECTION_DB_NAME}}"
             - name: READ_MODEL_DB_USER
               valueFrom:
                 secretKeyRef:
