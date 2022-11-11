@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          env:
+            - name: READ_MODEL_DB_HOST
+              value: "{{READ_MODEL_DB_HOST}}"
+            - name: READ_MODEL_DB_PORT
+              value: "{{READ_MODEL_DB_PORT}}"
+            - name: READ_MODEL_DB_NAME
+              value: "{{READ_MODEL_DB_NAME}}"
+            - name: READ_MODEL_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: documentdb
+                  key: DOCUMENTDB_USR
+            - name: READ_MODEL_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: documentdb
+                  key: DOCUMENTDB_PSW
