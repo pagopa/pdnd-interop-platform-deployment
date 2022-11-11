@@ -682,7 +682,7 @@ String urlEncode(String str) {
           -e 's/&/%26/g' \
           -e 's/*/%2a/g' \
           -e 's/./%2e/g' \
-          -e 's/\//%2f/g' \
+          -e 's_/_%2f_g' \
           -e 's/[/%5b/g' \
           -e 's/\\/%5c/g' \
           -e 's/]/%5d/g' \
