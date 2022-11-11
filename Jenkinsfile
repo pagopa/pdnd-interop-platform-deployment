@@ -97,6 +97,7 @@ spec:
           }
           steps {
             createReadModelUser(READ_MODEL_CREDENTIALS_RO_USR, READ_MODEL_CREDENTIALS_RO_PSW, "read")
+            // createReadModelUser(READ_MODEL_CREDENTIALS_PROJECTION_USR, READ_MODEL_CREDENTIALS_PROJECTION_PSW, "readWrite")
           }
         }
 
@@ -652,13 +653,18 @@ String getDockerImageDigest(String serviceName, String imageVersion) {
 void createReadModelUser(String user, String password, String role) {
   container('mongodb-migrations') {
     echo "Creating user in read model..."
-    sh'''set +x && mongosh 'mongodb://''' + urlEncode(env.READ_MODEL_CREDENTIALS_ADMIN_USR) + ':' + urlEncode(env.READ_MODEL_CREDENTIALS_ADMIN_PSW) + """@$READ_MODEL_DB_HOST:$READ_MODEL_DB_PORT/$READ_MODEL_DB_NAME?replicaSet=rs0&readPreference=secondaryPreferred' """ + '''\
-        --eval 'use admin; if(db.getUser("''' + urlEncode(user) + '''") == null) { db.createUser({
-          user: "''' + urlEncode(user) + '''",
-          pwd: "''' + urlEncode(password) + '''",
-          roles: [ {role: "''' + role + '", db: "' + env.READ_MODEL_DB_NAME + '''"} ]
-        }})' && set -x
-    '''
+    def encodedAdminUser = urlEncode(env.READ_MODEL_CREDENTIALS_ADMIN_USR)
+    def encodedAdminPassword = urlEncode(env.READ_MODEL_CREDENTIALS_ADMIN_PSW)
+    def encodedNewUser = urlEncode(user)
+    def encodedNewPassword = urlEncode(password)
+
+    sh"""set +x && mongosh 'mongodb://${encodedAdminUser}:${encodedAdminPassword}@$READ_MODEL_DB_HOST:$READ_MODEL_DB_PORT/$READ_MODEL_DB_NAME?replicaSet=rs0&readPreference=secondaryPreferred' \
+        --eval 'use admin; if(db.getUser("${encodedNewUser}") == null) { db.createUser({
+          user: "${encodedNewUser}",
+          pwd: "${encodedNewPassword}",
+          roles: [ {role: "${role}", db: "$READ_MODEL_DB_NAME"} ]
+        })}' && set -x
+    """
     echo "User created in read model"
   }
 }
