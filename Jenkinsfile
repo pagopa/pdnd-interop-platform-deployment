@@ -697,6 +697,6 @@ String urlEncode(String str) {
         -e 's/|/%7c/g' \
         -e 's/}/%7d/g' \
         -e 's/~/%7e/g'
-  """
+  '''
   ).trim()
 }
