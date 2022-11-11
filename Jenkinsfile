@@ -663,7 +663,7 @@ void createReadModelUser(String user, String password, String role) {
           user: "${encodedNewUser}",
           pwd: "${encodedNewPassword}",
           roles: [ {role: "${role}", db: "$READ_MODEL_DB_NAME"} ]
-        })}' && set -x
+        })}'; set -x
     """
     echo "User created in read model"
   }
