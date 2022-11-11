@@ -646,16 +646,15 @@ String getDockerImageDigest(String serviceName, String imageVersion) {
 
 void createReadModelUser(String user, String password, String role) {
   container('mongodb-migrations') {
-    echo "Creating user ${user} in read model..."
-    sh'''
-      mongosh 'mongodb://$READ_MODEL_CREDENTIALS_ADMIN_USR:$READ_MODEL_CREDENTIALS_ADMIN_PSW@$READ_MODEL_HOST:$READ_MODEL_PORT/$READ_MODEL_DB_NAME?replicaSet=rs0&readPreference=secondaryPreferred' \
+    echo "Creating user in read model..."
+    sh"""mongosh 'mongodb://$READ_MODEL_CREDENTIALS_ADMIN_USR:$READ_MODEL_CREDENTIALS_ADMIN_PSW@$READ_MODEL_HOST:$READ_MODEL_PORT/$READ_MODEL_DB_NAME?replicaSet=rs0&readPreference=secondaryPreferred' """ + '''\
         --eval 'use $READ_MODEL_DB_NAME; db.createUser({
           user: "''' + urlEncode(user) + '''",
           pwd: "''' + urlEncode(password) + '''",
           roles: [ "''' + role + '''" ]
         })'
     '''
-    echo "User ${user} created in read model"
+    echo "User created in read model"
   }
 }
 
