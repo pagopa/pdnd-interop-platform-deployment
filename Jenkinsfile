@@ -680,7 +680,7 @@ String urlEncode(String str) {
           -e 's/@/%40/g' \
           -e 's/\$/%24/g' \
           -e 's/&/%26/g' \
-          -e 's/\*/%2a/g' \
+          -e 's/*/%2a/g' \
           -e 's/\./%2e/g' \
           -e 's/\//%2f/g' \
           -e 's/\[/%5b/g' \
