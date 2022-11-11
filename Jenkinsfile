@@ -658,8 +658,8 @@ void createReadModelUser(String user, String password, String role) {
     def encodedNewUser = urlEncode(user)
     def encodedNewPassword = urlEncode(password)
 
-    sh"""mongosh 'mongodb://${encodedAdminUser}:${encodedAdminPassword}@$READ_MODEL_DB_HOST:$READ_MODEL_DB_PORT/$READ_MODEL_DB_NAME?replicaSet=rs0&readPreference=secondaryPreferred' \
-        --eval 'use admin; if(db.getUser("${encodedNewUser}") == null) { db.createUser({
+    sh"""mongosh 'mongodb://${encodedAdminUser}:${encodedAdminPassword}@$READ_MODEL_DB_HOST:$READ_MODEL_DB_PORT/admin?replicaSet=rs0&readPreference=secondaryPreferred' \
+        --eval 'if(db.getUser("${encodedNewUser}") == null) { db.createUser({
           user: "${encodedNewUser}",
           pwd: "${encodedNewPassword}",
           roles: [ {role: "${role}", db: "$READ_MODEL_DB_NAME"} ]
