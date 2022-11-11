@@ -35,8 +35,8 @@ spec:
     POSTGRES_CREDENTIALS_PSW = credentials('postgres-db-password')
     READ_MODEL_CREDENTIALS_ADMIN_USR = credentials('documentdb-admin-username')
     READ_MODEL_CREDENTIALS_ADMIN_PSW = credentials('documentdb-admin-password')
-    // READ_MODEL_CREDENTIALS_PROJECTION_USR = credentials('documentdb-projection-username')
-    // READ_MODEL_CREDENTIALS_PROJECTION_PSW = credentials('documentdb-projection-password')
+    READ_MODEL_CREDENTIALS_PROJECTION_USR = credentials('documentdb-projection-username')
+    READ_MODEL_CREDENTIALS_PROJECTION_PSW = credentials('documentdb-projection-password')
     READ_MODEL_CREDENTIALS_RO_USR = credentials('documentdb-ro-username')
     READ_MODEL_CREDENTIALS_RO_PSW = credentials('documentdb-ro-password')
     //
@@ -97,320 +97,320 @@ spec:
           }
           steps {
             createReadModelUser(READ_MODEL_CREDENTIALS_RO_USR, READ_MODEL_CREDENTIALS_RO_PSW, "read")
-            // createReadModelUser(READ_MODEL_CREDENTIALS_PROJECTION_USR, READ_MODEL_CREDENTIALS_PROJECTION_PSW, "readWrite")
+            createReadModelUser(READ_MODEL_CREDENTIALS_PROJECTION_USR, READ_MODEL_CREDENTIALS_PROJECTION_PSW, "readWrite")
           }
         }
 
-        // stage('Create Namespace') {
-        //   steps {
-        //       applyKubeFile('namespace.yaml')
-        //   }
-        // }
-        // stage('Load Secrets') {
-        //   steps {
-        //       loadSecrets()
-        //   }
-        // }
-        // stage('Load ConfigMaps') {
-        //   steps {
-        //       prepareDbMigrations()
-        //   }
-        // }
-        // stage('Deploy Services') {
-        //   parallel {
-        //     stage('Front End') {
-        //       environment {
-        //         SERVICE_NAME = getVariableFromConf("FRONTEND_SERVICE_NAME")
-        //         IMAGE_VERSION = getVariableFromConf("FRONTEND_IMAGE_VERSION")
-        //         IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
-        //         RESOURCE_CPU = getVariableFromConf("FRONTEND_RESOURCE_CPU")
-        //         RESOURCE_MEM = getVariableFromConf("FRONTEND_RESOURCE_MEM")
-        //       }
-        //       steps {
-        //         applyKubeFile('frontend/configmap.yaml', SERVICE_NAME)
-        //         applyKubeFile('frontend/deployment.yaml', SERVICE_NAME, IMAGE_DIGEST, RESOURCE_CPU, RESOURCE_MEM)
-        //         applyKubeFile('frontend/service.yaml', SERVICE_NAME)
-        //       }
-        //     }
-        //     stage('Agreement Management') {
-        //       steps {
-        //         applyKustomizeToDir(
-        //           'overlays/agreement-management', 
-        //           getVariableFromConf("AGREEMENT_MANAGEMENT_SERVICE_NAME"), 
-        //           getVariableFromConf("AGREEMENT_MANAGEMENT_IMAGE_VERSION"),
-        //           getVariableFromConf("AGREEMENT_MANAGEMENT_RESOURCE_CPU"),
-        //           getVariableFromConf("AGREEMENT_MANAGEMENT_RESOURCE_MEM")
-        //         )
-        //       }
-        //     }
-        //     stage('Agreement Process') {
-        //       steps {
-        //         applyKustomizeToDir(
-        //           'overlays/agreement-process', 
-        //           getVariableFromConf("AGREEMENT_PROCESS_SERVICE_NAME"),
-        //           getVariableFromConf("AGREEMENT_PROCESS_IMAGE_VERSION"),
-        //           getVariableFromConf("AGREEMENT_PROCESS_RESOURCE_CPU"),
-        //           getVariableFromConf("AGREEMENT_PROCESS_RESOURCE_MEM")
-        //         )
-        //       }
-        //     }
-        //     stage('Attribute Registry Management') {
-        //       steps {
-        //         applyKustomizeToDir(
-        //           'overlays/attribute-registry-management', 
-        //           getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME"), 
-        //           getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION"),
-        //           getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_RESOURCE_CPU"),
-        //           getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_RESOURCE_MEM")
-        //         )
-        //       }
-        //     }
-        //     stage('Authorization Management') {
-        //       steps {
-        //         applyKustomizeToDir(
-        //           'overlays/authorization-management', 
-        //           getVariableFromConf("AUTHORIZATION_MANAGEMENT_SERVICE_NAME"),
-        //           getVariableFromConf("AUTHORIZATION_MANAGEMENT_IMAGE_VERSION"),
-        //           getVariableFromConf("AUTHORIZATION_MANAGEMENT_RESOURCE_CPU"),
-        //           getVariableFromConf("AUTHORIZATION_MANAGEMENT_RESOURCE_MEM")
-        //         )
-        //       }
-        //     }
-        //     stage('Authorization Process') {
-        //       steps {
-        //         applyKustomizeToDir(
-        //           'overlays/authorization-process', 
-        //           getVariableFromConf("AUTHORIZATION_PROCESS_SERVICE_NAME"),
-        //           getVariableFromConf("AUTHORIZATION_PROCESS_IMAGE_VERSION"),
-        //           getVariableFromConf("AUTHORIZATION_PROCESS_RESOURCE_CPU"),
-        //           getVariableFromConf("AUTHORIZATION_PROCESS_RESOURCE_MEM")
-        //         )
-        //       }
-        //     }
-        //     stage('Catalog Management') {
-        //       steps {
-        //         applyKustomizeToDir(
-        //           'overlays/catalog-management', 
-        //           getVariableFromConf("CATALOG_MANAGEMENT_SERVICE_NAME"),
-        //           getVariableFromConf("CATALOG_MANAGEMENT_IMAGE_VERSION"),
-        //           getVariableFromConf("CATALOG_MANAGEMENT_RESOURCE_CPU"),
-        //           getVariableFromConf("CATALOG_MANAGEMENT_RESOURCE_MEM")
-        //         )
-        //       }
-        //     }
-        //     stage('Catalog Process') {
-        //       steps {
-        //         applyKustomizeToDir(
-        //           'overlays/catalog-process', 
-        //           getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"),
-        //           getVariableFromConf("CATALOG_PROCESS_IMAGE_VERSION"),
-        //           getVariableFromConf("CATALOG_PROCESS_RESOURCE_CPU"),
-        //           getVariableFromConf("CATALOG_PROCESS_RESOURCE_MEM")
-        //         )
-        //       }
-        //     }
-        //     stage('Party Mock Registry') {
-        //       when { 
-        //         anyOf {
-        //           environment name: 'STAGE', value: 'DEV'
-        //           environment name: 'STAGE', value: 'TEST' 
-        //         }
-        //       }
-        //       steps {
-        //         applyKustomizeToDir(
-        //           'overlays/party-mock-registry', 
-        //           getVariableFromConf("PARTY_MOCK_REGISTRY_SERVICE_NAME"), 
-        //           getVariableFromConf("PARTY_MOCK_REGISTRY_IMAGE_VERSION"),
-        //           getVariableFromConf("PARTY_MOCK_REGISTRY_RESOURCE_CPU"),
-        //           getVariableFromConf("PARTY_MOCK_REGISTRY_RESOURCE_MEM")
-        //         )
-        //       }
-        //     }
-        //     stage('Party Registry Proxy') {
-        //       steps {
-        //         applyKustomizeToDir(
-        //           'overlays/party-registry-proxy', 
-        //           getVariableFromConf("PARTY_REGISTRY_PROXY_SERVICE_NAME"), 
-        //           getVariableFromConf("PARTY_REGISTRY_PROXY_IMAGE_VERSION"),
-        //           getVariableFromConf("PARTY_REGISTRY_PROXY_RESOURCE_CPU"),
-        //           getVariableFromConf("PARTY_REGISTRY_PROXY_RESOURCE_MEM")
-        //         )
-        //       }
-        //     }
-        //     stage('Purpose Management') {
-        //       steps {
-        //         applyKustomizeToDir(
-        //           'overlays/purpose-management', 
-        //           getVariableFromConf("PURPOSE_MANAGEMENT_SERVICE_NAME"), 
-        //           getVariableFromConf("PURPOSE_MANAGEMENT_IMAGE_VERSION"),
-        //           getVariableFromConf("PURPOSE_MANAGEMENT_RESOURCE_CPU"),
-        //           getVariableFromConf("PURPOSE_MANAGEMENT_RESOURCE_MEM")
-        //         )
-        //       }
-        //     }
-        //     stage('Purpose Process') {
-        //       steps {
-        //         applyKustomizeToDir(
-        //           'overlays/purpose-process', 
-        //           getVariableFromConf("PURPOSE_PROCESS_SERVICE_NAME"), 
-        //           getVariableFromConf("PURPOSE_PROCESS_IMAGE_VERSION"),
-        //           getVariableFromConf("PURPOSE_PROCESS_RESOURCE_CPU"),
-        //           getVariableFromConf("PURPOSE_PROCESS_RESOURCE_MEM")
-        //         )
-        //       }
-        //     }
+        stage('Create Namespace') {
+          steps {
+              applyKubeFile('namespace.yaml')
+          }
+        }
+        stage('Load Secrets') {
+          steps {
+              loadSecrets()
+          }
+        }
+        stage('Load ConfigMaps') {
+          steps {
+              prepareDbMigrations()
+          }
+        }
+        stage('Deploy Services') {
+          parallel {
+            stage('Front End') {
+              environment {
+                SERVICE_NAME = getVariableFromConf("FRONTEND_SERVICE_NAME")
+                IMAGE_VERSION = getVariableFromConf("FRONTEND_IMAGE_VERSION")
+                IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
+                RESOURCE_CPU = getVariableFromConf("FRONTEND_RESOURCE_CPU")
+                RESOURCE_MEM = getVariableFromConf("FRONTEND_RESOURCE_MEM")
+              }
+              steps {
+                applyKubeFile('frontend/configmap.yaml', SERVICE_NAME)
+                applyKubeFile('frontend/deployment.yaml', SERVICE_NAME, IMAGE_DIGEST, RESOURCE_CPU, RESOURCE_MEM)
+                applyKubeFile('frontend/service.yaml', SERVICE_NAME)
+              }
+            }
+            stage('Agreement Management') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/agreement-management', 
+                  getVariableFromConf("AGREEMENT_MANAGEMENT_SERVICE_NAME"), 
+                  getVariableFromConf("AGREEMENT_MANAGEMENT_IMAGE_VERSION"),
+                  getVariableFromConf("AGREEMENT_MANAGEMENT_RESOURCE_CPU"),
+                  getVariableFromConf("AGREEMENT_MANAGEMENT_RESOURCE_MEM")
+                )
+              }
+            }
+            stage('Agreement Process') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/agreement-process', 
+                  getVariableFromConf("AGREEMENT_PROCESS_SERVICE_NAME"),
+                  getVariableFromConf("AGREEMENT_PROCESS_IMAGE_VERSION"),
+                  getVariableFromConf("AGREEMENT_PROCESS_RESOURCE_CPU"),
+                  getVariableFromConf("AGREEMENT_PROCESS_RESOURCE_MEM")
+                )
+              }
+            }
+            stage('Attribute Registry Management') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/attribute-registry-management', 
+                  getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME"), 
+                  getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION"),
+                  getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_RESOURCE_CPU"),
+                  getVariableFromConf("ATTRIBUTE_REGISTRY_MANAGEMENT_RESOURCE_MEM")
+                )
+              }
+            }
+            stage('Authorization Management') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/authorization-management', 
+                  getVariableFromConf("AUTHORIZATION_MANAGEMENT_SERVICE_NAME"),
+                  getVariableFromConf("AUTHORIZATION_MANAGEMENT_IMAGE_VERSION"),
+                  getVariableFromConf("AUTHORIZATION_MANAGEMENT_RESOURCE_CPU"),
+                  getVariableFromConf("AUTHORIZATION_MANAGEMENT_RESOURCE_MEM")
+                )
+              }
+            }
+            stage('Authorization Process') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/authorization-process', 
+                  getVariableFromConf("AUTHORIZATION_PROCESS_SERVICE_NAME"),
+                  getVariableFromConf("AUTHORIZATION_PROCESS_IMAGE_VERSION"),
+                  getVariableFromConf("AUTHORIZATION_PROCESS_RESOURCE_CPU"),
+                  getVariableFromConf("AUTHORIZATION_PROCESS_RESOURCE_MEM")
+                )
+              }
+            }
+            stage('Catalog Management') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/catalog-management', 
+                  getVariableFromConf("CATALOG_MANAGEMENT_SERVICE_NAME"),
+                  getVariableFromConf("CATALOG_MANAGEMENT_IMAGE_VERSION"),
+                  getVariableFromConf("CATALOG_MANAGEMENT_RESOURCE_CPU"),
+                  getVariableFromConf("CATALOG_MANAGEMENT_RESOURCE_MEM")
+                )
+              }
+            }
+            stage('Catalog Process') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/catalog-process', 
+                  getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"),
+                  getVariableFromConf("CATALOG_PROCESS_IMAGE_VERSION"),
+                  getVariableFromConf("CATALOG_PROCESS_RESOURCE_CPU"),
+                  getVariableFromConf("CATALOG_PROCESS_RESOURCE_MEM")
+                )
+              }
+            }
+            stage('Party Mock Registry') {
+              when { 
+                anyOf {
+                  environment name: 'STAGE', value: 'DEV'
+                  environment name: 'STAGE', value: 'TEST' 
+                }
+              }
+              steps {
+                applyKustomizeToDir(
+                  'overlays/party-mock-registry', 
+                  getVariableFromConf("PARTY_MOCK_REGISTRY_SERVICE_NAME"), 
+                  getVariableFromConf("PARTY_MOCK_REGISTRY_IMAGE_VERSION"),
+                  getVariableFromConf("PARTY_MOCK_REGISTRY_RESOURCE_CPU"),
+                  getVariableFromConf("PARTY_MOCK_REGISTRY_RESOURCE_MEM")
+                )
+              }
+            }
+            stage('Party Registry Proxy') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/party-registry-proxy', 
+                  getVariableFromConf("PARTY_REGISTRY_PROXY_SERVICE_NAME"), 
+                  getVariableFromConf("PARTY_REGISTRY_PROXY_IMAGE_VERSION"),
+                  getVariableFromConf("PARTY_REGISTRY_PROXY_RESOURCE_CPU"),
+                  getVariableFromConf("PARTY_REGISTRY_PROXY_RESOURCE_MEM")
+                )
+              }
+            }
+            stage('Purpose Management') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/purpose-management', 
+                  getVariableFromConf("PURPOSE_MANAGEMENT_SERVICE_NAME"), 
+                  getVariableFromConf("PURPOSE_MANAGEMENT_IMAGE_VERSION"),
+                  getVariableFromConf("PURPOSE_MANAGEMENT_RESOURCE_CPU"),
+                  getVariableFromConf("PURPOSE_MANAGEMENT_RESOURCE_MEM")
+                )
+              }
+            }
+            stage('Purpose Process') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/purpose-process', 
+                  getVariableFromConf("PURPOSE_PROCESS_SERVICE_NAME"), 
+                  getVariableFromConf("PURPOSE_PROCESS_IMAGE_VERSION"),
+                  getVariableFromConf("PURPOSE_PROCESS_RESOURCE_CPU"),
+                  getVariableFromConf("PURPOSE_PROCESS_RESOURCE_MEM")
+                )
+              }
+            }
 
-        //     stage('Tenant Management') {
-        //       steps {
-        //         applyKustomizeToDir(
-        //           'overlays/tenant-management', 
-        //           getVariableFromConf("TENANT_MANAGEMENT_SERVICE_NAME"), 
-        //           getVariableFromConf("TENANT_MANAGEMENT_IMAGE_VERSION"),
-        //           getVariableFromConf("TENANT_MANAGEMENT_RESOURCE_CPU"),
-        //           getVariableFromConf("TENANT_MANAGEMENT_RESOURCE_MEM")
-        //         )
-        //       }
-        //     }
-        //     stage('Tenant Process') {
-        //       steps {
-        //         applyKustomizeToDir(
-        //           'overlays/tenant-process', 
-        //           getVariableFromConf("TENANT_PROCESS_SERVICE_NAME"), 
-        //           getVariableFromConf("TENANT_PROCESS_IMAGE_VERSION"),
-        //           getVariableFromConf("TENANT_PROCESS_RESOURCE_CPU"),
-        //           getVariableFromConf("TENANT_PROCESS_RESOURCE_MEM")
-        //         )
-        //       }
-        //     }
+            stage('Tenant Management') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/tenant-management', 
+                  getVariableFromConf("TENANT_MANAGEMENT_SERVICE_NAME"), 
+                  getVariableFromConf("TENANT_MANAGEMENT_IMAGE_VERSION"),
+                  getVariableFromConf("TENANT_MANAGEMENT_RESOURCE_CPU"),
+                  getVariableFromConf("TENANT_MANAGEMENT_RESOURCE_MEM")
+                )
+              }
+            }
+            stage('Tenant Process') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/tenant-process', 
+                  getVariableFromConf("TENANT_PROCESS_SERVICE_NAME"), 
+                  getVariableFromConf("TENANT_PROCESS_IMAGE_VERSION"),
+                  getVariableFromConf("TENANT_PROCESS_RESOURCE_CPU"),
+                  getVariableFromConf("TENANT_PROCESS_RESOURCE_MEM")
+                )
+              }
+            }
 
-        //     stage('Backend for Frontend') {
-        //       steps {
-        //         applyKustomizeToDir(
-        //           'overlays/backend-for-frontend', 
-        //           getVariableFromConf("BACKEND_FOR_FRONTEND_SERVICE_NAME"),
-        //           getVariableFromConf("BACKEND_FOR_FRONTEND_IMAGE_VERSION"),
-        //           getVariableFromConf("BACKEND_FOR_FRONTEND_RESOURCE_CPU"),
-        //           getVariableFromConf("BACKEND_FOR_FRONTEND_RESOURCE_MEM")
-        //         )
-        //       }
-        //     }
+            stage('Backend for Frontend') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/backend-for-frontend', 
+                  getVariableFromConf("BACKEND_FOR_FRONTEND_SERVICE_NAME"),
+                  getVariableFromConf("BACKEND_FOR_FRONTEND_IMAGE_VERSION"),
+                  getVariableFromConf("BACKEND_FOR_FRONTEND_RESOURCE_CPU"),
+                  getVariableFromConf("BACKEND_FOR_FRONTEND_RESOURCE_MEM")
+                )
+              }
+            }
 
-        //     stage('API Gateway') {
-        //       steps {
-        //         applyKustomizeToDir(
-        //           'overlays/api-gateway', 
-        //           getVariableFromConf("API_GATEWAY_SERVICE_NAME"),
-        //           getVariableFromConf("API_GATEWAY_IMAGE_VERSION"),
-        //           getVariableFromConf("API_GATEWAY_RESOURCE_CPU"),
-        //           getVariableFromConf("API_GATEWAY_RESOURCE_MEM")
-        //         )
-        //       }
-        //     }
+            stage('API Gateway') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/api-gateway', 
+                  getVariableFromConf("API_GATEWAY_SERVICE_NAME"),
+                  getVariableFromConf("API_GATEWAY_IMAGE_VERSION"),
+                  getVariableFromConf("API_GATEWAY_RESOURCE_CPU"),
+                  getVariableFromConf("API_GATEWAY_RESOURCE_MEM")
+                )
+              }
+            }
 
-        //     stage('Authorization Server') {
-        //       steps {
-        //         applyKustomizeToDir(
-        //           'overlays/authorization-server', 
-        //           getVariableFromConf("AUTHORIZATION_SERVER_SERVICE_NAME"),
-        //           getVariableFromConf("AUTHORIZATION_SERVER_IMAGE_VERSION"),
-        //           getVariableFromConf("AUTHORIZATION_SERVER_RESOURCE_CPU"),
-        //           getVariableFromConf("AUTHORIZATION_SERVER_RESOURCE_MEM")
-        //         )
-        //       }
-        //     }
+            stage('Authorization Server') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/authorization-server', 
+                  getVariableFromConf("AUTHORIZATION_SERVER_SERVICE_NAME"),
+                  getVariableFromConf("AUTHORIZATION_SERVER_IMAGE_VERSION"),
+                  getVariableFromConf("AUTHORIZATION_SERVER_RESOURCE_CPU"),
+                  getVariableFromConf("AUTHORIZATION_SERVER_RESOURCE_MEM")
+                )
+              }
+            }
 
-        //     stage('Notifier') {
-        //       steps {
-        //         applyKustomizeToDir(
-        //           'overlays/notifier', 
-        //           getVariableFromConf("NOTIFIER_SERVICE_NAME"),
-        //           getVariableFromConf("NOTIFIER_IMAGE_VERSION"),
-        //           getVariableFromConf("NOTIFIER_RESOURCE_CPU"),
-        //           getVariableFromConf("NOTIFIER_RESOURCE_MEM")
-        //         )
-        //       }
-        //     }
+            stage('Notifier') {
+              steps {
+                applyKustomizeToDir(
+                  'overlays/notifier', 
+                  getVariableFromConf("NOTIFIER_SERVICE_NAME"),
+                  getVariableFromConf("NOTIFIER_IMAGE_VERSION"),
+                  getVariableFromConf("NOTIFIER_RESOURCE_CPU"),
+                  getVariableFromConf("NOTIFIER_RESOURCE_MEM")
+                )
+              }
+            }
 
-        //     stage('Jobs') {
-        //       stages {
-        //         stage('Attributes Loader') {
-        //           environment {
-        //             SERVICE_NAME = getVariableFromConf("JOB_ATTRIBUTES_LOADER_SERVICE_NAME")
-        //             IMAGE_VERSION = getVariableFromConf("JOB_ATTRIBUTES_LOADER_IMAGE_VERSION")
-        //             IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
-        //             RESOURCE_CPU = getVariableFromConf("JOB_ATTRIBUTES_LOADER_RESOURCE_CPU")
-        //             RESOURCE_MEM = getVariableFromConf("JOB_ATTRIBUTES_LOADER_RESOURCE_MEM")
-        //           }
-        //           steps {
-        //             applyKubeFile('jobs/attributes-loader/configmap.yaml', SERVICE_NAME)
-        //             applyKubeFile('jobs/attributes-loader/serviceaccount.yaml', SERVICE_NAME)
-        //             applyKubeFile('jobs/attributes-loader/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST, RESOURCE_CPU, RESOURCE_MEM)
-        //           }
-        //         }
+            stage('Jobs') {
+              stages {
+                stage('Attributes Loader') {
+                  environment {
+                    SERVICE_NAME = getVariableFromConf("JOB_ATTRIBUTES_LOADER_SERVICE_NAME")
+                    IMAGE_VERSION = getVariableFromConf("JOB_ATTRIBUTES_LOADER_IMAGE_VERSION")
+                    IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
+                    RESOURCE_CPU = getVariableFromConf("JOB_ATTRIBUTES_LOADER_RESOURCE_CPU")
+                    RESOURCE_MEM = getVariableFromConf("JOB_ATTRIBUTES_LOADER_RESOURCE_MEM")
+                  }
+                  steps {
+                    applyKubeFile('jobs/attributes-loader/configmap.yaml', SERVICE_NAME)
+                    applyKubeFile('jobs/attributes-loader/serviceaccount.yaml', SERVICE_NAME)
+                    applyKubeFile('jobs/attributes-loader/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST, RESOURCE_CPU, RESOURCE_MEM)
+                  }
+                }
 
-        //         stage('Token Details Persister') {
-        //           environment {
-        //             SERVICE_NAME = getVariableFromConf("JOB_DETAILS_PERSISTER_SERVICE_NAME")
-        //             IMAGE_VERSION = getVariableFromConf("JOB_DETAILS_PERSISTER_IMAGE_VERSION")
-        //             IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
-        //             RESOURCE_CPU = getVariableFromConf("JOB_DETAILS_PERSISTER_RESOURCE_CPU")
-        //             RESOURCE_MEM = getVariableFromConf("JOB_DETAILS_PERSISTER_RESOURCE_MEM")
-        //           }
-        //           steps {
-        //             applyKubeFile('jobs/token-details-persister/configmap.yaml', SERVICE_NAME)
-        //             applyKubeFile('jobs/token-details-persister/serviceaccount.yaml', SERVICE_NAME)
-        //             applyKubeFile('jobs/token-details-persister/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST, RESOURCE_CPU, RESOURCE_MEM)
-        //           }
-        //         }
+                stage('Token Details Persister') {
+                  environment {
+                    SERVICE_NAME = getVariableFromConf("JOB_DETAILS_PERSISTER_SERVICE_NAME")
+                    IMAGE_VERSION = getVariableFromConf("JOB_DETAILS_PERSISTER_IMAGE_VERSION")
+                    IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
+                    RESOURCE_CPU = getVariableFromConf("JOB_DETAILS_PERSISTER_RESOURCE_CPU")
+                    RESOURCE_MEM = getVariableFromConf("JOB_DETAILS_PERSISTER_RESOURCE_MEM")
+                  }
+                  steps {
+                    applyKubeFile('jobs/token-details-persister/configmap.yaml', SERVICE_NAME)
+                    applyKubeFile('jobs/token-details-persister/serviceaccount.yaml', SERVICE_NAME)
+                    applyKubeFile('jobs/token-details-persister/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST, RESOURCE_CPU, RESOURCE_MEM)
+                  }
+                }
 
-        //         stage('Tenants Certified Attributes Updater') {
-        //           environment {
-        //             SERVICE_NAME = getVariableFromConf("JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_SERVICE_NAME")
-        //             IMAGE_VERSION = getVariableFromConf("JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_IMAGE_VERSION")
-        //             IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
-        //             RESOURCE_CPU = getVariableFromConf("JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_RESOURCE_CPU")
-        //             RESOURCE_MEM = getVariableFromConf("JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_RESOURCE_MEM")
-        //           }
-        //           steps {
-        //             applyKubeFile('jobs/tenants-certified-attributes-updater/configmap.yaml', SERVICE_NAME)
-        //             applyKubeFile('jobs/tenants-certified-attributes-updater/serviceaccount.yaml', SERVICE_NAME)
-        //             applyKubeFile('jobs/tenants-certified-attributes-updater/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST, RESOURCE_CPU, RESOURCE_MEM)
-        //           }
-        //         }
+                stage('Tenants Certified Attributes Updater') {
+                  environment {
+                    SERVICE_NAME = getVariableFromConf("JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_SERVICE_NAME")
+                    IMAGE_VERSION = getVariableFromConf("JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_IMAGE_VERSION")
+                    IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
+                    RESOURCE_CPU = getVariableFromConf("JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_RESOURCE_CPU")
+                    RESOURCE_MEM = getVariableFromConf("JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_RESOURCE_MEM")
+                  }
+                  steps {
+                    applyKubeFile('jobs/tenants-certified-attributes-updater/configmap.yaml', SERVICE_NAME)
+                    applyKubeFile('jobs/tenants-certified-attributes-updater/serviceaccount.yaml', SERVICE_NAME)
+                    applyKubeFile('jobs/tenants-certified-attributes-updater/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST, RESOURCE_CPU, RESOURCE_MEM)
+                  }
+                }
 
-        //       }
-        //     }
+              }
+            }
 
-        //     stage('Redis') {
-        //       environment {
-        //         SERVICE_NAME = getVariableFromConf("REDIS_SERVICE_NAME")
-        //         RESOURCE_CPU = getVariableFromConf("REDIS_RESOURCE_CPU")
-        //         RESOURCE_MEM = getVariableFromConf("REDIS_RESOURCE_MEM")
-        //       }
-        //       steps {
-        //         applyKubeFile('thirdparty/redis/deployment.yaml', SERVICE_NAME, "", RESOURCE_CPU, RESOURCE_MEM)
-        //         applyKubeFile('thirdparty/redis/service.yaml', SERVICE_NAME)
+            stage('Redis') {
+              environment {
+                SERVICE_NAME = getVariableFromConf("REDIS_SERVICE_NAME")
+                RESOURCE_CPU = getVariableFromConf("REDIS_RESOURCE_CPU")
+                RESOURCE_MEM = getVariableFromConf("REDIS_RESOURCE_MEM")
+              }
+              steps {
+                applyKubeFile('thirdparty/redis/deployment.yaml', SERVICE_NAME, "", RESOURCE_CPU, RESOURCE_MEM)
+                applyKubeFile('thirdparty/redis/service.yaml', SERVICE_NAME)
 
-        //         waitForServiceReady(SERVICE_NAME)
-        //       }
-        //     }
+                waitForServiceReady(SERVICE_NAME)
+              }
+            }
 
-        //   }
-        // }
-        // stage('Create Ingress') {
-        //   steps {
-        //     createIngress(
-        //       getVariableFromConf("AGREEMENT_PROCESS_SERVICE_NAME"), getVariableFromConf("AGREEMENT_PROCESS_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
-        //       getVariableFromConf("API_GATEWAY_SERVICE_NAME"), getVariableFromConf("API_GATEWAY_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
-        //       getVariableFromConf("AUTHORIZATION_PROCESS_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_PROCESS_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
-        //       getVariableFromConf("AUTHORIZATION_SERVER_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_SERVER_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
-        //       getVariableFromConf("BACKEND_FOR_FRONTEND_SERVICE_NAME"), getVariableFromConf("BACKEND_FOR_FRONTEND_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
-        //       getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"), getVariableFromConf("CATALOG_PROCESS_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
-        //       getVariableFromConf("FRONTEND_SERVICE_NAME"), getVariableFromConf("FRONTEND_SERVICE_APPLICATION_PATH"), getVariableFromConf("FRONTEND_SERVICE_PORT"),
-        //       getVariableFromConf("PURPOSE_PROCESS_SERVICE_NAME"), getVariableFromConf("PURPOSE_PROCESS_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
-        //     )
-        //   }
-        // }
+          }
+        }
+        stage('Create Ingress') {
+          steps {
+            createIngress(
+              getVariableFromConf("AGREEMENT_PROCESS_SERVICE_NAME"), getVariableFromConf("AGREEMENT_PROCESS_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
+              getVariableFromConf("API_GATEWAY_SERVICE_NAME"), getVariableFromConf("API_GATEWAY_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
+              getVariableFromConf("AUTHORIZATION_PROCESS_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_PROCESS_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
+              getVariableFromConf("AUTHORIZATION_SERVER_SERVICE_NAME"), getVariableFromConf("AUTHORIZATION_SERVER_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
+              getVariableFromConf("BACKEND_FOR_FRONTEND_SERVICE_NAME"), getVariableFromConf("BACKEND_FOR_FRONTEND_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
+              getVariableFromConf("CATALOG_PROCESS_SERVICE_NAME"), getVariableFromConf("CATALOG_PROCESS_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
+              getVariableFromConf("FRONTEND_SERVICE_NAME"), getVariableFromConf("FRONTEND_SERVICE_APPLICATION_PATH"), getVariableFromConf("FRONTEND_SERVICE_PORT"),
+              getVariableFromConf("PURPOSE_PROCESS_SERVICE_NAME"), getVariableFromConf("PURPOSE_PROCESS_APPLICATION_PATH"), getVariableFromConf("BACKEND_SERVICE_PORT"),
+            )
+          }
+        }
 
       }
     }
@@ -601,7 +601,7 @@ void loadSecrets() {
     loadSecret('party-process', 'PARTY_PROCESS_API_KEY', 'PARTY_PROCESS_API_KEY')
     loadSecret('party-management', 'PARTY_MANAGEMENT_API_KEY', 'PARTY_MANAGEMENT_API_KEY')
     loadSecret('postgres', 'POSTGRES_USR', 'POSTGRES_CREDENTIALS_USR', 'POSTGRES_PSW', 'POSTGRES_CREDENTIALS_PSW')
-    loadSecret('documentdb', 'DOCUMENTDB_USR', 'DOCUMENTDB_CREDENTIALS_USR', 'DOCUMENTDB_PSW', 'DOCUMENTDB_CREDENTIALS_PSW')
+    loadSecret('documentdb', 'PROJECTION_USR', 'READ_MODEL_CREDENTIALS_PROJECTION_USR', 'PROJECTION_PSW', 'READ_MODEL_CREDENTIALS_PROJECTION_PSW', 'READONLY_USR', 'READ_MODEL_CREDENTIALS_RO_USR', 'READONLY_PSW', 'READ_MODEL_CREDENTIALS_RO_PSW')
     loadSecret('vault', 'VAULT_ADDR', 'VAULT_ADDR', 'VAULT_TOKEN', 'VAULT_TOKEN')
   }
 }

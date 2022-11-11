@@ -186,6 +186,64 @@ function prepareDbMigrations() {
     echo "***********************************"
 }
 
+
+function createReadModelUser(String user, String password, String role) {
+    user=$1
+    password=$2
+    role=$3
+    
+    echo "********** MongoDB User Creation **********"
+    echo "Creating user in read model..."
+    encodedAdminUser=$(urlEncode $READ_MODEL_CREDENTIALS_ADMIN_USR)
+    encodedAdminPassword=$(urlEncode $READ_MODEL_CREDENTIALS_ADMIN_PSW)
+    encodedNewUser=$(urlEncode $user)
+    encodedNewPassword=$(urlEncode $password)
+
+    mongosh "mongodb://$encodedAdminUser:$encodedAdminPassword@$READ_MODEL_DB_HOST:$READ_MODEL_DB_PORT/admin?replicaSet=rs0&readPreference=secondaryPreferred" \
+        --eval "if(db.getUser("$encodedNewUser") == null) { db.createUser({
+          user: "$encodedNewUser",
+          pwd: "$encodedNewPassword",
+          roles: [ {role: "$role", db: "$READ_MODEL_DB_NAME"} ]
+        })}"
+
+    echo "User created in read model"
+}
+
+function urlEncode() {
+    echo "$@" \
+    | sed \
+        -e 's/%/%25/g' \
+        -e 's/ /%20/g' \
+        -e 's/!/%21/g' \
+        -e 's/"/%22/g' \
+        -e "s/'/%27/g" \
+        -e 's/#/%23/g' \
+        -e 's/(/%28/g' \
+        -e 's/)/%29/g' \
+        -e 's/+/%2b/g' \
+        -e 's/,/%2c/g' \
+        -e 's/-/%2d/g' \
+        -e 's/:/%3a/g' \
+        -e 's/;/%3b/g' \
+        -e 's/?/%3f/g' \
+        -e 's/@/%40/g' \
+        -e 's/\$/%24/g' \
+        -e 's/\&/%26/g' \
+        -e 's/\*/%2a/g' \
+        -e 's/\./%2e/g' \
+        -e 's/\//%2f/g' \
+        -e 's/\[/%5b/g' \
+        -e 's/\\/%5c/g' \
+        -e 's/\]/%5d/g' \
+        -e 's/\^/%5e/g' \
+        -e 's/_/%5f/g' \
+        -e 's/`/%60/g' \
+        -e 's/{/%7b/g' \
+        -e 's/|/%7c/g' \
+        -e 's/}/%7d/g' \
+        -e 's/~/%7e/g'
+}
+
 function getDockerImageDigest() {
     serviceName=$1
     imageVersion=$2
@@ -233,7 +291,7 @@ function loadSecrets() {
     loadSecret 'party-process' 'PARTY_PROCESS_API_KEY' 'PARTY_PROCESS_API_KEY'
     loadSecret 'party-management' 'PARTY_MANAGEMENT_API_KEY' 'PARTY_MANAGEMENT_API_KEY'
     loadSecret 'postgres' 'POSTGRES_USR' 'POSTGRES_CREDENTIALS_USR' 'POSTGRES_PSW' 'POSTGRES_CREDENTIALS_PSW'
-    loadSecret 'documentdb' 'DOCUMENTDB_USR' 'DOCUMENTDB_CREDENTIALS_USR' 'DOCUMENTDB_PSW' 'DOCUMENTDB_CREDENTIALS_PSW'
+    loadSecret 'documentdb' 'PROJECTION_USR' 'READ_MODEL_CREDENTIALS_PROJECTION_USR' 'PROJECTION_PSW' 'READ_MODEL_CREDENTIALS_PROJECTION_PSW' 'READONLY_USR' 'READ_MODEL_CREDENTIALS_RO_USR' 'READONLY_PSW' 'READ_MODEL_CREDENTIALS_RO_PSW'
     loadSecret 'vault' 'VAULT_ADDR' 'VAULT_ADDR' 'VAULT_TOKEN' 'VAULT_TOKEN'
 
     echo "*****************************"
