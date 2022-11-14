@@ -33,8 +33,12 @@ spec:
     // TODO Create one set of credentials for each service
     POSTGRES_CREDENTIALS_USR = credentials('postgres-db-username')
     POSTGRES_CREDENTIALS_PSW = credentials('postgres-db-password')
-    DOCUMENTDB_CREDENTIALS_USR = credentials('documentdb-username')
-    DOCUMENTDB_CREDENTIALS_PSW = credentials('documentdb-password')
+    READ_MODEL_CREDENTIALS_ADMIN_USR = credentials('documentdb-admin-username')
+    READ_MODEL_CREDENTIALS_ADMIN_PSW = credentials('documentdb-admin-password')
+    READ_MODEL_CREDENTIALS_PROJECTION_USR = credentials('documentdb-projection-username')
+    READ_MODEL_CREDENTIALS_PROJECTION_PSW = credentials('documentdb-projection-password')
+    READ_MODEL_CREDENTIALS_RO_USR = credentials('documentdb-ro-username')
+    READ_MODEL_CREDENTIALS_RO_PSW = credentials('documentdb-ro-password')
     //
     VAULT_TOKEN = credentials('vault-token')
     VAULT_ADDR = credentials('vault-addr')
@@ -59,6 +63,44 @@ spec:
           }
         }
         
+        stage('Prepare MongoDB') {
+
+          agent {
+              kubernetes {
+                  label "mongodb-migrations-template"
+                  yaml """
+apiVersion: v1
+kind: Pod
+spec:
+  serviceAccountName: jenkins
+  containers:
+    - name: mongodb-migrations
+      image: mongo:6.0.2-focal
+      resources:
+        requests:
+          cpu: 1
+          memory: 1Gi
+        limits:
+          cpu: 1
+          memory: 1Gi
+      command:
+        - /bin/sh
+      args: [ "-c", "cat"]
+      tty: true
+"""
+              }
+          }
+          environment {
+            READ_MODEL_DB_HOST = getVariableFromConf("READ_MODEL_DB_HOST")
+            READ_MODEL_DB_PORT = getVariableFromConf("READ_MODEL_DB_PORT")
+            READ_MODEL_DB_NAME = getVariableFromConf("READ_MODEL_DB_NAME")
+          }
+          steps {
+            createReadModelUser(READ_MODEL_CREDENTIALS_RO_USR, READ_MODEL_CREDENTIALS_RO_PSW, "read")
+            createReadModelUser(READ_MODEL_CREDENTIALS_PROJECTION_USR, READ_MODEL_CREDENTIALS_PROJECTION_PSW, "readWrite")
+          }
+        }
+
         stage('Create Namespace') {
           steps {
               applyKubeFile('namespace.yaml')
@@ -559,7 +601,7 @@ void loadSecrets() {
     loadSecret('party-process', 'PARTY_PROCESS_API_KEY', 'PARTY_PROCESS_API_KEY')
     loadSecret('party-management', 'PARTY_MANAGEMENT_API_KEY', 'PARTY_MANAGEMENT_API_KEY')
     loadSecret('postgres', 'POSTGRES_USR', 'POSTGRES_CREDENTIALS_USR', 'POSTGRES_PSW', 'POSTGRES_CREDENTIALS_PSW')
-    loadSecret('documentdb', 'DOCUMENTDB_USR', 'DOCUMENTDB_CREDENTIALS_USR', 'DOCUMENTDB_PSW', 'DOCUMENTDB_CREDENTIALS_PSW')
+    loadSecret('documentdb', 'PROJECTION_USR', 'READ_MODEL_CREDENTIALS_PROJECTION_USR', 'PROJECTION_PSW', 'READ_MODEL_CREDENTIALS_PROJECTION_PSW', 'READONLY_USR', 'READ_MODEL_CREDENTIALS_RO_USR', 'READONLY_PSW', 'READ_MODEL_CREDENTIALS_RO_PSW')
     loadSecret('vault', 'VAULT_ADDR', 'VAULT_ADDR', 'VAULT_TOKEN', 'VAULT_TOKEN')
   }
 }
@@ -606,4 +648,61 @@ String getDockerImageDigest(String serviceName, String imageVersion) {
       return sha256
     }
   
+}
+
+void createReadModelUser(String user, String password, String role) {
+  container('mongodb-migrations') {
+    echo "Creating user in read model..."
+    def encodedAdminUser = urlEncode(env.READ_MODEL_CREDENTIALS_ADMIN_USR)
+    def encodedAdminPassword = urlEncode(env.READ_MODEL_CREDENTIALS_ADMIN_PSW)
+    def encodedNewUser = urlEncode(user)
+    def encodedNewPassword = urlEncode(password)
+
+    sh"""set +x && mongosh 'mongodb://${encodedAdminUser}:${encodedAdminPassword}@$READ_MODEL_DB_HOST:$READ_MODEL_DB_PORT/admin' \
+        --eval 'if(db.getUser("${encodedNewUser}") == null) { db.createUser({
+          user: "${encodedNewUser}",
+          pwd: "${encodedNewPassword}",
+          roles: [ {role: "${role}", db: "$READ_MODEL_DB_NAME"} ]
+        })}'; set -x
+    """
+    echo "User created in read model"
+  }
+}
+
+String urlEncode(String str) {
+  sh(
+    returnStdout: true, 
+    script: 'echo ' + str + ''' | sed \
+        -e 's/%/%25/g' \
+        -e 's/ /%20/g' \
+        -e 's/!/%21/g' \
+        -e 's/"/%22/g' \
+        -e "s/'/%27/g" \
+        -e 's/#/%23/g' \
+        -e 's/(/%28/g' \
+        -e 's/)/%29/g' \
+        -e 's/+/%2b/g' \
+        -e 's/,/%2c/g' \
+        -e 's/-/%2d/g' \
+        -e 's/:/%3a/g' \
+        -e 's/;/%3b/g' \
+        -e 's/?/%3f/g' \
+        -e 's/@/%40/g' \
+        -e 's/\\$/%24/g' \
+        -e 's/\\&/%26/g' \
+        -e 's/\\*/%2a/g' \
+        -e 's/\\./%2e/g' \
+        -e 's/\\//%2f/g' \
+        -e 's/\\[/%5b/g' \
+        -e 's/\\\\/%5c/g' \
+        -e 's/\\]/%5d/g' \
+        -e 's/\\^/%5e/g' \
+        -e 's/_/%5f/g' \
+        -e 's/`/%60/g' \
+        -e 's/{/%7b/g' \
+        -e 's/|/%7c/g' \
+        -e 's/}/%7d/g' \
+        -e 's/~/%7e/g'
+  '''
+  ).trim()
 }
