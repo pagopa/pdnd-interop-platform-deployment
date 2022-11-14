@@ -200,12 +200,14 @@ function createReadModelUser(String user, String password, String role) {
     encodedNewUser=$(urlEncode $user)
     encodedNewPassword=$(urlEncode $password)
 
-    mongosh "mongodb://$encodedAdminUser:$encodedAdminPassword@$READ_MODEL_DB_HOST:$READ_MODEL_DB_PORT/admin" \
-        --eval "if(db.getUser("$encodedNewUser") == null) { db.createUser({
-          user: "$encodedNewUser",
-          pwd: "$encodedNewPassword",
-          roles: [ {role: "$role", db: "$READ_MODEL_DB_NAME"} ]
-        })}"
+    if [ -z ${DRYRUN} ]; then 
+      mongosh "mongodb://$encodedAdminUser:$encodedAdminPassword@$READ_MODEL_DB_HOST:$READ_MODEL_DB_PORT/admin" \
+          --eval "if(db.getUser("$encodedNewUser") == null) { db.createUser({
+            user: "$encodedNewUser",
+            pwd: "$encodedNewPassword",
+            roles: [ {role: "$role", db: "$READ_MODEL_DB_NAME"} ]
+          })}"
+    fi
 
     echo "User created in read model"
     echo "*******************************************"
