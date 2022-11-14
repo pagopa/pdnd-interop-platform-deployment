@@ -200,7 +200,7 @@ function createReadModelUser(String user, String password, String role) {
     encodedNewUser=$(urlEncode $user)
     encodedNewPassword=$(urlEncode $password)
 
-    mongosh "mongodb://$encodedAdminUser:$encodedAdminPassword@$READ_MODEL_DB_HOST:$READ_MODEL_DB_PORT/admin?replicaSet=rs0&readPreference=secondaryPreferred" \
+    mongosh "mongodb://$encodedAdminUser:$encodedAdminPassword@$READ_MODEL_DB_HOST:$READ_MODEL_DB_PORT/admin" \
         --eval "if(db.getUser("$encodedNewUser") == null) { db.createUser({
           user: "$encodedNewUser",
           pwd: "$encodedNewPassword",
