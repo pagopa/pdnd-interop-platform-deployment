@@ -29,11 +29,6 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: CATALOG_MANAGEMENT_URL
-            - name: PARTY_MANAGEMENT_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: PARTY_MANAGEMENT_URL
             - name: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
@@ -59,8 +54,3 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: NOTIFIER_URL
-            - name: PARTY_MANAGEMENT_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: party-management
-                  key: PARTY_MANAGEMENT_API_KEY
