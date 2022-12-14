@@ -27,7 +27,7 @@ jobs:
           aws_region: ${{ secrets.AWS_REGION }}
           iam_role_arn: ${{ secrets.ECS_IAM_ROLE_ARN }}
           ecs_cluster_name: ${{ secrets.ECS_CLUSTER_NAME }}
-          ecs_task_definition_arn: ${{ secrets.TASK_DEFINITION_ARN }}
+          ecs_task_definition: ${{ secrets.TASK_DEFINITION }}
           ecs_container_name: github-runner
           ecs_task_subnet_id: ${{ secrets.SUBNET_ID }}
           ecs_task_sec_group: ${{ secrets.SEC_GROUP_ID }}
@@ -106,21 +106,21 @@ jobs:
           createKubeSecret 'documentdb' 'PROJECTION_USR' "$projectionUsername" 'PROJECTION_PSW' "$projectionPassword" 'READONLY_USR' "$projectionROUsername" 'READONLY_PSW' "$projectionROPassword"
           createKubeSecret 'vault' 'VAULT_ADDR' "$vaultAddr" 'VAULT_TOKEN' "$vaultToken"
 
-  deploy_agreement_management:
-    name: Deploy Agreement Management
-    needs: [create_runner, platform_deployment_configs]
-    permissions:
-      contents: read
-    uses: ${{ env.GITHUB_REPOSITORY }}/.github/workflows/deploy-service.yaml
-    secrets: inherit
-    with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
-      environment: ${{ inputs.environment }}
-      kustomize_overlay_path: "overlays/agreement-management"
-      service_name_var_name: AGREEMENT_MANAGEMENT_SERVICE_NAME
-      image_version_var_name: AGREEMENT_MANAGEMENT_IMAGE_VERSION
-      resource_cpu_var_name: AGREEMENT_MANAGEMENT_RESOURCE_CPU
-      resource_mem_var_name: AGREEMENT_MANAGEMENT_RESOURCE_MEM
+  # deploy_agreement_management:
+  #   name: Deploy Agreement Management
+  #   needs: [create_runner, platform_deployment_configs]
+  #   permissions:
+  #     contents: read
+  #   uses: ${{ env.GITHUB_REPOSITORY }}/.github/workflows/deploy-service.yaml@1.0.x
+  #   secrets: inherit
+  #   with:
+  #     runner_name: ${{ needs.create_runner.outputs.runner_name }}
+  #     environment: ${{ inputs.environment }}
+  #     kustomize_overlay_path: "overlays/agreement-management"
+  #     service_name_var_name: AGREEMENT_MANAGEMENT_SERVICE_NAME
+  #     image_version_var_name: AGREEMENT_MANAGEMENT_IMAGE_VERSION
+  #     resource_cpu_var_name: AGREEMENT_MANAGEMENT_RESOURCE_CPU
+  #     resource_mem_var_name: AGREEMENT_MANAGEMENT_RESOURCE_MEM
 
 
   delete_runner:

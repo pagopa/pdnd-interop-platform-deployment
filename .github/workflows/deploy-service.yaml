@@ -63,6 +63,9 @@ jobs:
           source $CONFIG_FILE
           source ./deployment_functions.sh
 
+          // DEBUG
+          ls -l
+
           serviceName=${!${{inputs.service_name_var_name}}}
           imageVersion=${!${{inputs.image_version_var_name}}}
           resourceCpu=${!${{inputs.resource_cpu_var_name}}}
