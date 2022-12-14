@@ -128,7 +128,7 @@ jobs:
 
   delete_runner:
     name: Delete Self-Hosted Runner
-    needs: [create_runner, platform_deployment_pt1, platform_deployment_pt2]
+    needs: [create_runner, platform_deployment_configs]
     if: ${{ always() }}
     runs-on: ubuntu-22.04
     environment: dev
