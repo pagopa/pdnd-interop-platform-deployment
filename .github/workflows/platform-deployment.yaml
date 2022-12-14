@@ -124,7 +124,7 @@ jobs:
     secrets: inherit
     with:
       runner_name: ${{ needs.create_runner.outputs.runner_name }}
-      environment: ${{ inputs.environment }}
+      environment: dev
       kustomize_overlay_path: "overlays/agreement-management"
       service_name_var_name: AGREEMENT_MANAGEMENT_SERVICE_NAME
       image_version_var_name: AGREEMENT_MANAGEMENT_IMAGE_VERSION
