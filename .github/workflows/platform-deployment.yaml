@@ -46,7 +46,7 @@ jobs:
     env:
       NAMESPACE: ${{ secrets.NAMESPACE }}
       CONFIG_FILE: ${{ secrets.CONFIG_FILE }}
-
+      ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
 
     steps:
       - name: Checkout
@@ -115,26 +115,64 @@ jobs:
           createKubeSecret 'documentdb' 'PROJECTION_USR' "$projectionUsername" 'PROJECTION_PSW' "$projectionPassword" 'READONLY_USR' "$projectionROUsername" 'READONLY_PSW' "$projectionROPassword"
           createKubeSecret 'vault' 'VAULT_ADDR' "$vaultAddr" 'VAULT_TOKEN' "$vaultToken"
 
-  deploy_agreement_management:
-    name: Deploy Agreement Management
+  deploy_frontend:
+    name: Frontend
     needs: [create_runner, platform_deployment_configs]
+    runs-on: [self-hosted, "${{ needs.create_runner.outputs.runner_name }}"]
+    environment: dev
     permissions:
       contents: read
-    uses: ./.github/workflows/deploy-service.yaml
-    secrets: inherit
-    with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
-      environment: dev
-      kustomize_overlay_path: "overlays/agreement-management"
-      service_name_var_name: AGREEMENT_MANAGEMENT_SERVICE_NAME
-      image_version_var_name: AGREEMENT_MANAGEMENT_IMAGE_VERSION
-      resource_cpu_var_name: AGREEMENT_MANAGEMENT_RESOURCE_CPU
-      resource_mem_var_name: AGREEMENT_MANAGEMENT_RESOURCE_MEM
+    env:
+      NAMESPACE: ${{ secrets.NAMESPACE }}
+      CONFIG_FILE: ${{ secrets.CONFIG_FILE }}
+      ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      - name: Update Kubeconfig
+        id: update_kubeconfig
+        run: |
+          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
+
+      - name: Apply Kube Files
+        id: apply_kube_files
+        run: |
+          source $CONFIG_FILE
+          source ./deployment_functions.sh
+
+          echo "Retrieving image digest for $FRONTEND_SERVICE_NAME version $FRONTEND_IMAGE_VERSION"
+          imageDigest="$(getDockerImageDigest $FRONTEND_SERVICE_NAME $FRONTEND_IMAGE_VERSION)"
+          echo "Image digest: $imageDigest"
+
+          applyKubeFile "frontend/configmap.yaml" $FRONTEND_SERVICE_NAME
+          applyKubeFile "frontend/deployment.yaml" $FRONTEND_SERVICE_NAME $imageDigest $FRONTEND_RESOURCE_CPU $FRONTEND_RESOURCE_MEM
+          applyKubeFile "frontend/service.yaml" $FRONTEND_SERVICE_NAME
+
+  # deploy_agreement_management:
+  #   name: Agreement Management
+  #   needs: [create_runner, platform_deployment_configs]
+  #   permissions:
+  #     contents: read
+  #   uses: ./.github/workflows/deploy-service.yaml
+  #   secrets: inherit
+  #   with:
+  #     runner_name: ${{ needs.create_runner.outputs.runner_name }}
+  #     environment: dev
+  #     kustomize_overlay_path: "overlays/agreement-management"
+  #     service_name_var_name: AGREEMENT_MANAGEMENT_SERVICE_NAME
+  #     image_version_var_name: AGREEMENT_MANAGEMENT_IMAGE_VERSION
+  #     resource_cpu_var_name: AGREEMENT_MANAGEMENT_RESOURCE_CPU
+  #     resource_mem_var_name: AGREEMENT_MANAGEMENT_RESOURCE_MEM
 
 
   delete_runner:
     name: Delete Self-Hosted Runner
-    needs: [create_runner, platform_deployment_configs, deploy_agreement_management]
+    needs: [create_runner, platform_deployment_configs, deploy_frontend]
     if: ${{ always() }}
     runs-on: ubuntu-22.04
     environment: dev

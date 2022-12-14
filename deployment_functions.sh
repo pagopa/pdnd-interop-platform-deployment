@@ -119,13 +119,23 @@ function getDockerImageDigest() {
 
 function applyKubeFile() {
   fileName=$1
+  serviceName=$2
+  imageDigest=$3
+  resourceCpu=$4
+  resourceMem=$5
+
   compiledFileName="./kubernetes/$(dirname $fileName)/compiled.$(basename $fileName)"
 
   echo "Compiling file $fileName"
 
-  ./kubernetes/templater.sh "./kubernetes/$fileName" \
-    -s -f $CONFIG_FILE \
-    > "$compiledFileName"
+  SERVICE_NAME=$serviceName \
+    IMAGE_DIGEST=$imageDigest \
+    SERVICE_RESOURCE_CPU=$resourceCpu \
+    SERVICE_RESOURCE_MEME=$resourceMem \
+    LOWERCASE_ENV=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]') \
+    ./kubernetes/templater.sh "./kubernetes/$fileName" \
+      -s -f $CONFIG_FILE \
+      > "$compiledFileName"
 
   echo "File $fileName compiled"
   echo "Applying $compiledFileName"
@@ -169,7 +179,7 @@ function applyKustomizeToDir() {
   resourceMem=$5
 
   echo "Retrieving image digest for ${serviceName} and version ${imageVersion}"
-  serviceImageDigest="$(getDockerImageDigest serviceName imageVersion)"
+  serviceImageDigest="$(getDockerImageDigest $serviceName $imageVersion)"
   echo "Image digest: $serviceImageDigest"
 
   kubeDirPath="kubernetes/${dirPath}"
