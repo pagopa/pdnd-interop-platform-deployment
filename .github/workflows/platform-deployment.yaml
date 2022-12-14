@@ -47,12 +47,18 @@ jobs:
       NAMESPACE: ${{ secrets.NAMESPACE }}
       CONFIG_FILE: ${{ secrets.CONFIG_FILE }}
 
+
     steps:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v3
         with:
           persist-credentials: false
+
+      - name: Update Kubeconfig
+        id: update_kubeconfig
+        run: |
+          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
 
       - name: Create MongoDB User
         id: create_mongodb_user
