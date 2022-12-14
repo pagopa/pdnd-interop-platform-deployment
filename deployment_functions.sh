@@ -82,7 +82,8 @@ function createKubeSecret() {
     k=$((j+1))
     secretKey="${tuples[$i]}"
     secretValue="${tuples[$k]}"
-    command="$command --from-literal=${secretKey}=${secretValue}"
+    echo -n "$secretValue" > "${secretKey}.txt"
+    command="$command --from-file=${secretKey}=./${secretKey}.txt"
   done
 
   echo "Compiling $secretName secret manifest"
