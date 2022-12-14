@@ -1,6 +1,9 @@
-name: Platform Deployment
+name: Platform Deployment (latest)
 
 on:
+  push:
+    branches:
+      - "PIN-2295"
   workflow_dispatch:
     inputs:
       env:
@@ -37,7 +40,7 @@ jobs:
     name: Platform Deployment Configs
     needs: create_runner
     runs-on: [self-hosted, "${{ needs.create_runner.outputs.runner_name }}"]
-    environment: ${{ inputs.env }}
+    environment: dev
     permissions:
       contents: read
     env:
