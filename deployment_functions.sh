@@ -160,7 +160,7 @@ function compileDir() {
 }
 
 function applyKustomizeToDir() {
-  // dirPath starting from kubernetes folder (e.g. overlays/party-management)
+  # dirPath starting from kubernetes folder (e.g. overlays/party-management)
   dirPath=$1
   serviceName=$2
   imageVersion=$3
