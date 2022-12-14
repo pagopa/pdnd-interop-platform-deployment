@@ -71,13 +71,19 @@ jobs:
           resourceCpu=${!${{inputs.resource_cpu_var_name}}}
           resourceMem=${!${{inputs.resource_mem_var_name}}}
 
-          applyKustomizeToDir ${{ inputs.kustomize_overlay_path }} \
-            $serviceName $imageVersion $resourceCpu $resourceMem
+          echo $serviceName
+          echo $imageVersion
+          echo $resourceCpu
+          echo $resourceMem
 
-      - name: Wait for Service Ready
-        id: wait_ready
-        run: |
-          source $CONFIG_FILE
-          source ./deployment_functions.sh
 
-          waitForServiceReady ${{ inputs.service_name }}
+      #     applyKustomizeToDir ${{ inputs.kustomize_overlay_path }} \
+      #       $serviceName $imageVersion $resourceCpu $resourceMem
+      #
+      # - name: Wait for Service Ready
+      #   id: wait_ready
+      #   run: |
+      #     source $CONFIG_FILE
+      #     source ./deployment_functions.sh
+      #
+      #     waitForServiceReady ${{ inputs.service_name }}
