@@ -120,7 +120,7 @@ jobs:
     needs: [create_runner, platform_deployment_configs]
     permissions:
       contents: read
-    uses: ${{ env.GITHUB_REPOSITORY }}/.github/workflows/deploy-service.yaml@refs/heads/PIN-2295
+    uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
     with:
       runner_name: ${{ needs.create_runner.outputs.runner_name }}
@@ -134,7 +134,7 @@ jobs:
 
   delete_runner:
     name: Delete Self-Hosted Runner
-    needs: [create_runner, platform_deployment_configs]
+    needs: [create_runner, platform_deployment_configs, deploy_agreement_management]
     if: ${{ always() }}
     runs-on: ubuntu-22.04
     environment: dev
