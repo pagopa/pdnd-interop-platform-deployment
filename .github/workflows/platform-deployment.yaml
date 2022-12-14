@@ -58,11 +58,14 @@ jobs:
       - name: Update Kubeconfig
         id: update_kubeconfig
         run: |
+          set -eo pipefail
+
           aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
 
       - name: Create MongoDB User
         id: create_mongodb_user
         run: |
+          set -eo pipefail
           source $CONFIG_FILE
           source ./deployment_functions.sh
 
@@ -77,6 +80,7 @@ jobs:
       - name: Prepare DB migrations
         id: prepare_db_migrations
         run: |
+          set -eo pipefail
           source $CONFIG_FILE
           source ./deployment_functions.sh
 
@@ -85,6 +89,7 @@ jobs:
       - name: Create Namespace
         id: create_namespace
         run: |
+          set -eo pipefail
           source $CONFIG_FILE
           source ./deployment_functions.sh
 
@@ -93,6 +98,7 @@ jobs:
       - name: Create K8s Secrets
         id: create_secrets
         run: |
+          set -eo pipefail
           source $CONFIG_FILE
           source ./deployment_functions.sh
 
@@ -137,11 +143,14 @@ jobs:
       - name: Update Kubeconfig
         id: update_kubeconfig
         run: |
+          set -eo pipefail
+
           aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
 
       - name: Apply Kube Files
         id: apply_kube_files
         run: |
+          set -eo pipefail
           source $CONFIG_FILE
           source ./deployment_functions.sh
 

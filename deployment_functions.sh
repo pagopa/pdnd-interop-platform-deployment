@@ -111,8 +111,8 @@ function getDockerImageDigest() {
   serviceName=$1
   imageVersion=$2
 
-  imageSHA56="$(aws ecr batch-get-image --repository-name "interop-be-${serviceName}" --imageTag="$imageVersion" \
-              jq -r '.images[0].imageId.imageDigest')"
+  imageSHA56="$(aws ecr batch-get-image --repository-name "${serviceName}" --image-ids "imageTag=$imageVersion" \
+              | jq -r '.images[0].imageId.imageDigest')"
 
   echo "$imageSHA56"
 }

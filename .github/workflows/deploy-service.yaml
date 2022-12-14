@@ -54,11 +54,14 @@ jobs:
       - name: Update Kubeconfig
         id: update_kubeconfig
         run: |
+          set -eo pipefail
+
           aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
 
       - name: Apply Kustomize
         id: apply_kustomize
         run: |
+          set -eo pipefail
           source $CONFIG_FILE
           source ./deployment_functions.sh
 
@@ -73,6 +76,7 @@ jobs:
       - name: Wait for Service Ready
         id: wait_ready
         run: |
+          set -eo pipefail
           source $CONFIG_FILE
           source ./deployment_functions.sh
 
