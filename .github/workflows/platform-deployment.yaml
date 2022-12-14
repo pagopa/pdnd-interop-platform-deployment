@@ -4,12 +4,12 @@ on:
   push:
     branches:
       - "PIN-2295"
-  workflow_dispatch:
-    inputs:
-      env:
-        type: environment
-        required: true
-        description: Environment to deploy
+  # workflow_dispatch:
+  #   inputs:
+  #     env:
+  #       type: environment
+  #       required: true
+  #       description: Environment to deploy
 
 jobs:
   create_runner:
