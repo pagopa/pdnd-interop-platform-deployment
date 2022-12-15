@@ -138,10 +138,10 @@ function applyKubeFile() {
       > "$compiledFileName"
 
   echo "File $fileName compiled"
+  cat $compiledFileName
+
   echo "Applying $compiledFileName"
-
   kubectl apply -f "$compiledFileName"
-
   echo "File $compiledFileName applied"
 }
 
