@@ -225,5 +225,5 @@ function waitForServiceReady() {
   done
 
   echo "Waiting for pod readiness for ${serviceName}"
-  kubectl wait --for condition=Ready pod -l app="${serviceName}" --namespace="$NAMESPACE" --timeout=180s
+  kubectl wait --for condition=Ready pod -l app="${serviceName}" --namespace="$NAMESPACE" --timeout=120s
 }

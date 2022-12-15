@@ -15,12 +15,14 @@ jobs:
   create_runner:
     name: Create Self-Hosted Runner
     runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        index: [1, 2, 3]
+      fail-fast: true
     environment: dev
     permissions:
       contents: read
       id-token: write
-    outputs:
-      runner_name: ${{ steps.start_runner.outputs.runner_name }}
 
     steps:
       - name: Start GitHub Runner
@@ -39,7 +41,7 @@ jobs:
   platform_deployment_configs:
     name: Configurations
     needs: create_runner
-    runs-on: [self-hosted, "${{ needs.create_runner.outputs.runner_name }}"]
+    runs-on: [self-hosted, "run_id:${{ github.run_id }}"]
     environment: dev
     permissions:
       contents: read
@@ -129,7 +131,6 @@ jobs:
     uses: ./.github/workflows/deploy-frontend.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
 
   deploy_agreement_management:
@@ -140,7 +141,6 @@ jobs:
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
       kustomize_overlay_path: "overlays/agreement-management"
       service_name_var_name: AGREEMENT_MANAGEMENT_SERVICE_NAME
@@ -156,7 +156,6 @@ jobs:
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
       kustomize_overlay_path: "overlays/agreement-process"
       service_name_var_name: AGREEMENT_PROCESS_SERVICE_NAME
@@ -172,7 +171,6 @@ jobs:
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
       kustomize_overlay_path: "overlays/attribute-registry-management"
       service_name_var_name: ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME
@@ -188,7 +186,6 @@ jobs:
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
       kustomize_overlay_path: "overlays/authorization-management"
       service_name_var_name: AUTHORIZATION_MANAGEMENT_SERVICE_NAME
@@ -204,7 +201,6 @@ jobs:
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
       kustomize_overlay_path: "overlays/authorization-process"
       service_name_var_name: AUTHORIZATION_PROCESS_SERVICE_NAME
@@ -220,7 +216,6 @@ jobs:
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
       kustomize_overlay_path: "overlays/catalog-management"
       service_name_var_name: CATALOG_MANAGEMENT_SERVICE_NAME
@@ -236,7 +231,6 @@ jobs:
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
       kustomize_overlay_path: "overlays/catalog-process"
       service_name_var_name: CATALOG_PROCESS_SERVICE_NAME
@@ -253,7 +247,6 @@ jobs:
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
       kustomize_overlay_path: "overlays/party-mock-registry"
       service_name_var_name: PARTY_MOCK_REGISTRY_SERVICE_NAME
@@ -269,7 +262,6 @@ jobs:
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
       kustomize_overlay_path: "overlays/party-registry-proxy"
       service_name_var_name: PARTY_REGISTRY_PROXY_SERVICE_NAME
@@ -285,7 +277,6 @@ jobs:
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
       kustomize_overlay_path: "overlays/purpose-management"
       service_name_var_name: PURPOSE_MANAGEMENT_SERVICE_NAME
@@ -301,7 +292,6 @@ jobs:
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
       kustomize_overlay_path: "overlays/purpose-process"
       service_name_var_name: PURPOSE_PROCESS_SERVICE_NAME
@@ -317,7 +307,6 @@ jobs:
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
       kustomize_overlay_path: "overlays/tenant-management"
       service_name_var_name: TENANT_MANAGEMENT_SERVICE_NAME
@@ -333,7 +322,6 @@ jobs:
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
       kustomize_overlay_path: "overlays/tenant-process"
       service_name_var_name: TENANT_PROCESS_SERVICE_NAME
@@ -349,7 +337,6 @@ jobs:
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
       kustomize_overlay_path: "overlays/backend-for-frontend"
       service_name_var_name: BACKEND_FOR_FRONTEND_SERVICE_NAME
@@ -365,7 +352,6 @@ jobs:
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
       kustomize_overlay_path: "overlays/api-gateway"
       service_name_var_name: API_GATEWAY_SERVICE_NAME
@@ -381,7 +367,6 @@ jobs:
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
       kustomize_overlay_path: "overlays/authorization-server"
       service_name_var_name: AUTHORIZATION_SERVER_SERVICE_NAME
@@ -397,7 +382,6 @@ jobs:
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
       kustomize_overlay_path: "overlays/notifier"
       service_name_var_name: NOTIFIER_SERVICE_NAME
@@ -413,7 +397,6 @@ jobs:
     uses: ./.github/workflows/deploy-cronjob.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
       k8s_files_path: "jobs/attributes-loader"
       service_name_var_name: JOB_ATTRIBUTES_LOADER_SERVICE_NAME
@@ -429,7 +412,6 @@ jobs:
     uses: ./.github/workflows/deploy-cronjob.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
       k8s_files_path: "jobs/token-details-persister"
       service_name_var_name: JOB_DETAILS_PERSISTER_SERVICE_NAME
@@ -445,7 +427,6 @@ jobs:
     uses: ./.github/workflows/deploy-cronjob.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
       k8s_files_path: "jobs/token-details-persister"
       service_name_var_name: JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_SERVICE_NAME
@@ -461,7 +442,6 @@ jobs:
     uses: ./.github/workflows/deploy-redis.yaml
     secrets: inherit
     with:
-      runner_name: ${{ needs.create_runner.outputs.runner_name }}
       environment: dev
 
   delete_runner:
@@ -477,6 +457,10 @@ jobs:
       deploy_tenants_certified_attributes_updater, deploy_redis]
     if: ${{ always() }}
     runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        index: [1, 2, 3]
+      fail-fast: true
     environment: dev
     permissions:
       contents: read
@@ -490,5 +474,4 @@ jobs:
           aws_region: ${{ secrets.AWS_REGION }}
           iam_role_arn: ${{ secrets.ECS_IAM_ROLE_ARN }}
           ecs_cluster_name: ${{ secrets.ECS_CLUSTER_NAME }}
-          runner_name: ${{ needs.create_runner.outputs.runner_name }}
           pat_token: ${{ secrets.BOT_TOKEN }}

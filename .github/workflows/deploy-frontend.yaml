@@ -3,10 +3,6 @@ name: Deploy Frontend
 on:
   workflow_call:
     inputs:
-      runner_name:
-        description: 'Name (label) of the self-hosted runner'
-        type: string
-        required: true
       environment:
         description: 'Environment name'
         type: string
@@ -15,7 +11,7 @@ on:
 jobs:
   deploy_frontend:
     name: Deploy Frontend
-    runs-on: [self-hosted, "${{ inputs.runner_name }}"]
+    runs-on: [self-hosted, "run_id:${{ github.run_id }}"]
     environment: ${{ inputs.environment }}
     permissions:
       contents: read
