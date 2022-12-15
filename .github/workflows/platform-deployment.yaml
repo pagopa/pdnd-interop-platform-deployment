@@ -162,21 +162,30 @@ jobs:
           applyKubeFile "frontend/deployment.yaml" $FRONTEND_SERVICE_NAME $imageDigest $FRONTEND_RESOURCE_CPU $FRONTEND_RESOURCE_MEM
           applyKubeFile "frontend/service.yaml" $FRONTEND_SERVICE_NAME
 
-  # deploy_agreement_management:
-  #   name: Agreement Management
-  #   needs: [create_runner, platform_deployment_configs]
-  #   permissions:
-  #     contents: read
-  #   uses: ./.github/workflows/deploy-service.yaml
-  #   secrets: inherit
-  #   with:
-  #     runner_name: ${{ needs.create_runner.outputs.runner_name }}
-  #     environment: dev
-  #     kustomize_overlay_path: "overlays/agreement-management"
-  #     service_name_var_name: AGREEMENT_MANAGEMENT_SERVICE_NAME
-  #     image_version_var_name: AGREEMENT_MANAGEMENT_IMAGE_VERSION
-  #     resource_cpu_var_name: AGREEMENT_MANAGEMENT_RESOURCE_CPU
-  #     resource_mem_var_name: AGREEMENT_MANAGEMENT_RESOURCE_MEM
+      - name: Wait for Service Readiness
+        id: wait_ready
+        run: |
+          set -eo pipefail
+          source $CONFIG_FILE
+          source ./deployment_functions.sh
+
+          waitForServiceReady $FRONTEND_SERVICE_NAME
+
+  deploy_agreement_management:
+    name: Agreement Management
+    needs: [create_runner, platform_deployment_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      runner_name: ${{ needs.create_runner.outputs.runner_name }}
+      environment: dev
+      kustomize_overlay_path: "overlays/agreement-management"
+      service_name_var_name: AGREEMENT_MANAGEMENT_SERVICE_NAME
+      image_version_var_name: AGREEMENT_MANAGEMENT_IMAGE_VERSION
+      resource_cpu_var_name: AGREEMENT_MANAGEMENT_RESOURCE_CPU
+      resource_mem_var_name: AGREEMENT_MANAGEMENT_RESOURCE_MEM
 
 
   delete_runner:

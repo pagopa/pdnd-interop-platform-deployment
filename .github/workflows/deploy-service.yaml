@@ -73,7 +73,7 @@ jobs:
           applyKustomizeToDir ${{ inputs.kustomize_overlay_path }} \
             $serviceName $imageVersion $resourceCpu $resourceMem
 
-      - name: Wait for Service Ready
+      - name: Wait for Service Readiness
         id: wait_ready
         run: |
           set -eo pipefail
