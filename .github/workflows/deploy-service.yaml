@@ -80,4 +80,6 @@ jobs:
           source $CONFIG_FILE
           source ./deployment_functions.sh
 
-          waitForServiceReady ${{ inputs.service_name }}
+          serviceName="${${{inputs.service_name_var_name}}}"
+
+          waitForServiceReady $serviceName

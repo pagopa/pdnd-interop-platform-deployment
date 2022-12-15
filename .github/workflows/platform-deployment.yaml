@@ -37,7 +37,7 @@ jobs:
           pat_token: ${{ secrets.BOT_TOKEN }}
 
   platform_deployment_configs:
-    name: Platform Deployment Configs
+    name: Configurations
     needs: create_runner
     runs-on: [self-hosted, "${{ needs.create_runner.outputs.runner_name }}"]
     environment: dev
@@ -124,52 +124,13 @@ jobs:
   deploy_frontend:
     name: Frontend
     needs: [create_runner, platform_deployment_configs]
-    runs-on: [self-hosted, "${{ needs.create_runner.outputs.runner_name }}"]
-    environment: dev
     permissions:
       contents: read
-    env:
-      NAMESPACE: ${{ secrets.NAMESPACE }}
-      CONFIG_FILE: ${{ secrets.CONFIG_FILE }}
-      ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
-
-    steps:
-      - name: Checkout
-        id: checkout
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-
-      - name: Update Kubeconfig
-        id: update_kubeconfig
-        run: |
-          set -eo pipefail
-
-          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
-
-      - name: Apply Kube Files
-        id: apply_kube_files
-        run: |
-          set -eo pipefail
-          source $CONFIG_FILE
-          source ./deployment_functions.sh
-
-          echo "Retrieving image digest for $FRONTEND_SERVICE_NAME version $FRONTEND_IMAGE_VERSION"
-          imageDigest="$(getDockerImageDigest $FRONTEND_SERVICE_NAME $FRONTEND_IMAGE_VERSION)"
-          echo "Image digest: $imageDigest"
-
-          applyKubeFile "frontend/configmap.yaml" $FRONTEND_SERVICE_NAME
-          applyKubeFile "frontend/deployment.yaml" $FRONTEND_SERVICE_NAME $imageDigest $FRONTEND_RESOURCE_CPU $FRONTEND_RESOURCE_MEM
-          applyKubeFile "frontend/service.yaml" $FRONTEND_SERVICE_NAME
-
-      - name: Wait for Service Readiness
-        id: wait_ready
-        run: |
-          set -eo pipefail
-          source $CONFIG_FILE
-          source ./deployment_functions.sh
-
-          waitForServiceReady $FRONTEND_SERVICE_NAME
+    uses: ./.github/workflows/deploy-frontend.yaml
+    secrets: inherit
+    with:
+      runner_name: ${{ needs.create_runner.outputs.runner_name }}
+      environment: dev
 
   deploy_agreement_management:
     name: Agreement Management
