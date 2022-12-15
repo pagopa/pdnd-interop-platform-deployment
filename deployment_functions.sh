@@ -153,11 +153,9 @@ function compileDir() {
   resourceCpu=$5
   resourceMem=$6
 
-  echo "$dirPath"
 
-  for f in $dirPath; do
+  for f in $dirPath/*; do
     if [ ! $(basename $f) = "kustomization.yaml" ]; then
-      echo "f: $f"
       mkdir -p "${serviceName}/${dirPath}"
       SERVICE_NAME="$serviceName" \
         IMAGE_VERSION="$imageVersion" \
