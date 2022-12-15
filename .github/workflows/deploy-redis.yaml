@@ -1,0 +1,58 @@
+name: Deploy Redis
+
+on:
+  workflow_call:
+    inputs:
+      runner_name:
+        description: 'Name (label) of the self-hosted runner'
+        type: string
+        required: true
+      environment:
+        description: 'Environment name'
+        type: string
+        required: true
+
+jobs:
+  deploy_redis:
+    name: Deploy Redis
+    runs-on: [self-hosted, "${{ inputs.runner_name }}"]
+    environment: ${{ inputs.environment }}
+    permissions:
+      contents: read
+    env:
+      NAMESPACE: ${{ secrets.NAMESPACE }}
+      CONFIG_FILE: ${{ secrets.CONFIG_FILE }}
+      ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      - name: Update Kubeconfig
+        id: update_kubeconfig
+        run: |
+          set -eo pipefail
+
+          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
+
+      - name: Apply Kube Files
+        id: apply_kube_files
+        run: |
+          set -eo pipefail
+          source $CONFIG_FILE
+          source ./deployment_functions.sh
+
+          applyKubeFile "thirdparty/redis/deployment.yaml" $REDIS_SERVICE_NAME "" $REDIS_RESOURCE_CPU $REDIS_RESOURCE_MEM
+          applyKubeFile "thirdparty/redis/service.yaml" $REDIS_SERVICE_NAME
+
+      - name: Wait for Service Readiness
+        id: wait_ready
+        run: |
+          set -eo pipefail
+          source $CONFIG_FILE
+          source ./deployment_functions.sh
+
+          waitForServiceReady $REDIS_SERVICE_NAME
