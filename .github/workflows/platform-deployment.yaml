@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        index: [1, 2, 3]
+        index: [1, 2, 3, 4, 5]
       fail-fast: true
     environment: dev
     permissions:
@@ -459,7 +459,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        index: [1, 2, 3]
+        index: [1, 2, 3, 4, 5]
       fail-fast: true
     environment: dev
     permissions:

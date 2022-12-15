@@ -71,5 +71,5 @@ jobs:
           echo "Image digest: $imageDigest"
 
           applyKubeFile "${{ inputs.k8s_files_path }}/configmap.yaml" $serviceName
-          applyKubeFile "${{ inputs.k8s_files_path }}/serviceaccount.yaml" $serviceName $imageDigest $resourceCpu $resourceMem
-          applyKubeFile "${{ inputs.k8s_files_path }}/cronjob.yaml" $serviceName
+          applyKubeFile "${{ inputs.k8s_files_path }}/serviceaccount.yaml" $serviceName
+          applyKubeFile "${{ inputs.k8s_files_path }}/cronjob.yaml" $serviceName $imageDigest $resourceCpu $resourceMem

@@ -131,7 +131,7 @@ function applyKubeFile() {
   SERVICE_NAME=$serviceName \
     IMAGE_DIGEST=$imageDigest \
     SERVICE_RESOURCE_CPU=$resourceCpu \
-    SERVICE_RESOURCE_MEME=$resourceMem \
+    SERVICE_RESOURCE_MEM=$resourceMem \
     LOWERCASE_ENV=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]') \
     ./kubernetes/templater.sh "./kubernetes/$fileName" \
       -s -f $CONFIG_FILE \
