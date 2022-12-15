@@ -208,10 +208,6 @@ function applyKustomizeToDir() {
   echo "Applying files for ${serviceName}"
   kubectl apply -f "${serviceName}/full.${serviceName}.yaml"
   echo "Files for ${serviceName} applied"
-
-  echo "Removing folder"
-  sh "rm -rf ${serviceName}"
-  echo "Folder removed"
 }
 
 function waitForServiceReady() {
