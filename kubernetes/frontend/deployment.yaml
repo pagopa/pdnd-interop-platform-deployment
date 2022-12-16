@@ -36,11 +36,11 @@ spec:
               readOnly: true
           resources:
             requests:
-              memory: {{SERVICE_RESOURCE_CPU}}
-              cpu: {{SERVICE_RESOURCE_MEM}}
+              memory: "16Mi"
+              cpu: "10m"
             limits:
-              memory: {{SERVICE_RESOURCE_CPU}}
-              cpu: {{SERVICE_RESOURCE_MEM}}
+              memory: "128Mi"
+              cpu: "100m"
       volumes:
         - name: default-conf
           configMap:
