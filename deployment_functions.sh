@@ -124,14 +124,16 @@ function applyKubeFile() {
   resourceCpu=$4
   resourceMem=$5
 
+  echo "args: $@"
+
   compiledFileName="./kubernetes/$(dirname $fileName)/compiled.$(basename $fileName)"
 
   echo "Compiling file $fileName"
 
-  SERVICE_NAME=$serviceName \
-    IMAGE_DIGEST=$imageDigest \
-    SERVICE_RESOURCE_CPU=$resourceCpu \
-    SERVICE_RESOURCE_MEM=$resourceMem \
+  SERVICE_NAME="$serviceName" \
+    IMAGE_DIGEST="$imageDigest" \
+    SERVICE_RESOURCE_CPU="$resourceCpu" \
+    SERVICE_RESOURCE_MEM="$resourceMem" \
     LOWERCASE_ENV=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]') \
     ./kubernetes/templater.sh "./kubernetes/$fileName" \
       -s -f $CONFIG_FILE \
@@ -140,9 +142,9 @@ function applyKubeFile() {
   echo "File $fileName compiled"
   cat $compiledFileName
 
-  echo "Applying $compiledFileName"
-  kubectl apply -f "$compiledFileName"
-  echo "File $compiledFileName applied"
+  # echo "Applying $compiledFileName"
+  # kubectl apply -f "$compiledFileName"
+  # echo "File $compiledFileName applied"
 }
 
 function compileDir() {
