@@ -48,15 +48,15 @@ jobs:
     with:
       environment: dev
 
-  deploy_frontend:
-    name: Frontend
-    needs: [create_runner, deploy_configs]
-    permissions:
-      contents: read
-    uses: ./.github/workflows/deploy-frontend.yaml
-    secrets: inherit
-    with:
-      environment: dev
+  # deploy_frontend:
+  #   name: Frontend
+  #   needs: [create_runner, deploy_configs]
+  #   permissions:
+  #     contents: read
+  #   uses: ./.github/workflows/deploy-frontend.yaml
+  #   secrets: inherit
+  #   with:
+  #     environment: dev
 
   # deploy_agreement_management:
   #   name: Agreement Management
@@ -368,10 +368,20 @@ jobs:
   #   secrets: inherit
   #   with:
   #     environment: dev
+  #
+  deploy_ingress:
+    name: Ingress
+    needs: [create_runner, deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-ingress.yaml
+    secrets: inherit
+    with:
+      environment: dev
 
   delete_runner:
     name: Delete Self-Hosted Runner
-    needs: [create_runner, deploy_configs, deploy_frontend]
+    needs: [create_runner, deploy_configs, deploy_ingress]
       # deploy_frontend, deploy_agreement_management, deploy_agreement_process,
       # deploy_attribute_registry_management, deploy_authorization_management,
       # deploy_authorization_process, deploy_catalog_management, deploy_catalog_process,
@@ -379,7 +389,7 @@ jobs:
       # deploy_purpose_process, deploy_tenant_management, deploy_tenant_process,
       # deploy_backend_for_frontend, deploy_api_gateway, deploy_authorization_server,
       # deploy_notifier, deploy_attributes_loader, deploy_token_details_persister,
-      # deploy_tenants_certified_attributes_updater, deploy_redis]
+      # deploy_tenants_certified_attributes_updater, deploy_redis, deploy_ingress]
     if: ${{ always() }}
     runs-on: ubuntu-22.04
     strategy:

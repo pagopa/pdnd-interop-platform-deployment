@@ -227,3 +227,35 @@ function waitForServiceReady() {
   echo "Waiting for pod readiness for ${serviceName}"
   kubectl wait --for condition=Ready pod -l app="${serviceName}" --namespace="$NAMESPACE" --timeout=180s
 }
+
+function createIngress() {
+  # Params are triplets of (serviceName, applicationPath, servicePort)
+  local tuples=("${@}")
+  local length=${#tuples[@]}
+
+  local compiledFileName='./kubernetes/compiled.ingress.yaml'
+
+  local baseCommand="kubectl -n $NAMESPACE create ingress interop-services --class=alb --dry-run=client -o yaml "
+  local annotations='--annotation="alb.ingress.kubernetes.io/scheme=internal" --annotation="alb.ingress.kubernetes.io/target-type=ip" '
+
+  local rules=''
+
+  for (( j=0; j<length; j=j+3 )); do
+    local i=$j
+    local k=$((j+1))
+    local z=$((j+2))
+    local serviceName="${tuples[$i]}"
+    local applicationPath="${tuples[$k]}"
+    local servicePort="${tuples[$z]}"
+
+    newRule=' --rule="/'${applicationPath}'*='${serviceName}':'${servicePort}'" '
+    echo "Adding rule: $newRule"
+    rules=$rules''$newRule
+  done
+
+  eval "$baseCommand $annotations $rules > $compiledFileName"
+
+  echo "Applying $compiledFileName"
+  kubectl apply -f "$compiledFileName"
+  echo "Applied $compiledFileName"
+}

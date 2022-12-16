@@ -1,0 +1,52 @@
+name: Deploy Ingress
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: 'Environment name'
+        type: string
+        required: true
+
+jobs:
+  deploy_ingress:
+    name: Deploy Ingress
+    runs-on: [self-hosted, "run_id:${{ github.run_id }}"]
+    environment: ${{ inputs.environment }}
+    permissions:
+      contents: read
+    env:
+      NAMESPACE: ${{ secrets.NAMESPACE }}
+      CONFIG_FILE: ${{ secrets.CONFIG_FILE }}
+      ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      - name: Update Kubeconfig
+        id: update_kubeconfig
+        run: |
+          set -eo pipefail
+
+          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
+
+      - name: Create Ingress
+        id: create_ingress
+        run: |
+          set -eo pipefail
+          source $CONFIG_FILE
+          source ./deployment_functions.sh
+          
+          createIngress \
+              $AGREEMENT_PROCESS_SERVICE_NAME $AGREEMENT_PROCESS_APPLICATION_PATH $BACKEND_SERVICE_PORT \
+              $API_GATEWAY_SERVICE_NAME $API_GATEWAY_APPLICATION_PATH $BACKEND_SERVICE_PORT \
+              $AUTHORIZATION_PROCESS_SERVICE_NAME $AUTHORIZATION_PROCESS_APPLICATION_PATH $BACKEND_SERVICE_PORT \
+              $AUTHORIZATION_SERVER_SERVICE_NAME $AUTHORIZATION_SERVER_APPLICATION_PATH $BACKEND_SERVICE_PORT \
+              $BACKEND_FOR_FRONTEND_SERVICE_NAME $BACKEND_FOR_FRONTEND_APPLICATION_PATH $BACKEND_SERVICE_PORT \
+              $CATALOG_PROCESS_SERVICE_NAME $CATALOG_PROCESS_APPLICATION_PATH $BACKEND_SERVICE_PORT \
+              $FRONTEND_SERVICE_NAME $FRONTEND_SERVICE_APPLICATION_PATH $FRONTEND_SERVICE_PORT \
+              $PURPOSE_PROCESS_SERVICE_NAME $PURPOSE_PROCESS_APPLICATION_PATH $BACKEND_SERVICE_PORT
