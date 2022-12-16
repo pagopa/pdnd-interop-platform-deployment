@@ -1,5 +1,5 @@
 function getSecretValue() {
-  secretId=$1
+  local secretId=$1
 
   secretValue="$(aws secretsmanager get-secret-value \
     --secret-id "$secretId" \
@@ -45,9 +45,9 @@ function urlEncode() {
 }
 
 function createReadModelUser() {
-  user=$1
-  password=$2
-  role=$3
+  local user=$1
+  local password=$2
+  local role=$3
 
   adminUser="$(getSecretValue 'documentdb-admin-username')"
   adminPassword="$(getSecretValue 'documentdb-admin-password')"
@@ -67,8 +67,8 @@ function createReadModelUser() {
 
 
 function createKubeSecret() {
-  secretName=$1
-  compiledFileName="./kubernetes/compiled.secret.$secretName.yaml"
+  local secretName=$1
+  local compiledFileName="./kubernetes/compiled.secret.$secretName.yaml"
 
   shift
   tuples=("${@}")
@@ -108,8 +108,8 @@ function prepareDbMigrations() {
 }
 
 function getDockerImageDigest() {
-  serviceName=$1
-  imageVersion=$2
+  local serviceName=$1
+  local imageVersion=$2
 
   imageSHA56="$(aws ecr batch-get-image --repository-name "${serviceName}" --image-ids "imageTag=$imageVersion" \
               | jq -r '.images[0].imageId.imageDigest')"
@@ -118,11 +118,11 @@ function getDockerImageDigest() {
 }
 
 function applyKubeFile() {
-  fileName=$1
-  serviceName=$2
-  imageDigest=$3
-  resourceCpu=$4
-  resourceMem=$5
+  local fileName=$1
+  local serviceName=$2
+  local imageDigest=$3
+  local resourceCpu=$4
+  local resourceMem=$5
 
   echo "args: $@"
 
@@ -148,12 +148,12 @@ function applyKubeFile() {
 }
 
 function compileDir() {
-  dirPath=$1
-  serviceName=$2
-  imageVersion=$3
-  imageDigest=$4
-  resourceCpu=$5
-  resourceMem=$6
+  local dirPath=$1
+  local serviceName=$2
+  local imageVersion=$3
+  local imageDigest=$4
+  local resourceCpu=$5
+  local resourceMem=$6
 
 
   for f in $dirPath/*; do
@@ -175,11 +175,11 @@ function compileDir() {
 
 function applyKustomizeToDir() {
   # dirPath starting from kubernetes folder (e.g. overlays/party-management)
-  dirPath=$1
-  serviceName=$2
-  imageVersion=$3
-  resourceCpu=$4
-  resourceMem=$5
+  local dirPath=$1
+  local serviceName=$2
+  local imageVersion=$3
+  local resourceCpu=$4
+  local resourceMem=$5
 
   echo "Retrieving image digest for ${serviceName} version ${imageVersion}"
   serviceImageDigest="$(getDockerImageDigest $serviceName $imageVersion)"
@@ -213,7 +213,7 @@ function applyKustomizeToDir() {
 }
 
 function waitForServiceReady() {
-  serviceName=$1
+  local serviceName=$1
 
   retry=0
   result=0
