@@ -124,9 +124,7 @@ function applyKubeFile() {
   local resourceCpu=$4
   local resourceMem=$5
 
-  echo "args: $@"
-
-  compiledFileName="./kubernetes/$(dirname $fileName)/compiled.$(basename $fileName)"
+  local compiledFileName="./kubernetes/$(dirname $fileName)/compiled.$(basename $fileName)"
 
   echo "Compiling file $fileName"
 
@@ -142,9 +140,9 @@ function applyKubeFile() {
   echo "File $fileName compiled"
   cat $compiledFileName
 
-  # echo "Applying $compiledFileName"
-  # kubectl apply -f "$compiledFileName"
-  # echo "File $compiledFileName applied"
+  echo "Applying $compiledFileName"
+  kubectl apply -f "$compiledFileName"
+  echo "File $compiledFileName applied"
 }
 
 function compileDir() {
@@ -227,5 +225,5 @@ function waitForServiceReady() {
   done
 
   echo "Waiting for pod readiness for ${serviceName}"
-  kubectl wait --for condition=Ready pod -l app="${serviceName}" --namespace="$NAMESPACE" --timeout=120s
+  kubectl wait --for condition=Ready pod -l app="${serviceName}" --namespace="$NAMESPACE" --timeout=180s
 }
