@@ -24,6 +24,7 @@ jobs:
       NAMESPACE: ${{ secrets.NAMESPACE }}
       CONFIG_FILE: ${{ secrets.CONFIG_FILE }}
       ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+      AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
 
     steps:
       - name: Checkout
