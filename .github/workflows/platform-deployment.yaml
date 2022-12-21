@@ -387,7 +387,7 @@ jobs:
   delete_runner:
     name: Delete Self-Hosted Runner
     needs: [create_runner, deploy_ingress]
-    if: ${{ jobs.create_runner.result != 'skipped' }}
+    if: ${{ needs.create_runner.result != 'skipped' }}
     runs-on: ubuntu-22.04
     strategy:
       matrix:
