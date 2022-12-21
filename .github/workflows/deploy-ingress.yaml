@@ -35,7 +35,7 @@ jobs:
           persist-credentials: false
 
       - name: Checkout Tag
-        id: checkout
+        id: checkout_tag
         if: ${{ inputs.tag != '' }}
         uses: actions/checkout@v3
         with:
