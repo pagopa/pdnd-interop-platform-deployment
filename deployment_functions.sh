@@ -57,11 +57,11 @@ function createReadModelUser() {
   encodedNewUser=$(urlEncode "$user")
   encodedNewPassword=$(urlEncode "$password")
 
-  mongosh mongodb://${encodedAdminUser}:${encodedAdminPassword}@$READ_MODEL_DB_HOST:$READ_MODEL_DB_PORT/admin \
+  mongosh mongodb://"${encodedAdminUser}":"${encodedAdminPassword}"@"$READ_MODEL_DB_HOST":"$READ_MODEL_DB_PORT"/admin \
           --eval "if(db.getUser(\"${encodedNewUser}\") == null) { db.createUser({
             user: \"${encodedNewUser}\",
             pwd: \"${encodedNewPassword}\",
-            roles: [ {role: \"${role}\", db: "$READ_MODEL_DB_NAME"} ]
+            roles: [ {role: \"${role}\", db: \"$READ_MODEL_DB_NAME\"} ]
           })}"
 }
 
@@ -90,7 +90,7 @@ function createKubeSecret() {
   eval "$command -o yaml > $compiledFileName"
 
   echo "Applying $compiledFileName"
-  kubectl apply -f $compiledFileName
+  kubectl apply -f "$compiledFileName"
   echo "Applied: $compiledFileName"
 }
 
@@ -99,7 +99,7 @@ function prepareDbMigrations() {
 
   kubectl \
     create configmap common-db-migrations \
-    --namespace $NAMESPACE \
+    --namespace "$NAMESPACE" \
     --from-file=db/migrations/ \
     --dry-run=client \
     -o yaml | kubectl apply -f -
@@ -124,7 +124,8 @@ function applyKubeFile() {
   local resourceCpu=$4
   local resourceMem=$5
 
-  local compiledFileName="./kubernetes/$(dirname $fileName)/compiled.$(basename $fileName)"
+  local compiledFileName
+  compiledFileName="./kubernetes/$(dirname "$fileName")/compiled.$(basename "$fileName")"
 
   echo "Compiling file $fileName"
 
@@ -134,11 +135,11 @@ function applyKubeFile() {
     SERVICE_RESOURCE_MEM="$resourceMem" \
     LOWERCASE_ENV=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]') \
     ./kubernetes/templater.sh "./kubernetes/$fileName" \
-      -s -f $CONFIG_FILE \
+      -s -f "$CONFIG_FILE" \
       > "$compiledFileName"
 
   echo "File $fileName compiled"
-  cat $compiledFileName
+  cat "$compiledFileName"
 
   echo "Applying $compiledFileName"
   kubectl apply -f "$compiledFileName"
@@ -154,8 +155,8 @@ function compileDir() {
   local resourceMem=$6
 
 
-  for f in $dirPath/*; do
-    if [ ! $(basename $f) = "kustomization.yaml" ]; then
+  for f in "$dirPath"/*; do
+    if [ ! "$(basename "$f")" = "kustomization.yaml" ]; then
       mkdir -p "${serviceName}/${dirPath}"
       SERVICE_NAME="$serviceName" \
         IMAGE_VERSION="$imageVersion" \
@@ -163,10 +164,10 @@ function compileDir() {
         SERVICE_RESOURCE_CPU="$resourceCpu" \
         SERVICE_RESOURCE_MEM="$resourceMem" \
         LOWERCASE_ENV=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]') \
-        ./kubernetes/templater.sh "$f" -s -f $CONFIG_FILE \
+        ./kubernetes/templater.sh "$f" -s -f "$CONFIG_FILE" \
         > "$serviceName/$f"
     else
-      cp $f "$serviceName/$f"
+      cp "$f" "$serviceName/$f"
     fi
   done
 }
@@ -180,22 +181,22 @@ function applyKustomizeToDir() {
   local resourceMem=$5
 
   echo "Retrieving image digest for ${serviceName} version ${imageVersion}"
-  serviceImageDigest="$(getDockerImageDigest $serviceName $imageVersion)"
+  serviceImageDigest="$(getDockerImageDigest "$serviceName" "$imageVersion")"
   echo "Image digest: $serviceImageDigest"
 
   kubeDirPath="kubernetes/${dirPath}"
 
   echo "Compiling base files"
-  compileDir "kubernetes/base" $serviceName $imageVersion $serviceImageDigest $resourceCpu $resourceMem
+  compileDir "kubernetes/base" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
   echo "Base files compiled"
 
   echo "Compiling common files"
-  compileDir "kubernetes/commons/database" $serviceName $imageVersion $serviceImageDigest $resourceCpu $resourceMem
-  compileDir "kubernetes/commons/rate-limiting" $serviceName $imageVersion $serviceImageDigest $resourceCpu $resourceMem
+  compileDir "kubernetes/commons/database" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
+  compileDir "kubernetes/commons/rate-limiting" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
   echo "Common files compiled"
 
   echo "Compiling directory ${dirPath}"
-  compileDir $kubeDirPath $serviceName $imageVersion $serviceImageDigest $resourceCpu $resourceMem
+  compileDir "$kubeDirPath" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
   echo "Directory ${dirPath} compiled"
 
   echo "Applying Kustomization for ${serviceName}"
@@ -217,7 +218,7 @@ function waitForServiceReady() {
   result=0
   maxRetries=10
   echo "Waiting for pod creation for ${serviceName}"
-  while [ "$result" -lt 1 -a "$retry" -lt "$maxRetries" ]; do
+  while [ "$result" -lt 1 ] && [ "$retry" -lt "$maxRetries" ]; do
     sleep 3
     result=$(kubectl --namespace="$NAMESPACE" get pod -l app="$serviceName"  2>/dev/null \
       | grep "$serviceName" | wc -l)
