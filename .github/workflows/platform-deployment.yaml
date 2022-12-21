@@ -27,6 +27,7 @@ jobs:
   create_runner:
     name: Create Self-Hosted Runner
     needs: [check_prod_tag]
+    if: ${{ needs.check_prod_tag.result != 'failure' }}
     runs-on: ubuntu-22.04
     strategy:
       matrix:
