@@ -359,7 +359,7 @@ jobs:
       deploy_frontend, deploy_agreement_management, deploy_agreement_process,
       deploy_attribute_registry_management, deploy_authorization_management,
       deploy_authorization_process, deploy_catalog_management, deploy_catalog_process,
-      deploy_party_mock_registry, deploy_party_registry_proxy, deploy_purpose_management,
+      deploy_party_registry_proxy, deploy_purpose_management,
       deploy_purpose_process, deploy_tenant_management, deploy_tenant_process,
       deploy_backend_for_frontend, deploy_api_gateway, deploy_authorization_server,
       deploy_notifier, deploy_attributes_loader, deploy_token_details_persister,
