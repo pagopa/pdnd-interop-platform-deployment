@@ -672,7 +672,7 @@ void createReadModelUser(String user, String password, String role) {
 String urlEncode(String str) {
   sh(
     returnStdout: true, 
-    script: 'echo ' + str + ''' | sed \
+    script: "echo '${str}'" + ''' | sed \
         -e 's/%/%25/g' \
         -e 's/ /%20/g' \
         -e 's/!/%21/g' \
