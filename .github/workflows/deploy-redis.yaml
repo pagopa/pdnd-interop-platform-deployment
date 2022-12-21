@@ -7,11 +7,6 @@ on:
         description: 'Environment name'
         type: string
         required: true
-      tag:
-        description: 'Repository tag to checkout (e.g. "v1.0.2")'
-        type: string
-        required: false
-        default: ''
 
 jobs:
   deploy_redis:
@@ -29,18 +24,9 @@ jobs:
     steps:         
       - name: Checkout
         id: checkout
-        if: ${{ inputs.tag == '' }}
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-
-      - name: Checkout Tag
-        id: checkout_tag
-        if: ${{ inputs.tag != '' }}
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          ref: refs/tags/${{ inputs.tag }}
           persist-credentials: false
 
       - name: Update Kubeconfig

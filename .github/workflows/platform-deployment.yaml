@@ -1,4 +1,4 @@
-name: Platform Deployment (dev, test)
+name: Platform Deployment
 
 on:
   workflow_dispatch:
@@ -6,14 +6,27 @@ on:
       environment:
         description: Environment to deploy
         required: true
-        type: choice
-        options:
-          - "dev"
-          - "test"
+        type: environment
 
 jobs:
+  check_prod_tag:
+    name: Check Prod Tag
+    if: ${{ inputs.environment == 'prod' }}
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Check Ref
+        id: check_ref
+        run: |
+          set -euxo pipefail
+          if [ ! "${{ github.ref_type }}" = "tag" ]; then
+            echo >2 "ERROR: deploy on prod environment must use a git tag"
+            exit 1
+          fi
+
   create_runner:
     name: Create Self-Hosted Runner
+    needs: [check_prod_tag]
     runs-on: ubuntu-22.04
     strategy:
       matrix:
@@ -374,7 +387,7 @@ jobs:
   delete_runner:
     name: Delete Self-Hosted Runner
     needs: [create_runner, deploy_ingress]
-    if: ${{ always() }}
+    if: ${{ jobs.create_runner.result != 'skipped' }}
     runs-on: ubuntu-22.04
     strategy:
       matrix:
