@@ -1,0 +1,96 @@
+name: Deploy Service
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: 'Environment name'
+        type: string
+        required: true
+      tag:
+        description: 'Repository tag to checkout (e.g. "v1.0.2")'
+        type: string
+        required: false
+        default: ''
+      kustomize_overlay_path:
+        description: 'Path to folder with kustomize overlay for this service'
+        type: string
+        required: true
+      service_name_var_name:
+        description: 'Name of the environment variable containing the service name'
+        type: string
+        required: true
+      image_version_var_name:
+        description: 'Name of the environment variable containing the image version for this service'
+        type: string
+        required: true
+      resource_cpu_var_name:
+        description: 'Name of the environment variable containing the CPU to allocate for this service'
+        type: string
+        required: true
+      resource_mem_var_name:
+        description: 'Name of the environment variable containing the memory to allocate for this service'
+        type: string
+        required: true
+
+jobs:
+  deploy_service:
+    name: Deploy Service
+    runs-on: [self-hosted, "run_id:${{ github.run_id }}"]
+    environment: ${{ inputs.environment }}
+    env:
+      NAMESPACE: ${{ secrets.NAMESPACE }}
+      CONFIG_FILE: ${{ secrets.CONFIG_FILE }}
+      ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+      AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+      ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+
+    steps:
+      - name: Checkout
+        id: checkout
+        if: ${{ inputs.tag == '' }}
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      - name: Checkout Tag
+        id: checkout
+        if: ${{ inputs.tag != '' }}
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: refs/tags/${{ inputs.tag }}
+          persist-credentials: false
+
+      - name: Update Kubeconfig
+        id: update_kubeconfig
+        run: |
+          set -eo pipefail
+
+          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
+
+      - name: Apply Kustomize
+        id: apply_kustomize
+        run: |
+          set -eo pipefail
+          source $CONFIG_FILE
+          source ./deployment_functions.sh
+
+          serviceName="${${{inputs.service_name_var_name}}}"
+          imageVersion="${${{inputs.image_version_var_name}}}"
+          resourceCpu="${${{inputs.resource_cpu_var_name}}}"
+          resourceMem="${${{inputs.resource_mem_var_name}}}"
+
+          applyKustomizeToDir ${{ inputs.kustomize_overlay_path }} \
+            $serviceName $imageVersion $resourceCpu $resourceMem
+
+      - name: Wait for Service Readiness
+        id: wait_ready
+        run: |
+          set -eo pipefail
+          source $CONFIG_FILE
+          source ./deployment_functions.sh
+
+          serviceName="${${{inputs.service_name_var_name}}}"
+
+          waitForServiceReady $serviceName
