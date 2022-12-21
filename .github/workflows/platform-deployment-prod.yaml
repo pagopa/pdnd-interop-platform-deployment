@@ -355,7 +355,7 @@ jobs:
     with:
       environment: prod
       tag: ${{ inputs.tag }}
-      k8s_files_path: "jobs/token-details-persister"
+      k8s_files_path: "jobs/tenants-certified-attributes-updater"
       service_name_var_name: JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_SERVICE_NAME
       image_version_var_name: JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_IMAGE_VERSION
       resource_cpu_var_name: JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_RESOURCE_CPU
