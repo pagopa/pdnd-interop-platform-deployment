@@ -27,7 +27,7 @@ jobs:
   create_runner:
     name: Create Self-Hosted Runner
     needs: [check_prod_tag]
-    if: ${{ needs.check_prod_tag.result != 'failure' }}
+    if: ${{ always() && needs.check_prod_tag.result != 'failure' }}
     runs-on: ubuntu-22.04
     strategy:
       matrix:
@@ -388,7 +388,7 @@ jobs:
   delete_runner:
     name: Delete Self-Hosted Runner
     needs: [create_runner, deploy_ingress]
-    if: ${{ needs.create_runner.result != 'skipped' }}
+    if: ${{ always() && needs.create_runner.result != 'skipped' }}
     runs-on: ubuntu-22.04
     strategy:
       matrix:
