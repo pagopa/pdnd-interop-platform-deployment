@@ -11,14 +11,19 @@ on:
 jobs:
   check_prod_tag:
     name: Check Prod Tag
-    if: ${{ inputs.environment == 'prod' }}
     runs-on: ubuntu-22.04
+    # we could use an "if" here, but if this job is skipped then all the downstream jobs are skipped even if they don't need this job
 
     steps:
       - name: Check Ref
         id: check_ref
         run: |
           set -euxo pipefail
+
+          if [ ! "${{ inputs.environment }}" = "prod"]; then
+            exit 0
+          fi
+
           if [ ! "${{ github.ref_type }}" = "tag" ]; then
             echo >2 "ERROR: deploy on prod environment must use a git tag"
             exit 1
@@ -27,7 +32,6 @@ jobs:
   create_runner:
     name: Create Self-Hosted Runner
     needs: [check_prod_tag]
-    if: ${{ always() && needs.check_prod_tag.result != 'failure' }}
     runs-on: ubuntu-22.04
     strategy:
       matrix:
@@ -54,7 +58,7 @@ jobs:
 
   deploy_configs:
     name: Configurations
-    needs: create_runner
+    needs: [create_runner]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-configs.yaml
@@ -64,7 +68,7 @@ jobs:
 
   deploy_frontend:
     name: Frontend
-    needs: [create_runner, deploy_configs]
+    needs: [deploy_configs]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-frontend.yaml
@@ -74,7 +78,7 @@ jobs:
 
   deploy_agreement_management:
     name: Agreement Management
-    needs: [create_runner, deploy_configs]
+    needs: [deploy_configs]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -89,7 +93,7 @@ jobs:
 
   deploy_agreement_process:
     name: Agreement Process
-    needs: [create_runner, deploy_configs]
+    needs: [deploy_configs]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -104,7 +108,7 @@ jobs:
 
   deploy_attribute_registry_management:
     name: Attribute Registry Management
-    needs: [create_runner, deploy_configs]
+    needs: [deploy_configs]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -119,7 +123,7 @@ jobs:
 
   deploy_authorization_management:
     name: Authorization Management
-    needs: [create_runner, deploy_configs]
+    needs: [deploy_configs]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -134,7 +138,7 @@ jobs:
 
   deploy_authorization_process:
     name: Authorization Process
-    needs: [create_runner, deploy_configs]
+    needs: [deploy_configs]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -149,7 +153,7 @@ jobs:
 
   deploy_catalog_management:
     name: Catalog Management
-    needs: [create_runner, deploy_configs]
+    needs: [deploy_configs]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -164,7 +168,7 @@ jobs:
 
   deploy_catalog_process:
     name: Catalog Process
-    needs: [create_runner, deploy_configs]
+    needs: [deploy_configs]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -179,7 +183,7 @@ jobs:
 
   deploy_party_registry_proxy:
     name: Party Registry Proxy
-    needs: [create_runner, deploy_configs]
+    needs: [deploy_configs]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -194,7 +198,7 @@ jobs:
 
   deploy_purpose_management:
     name: Purpose Management
-    needs: [create_runner, deploy_configs]
+    needs: [deploy_configs]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -209,7 +213,7 @@ jobs:
 
   deploy_purpose_process:
     name: Purpose Process
-    needs: [create_runner, deploy_configs]
+    needs: [deploy_configs]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -224,7 +228,7 @@ jobs:
 
   deploy_tenant_management:
     name: Tenant Management
-    needs: [create_runner, deploy_configs]
+    needs: [deploy_configs]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -239,7 +243,7 @@ jobs:
 
   deploy_tenant_process:
     name: Tenant Process
-    needs: [create_runner, deploy_configs]
+    needs: [deploy_configs]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -254,7 +258,7 @@ jobs:
 
   deploy_backend_for_frontend:
     name: Backend For Frontend
-    needs: [create_runner, deploy_configs]
+    needs: [deploy_configs]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -269,7 +273,7 @@ jobs:
 
   deploy_api_gateway:
     name: API Gateway
-    needs: [create_runner, deploy_configs]
+    needs: [deploy_configs]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -284,7 +288,7 @@ jobs:
 
   deploy_authorization_server:
     name: Authorization Server
-    needs: [create_runner, deploy_configs]
+    needs: [deploy_configs]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -299,7 +303,7 @@ jobs:
 
   deploy_notifier:
     name: Notifier
-    needs: [create_runner, deploy_configs]
+    needs: [deploy_configs]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -314,7 +318,7 @@ jobs:
 
   deploy_attributes_loader:
     name: Attributes Loader
-    needs: [create_runner, deploy_configs]
+    needs: [deploy_configs]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
@@ -329,7 +333,7 @@ jobs:
 
   deploy_token_details_persister:
     name: Token Details Persister
-    needs: [create_runner, deploy_configs]
+    needs: [deploy_configs]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
@@ -344,7 +348,7 @@ jobs:
 
   deploy_tenants_certified_attributes_updater:
     name: Tenants Certified Attributes Updater
-    needs: [create_runner, deploy_configs]
+    needs: [deploy_configs]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
@@ -359,7 +363,7 @@ jobs:
 
   deploy_redis:
     name: Redis
-    needs: [create_runner, deploy_configs]
+    needs: [deploy_configs]
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-redis.yaml
@@ -369,7 +373,7 @@ jobs:
 
   deploy_ingress:
     name: Ingress
-    needs: [create_runner, deploy_configs,
+    needs: [deploy_configs,
       deploy_frontend, deploy_agreement_management, deploy_agreement_process,
       deploy_attribute_registry_management, deploy_authorization_management,
       deploy_authorization_process, deploy_catalog_management, deploy_catalog_process,
