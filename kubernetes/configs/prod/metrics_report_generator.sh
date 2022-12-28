@@ -1,0 +1,12 @@
+#!/bin/bash
+
+INTERFACES_CONTAINER="interop-application-documents-prod"
+
+METRICS_CONTAINER="interop-platform-metrics-prod"
+METRICS_STORAGE_PATH="pa-digitale"
+
+ESERVICES_COLLECTION_NAME="eservices"
+TENANTS_COLLECTION_NAME="tenants"
+
+JOB_METRICS_REPORT_GENERATOR_RESOURCE_CPU="2"
+JOB_METRICS_REPORT_GENERATOR_RESOURCE_MEM="4Gi"
