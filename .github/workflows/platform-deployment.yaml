@@ -370,7 +370,7 @@ jobs:
     secrets: inherit
     with:
       environment: ${{ inputs.environment }}
-      k8s_files_path: "jobs/metrics_report_generator"
+      k8s_files_path: "jobs/metrics-report-generator"
       service_name_var_name: JOB_METRICS_REPORT_GENERATOR_SERVICE_NAME
       image_version_var_name: JOB_METRICS_REPORT_GENERATOR_IMAGE_VERSION
       resource_cpu_var_name: JOB_METRICS_REPORT_GENERATOR_RESOURCE_CPU
