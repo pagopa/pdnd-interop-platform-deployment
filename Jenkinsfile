@@ -378,6 +378,21 @@ spec:
                   }
                 }
 
+                stage('Metrics Report Generator') {
+                  environment {
+                    SERVICE_NAME = getVariableFromConf("JOB_METRICS_REPORT_GENERATOR_SERVICE_NAME")
+                    IMAGE_VERSION = getVariableFromConf("JOB_METRICS_REPORT_GENERATOR_IMAGE_VERSION")
+                    IMAGE_DIGEST =  getDockerImageDigest(SERVICE_NAME, IMAGE_VERSION)
+                    RESOURCE_CPU = getVariableFromConf("JOB_METRICS_REPORT_GENERATOR_RESOURCE_CPU")
+                    RESOURCE_MEM = getVariableFromConf("JOB_METRICS_REPORT_GENERATOR_RESOURCE_MEM")
+                  }
+                  steps {
+                    applyKubeFile('jobs/metrics-report-generator/configmap.yaml', SERVICE_NAME)
+                    applyKubeFile('jobs/metrics-report-generator/serviceaccount.yaml', SERVICE_NAME)
+                    applyKubeFile('jobs/metrics-report-generator/cronjob.yaml', SERVICE_NAME, IMAGE_DIGEST, RESOURCE_CPU, RESOURCE_MEM)
+                  }
+                }
+
               }
             }
 
