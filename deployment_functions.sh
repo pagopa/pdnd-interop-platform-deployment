@@ -110,8 +110,9 @@ function prepareDbMigrations() {
 function getDockerImageDigest() {
   local serviceName=$1
   local imageVersion=$2
+  local registryId="$(echo "$REPOSITORY" | cut -d '.' -f1)"
 
-  imageSHA56="$(aws ecr batch-get-image --repository-name "${serviceName}" --image-ids "imageTag=$imageVersion" \
+  imageSHA56="$(aws ecr batch-get-image --registry-id "$registryId" --repository-name "$serviceName" --image-ids "imageTag=$imageVersion" \
               | jq -r '.images[0].imageId.imageDigest')"
 
   echo "$imageSHA56"
