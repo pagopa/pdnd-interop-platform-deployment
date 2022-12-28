@@ -50,6 +50,21 @@ spec:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
                         key: TENANTS_COLLECTION_NAME
+                - name: INTERFACES_CONTAINER
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: INTERFACES_CONTAINER
+                - name: METRICS_CONTAINER
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: METRICS_CONTAINER
+                - name: METRICS_STORAGE_PATH
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: METRICS_STORAGE_PATH
                 - name: READ_MODEL_DB_USER
                   valueFrom:
                     secretKeyRef:
