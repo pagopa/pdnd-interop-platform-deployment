@@ -187,7 +187,7 @@ function prepareDbMigrations() {
 }
 
 
-function createReadModelUser(String user, String password, String role) {
+function createReadModelUser() {
     user=$1
     password=$2
     role=$3
@@ -396,6 +396,11 @@ applyKubeFile 'jobs/tenants-certified-attributes-updater/configmap.yaml' $JOB_TE
 applyKubeFile 'jobs/tenants-certified-attributes-updater/serviceaccount.yaml' $JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_SERVICE_NAME
 jobTenantsCertAttrUpdaterImageDigest=$(getDockerImageDigest $JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_SERVICE_NAME $JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_VERSION)
 applyKubeFile 'jobs/tenants-certified-attributes-updater/cronjob.yaml' $JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_SERVICE_NAME $jobTenantsCertAttrUpdaterImageDigest $JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_RESOURCE_CPU $JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_RESOURCE_MEM
+
+applyKubeFile 'jobs/metrics-report-generator/configmap.yaml' $JOB_METRICS_REPORT_GENERATOR_SERVICE_NAME
+applyKubeFile 'jobs/metrics-report-generator/serviceaccount.yaml' $JOB_METRICS_REPORT_GENERATOR_SERVICE_NAME
+jobMetricsReportGeneratorImageDigest=$(getDockerImageDigest $JOB_METRICS_REPORT_GENERATOR_SERVICE_NAME $JOB_METRICS_REPORT_GENERATOR_IMAGE_VERSION)
+applyKubeFile 'jobs/metrics-report-generator/cronjob.yaml' $JOB_METRICS_REPORT_GENERATOR_SERVICE_NAME $jobMetricsReportGeneratorImageDigest $JOB_METRICS_REPORT_GENERATOR_RESOURCE_CPU $JOB_METRICS_REPORT_GENERATOR_RESOURCE_MEM
 
 applyKubeFile 'thirdparty/redis/deployment.yaml' $REDIS_SERVICE_NAME "" $REDIS_RESOURCE_CPU $REDIS_RESOURCE_MEM
 applyKubeFile 'thirdparty/redis/service.yaml' $REDIS_SERVICE_NAME

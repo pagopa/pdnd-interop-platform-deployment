@@ -29,6 +29,7 @@ FRONTEND_SERVICE_NAME="interop-frontend"
 JOB_ATTRIBUTES_LOADER_SERVICE_NAME="interop-be-attributes-loader"
 JOB_DETAILS_PERSISTER_SERVICE_NAME="interop-be-token-details-persister"
 JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_SERVICE_NAME="interop-be-tenants-cert-attr-updater"
+JOB_METRICS_REPORT_GENERATOR_SERVICE_NAME="interop-be-metrics-report-generator"
 
 REDIS_SERVICE_NAME="redis"
 
