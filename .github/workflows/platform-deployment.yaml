@@ -1,0 +1,429 @@
+name: Platform Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment to deploy
+        required: true
+        type: environment
+
+jobs:
+  check_prod_tag:
+    name: Check Prod Tag
+    runs-on: ubuntu-22.04
+    # we could use an "if" here, but if this job is skipped then all the downstream jobs are skipped even if they don't need this job
+
+    steps:
+      - name: Check Ref
+        id: check_ref
+        run: |
+          set -euxo pipefail
+
+          if [ ! "${{ inputs.environment }}" = "prod" ]; then
+            exit 0
+          fi
+
+          if [ ! "${{ github.ref_type }}" = "tag" ]; then
+            echo >&2 "ERROR: deploy on prod environment must use a git tag"
+            exit 1
+          fi
+
+  create_runner:
+    name: Create Self-Hosted Runner
+    needs: [check_prod_tag]
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        index: [1, 2, 3, 4 ,5]
+      fail-fast: true
+    environment: ${{ inputs.environment }}
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Start GitHub Runner
+        id: start_runner
+        uses: pagopa/interop-github-runner-aws-create-action@main
+        with:
+          aws_region: ${{ secrets.AWS_REGION }}
+          iam_role_arn: ${{ secrets.ECS_IAM_ROLE_ARN }}
+          ecs_cluster_name: ${{ secrets.ECS_CLUSTER_NAME }}
+          ecs_task_definition: ${{ secrets.TASK_DEFINITION }}
+          ecs_container_name: github-runner
+          ecs_task_subnet_id: ${{ secrets.SUBNET_ID }}
+          ecs_task_sec_group: ${{ secrets.SEC_GROUP_ID }}
+          pat_token: ${{ secrets.BOT_TOKEN }}
+
+  deploy_configs:
+    name: Configurations
+    needs: [create_runner]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-configs.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+
+  deploy_frontend:
+    name: Frontend
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-frontend.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+
+  deploy_agreement_management:
+    name: Agreement Management
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/agreement-management"
+      service_name_var_name: AGREEMENT_MANAGEMENT_SERVICE_NAME
+      image_version_var_name: AGREEMENT_MANAGEMENT_IMAGE_VERSION
+      resource_cpu_var_name: AGREEMENT_MANAGEMENT_RESOURCE_CPU
+      resource_mem_var_name: AGREEMENT_MANAGEMENT_RESOURCE_MEM
+
+  deploy_agreement_process:
+    name: Agreement Process
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/agreement-process"
+      service_name_var_name: AGREEMENT_PROCESS_SERVICE_NAME
+      image_version_var_name: AGREEMENT_PROCESS_IMAGE_VERSION
+      resource_cpu_var_name: AGREEMENT_PROCESS_RESOURCE_CPU
+      resource_mem_var_name: AGREEMENT_PROCESS_RESOURCE_MEM
+
+  deploy_attribute_registry_management:
+    name: Attribute Registry Management
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/attribute-registry-management"
+      service_name_var_name: ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME
+      image_version_var_name: ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION
+      resource_cpu_var_name: ATTRIBUTE_REGISTRY_MANAGEMENT_RESOURCE_CPU
+      resource_mem_var_name: ATTRIBUTE_REGISTRY_MANAGEMENT_RESOURCE_MEM
+
+  deploy_authorization_management:
+    name: Authorization Management
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/authorization-management"
+      service_name_var_name: AUTHORIZATION_MANAGEMENT_SERVICE_NAME
+      image_version_var_name: AUTHORIZATION_MANAGEMENT_IMAGE_VERSION
+      resource_cpu_var_name: AUTHORIZATION_MANAGEMENT_RESOURCE_CPU
+      resource_mem_var_name: AUTHORIZATION_MANAGEMENT_RESOURCE_MEM
+
+  deploy_authorization_process:
+    name: Authorization Process
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/authorization-process"
+      service_name_var_name: AUTHORIZATION_PROCESS_SERVICE_NAME
+      image_version_var_name: AUTHORIZATION_PROCESS_IMAGE_VERSION
+      resource_cpu_var_name: AUTHORIZATION_PROCESS_RESOURCE_CPU
+      resource_mem_var_name: AUTHORIZATION_PROCESS_RESOURCE_MEM
+
+  deploy_catalog_management:
+    name: Catalog Management
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/catalog-management"
+      service_name_var_name: CATALOG_MANAGEMENT_SERVICE_NAME
+      image_version_var_name: CATALOG_MANAGEMENT_IMAGE_VERSION
+      resource_cpu_var_name: CATALOG_MANAGEMENT_RESOURCE_CPU
+      resource_mem_var_name: CATALOG_MANAGEMENT_RESOURCE_MEM
+
+  deploy_catalog_process:
+    name: Catalog Process
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/catalog-process"
+      service_name_var_name: CATALOG_PROCESS_SERVICE_NAME
+      image_version_var_name: CATALOG_PROCESS_IMAGE_VERSION
+      resource_cpu_var_name: CATALOG_PROCESS_RESOURCE_CPU
+      resource_mem_var_name: CATALOG_PROCESS_RESOURCE_MEM
+
+  deploy_party_registry_proxy:
+    name: Party Registry Proxy
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/party-registry-proxy"
+      service_name_var_name: PARTY_REGISTRY_PROXY_SERVICE_NAME
+      image_version_var_name: PARTY_REGISTRY_PROXY_IMAGE_VERSION
+      resource_cpu_var_name: PARTY_REGISTRY_PROXY_RESOURCE_CPU
+      resource_mem_var_name: PARTY_REGISTRY_PROXY_RESOURCE_MEM
+
+  deploy_purpose_management:
+    name: Purpose Management
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/purpose-management"
+      service_name_var_name: PURPOSE_MANAGEMENT_SERVICE_NAME
+      image_version_var_name: PURPOSE_MANAGEMENT_IMAGE_VERSION
+      resource_cpu_var_name: PURPOSE_MANAGEMENT_RESOURCE_CPU
+      resource_mem_var_name: PURPOSE_MANAGEMENT_RESOURCE_MEM
+
+  deploy_purpose_process:
+    name: Purpose Process
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/purpose-process"
+      service_name_var_name: PURPOSE_PROCESS_SERVICE_NAME
+      image_version_var_name: PURPOSE_PROCESS_IMAGE_VERSION
+      resource_cpu_var_name: PURPOSE_PROCESS_RESOURCE_CPU
+      resource_mem_var_name: PURPOSE_PROCESS_RESOURCE_MEM
+
+  deploy_tenant_management:
+    name: Tenant Management
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/tenant-management"
+      service_name_var_name: TENANT_MANAGEMENT_SERVICE_NAME
+      image_version_var_name: TENANT_MANAGEMENT_IMAGE_VERSION
+      resource_cpu_var_name: TENANT_MANAGEMENT_RESOURCE_CPU
+      resource_mem_var_name: TENANT_MANAGEMENT_RESOURCE_MEM
+
+  deploy_tenant_process:
+    name: Tenant Process
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/tenant-process"
+      service_name_var_name: TENANT_PROCESS_SERVICE_NAME
+      image_version_var_name: TENANT_PROCESS_IMAGE_VERSION
+      resource_cpu_var_name: TENANT_PROCESS_RESOURCE_CPU
+      resource_mem_var_name: TENANT_PROCESS_RESOURCE_MEM
+
+  deploy_backend_for_frontend:
+    name: Backend For Frontend
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/backend-for-frontend"
+      service_name_var_name: BACKEND_FOR_FRONTEND_SERVICE_NAME
+      image_version_var_name: BACKEND_FOR_FRONTEND_IMAGE_VERSION
+      resource_cpu_var_name: BACKEND_FOR_FRONTEND_RESOURCE_CPU
+      resource_mem_var_name: BACKEND_FOR_FRONTEND_RESOURCE_MEM
+
+  deploy_api_gateway:
+    name: API Gateway
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/api-gateway"
+      service_name_var_name: API_GATEWAY_SERVICE_NAME
+      image_version_var_name: API_GATEWAY_IMAGE_VERSION
+      resource_cpu_var_name: API_GATEWAY_RESOURCE_CPU
+      resource_mem_var_name: API_GATEWAY_RESOURCE_MEM
+
+  deploy_authorization_server:
+    name: Authorization Server
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/authorization-server"
+      service_name_var_name: AUTHORIZATION_SERVER_SERVICE_NAME
+      image_version_var_name: AUTHORIZATION_SERVER_IMAGE_VERSION
+      resource_cpu_var_name: AUTHORIZATION_SERVER_RESOURCE_CPU
+      resource_mem_var_name: AUTHORIZATION_SERVER_RESOURCE_MEM
+
+  deploy_notifier:
+    name: Notifier
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/notifier"
+      service_name_var_name: NOTIFIER_SERVICE_NAME
+      image_version_var_name: NOTIFIER_IMAGE_VERSION
+      resource_cpu_var_name: NOTIFIER_RESOURCE_CPU
+      resource_mem_var_name: NOTIFIER_RESOURCE_MEM
+
+  deploy_attributes_loader:
+    name: Attributes Loader
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-cronjob.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      k8s_files_path: "jobs/attributes-loader"
+      service_name_var_name: JOB_ATTRIBUTES_LOADER_SERVICE_NAME
+      image_version_var_name: JOB_ATTRIBUTES_LOADER_IMAGE_VERSION
+      resource_cpu_var_name: JOB_ATTRIBUTES_LOADER_RESOURCE_CPU
+      resource_mem_var_name: JOB_ATTRIBUTES_LOADER_RESOURCE_MEM
+
+  deploy_token_details_persister:
+    name: Token Details Persister
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-cronjob.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      k8s_files_path: "jobs/token-details-persister"
+      service_name_var_name: JOB_DETAILS_PERSISTER_SERVICE_NAME
+      image_version_var_name: JOB_DETAILS_PERSISTER_IMAGE_VERSION
+      resource_cpu_var_name: JOB_DETAILS_PERSISTER_RESOURCE_CPU
+      resource_mem_var_name: JOB_DETAILS_PERSISTER_RESOURCE_MEM
+
+  deploy_tenants_certified_attributes_updater:
+    name: Tenants Certified Attributes Updater
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-cronjob.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      k8s_files_path: "jobs/tenants-certified-attributes-updater"
+      service_name_var_name: JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_SERVICE_NAME
+      image_version_var_name: JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_IMAGE_VERSION
+      resource_cpu_var_name: JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_RESOURCE_CPU
+      resource_mem_var_name: JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_RESOURCE_MEM
+
+  deploy_metrics_report_generator:
+    name: Metrics report generator
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-cronjob.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      k8s_files_path: "jobs/metrics-report-generator"
+      service_name_var_name: JOB_METRICS_REPORT_GENERATOR_SERVICE_NAME
+      image_version_var_name: JOB_METRICS_REPORT_GENERATOR_IMAGE_VERSION
+      resource_cpu_var_name: JOB_METRICS_REPORT_GENERATOR_RESOURCE_CPU
+      resource_mem_var_name: JOB_METRICS_REPORT_GENERATOR_RESOURCE_MEM
+
+  deploy_redis:
+    name: Redis
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-redis.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+
+  deploy_ingress:
+    name: Ingress
+    needs: [deploy_configs,
+      deploy_frontend, deploy_agreement_management, deploy_agreement_process,
+      deploy_attribute_registry_management, deploy_authorization_management,
+      deploy_authorization_process, deploy_catalog_management, deploy_catalog_process,
+      deploy_party_registry_proxy, deploy_purpose_management,
+      deploy_purpose_process, deploy_tenant_management, deploy_tenant_process,
+      deploy_backend_for_frontend, deploy_api_gateway, deploy_authorization_server,
+      deploy_notifier, deploy_attributes_loader, deploy_token_details_persister,
+      deploy_tenants_certified_attributes_updater, deploy_metrics_report_generator, deploy_redis]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-ingress.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+
+  delete_runner:
+    name: Delete Self-Hosted Runner
+    needs: [create_runner, deploy_ingress]
+    if: ${{ always() && needs.create_runner.result != 'skipped' }}
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        index: [1, 2, 3, 4, 5]
+      fail-fast: true
+    environment: ${{ inputs.environment }}
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Stop Github Runner
+        id: stop_runner
+        uses: pagopa/interop-github-runner-aws-cleanup-action@main
+        with:
+          aws_region: ${{ secrets.AWS_REGION }}
+          iam_role_arn: ${{ secrets.ECS_IAM_ROLE_ARN }}
+          ecs_cluster_name: ${{ secrets.ECS_CLUSTER_NAME }}
+          pat_token: ${{ secrets.BOT_TOKEN }}
