@@ -2,8 +2,10 @@
 
 INTERFACES_CONTAINER="interop-application-documents-dev"
 
-METRICS_CONTAINER="interop-platform-metrics-dev"
-METRICS_STORAGE_PATH="pa-digitale"
+REPORTS_CONTAINER="interop-platform-metrics-dev"
+PA_DIGITALE_STORAGE_PATH="pa-digitale"
+AGREEMENTS_CSV_STORAGE_PATH="agreements/csv"
+AGREEMENTS_JSON_STORAGE_PATH="agreements/json"
 
 ESERVICES_COLLECTION_NAME="eservices"
 TENANTS_COLLECTION_NAME="tenants"
