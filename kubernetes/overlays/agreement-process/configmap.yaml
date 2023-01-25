@@ -13,3 +13,4 @@ data:
   USER_REGISTRY_URL: "{{USER_REGISTRY_URL}}"
 
   AGREEMENT_CONTRACTS_PATH: "{{NAMESPACE}}/agreement/contracts"
+  CONSUMER_DOCS_PATH: "{{NAMESPACE}}/agreement/consumer-docs"
