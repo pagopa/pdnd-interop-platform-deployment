@@ -9,13 +9,19 @@ on:
         type: environment
 
 jobs:
-  check_prod_tag:
-    name: Check Prod Tag
+  validate_inputs:
+    name: Validate Inputs
     runs-on: ubuntu-22.04
     # we could use an "if" here, but if this job is skipped then all the downstream jobs are skipped even if they don't need this job
 
     steps:
-      - name: Check Ref
+      - name: Print Inputs
+        id: print_inputs
+        run: |
+          echo "- environment: \`${{ inputs.environment }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- ref: \`${{ github.ref }}\`" >> $GITHUB_STEP_SUMMARY
+
+      - name: Validate Prod Ref
         id: check_ref
         run: |
           set -euxo pipefail
@@ -31,7 +37,7 @@ jobs:
 
   create_runner:
     name: Create Self-Hosted Runner
-    needs: [check_prod_tag]
+    needs: [validate_inputs]
     runs-on: ubuntu-22.04
     strategy:
       matrix:

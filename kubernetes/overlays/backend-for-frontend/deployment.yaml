@@ -129,13 +129,28 @@ spec:
                 secretKeyRef:
                   name: party-process
                   key: PARTY_PROCESS_API_KEY
-            - name: STORAGE_CONTAINER
+            - name: CONSUMER_DOCS_CONTAINER
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: STORAGE_CONTAINER
+                  key: CONSUMER_DOCS_CONTAINER
             - name: CONSUMER_DOCS_PATH
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: CONSUMER_DOCS_PATH
+            - name: ALLOW_LIST_CONTAINER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ALLOW_LIST_CONTAINER
+            - name: ALLOW_LIST_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ALLOW_LIST_PATH
+            - name: ALLOW_LIST_FILENAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ALLOW_LIST_FILENAME
