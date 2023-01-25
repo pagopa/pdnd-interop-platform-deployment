@@ -104,6 +104,11 @@ spec:
                   configMapKeyRef:
                     name: {{SERVICE_NAME}}
                     key: TENANT_PROCESS_URL
+            - name: PURPOSE_PROCESS_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: PURPOSE_PROCESS_URL
             - name: PARTY_PROCESS_URL
               valueFrom:
                   configMapKeyRef:
