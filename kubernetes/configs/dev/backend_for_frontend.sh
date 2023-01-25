@@ -9,7 +9,8 @@ SELFCARE_WELL_KNOWN_URL="https://uat.selfcare.pagopa.it/.well-known/jwks.json"
 BACKEND_FOR_FRONTEND_RESOURCE_CPU="500m"
 BACKEND_FOR_FRONTEND_RESOURCE_MEM="2Gi"
 
-BFF_STORAGE_CONTAINER="interop-application-documents-dev"
+CONSUMER_DOCS_CONTAINER="interop-application-documents-dev"
+ALLOW_LIST_CONTAINER="interop-allow-list-dev"
 
 BFF_RATE_LIMITER_MAX_REQUESTS="10"
 BFF_RATE_LIMITER_BURST_PERCENTAGE="1.0"
