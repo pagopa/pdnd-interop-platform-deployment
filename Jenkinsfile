@@ -209,23 +209,6 @@ spec:
                 )
               }
             }
-            stage('Party Mock Registry') {
-              when { 
-                anyOf {
-                  environment name: 'STAGE', value: 'DEV'
-                  environment name: 'STAGE', value: 'TEST' 
-                }
-              }
-              steps {
-                applyKustomizeToDir(
-                  'overlays/party-mock-registry', 
-                  getVariableFromConf("PARTY_MOCK_REGISTRY_SERVICE_NAME"), 
-                  getVariableFromConf("PARTY_MOCK_REGISTRY_IMAGE_VERSION"),
-                  getVariableFromConf("PARTY_MOCK_REGISTRY_RESOURCE_CPU"),
-                  getVariableFromConf("PARTY_MOCK_REGISTRY_RESOURCE_MEM")
-                )
-              }
-            }
             stage('Party Registry Proxy') {
               steps {
                 applyKustomizeToDir(

@@ -34,26 +34,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: AUTHORIZATION_MANAGEMENT_URL
-            - name: PARTY_MANAGEMENT_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: PARTY_MANAGEMENT_URL
             - name: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
-            - name: PARTY_MANAGEMENT_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: party-management
-                  key: PARTY_MANAGEMENT_API_KEY
-            - name: PARTY_MANAGEMENT_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: party-management
-                  key: PARTY_MANAGEMENT_API_KEY
             - name: USER_REGISTRY_URL
               valueFrom:
                 configMapKeyRef:
