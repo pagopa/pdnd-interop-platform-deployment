@@ -10,6 +10,7 @@ BACKEND_FOR_FRONTEND_RESOURCE_CPU="2"
 BACKEND_FOR_FRONTEND_RESOURCE_MEM="2Gi"
 
 CONSUMER_DOCS_CONTAINER="interop-application-documents-prod"
+ESERVICE_DOCS_CONTAINER="interop-application-documents-prod"
 ALLOW_LIST_CONTAINER="interop-allow-list-prod"
 
 BFF_RATE_LIMITER_MAX_REQUESTS="10"

@@ -139,6 +139,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: CONSUMER_DOCS_PATH
+            - name: ESERVICE_DOCS_CONTAINER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ESERVICE_DOCS_CONTAINER
             - name: ALLOW_LIST_CONTAINER
               valueFrom:
                 configMapKeyRef:
