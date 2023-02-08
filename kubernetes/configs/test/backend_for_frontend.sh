@@ -10,6 +10,7 @@ BACKEND_FOR_FRONTEND_RESOURCE_CPU="500m"
 BACKEND_FOR_FRONTEND_RESOURCE_MEM="2Gi"
 
 CONSUMER_DOCS_CONTAINER="interop-application-documents-test"
+ESERVICE_DOCS_CONTAINER="interop-application-documents-test"
 ALLOW_LIST_CONTAINER="interop-allow-list-test"
 
 BFF_RATE_LIMITER_MAX_REQUESTS="10"
