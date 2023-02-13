@@ -2,62 +2,62 @@
 
 while getopts ":n:de:kh" opt; do
   case $opt in
-    n)
-      export NAMESPACE=$OPTARG
-      echo "Selected namespace: $NAMESPACE" >&2
+  n)
+    export NAMESPACE=$OPTARG
+    echo "Selected namespace: $NAMESPACE" >&2
+    ;;
+  d)
+    DRYRUN=1
+    echo "Dry-run enabled. No file will be applied"
+    ;;
+  e)
+    case $OPTARG in
+    dev)
+      export LOWERCASE_ENV=dev
+      export CONFIG_FILE='./kubernetes/configs/dev/main.sh'
       ;;
-    d)
-      DRYRUN=1
-      echo "Dry-run enabled. No file will be applied"
+    test)
+      export LOWERCASE_ENV=test
+      export CONFIG_FILE='./kubernetes/configs/test/main.sh'
       ;;
-    e)
-      case $OPTARG in 
-        dev)
-          export LOWERCASE_ENV=dev
-          export CONFIG_FILE='./kubernetes/configs/dev/main.sh'
-          ;;
-        test)
-          export LOWERCASE_ENV=test
-          export CONFIG_FILE='./kubernetes/configs/test/main.sh'
-          ;;
-        prod)
-          export LOWERCASE_ENV=prod
-          export CONFIG_FILE='./kubernetes/configs/prod/main.sh'
-          ;;
-        \?)
-          echo "Invalid environment: -$OPTARG" >&2
-          exit 1
-          ;;
-      esac
-      echo "Selected environment: $OPTARG" >&2
-      ;;
-    k)
-      KEEPFILES=1
-      echo "Generated files will not be deleted"
-      ;;
-    h)
-      echo "Usage $0 -n namespace [-d]"
-      echo " -d dry-run: Creates files and print commands without executing them"
-      echo " -k keep files: Generated files will not be deleted"
-      exit 0
+    prod)
+      export LOWERCASE_ENV=prod
+      export CONFIG_FILE='./kubernetes/configs/prod/main.sh'
       ;;
     \?)
-      echo "Invalid option: -$OPTARG" >&2
+      echo "Invalid environment: -$OPTARG" >&2
       exit 1
       ;;
-    :)
-      echo "Option -$OPTARG requires an argument." >&2
-      exit 1
-      ;;
+    esac
+    echo "Selected environment: $OPTARG" >&2
+    ;;
+  k)
+    KEEPFILES=1
+    echo "Generated files will not be deleted"
+    ;;
+  h)
+    echo "Usage $0 -n namespace [-d]"
+    echo " -d dry-run: Creates files and print commands without executing them"
+    echo " -k keep files: Generated files will not be deleted"
+    exit 0
+    ;;
+  \?)
+    echo "Invalid option: -$OPTARG" >&2
+    exit 1
+    ;;
+  :)
+    echo "Option -$OPTARG requires an argument." >&2
+    exit 1
+    ;;
   esac
 done
 
-if [ -z ${NAMESPACE} ]; then 
+if [ -z ${NAMESPACE} ]; then
   echo "Namespace parameter is mandatory"
   exit 1
 fi
 
-if [ -z ${LOWERCASE_ENV} ]; then 
+if [ -z ${LOWERCASE_ENV} ]; then
   echo "Environment parameter is mandatory"
   exit 1
 fi
@@ -70,31 +70,32 @@ source $CONFIG_FILE
 #   imageVersion
 #   serviceImageDigest
 function compileDir() {
-    dirPath=$1
-    serviceName=$2
-    imageVersion=$3
-    serviceImageDigest=$4
-    resourceCpu=$5
-    resourceMem=$6
+  dirPath=$1
+  serviceName=$2
+  imageVersion=$3
+  serviceImageDigest=$4
+  resourceCpu=$5
+  resourceMem=$6
 
-    eval $(source ./${LOWERCASE_ENV}-secrets; echo awsAccountId=$AWS_ACCOUNT_ID)
+  eval $(
+    source ./${LOWERCASE_ENV}-secrets
+    echo awsAccountId=$AWS_ACCOUNT_ID
+  )
 
-    for f in $dirPath/*
-    do
-        if [ ! $(basename $f) = "kustomization.yaml" ]
-        then
-            mkdir -p $serviceName/$dirPath
-            SERVICE_NAME=$serviceName \
-            IMAGE_VERSION=$imageVersion \
-            IMAGE_DIGEST=$serviceImageDigest \
-            SERVICE_RESOURCE_CPU=${resourceCpu} \
-            SERVICE_RESOURCE_MEM=${resourceMem} \
-            AWS_ACCOUNT_ID=$awsAccountId \
-            kubernetes/templater.sh $f -s -f $CONFIG_FILE > $serviceName/$f
-        else
-            cp $f $serviceName/$f
-        fi
-    done
+  for f in $dirPath/*; do
+    if [ ! $(basename $f) = "kustomization.yaml" ]; then
+      mkdir -p $serviceName/$dirPath
+      SERVICE_NAME=$serviceName \
+        IMAGE_VERSION=$imageVersion \
+        IMAGE_DIGEST=$serviceImageDigest \
+        SERVICE_RESOURCE_CPU=${resourceCpu} \
+        SERVICE_RESOURCE_MEM=${resourceMem} \
+        AWS_ACCOUNT_ID=$awsAccountId \
+        kubernetes/templater.sh $f -s -f $CONFIG_FILE >$serviceName/$f
+    else
+      cp $f $serviceName/$f
+    fi
+  done
 }
 
 # Params:
@@ -102,259 +103,256 @@ function compileDir() {
 #   serviceName
 #   imageVersion
 function applyKustomizeToDir() {
-    dirPath=$1
-    serviceName=$2
-    imageVersion=$3
-    resourceCpu=$4
-    resourceMem=$5
+  dirPath=$1
+  serviceName=$2
+  imageVersion=$3
+  resourceCpu=$4
+  resourceMem=$5
 
-    echo "********** ${serviceName} **********"
-    echo "Apply directory ${dirPath} on Kubernetes"
+  echo "********** ${serviceName} **********"
+  echo "Apply directory ${dirPath} on Kubernetes"
 
-    serviceImageDigest=$(getDockerImageDigest $serviceName $imageVersion)
+  serviceImageDigest=$(getDockerImageDigest $serviceName $imageVersion)
 
-    kubeDirPath='kubernetes/'$dirPath
+  kubeDirPath='kubernetes/'$dirPath
 
-    echo "Compiling base files"
-    compileDir "kubernetes/base" $serviceName $imageVersion $serviceImageDigest $resourceCpu $resourceMem
-    echo "Base files compiled"
+  echo "Compiling base files"
+  compileDir "kubernetes/base" $serviceName $imageVersion $serviceImageDigest $resourceCpu $resourceMem
+  echo "Base files compiled"
 
-    echo "Compiling common files"
-    compileDir "kubernetes/commons/database" $serviceName $imageVersion $serviceImageDigest $resourceCpu $resourceMem
-    compileDir "kubernetes/commons/rate-limiting" $serviceName $imageVersion $serviceImageDigest $resourceCpu $resourceMem
-    echo "Common files compiled"
+  echo "Compiling common files"
+  compileDir "kubernetes/commons/database" $serviceName $imageVersion $serviceImageDigest $resourceCpu $resourceMem
+  compileDir "kubernetes/commons/rate-limiting" $serviceName $imageVersion $serviceImageDigest $resourceCpu $resourceMem
+  echo "Common files compiled"
 
-    echo "Compiling directory ${dirPath}"
-    compileDir $kubeDirPath $serviceName $imageVersion $serviceImageDigest $resourceCpu $resourceMem
-    echo "Directory ${dirPath} compiled"
-    
-    echo "Applying Kustomization for ${serviceName}"
-    kubectl kustomize --load-restrictor LoadRestrictionsNone $serviceName/$kubeDirPath > $serviceName/full.${serviceName}.yaml
-    echo "Kustomization for ${serviceName} applied"
+  echo "Compiling directory ${dirPath}"
+  compileDir $kubeDirPath $serviceName $imageVersion $serviceImageDigest $resourceCpu $resourceMem
+  echo "Directory ${dirPath} compiled"
 
-    kubeApply ${serviceName}/full.${serviceName}.yaml
-    cleanFiles ${serviceName}
+  echo "Applying Kustomization for ${serviceName}"
+  kubectl kustomize --load-restrictor LoadRestrictionsNone $serviceName/$kubeDirPath >$serviceName/full.${serviceName}.yaml
+  echo "Kustomization for ${serviceName} applied"
 
-    echo "************************************"
+  kubeApply ${serviceName}/full.${serviceName}.yaml
+  cleanFiles ${serviceName}
+
+  echo "************************************"
 }
 
-
 function applyKubeFile() {
-    fileName=$1
-    serviceName=$2
-    imageDigest=$3
-    resourceCpu=$4
-    resourceMem=$5
+  fileName=$1
+  serviceName=$2
+  imageDigest=$3
+  resourceCpu=$4
+  resourceMem=$5
 
-    echo "Apply file ${fileName} on Kubernetes"
+  echo "Apply file ${fileName} on Kubernetes"
 
-    eval $(source ./${LOWERCASE_ENV}-secrets; echo awsAccountId=$AWS_ACCOUNT_ID)
+  eval $(
+    source ./${LOWERCASE_ENV}-secrets
+    echo awsAccountId=$AWS_ACCOUNT_ID
+  )
 
-    echo "Compiling file ${fileName}"
-    SERVICE_NAME=${serviceName} \
+  echo "Compiling file ${fileName}"
+  SERVICE_NAME=${serviceName} \
     IMAGE_DIGEST=${imageDigest} \
     AWS_ACCOUNT_ID=$awsAccountId \
     SERVICE_RESOURCE_CPU=${resourceCpu} \
     SERVICE_RESOURCE_MEM=${resourceMem} \
     ./kubernetes/templater.sh ./kubernetes/${fileName} \
     -s \
-    -f ${CONFIG_FILE} > ./kubernetes/$(dirname $fileName)/compiled.$(basename $fileName)
-    echo "File ${fileName} compiled"
-    
-    kubeApply ./kubernetes/$(dirname $fileName)/compiled.$(basename $fileName)
-    cleanFiles ./kubernetes/$(dirname $fileName)/compiled.$(basename $fileName)
-}
+    -f ${CONFIG_FILE} >./kubernetes/$(dirname $fileName)/compiled.$(basename $fileName)
+  echo "File ${fileName} compiled"
 
+  kubeApply ./kubernetes/$(dirname $fileName)/compiled.$(basename $fileName)
+  cleanFiles ./kubernetes/$(dirname $fileName)/compiled.$(basename $fileName)
+}
 
 function prepareDbMigrations() {
-    echo "********** DB Migrations **********"
+  echo "********** DB Migrations **********"
 
-    echo 'Creating migrations configmap...'
-    outputFileName='./kubernetes/compiled.dbmigrationconfigmap.yaml'
-    kubectl \
-        create configmap common-db-migrations \
-        --namespace $NAMESPACE \
-        --from-file=db/migrations/ \
-        --dry-run=client \
-        -o yaml > $outputFileName
-        
-    kubeApply $outputFileName
-    cleanFiles $outputFileName
+  echo 'Creating migrations configmap...'
+  outputFileName='./kubernetes/compiled.dbmigrationconfigmap.yaml'
+  kubectl \
+    create configmap common-db-migrations \
+    --namespace $NAMESPACE \
+    --from-file=db/migrations/ \
+    --dry-run=client \
+    -o yaml >$outputFileName
 
-    echo 'Migrations configmap created'
+  kubeApply $outputFileName
+  cleanFiles $outputFileName
 
-    echo "***********************************"
+  echo 'Migrations configmap created'
+
+  echo "***********************************"
 }
 
-
 function createReadModelUser() {
-    user=$1
-    password=$2
-    role=$3
-    
-    echo "********** MongoDB User Creation **********"
+  user=$1
+  password=$2
+  role=$3
 
-    echo "Creating user in read model..."
-    encodedAdminUser=$(urlEncode $READ_MODEL_CREDENTIALS_ADMIN_USR)
-    encodedAdminPassword=$(urlEncode $READ_MODEL_CREDENTIALS_ADMIN_PSW)
-    encodedNewUser=$(urlEncode $user)
-    encodedNewPassword=$(urlEncode $password)
+  echo "********** MongoDB User Creation **********"
 
-    if [ -z ${DRYRUN} ]; then 
-      mongosh "mongodb://$encodedAdminUser:$encodedAdminPassword@$READ_MODEL_DB_HOST:$READ_MODEL_DB_PORT/admin" \
-          --eval "if(db.getUser("$encodedNewUser") == null) { db.createUser({
+  echo "Creating user in read model..."
+  encodedAdminUser=$(urlEncode $READ_MODEL_CREDENTIALS_ADMIN_USR)
+  encodedAdminPassword=$(urlEncode $READ_MODEL_CREDENTIALS_ADMIN_PSW)
+  encodedNewUser=$(urlEncode $user)
+  encodedNewPassword=$(urlEncode $password)
+
+  if [ -z ${DRYRUN} ]; then
+    mongosh "mongodb://$encodedAdminUser:$encodedAdminPassword@$READ_MODEL_DB_HOST:$READ_MODEL_DB_PORT/admin" \
+      --eval "if(db.getUser("$encodedNewUser") == null) { db.createUser({
             user: "$encodedNewUser",
             pwd: "$encodedNewPassword",
             roles: [ {role: "$role", db: "$READ_MODEL_DB_NAME"} ]
           })}"
-    fi
+  fi
 
-    echo "User created in read model"
-    echo "*******************************************"
+  echo "User created in read model"
+  echo "*******************************************"
 
 }
 
 function urlEncode() {
-    echo "$@" \
-    | sed \
-        -e 's/%/%25/g' \
-        -e 's/ /%20/g' \
-        -e 's/!/%21/g' \
-        -e 's/"/%22/g' \
-        -e "s/'/%27/g" \
-        -e 's/#/%23/g' \
-        -e 's/(/%28/g' \
-        -e 's/)/%29/g' \
-        -e 's/+/%2b/g' \
-        -e 's/,/%2c/g' \
-        -e 's/-/%2d/g' \
-        -e 's/:/%3a/g' \
-        -e 's/;/%3b/g' \
-        -e 's/?/%3f/g' \
-        -e 's/@/%40/g' \
-        -e 's/\$/%24/g' \
-        -e 's/\&/%26/g' \
-        -e 's/\*/%2a/g' \
-        -e 's/\./%2e/g' \
-        -e 's/\//%2f/g' \
-        -e 's/\[/%5b/g' \
-        -e 's/\\/%5c/g' \
-        -e 's/\]/%5d/g' \
-        -e 's/\^/%5e/g' \
-        -e 's/_/%5f/g' \
-        -e 's/`/%60/g' \
-        -e 's/{/%7b/g' \
-        -e 's/|/%7c/g' \
-        -e 's/}/%7d/g' \
-        -e 's/~/%7e/g'
+  echo "$@" |
+    sed \
+      -e 's/%/%25/g' \
+      -e 's/ /%20/g' \
+      -e 's/!/%21/g' \
+      -e 's/"/%22/g' \
+      -e "s/'/%27/g" \
+      -e 's/#/%23/g' \
+      -e 's/(/%28/g' \
+      -e 's/)/%29/g' \
+      -e 's/+/%2b/g' \
+      -e 's/,/%2c/g' \
+      -e 's/-/%2d/g' \
+      -e 's/:/%3a/g' \
+      -e 's/;/%3b/g' \
+      -e 's/?/%3f/g' \
+      -e 's/@/%40/g' \
+      -e 's/\$/%24/g' \
+      -e 's/\&/%26/g' \
+      -e 's/\*/%2a/g' \
+      -e 's/\./%2e/g' \
+      -e 's/\//%2f/g' \
+      -e 's/\[/%5b/g' \
+      -e 's/\\/%5c/g' \
+      -e 's/\]/%5d/g' \
+      -e 's/\^/%5e/g' \
+      -e 's/_/%5f/g' \
+      -e 's/`/%60/g' \
+      -e 's/{/%7b/g' \
+      -e 's/|/%7c/g' \
+      -e 's/}/%7d/g' \
+      -e 's/~/%7e/g'
 }
 
 function getDockerImageDigest() {
-    serviceName=$1
-    imageVersion=$2
-    
-    # echo "Retrieving digest for service ${serviceName} and version ${imageVersion}..."
+  serviceName=$1
+  imageVersion=$2
 
-    sha256=$(docker manifest inspect $REPOSITORY/$serviceName:$imageVersion | jq .config.digest)
+  # echo "Retrieving digest for service ${serviceName} and version ${imageVersion}..."
 
-    # echo "Digest retrieved for service ${serviceName} and version ${imageVersion}: ${sha256}"
+  sha256=$(docker manifest inspect $REPOSITORY/$serviceName:$imageVersion | jq .config.digest)
 
-    echo $sha256
+  # echo "Digest retrieved for service ${serviceName} and version ${imageVersion}: ${sha256}"
+
+  echo $sha256
 }
 
 function loadSecret() {
-    secretName=$1
+  secretName=$1
 
-    outputFileName="./kubernetes/compiled.secret.$secretName.yaml"
+  outputFileName="./kubernetes/compiled.secret.$secretName.yaml"
 
-    shift
-    tuples=("${@}")
-    length=${#tuples[@]}
+  shift
+  tuples=("${@}")
+  length=${#tuples[@]}
 
-    header="kubectl -n $NAMESPACE create secret generic ${secretName} --save-config --dry-run=client "
-    command=$header
+  header="kubectl -n $NAMESPACE create secret generic ${secretName} --save-config --dry-run=client "
+  command=$header
 
-    for (( j=0; j<length; j=j+2 ));
-    do
+  for ((j = 0; j < length; j = j + 2)); do
     i=$j
-    k=$((j+1))
+    k=$((j + 1))
     command="$command--from-literal=${tuples[$i]}=\${${tuples[$k]}} "
-    done
+  done
 
-    command="$command -o yaml > $outputFileName"
-    eval $command
+  command="$command -o yaml > $outputFileName"
+  eval $command
 
-    kubeApply $outputFileName
-    cleanFiles $outputFileName
+  kubeApply $outputFileName
+  cleanFiles $outputFileName
 }
 
 function loadSecrets() {
-    echo "********** Secrets **********"
+  echo "********** Secrets **********"
 
-    source ./${LOWERCASE_ENV}-secrets
-    loadSecret 'user-registry' 'USER_REGISTRY_API_KEY' 'USER_REGISTRY_API_KEY'
-    loadSecret 'party-process' 'PARTY_PROCESS_API_KEY' 'PARTY_PROCESS_API_KEY'
-    loadSecret 'party-management' 'PARTY_MANAGEMENT_API_KEY' 'PARTY_MANAGEMENT_API_KEY'
-    loadSecret 'postgres' 'POSTGRES_USR' 'POSTGRES_CREDENTIALS_USR' 'POSTGRES_PSW' 'POSTGRES_CREDENTIALS_PSW'
-    loadSecret 'documentdb' 'PROJECTION_USR' 'READ_MODEL_CREDENTIALS_PROJECTION_USR' 'PROJECTION_PSW' 'READ_MODEL_CREDENTIALS_PROJECTION_PSW' 'READONLY_USR' 'READ_MODEL_CREDENTIALS_RO_USR' 'READONLY_PSW' 'READ_MODEL_CREDENTIALS_RO_PSW'
-    loadSecret 'vault' 'VAULT_ADDR' 'VAULT_ADDR' 'VAULT_TOKEN' 'VAULT_TOKEN'
+  source ./${LOWERCASE_ENV}-secrets
+  loadSecret 'user-registry' 'USER_REGISTRY_API_KEY' 'USER_REGISTRY_API_KEY'
+  loadSecret 'party-process' 'PARTY_PROCESS_API_KEY' 'PARTY_PROCESS_API_KEY'
+  loadSecret 'party-management' 'PARTY_MANAGEMENT_API_KEY' 'PARTY_MANAGEMENT_API_KEY'
+  loadSecret 'postgres' 'POSTGRES_USR' 'POSTGRES_CREDENTIALS_USR' 'POSTGRES_PSW' 'POSTGRES_CREDENTIALS_PSW'
+  loadSecret 'documentdb' 'PROJECTION_USR' 'READ_MODEL_CREDENTIALS_PROJECTION_USR' 'PROJECTION_PSW' 'READ_MODEL_CREDENTIALS_PROJECTION_PSW' 'READONLY_USR' 'READ_MODEL_CREDENTIALS_RO_USR' 'READONLY_PSW' 'READ_MODEL_CREDENTIALS_RO_PSW'
+  loadSecret 'vault' 'VAULT_ADDR' 'VAULT_ADDR' 'VAULT_TOKEN' 'VAULT_TOKEN'
 
-    echo "*****************************"
+  echo "*****************************"
 }
 
 function createIngress() {
-    echo "********** Ingress **********"
+  echo "********** Ingress **********"
 
-    tuples=("${@}")
-    length=${#tuples[@]}
+  tuples=("${@}")
+  length=${#tuples[@]}
 
-    outputFileName='./kubernetes/compiled.ingress.yaml'
+  outputFileName='./kubernetes/compiled.ingress.yaml'
 
-    baseCommand="kubectl -n $NAMESPACE create ingress interop-services --class=alb --dry-run=client -o yaml "
-    annotations='--annotation="alb.ingress.kubernetes.io/scheme=internal" --annotation="alb.ingress.kubernetes.io/target-type=ip" '
+  baseCommand="kubectl -n $NAMESPACE create ingress interop-services --class=alb --dry-run=client -o yaml "
+  annotations='--annotation="alb.ingress.kubernetes.io/scheme=internal" --annotation="alb.ingress.kubernetes.io/target-type=ip" '
 
-    rules=''
+  rules=''
 
-    for (( j=0; j<length; j=j+3 ));
-    do
+  for ((j = 0; j < length; j = j + 3)); do
     i=$j
-    k=$((j+1))
-    z=$((j+2))
+    k=$((j + 1))
+    z=$((j + 2))
     rules=$rules' --rule="/'${tuples[$k]}'*='${tuples[$i]}':'${tuples[$z]}'" '
-    done
+  done
 
-    eval "$baseCommand $annotations $rules > $outputFileName"
+  eval "$baseCommand $annotations $rules > $outputFileName"
 
-    kubeApply $outputFileName
-    cleanFiles $outputFileName
+  kubeApply $outputFileName
+  cleanFiles $outputFileName
 
-    echo "*****************************"
+  echo "*****************************"
 }
 
 function kubeApply() {
-    yamlFileNameForKubeApply=$1
-    if [ -z ${DRYRUN} ]; then 
-        echo "Applying $yamlFileNameForKubeApply"
-        kubectl apply -f $yamlFileNameForKubeApply
-        echo "Applied: $yamlFileNameForKubeApply"
-    fi
+  yamlFileNameForKubeApply=$1
+  if [ -z ${DRYRUN} ]; then
+    echo "Applying $yamlFileNameForKubeApply"
+    kubectl apply -f $yamlFileNameForKubeApply
+    echo "Applied: $yamlFileNameForKubeApply"
+  fi
 }
 
 function cleanFiles() {
-    pathDoTelete=$1
-    if [ -z ${KEEPFILES} ]; then 
-        rm -rf $pathDoTelete
-        echo "Deleted: $pathDoTelete"
-    fi
+  pathDoTelete=$1
+  if [ -z ${KEEPFILES} ]; then
+    rm -rf $pathDoTelete
+    echo "Deleted: $pathDoTelete"
+  fi
 }
 
-aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $REPOSITORY 2>/dev/null 1>&2;
+aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $REPOSITORY 2>/dev/null 1>&2
 echo "Logged on ECR"
 
 # applyKubeFile 'namespace.yaml'
 loadSecrets
 prepareDbMigrations
-
 
 applyKubeFile 'frontend/configmap.yaml' $FRONTEND_SERVICE_NAME
 frontendImageDigest=$(getDockerImageDigest $FRONTEND_SERVICE_NAME $FRONTEND_IMAGE_VERSION)
@@ -399,14 +397,19 @@ applyKubeFile 'jobs/metrics-report-generator/serviceaccount.yaml' $JOB_METRICS_R
 jobMetricsReportGeneratorImageDigest=$(getDockerImageDigest $JOB_METRICS_REPORT_GENERATOR_SERVICE_NAME $JOB_METRICS_REPORT_GENERATOR_IMAGE_VERSION)
 applyKubeFile 'jobs/metrics-report-generator/cronjob.yaml' $JOB_METRICS_REPORT_GENERATOR_SERVICE_NAME $jobMetricsReportGeneratorImageDigest $JOB_METRICS_REPORT_GENERATOR_RESOURCE_CPU $JOB_METRICS_REPORT_GENERATOR_RESOURCE_MEM
 
+applyKubeFile 'jobs/padigitale-report-generator/configmap.yaml' $JOB_PADIGITALE_REPORT_GENERATOR_SERVICE_NAME
+applyKubeFile 'jobs/padigitale-report-generator/serviceaccount.yaml' $JOB_PADIGITALE_REPORT_GENERATOR_SERVICE_NAME
+jobPADigitaleReportGeneratorImageDigest=$(getDockerImageDigest $JOB_PADIGITALE_REPORT_GENERATOR_SERVICE_NAME $JOB_PADIGITALE_REPORT_GENERATOR_IMAGE_VERSION)
+applyKubeFile 'jobs/padigitale-report-generator/cronjob.yaml' $JOB_PADIGITALE_REPORT_GENERATOR_SERVICE_NAME $jobPADigitaleReportGeneratorImageDigest $JOB_PADIGITALE_REPORT_GENERATOR_RESOURCE_CPU $JOB_PADIGITALE_REPORT_GENERATOR_RESOURCE_MEM
+
 applyKubeFile 'thirdparty/redis/deployment.yaml' $REDIS_SERVICE_NAME "" $REDIS_RESOURCE_CPU $REDIS_RESOURCE_MEM
 applyKubeFile 'thirdparty/redis/service.yaml' $REDIS_SERVICE_NAME
 
 createIngress \
-    $API_GATEWAY_SERVICE_NAME $API_GATEWAY_APPLICATION_PATH $BACKEND_SERVICE_PORT \
-    $AUTHORIZATION_PROCESS_SERVICE_NAME $AUTHORIZATION_PROCESS_APPLICATION_PATH $BACKEND_SERVICE_PORT \
-    $AUTHORIZATION_SERVER_SERVICE_NAME $AUTHORIZATION_SERVER_APPLICATION_PATH $BACKEND_SERVICE_PORT \
-    $BACKEND_FOR_FRONTEND_SERVICE_NAME $BACKEND_FOR_FRONTEND_APPLICATION_PATH $BACKEND_SERVICE_PORT \
-    $CATALOG_PROCESS_SERVICE_NAME $CATALOG_PROCESS_APPLICATION_PATH $BACKEND_SERVICE_PORT \
-    $FRONTEND_SERVICE_NAME $FRONTEND_SERVICE_APPLICATION_PATH $FRONTEND_SERVICE_PORT \
-    $PURPOSE_PROCESS_SERVICE_NAME $PURPOSE_PROCESS_APPLICATION_PATH $BACKEND_SERVICE_PORT
+  $API_GATEWAY_SERVICE_NAME $API_GATEWAY_APPLICATION_PATH $BACKEND_SERVICE_PORT \
+  $AUTHORIZATION_PROCESS_SERVICE_NAME $AUTHORIZATION_PROCESS_APPLICATION_PATH $BACKEND_SERVICE_PORT \
+  $AUTHORIZATION_SERVER_SERVICE_NAME $AUTHORIZATION_SERVER_APPLICATION_PATH $BACKEND_SERVICE_PORT \
+  $BACKEND_FOR_FRONTEND_SERVICE_NAME $BACKEND_FOR_FRONTEND_APPLICATION_PATH $BACKEND_SERVICE_PORT \
+  $CATALOG_PROCESS_SERVICE_NAME $CATALOG_PROCESS_APPLICATION_PATH $BACKEND_SERVICE_PORT \
+  $FRONTEND_SERVICE_NAME $FRONTEND_SERVICE_APPLICATION_PATH $FRONTEND_SERVICE_PORT \
+  $PURPOSE_PROCESS_SERVICE_NAME $PURPOSE_PROCESS_APPLICATION_PATH $BACKEND_SERVICE_PORT
