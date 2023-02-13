@@ -1,13 +1,9 @@
 #!/bin/bash
 
-INTERFACES_CONTAINER="interop-application-documents-dev"
-
 REPORTS_CONTAINER="interop-platform-metrics-dev"
-PA_DIGITALE_STORAGE_PATH="pa-digitale"
 AGREEMENTS_CSV_STORAGE_PATH="agreements/csv"
 AGREEMENTS_JSON_STORAGE_PATH="agreements/json"
 
-ESERVICES_COLLECTION_NAME="eservices"
 TENANTS_COLLECTION_NAME="tenants"
 PURPOSES_COLLECTION_NAME="purposes"
 AGREEMENTS_COLLECTION_NAME="agreements"
