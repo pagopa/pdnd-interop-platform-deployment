@@ -3,7 +3,7 @@
 # Functions
 # TODO Take version from image label
 shortVersion() {
-  echo $1 | grep  -oE '^[0-9]+\.[0-9]+\.[0-9]+$' | grep -oE '[0-9]+\.[0-9]+' || echo "0.0"
+  echo $1 | grep -oE '^[0-9]+\.[0-9]+\.[0-9]+$' | grep -oE '[0-9]+\.[0-9]+' || echo "0.0"
 }
 
 AGREEMENT_MANAGEMENT_SERVICE_NAME="interop-be-agreement-management"
@@ -29,6 +29,7 @@ JOB_ATTRIBUTES_LOADER_SERVICE_NAME="interop-be-attributes-loader"
 JOB_DETAILS_PERSISTER_SERVICE_NAME="interop-be-token-details-persister"
 JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_SERVICE_NAME="interop-be-tenants-cert-attr-updater"
 JOB_METRICS_REPORT_GENERATOR_SERVICE_NAME="interop-be-metrics-report-generator"
+JOB_PADIGITALE_REPORT_GENERATOR_SERVICE_NAME="interop-be-padigitale-report-generator"
 
 REDIS_SERVICE_NAME="redis"
 
