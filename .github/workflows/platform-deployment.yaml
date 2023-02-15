@@ -382,20 +382,20 @@ jobs:
       resource_cpu_var_name: JOB_METRICS_REPORT_GENERATOR_RESOURCE_CPU
       resource_mem_var_name: JOB_METRICS_REPORT_GENERATOR_RESOURCE_MEM
 
-  deploy_padigitale_report_generator:
-    name: PaDigitale report generator
-    needs: [deploy_configs]
-    permissions:
-      contents: read
-    uses: ./.github/workflows/deploy-cronjob.yaml
-    secrets: inherit
-    with:
-      environment: ${{ inputs.environment }}
-      k8s_files_path: "jobs/padigitale-report-generator"
-      service_name_var_name: JOB_PADIGITALE_REPORT_GENERATOR_SERVICE_NAME
-      image_version_var_name: JOB_PADIGITALE_REPORT_GENERATOR_IMAGE_VERSION
-      resource_cpu_var_name: JOB_PADIGITALE_REPORT_GENERATOR_RESOURCE_CPU
-      resource_mem_var_name: JOB_PADIGITALE_REPORT_GENERATOR_RESOURCE_MEM
+  # deploy_padigitale_report_generator:
+  #   name: PaDigitale report generator
+  #   needs: [deploy_configs]
+  #   permissions:
+  #     contents: read
+  #   uses: ./.github/workflows/deploy-cronjob.yaml
+  #   secrets: inherit
+  #   with:
+  #     environment: ${{ inputs.environment }}
+  #     k8s_files_path: "jobs/padigitale-report-generator"
+  #     service_name_var_name: JOB_PADIGITALE_REPORT_GENERATOR_SERVICE_NAME
+  #     image_version_var_name: JOB_PADIGITALE_REPORT_GENERATOR_IMAGE_VERSION
+  #     resource_cpu_var_name: JOB_PADIGITALE_REPORT_GENERATOR_RESOURCE_CPU
+  #     resource_mem_var_name: JOB_PADIGITALE_REPORT_GENERATOR_RESOURCE_MEM
 
   deploy_redis:
     name: Redis
