@@ -105,11 +105,6 @@ spec:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
                         key: ESERVICES_COLLECTION_NAME
-                - name: ESERVICES_COLLECTION_NAME
-                  valueFrom:
-                      configMapKeyRef:
-                        name: {{SERVICE_NAME}}
-                        key: ESERVICES_COLLECTION_NAME
                 - name: PARTY_MANAGEMENT_URL
                   value: "{{PARTY_MANAGEMENT_URL}}"
                 - name: PARTY_MANAGEMENT_API_KEY
@@ -117,11 +112,6 @@ spec:
                     secretKeyRef:
                       name: party-management
                       key: PARTY_MANAGEMENT_API_KEY
-                - name: TENANT_PROCESS_URL
-                  valueFrom:
-                    configMapKeyRef:
-                      name: {{SERVICE_NAME}}
-                      key: TENANT_PROCESS_URL
               resources:
                 requests:
                   cpu: "{{SERVICE_RESOURCE_CPU}}"
