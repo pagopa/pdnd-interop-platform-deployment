@@ -50,11 +50,6 @@ spec:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
                         key: TENANTS_COLLECTION_NAME
-                - name: PURPOSES_COLLECTION_NAME
-                  valueFrom:
-                      configMapKeyRef:
-                        name: {{SERVICE_NAME}}
-                        key: PURPOSES_COLLECTION_NAME
                 - name: INTERFACES_CONTAINER
                   valueFrom:
                       configMapKeyRef:
