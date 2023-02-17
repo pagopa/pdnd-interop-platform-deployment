@@ -30,6 +30,9 @@ JOB_DETAILS_PERSISTER_SERVICE_NAME="interop-be-token-details-persister"
 JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_SERVICE_NAME="interop-be-tenants-cert-attr-updater"
 JOB_METRICS_REPORT_GENERATOR_SERVICE_NAME="interop-be-metrics-report-generator"
 JOB_PADIGITALE_REPORT_GENERATOR_SERVICE_NAME="interop-be-padigitale-report-generator"
+JOB_DASHBOARD_METRICS_REPORT_GENERATOR_SERVICE_NAME="interop-be-dashboard-metrics-report-generator"
+
+INTEROP_SELFCARE_PRODUCT_NAME="prod-interop"
 
 REDIS_SERVICE_NAME="redis"
 
