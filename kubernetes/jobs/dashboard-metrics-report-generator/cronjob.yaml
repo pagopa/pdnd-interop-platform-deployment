@@ -100,6 +100,11 @@ spec:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
                         key: ESERVICES_COLLECTION_NAME
+                - name: INTEROP_SELFCARE_PRODUCT_NAME
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: INTEROP_SELFCARE_PRODUCT_NAME
                 - name: PARTY_MANAGEMENT_URL
                   value: "{{PARTY_MANAGEMENT_URL}}"
                 - name: PARTY_MANAGEMENT_API_KEY
