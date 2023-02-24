@@ -112,6 +112,11 @@ spec:
                     secretKeyRef:
                       name: party-management
                       key: PARTY_MANAGEMENT_API_KEY
+                - name: TOTAL_TENANTS
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: TOTAL_TENANTS
               resources:
                 requests:
                   cpu: "{{SERVICE_RESOURCE_CPU}}"
