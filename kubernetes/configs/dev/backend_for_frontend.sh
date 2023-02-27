@@ -12,6 +12,7 @@ BACKEND_FOR_FRONTEND_RESOURCE_MEM="2Gi"
 CONSUMER_DOCS_CONTAINER="interop-application-documents-dev"
 ESERVICE_DOCS_CONTAINER="interop-application-documents-dev"
 ALLOW_LIST_CONTAINER="interop-allow-list-dev"
+RISK_ANALYSIS_DOCS_CONTAINER="interop-application-documents-dev"
 
 BFF_RATE_LIMITER_MAX_REQUESTS="10"
 BFF_RATE_LIMITER_BURST_PERCENTAGE="1.0"
