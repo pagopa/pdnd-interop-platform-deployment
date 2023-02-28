@@ -79,6 +79,11 @@ spec:
                   configMapKeyRef:
                     name: {{SERVICE_NAME}}
                     key: AGREEMENT_PROCESS_URL
+            - name: AUTHORIZATION_PROCESS_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: AUTHORIZATION_PROCESS_URL
             - name: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
               valueFrom:
                   configMapKeyRef:
