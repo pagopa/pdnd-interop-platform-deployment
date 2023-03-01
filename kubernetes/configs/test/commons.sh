@@ -1,5 +1,7 @@
 #!/bin/bash
 
+STAGE="UAT"
+
 DOMAIN_NAME="uat.interop.pagopa.it"
 
 REPOSITORY="505630707203.dkr.ecr.eu-central-1.amazonaws.com"
