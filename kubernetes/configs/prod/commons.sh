@@ -1,5 +1,7 @@
 #!/bin/bash
 
+STAGE="PROD"
+
 DOMAIN_NAME="interop.pagopa.it"
 
 REPOSITORY="505630707203.dkr.ecr.eu-central-1.amazonaws.com"
