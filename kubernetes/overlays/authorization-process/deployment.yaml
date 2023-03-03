@@ -64,3 +64,8 @@ spec:
                 secretKeyRef:
                   name: party-management
                   key: PARTY_MANAGEMENT_API_KEY
+            - name: SELFCARE_PRODUCT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SELFCARE_PRODUCT_ID

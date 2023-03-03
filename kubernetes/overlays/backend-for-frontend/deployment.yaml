@@ -174,3 +174,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ALLOW_LIST_FILENAME
+            - name: SELFCARE_PRODUCT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SELFCARE_PRODUCT_ID
