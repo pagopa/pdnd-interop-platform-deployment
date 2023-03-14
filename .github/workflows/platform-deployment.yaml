@@ -367,6 +367,21 @@ jobs:
       resource_cpu_var_name: JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_RESOURCE_CPU
       resource_mem_var_name: JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_RESOURCE_MEM
 
+  deploy_party_registry_proxy_refresher:
+    name: Party Registry Proxy Refresher
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-cronjob.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      k8s_files_path: "jobs/party-registry-proxy-refresher"
+      service_name_var_name: JOB_PARTY_REGISTRY_PROXY_REFRESHER_SERVICE_NAME
+      image_version_var_name: "fixed"
+      resource_cpu_var_name: JOB_PARTY_REGISTRY_PROXY_REFRESHER_RESOURCE_CPU
+      resource_mem_var_name: JOB_PARTY_REGISTRY_PROXY_REFRESHER_RESOURCE_MEM
+
   deploy_metrics_report_generator:
     name: Metrics report generator
     needs: [deploy_configs]
