@@ -179,3 +179,13 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: SELFCARE_PRODUCT_ID
+            - name: SELFCARE_V2_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SELFCARE_V2_URL
+            - name: SELFCARE_V2_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: selfcare-v2
+                  key: SELFCARE_V2_API_KEY
