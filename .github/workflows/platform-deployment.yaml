@@ -372,13 +372,12 @@ jobs:
     needs: [deploy_configs]
     permissions:
       contents: read
-    uses: ./.github/workflows/deploy-cronjob.yaml
+    uses: ./.github/workflows/deploy-thirdparty-cronjob.yaml
     secrets: inherit
     with:
       environment: ${{ inputs.environment }}
-      k8s_files_path: "jobs/party-registry-proxy-refresher"
+      k8s_files_path: "thirdparty/party-registry-proxy-refresher"
       service_name_var_name: JOB_PARTY_REGISTRY_PROXY_REFRESHER_SERVICE_NAME
-      image_version_var_name: "fixed"
       resource_cpu_var_name: JOB_PARTY_REGISTRY_PROXY_REFRESHER_RESOURCE_CPU
       resource_mem_var_name: JOB_PARTY_REGISTRY_PROXY_REFRESHER_RESOURCE_MEM
 
