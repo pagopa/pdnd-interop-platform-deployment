@@ -1,4 +1,4 @@
-name: Deploy Cronjob
+name: Deploy Thrid Party Cronjob
 
 on:
   workflow_call:
@@ -25,8 +25,8 @@ on:
         required: true
 
 jobs:
-  deploy_cronjob:
-    name: Deploy Cronjob
+  deploy_thirdparty_cronjob:
+    name: Deploy Third Party Cronjob
     runs-on: [self-hosted, "run_id:${{ github.run_id }}"]
     environment: ${{ inputs.environment }}
     permissions:
