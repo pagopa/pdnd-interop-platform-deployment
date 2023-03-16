@@ -22,7 +22,8 @@ spec:
           restartPolicy: OnFailure
           serviceAccountName: {{SERVICE_NAME}}
           containers:
-            - image: curlimages/curl:7.88.1
+            - name: {{SERVICE_NAME}}
+              image: curlimages/curl:7.88.1
               imagePullPolicy: IfNotPresent
               args: ["-X", "POST", "$(PARTY_REGISTRY_PROXY_URL)/reload"]
               env:
