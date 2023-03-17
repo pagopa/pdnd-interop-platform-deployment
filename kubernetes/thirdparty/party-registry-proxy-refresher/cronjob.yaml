@@ -25,7 +25,11 @@ spec:
             - name: {{SERVICE_NAME}}
               image: curlimages/curl:7.88.1
               imagePullPolicy: IfNotPresent
-              args: ["-X", "POST", "$(PARTY_REGISTRY_PROXY_URL)/reload"]
+              command:
+                - /bin/sh
+              args:
+                - "-c"
+                - "'echo \"Job Started\" && ./entrypoint.sh -X POST -sS $(PARTY_REGISTRY_PROXY_URL)/reload && echo \"Job Completed\"'"
               env:
                 - name: NAMESPACE
                   valueFrom:
