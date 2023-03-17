@@ -27,9 +27,7 @@ spec:
               imagePullPolicy: IfNotPresent
               command:
                 - /bin/sh
-              args:
-                - "-c"
-                - "'echo \"Job Started\" && ./entrypoint.sh -X POST -sS $(PARTY_REGISTRY_PROXY_URL)/reload && echo \"Job Completed\"'"
+              args: ["-c", "echo \"Job Started\" && ./entrypoint.sh -X POST -sS $(PARTY_REGISTRY_PROXY_URL)/reload && echo \"Job Completed\""]
               env:
                 - name: NAMESPACE
                   valueFrom:
