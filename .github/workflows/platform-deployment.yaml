@@ -127,6 +127,8 @@ jobs:
       resource_cpu_var_name: ATTRIBUTE_REGISTRY_MANAGEMENT_RESOURCE_CPU
       resource_mem_var_name: ATTRIBUTE_REGISTRY_MANAGEMENT_RESOURCE_MEM
 
+  if ()
+
   deploy_authorization_management:
     name: Authorization Management
     needs: [deploy_configs]
@@ -432,6 +434,17 @@ jobs:
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-redis.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+  
+  deploy_smtp_mock:
+    name: SMTP mock
+    needs: [deploy_configs]
+    if: ${{ inputs.environment != "prod" }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-smtp-mock.yaml
     secrets: inherit
     with:
       environment: ${{ inputs.environment }}

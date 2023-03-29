@@ -412,6 +412,9 @@ applyKubeFile 'jobs/padigitale-report-generator/cronjob.yaml' $JOB_PADIGITALE_RE
 applyKubeFile 'thirdparty/redis/deployment.yaml' $REDIS_SERVICE_NAME "" $REDIS_RESOURCE_CPU $REDIS_RESOURCE_MEM
 applyKubeFile 'thirdparty/redis/service.yaml' $REDIS_SERVICE_NAME
 
+applyKubeFile 'thirdparty/smtp-mock/deployment.yaml' $SMTP_MOCK_SERVICE_NAME "" $SMTP_MOCK_RESOURCE_CPU $SMTP_MOCK_RESOURCE_MEM
+applyKubeFile 'thirdparty/smtp-mock/service.yaml' $SMTP_MOCK_SERVICE_NAME
+
 createIngress \
     $API_GATEWAY_SERVICE_NAME $API_GATEWAY_APPLICATION_PATH $BACKEND_SERVICE_PORT \
     $AUTHORIZATION_PROCESS_SERVICE_NAME $AUTHORIZATION_PROCESS_APPLICATION_PATH $BACKEND_SERVICE_PORT \
