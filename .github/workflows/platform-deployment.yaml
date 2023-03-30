@@ -127,8 +127,6 @@ jobs:
       resource_cpu_var_name: ATTRIBUTE_REGISTRY_MANAGEMENT_RESOURCE_CPU
       resource_mem_var_name: ATTRIBUTE_REGISTRY_MANAGEMENT_RESOURCE_MEM
 
-  if ()
-
   deploy_authorization_management:
     name: Authorization Management
     needs: [deploy_configs]

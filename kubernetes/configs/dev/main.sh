@@ -29,7 +29,7 @@ BACKEND_FOR_FRONTEND_INTERFACE_VERSION=$(shortVersion $BACKEND_FOR_FRONTEND_IMAG
 NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 
 . $(pwd)/kubernetes/configs/dev/redis.sh
-. $(pwd)/kubernetes/configs/dev/smtp-mock.sh
+. $(pwd)/kubernetes/configs/dev/smtp_mock.sh
 
 . $(pwd)/kubernetes/configs/dev/agreement_management.sh
 . $(pwd)/kubernetes/configs/dev/agreement_process.sh
