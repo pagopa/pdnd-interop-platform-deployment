@@ -86,6 +86,9 @@ jobs:
           projectionPassword="$(getSecretValue 'documentdb-projection-password')"
           projectionROUsername="$(getSecretValue 'documentdb-ro-username')"
           projectionROPassword="$(getSecretValue 'documentdb-ro-password')"
+          metricsReportRecipients="$(getSecretValue 'metrics-reports-recipients')"
+          metricsReportSmtpUsername="$(getSecretValue 'metrics-reports-smtp-username')"
+          metricsReportSmtpPassword="$(getSecretValue 'metrics-reports-smtp-password')"
           vaultAddr="$(getSecretValue 'vault-addr')"
           vaultToken="$(getSecretValue 'vault-token')"
 
@@ -96,3 +99,4 @@ jobs:
           createKubeSecret 'postgres' 'POSTGRES_USR' "$postgresUsername" 'POSTGRES_PSW' "$postgresPassword"
           createKubeSecret 'documentdb' 'PROJECTION_USR' "$projectionUsername" 'PROJECTION_PSW' "$projectionPassword" 'READONLY_USR' "$projectionROUsername" 'READONLY_PSW' "$projectionROPassword"
           createKubeSecret 'vault' 'VAULT_ADDR' "$vaultAddr" 'VAULT_TOKEN' "$vaultToken"
+          createKubeSecret 'metrics-reports' 'METRICS_REPORT_RECIPIENTS' "$metricsReportRecipients" 'METRICS_REPORT_SMTP_USERNAME' "$metricsReportSmtpUsername" 'METRICS_REPORT_SMTP_PASSWORD' "$metricsReportSmtpPassword"
