@@ -102,26 +102,26 @@ spec:
                     secretKeyRef:
                       name: documentdb
                       key: READONLY_PSW
-                - name: REPORTS_MAIL_RECIPIENTS
+                - name: METRICS_REPORT_RECIPIENTS
                   valueFrom:
                     secretKeyRef:
-                      name: documentdb
-                      key: REPORTS_MAIL_RECIPIENTS
+                      name: metrics-reports
+                      key: METRICS_REPORT_RECIPIENTS
                 - name: MAIL_SENDER
                   valueFrom:
                     secretKeyRef:
-                      name: documentdb
-                      key: MAIL_SENDER
-                - name: SMTP_USERNAME
+                      name: metrics-reports
+                      key: METRICS_REPORT_SMTP_USERNAME
+                - name: METRICS_REPORT_SMTP_USERNAME
                   valueFrom:
                     secretKeyRef:
-                      name: documentdb
-                      key: SMTP_USERNAME
-                - name: SMTP_PASSWORD
+                      name: metrics-reports
+                      key: METRICS_REPORT_SMTP_USERNAME
+                - name: METRICS_REPORT_SMTP_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: documentdb
-                      key: SMTP_PASSWORD
+                      name: metrics-reports
+                      key: METRICS_REPORT_SMTP_PASSWORD
               resources:
                 requests:
                   cpu: "{{SERVICE_RESOURCE_CPU}}"
