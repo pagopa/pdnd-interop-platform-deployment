@@ -435,11 +435,11 @@ jobs:
     secrets: inherit
     with:
       environment: ${{ inputs.environment }}
-  
+
   deploy_smtp_mock:
     name: SMTP mock
     needs: [deploy_configs]
-    if: ${{ inputs.environment != "prod" }}
+    if: ${{ inputs.environment != 'prod' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-smtp-mock.yaml
