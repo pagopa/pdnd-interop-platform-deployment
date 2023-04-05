@@ -89,8 +89,6 @@ jobs:
           metricsReportRecipients="$(getSecretValue 'metrics-reports-recipients')"
           metricsReportSmtpUsername="$(getSecretValue 'metrics-reports-smtp-username')"
           metricsReportSmtpPassword="$(getSecretValue 'metrics-reports-smtp-password')"
-          vaultAddr="$(getSecretValue 'vault-addr')"
-          vaultToken="$(getSecretValue 'vault-token')"
 
           createKubeSecret 'user-registry' 'USER_REGISTRY_API_KEY' "$userRegistryApiKey"
           createKubeSecret 'party-process' 'PARTY_PROCESS_API_KEY' "$partyProcessApiKey"
@@ -98,5 +96,4 @@ jobs:
           createKubeSecret 'selfcare-v2' 'SELFCARE_V2_API_KEY' "$selfcareV2ApiKey"
           createKubeSecret 'postgres' 'POSTGRES_USR' "$postgresUsername" 'POSTGRES_PSW' "$postgresPassword"
           createKubeSecret 'documentdb' 'PROJECTION_USR' "$projectionUsername" 'PROJECTION_PSW' "$projectionPassword" 'READONLY_USR' "$projectionROUsername" 'READONLY_PSW' "$projectionROPassword"
-          createKubeSecret 'vault' 'VAULT_ADDR' "$vaultAddr" 'VAULT_TOKEN' "$vaultToken"
           createKubeSecret 'metrics-reports' 'METRICS_REPORT_RECIPIENTS' "$metricsReportRecipients" 'METRICS_REPORT_SMTP_USERNAME' "$metricsReportSmtpUsername" 'METRICS_REPORT_SMTP_PASSWORD' "$metricsReportSmtpPassword"

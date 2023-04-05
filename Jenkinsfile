@@ -40,8 +40,6 @@ spec:
     READ_MODEL_CREDENTIALS_RO_USR = credentials('documentdb-ro-username')
     READ_MODEL_CREDENTIALS_RO_PSW = credentials('documentdb-ro-password')
     //
-    VAULT_TOKEN = credentials('vault-token')
-    VAULT_ADDR = credentials('vault-addr')
     USER_REGISTRY_API_KEY = credentials('user-registry-api-key')
     PARTY_PROCESS_API_KEY = credentials('party-process-api-key')
     PARTY_MANAGEMENT_API_KEY = credentials('party-management-api-key')
@@ -599,7 +597,6 @@ void loadSecrets() {
     loadSecret('party-management', 'PARTY_MANAGEMENT_API_KEY', 'PARTY_MANAGEMENT_API_KEY')
     loadSecret('postgres', 'POSTGRES_USR', 'POSTGRES_CREDENTIALS_USR', 'POSTGRES_PSW', 'POSTGRES_CREDENTIALS_PSW')
     loadSecret('documentdb', 'PROJECTION_USR', 'READ_MODEL_CREDENTIALS_PROJECTION_USR', 'PROJECTION_PSW', 'READ_MODEL_CREDENTIALS_PROJECTION_PSW', 'READONLY_USR', 'READ_MODEL_CREDENTIALS_RO_USR', 'READONLY_PSW', 'READ_MODEL_CREDENTIALS_RO_PSW')
-    loadSecret('vault', 'VAULT_ADDR', 'VAULT_ADDR', 'VAULT_TOKEN', 'VAULT_TOKEN')
   }
 }
 

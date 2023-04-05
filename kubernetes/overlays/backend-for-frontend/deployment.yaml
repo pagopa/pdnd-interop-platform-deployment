@@ -14,16 +14,6 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ACCEPTED_AUDIENCES
-            - name: VAULT_ADDR
-              valueFrom:
-                secretKeyRef:
-                  name: vault
-                  key: VAULT_ADDR
-            - name: VAULT_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: vault
-                  key: VAULT_TOKEN
             - name: EC_KEYS_IDENTIFIERS
               valueFrom:
                 configMapKeyRef:
@@ -34,11 +24,6 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: RSA_KEYS_IDENTIFIERS
-            - name: VAULT_SIGNATURE_ROUTE
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: VAULT_SIGNATURE_ROUTE
             - name: GENERATED_JWT_AUDIENCE
               valueFrom:
                 configMapKeyRef:
