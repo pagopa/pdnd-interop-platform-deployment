@@ -64,11 +64,11 @@ spec:
                     configMapKeyRef:
                       name: {{SERVICE_NAME}}
                       key: RSA_KEYS_IDENTIFIERS
-                - name: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
+                - name: ATTRIBUTE_REGISTRY_PROCESS_URL
                   valueFrom:
                     configMapKeyRef:
                       name: {{SERVICE_NAME}}
-                      key: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
+                      key: ATTRIBUTE_REGISTRY_PROCESS_URL
               resources:
                 requests:
                   cpu: "{{SERVICE_RESOURCE_CPU}}"
