@@ -34,16 +34,6 @@ spec:
                   valueFrom:
                     fieldRef:
                       fieldPath: metadata.namespace
-                - name: VAULT_ADDR
-                  valueFrom:
-                    secretKeyRef:
-                      name: vault
-                      key: VAULT_ADDR
-                - name: VAULT_TOKEN
-                  valueFrom:
-                    secretKeyRef:
-                      name: vault
-                      key: VAULT_TOKEN
                 - name: JWT_ISSUER
                   valueFrom:
                     configMapKeyRef:
@@ -74,11 +64,6 @@ spec:
                     configMapKeyRef:
                       name: {{SERVICE_NAME}}
                       key: RSA_KEYS_IDENTIFIERS
-                - name: VAULT_SIGNATURE_ROUTE
-                  valueFrom:
-                    configMapKeyRef:
-                      name: {{SERVICE_NAME}}
-                      key: VAULT_SIGNATURE_ROUTE
                 - name: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
                   valueFrom:
                     configMapKeyRef:
