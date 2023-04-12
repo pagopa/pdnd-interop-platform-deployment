@@ -40,7 +40,7 @@ spec:
                   value: "{{READ_MODEL_DB_PORT}}"
                 - name: READ_MODEL_DB_NAME
                   value: "{{READ_MODEL_DB_NAME}}"
-                - name: ENVIROMENT
+                - name: ENVIRONMENT
                   value: "{{LOWERCASE_ENV}}"
                 - name: TENANTS_COLLECTION_NAME
                   valueFrom:
