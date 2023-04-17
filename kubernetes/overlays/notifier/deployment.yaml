@@ -26,16 +26,6 @@ spec:
                   key: PURPOSE_MANAGEMENT_URL
             - name: PERSISTENCE_EVENTS_QUEUE_URL
               value: "{{AWS_SQS_DOMAIN}}/{{AWS_ACCOUNT_ID}}/{{PERSISTENCE_QUEUE_NAME}}"
-            - name: VAULT_ADDR
-              valueFrom:
-                secretKeyRef:
-                  name: vault
-                  key: VAULT_ADDR
-            - name: VAULT_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: vault
-                  key: VAULT_TOKEN
             - name: INTERNAL_JWT_ISSUER
               valueFrom:
                 configMapKeyRef:
@@ -66,11 +56,6 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: RSA_KEYS_IDENTIFIERS
-            - name: VAULT_SIGNATURE_ROUTE
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: VAULT_SIGNATURE_ROUTE
             - name: ACCEPTED_AUDIENCES
               valueFrom:
                 configMapKeyRef:

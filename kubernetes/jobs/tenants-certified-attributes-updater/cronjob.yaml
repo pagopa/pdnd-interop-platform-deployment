@@ -34,16 +34,6 @@ spec:
                   valueFrom:
                     fieldRef:
                       fieldPath: metadata.namespace
-                - name: VAULT_ADDR
-                  valueFrom:
-                    secretKeyRef:
-                      name: vault
-                      key: VAULT_ADDR
-                - name: VAULT_TOKEN
-                  valueFrom:
-                    secretKeyRef:
-                      name: vault
-                      key: VAULT_TOKEN
                 - name: CQRS_PROJECTION_DB_HOST
                   value: "{{READ_MODEL_DB_HOST}}"
                 - name: CQRS_PROJECTION_DB_PORT
@@ -100,11 +90,6 @@ spec:
                     configMapKeyRef:
                       name: {{SERVICE_NAME}}
                       key: RSA_KEYS_IDENTIFIERS
-                - name: VAULT_SIGNATURE_ROUTE
-                  valueFrom:
-                    configMapKeyRef:
-                      name: {{SERVICE_NAME}}
-                      key: VAULT_SIGNATURE_ROUTE
                 - name: PARTY_REGISTRY_PROXY_URL
                   valueFrom:
                     configMapKeyRef:
