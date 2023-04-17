@@ -20,7 +20,7 @@ spec:
           image: redis:7.0.4
           imagePullPolicy: IfNotPresent
           command: ["redis-server"]
-          args: ["--save", "''", "--appendonly", "no", "--loglevel", "verbose"] # Disable persistence
+          args: ["--save", "''", "--appendonly", "no"] # Disable persistence
           ports:
             - name: redis
               containerPort: 6379
