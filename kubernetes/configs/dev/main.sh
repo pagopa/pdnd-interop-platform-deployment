@@ -18,6 +18,7 @@ PARTY_REGISTRY_PROXY_INTERFACE_VERSION=$(shortVersion $PARTY_REGISTRY_PROXY_IMAG
 PURPOSE_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $PURPOSE_MANAGEMENT_IMAGE_VERSION)
 TENANT_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $TENANT_MANAGEMENT_IMAGE_VERSION)
 
+ATTRIBUTE_REGISTRY_PROCESS_INTERFACE_VERSION=$(shortVersion $ATTRIBUTE_REGISTRY_PROCESS_IMAGE_VERSION)
 AGREEMENT_PROCESS_INTERFACE_VERSION=$(shortVersion $AGREEMENT_PROCESS_IMAGE_VERSION)
 AUTHORIZATION_PROCESS_INTERFACE_VERSION=$(shortVersion $AUTHORIZATION_PROCESS_IMAGE_VERSION)
 CATALOG_PROCESS_INTERFACE_VERSION=$(shortVersion $CATALOG_PROCESS_IMAGE_VERSION)
@@ -38,6 +39,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/dev/authorization_process.sh
 . $(pwd)/kubernetes/configs/dev/authorization_server.sh
 . $(pwd)/kubernetes/configs/dev/attribute_registry_management.sh
+. $(pwd)/kubernetes/configs/dev/attribute_registry_process.sh
 . $(pwd)/kubernetes/configs/dev/attributes_loader.sh
 . $(pwd)/kubernetes/configs/dev/backend_for_frontend.sh
 . $(pwd)/kubernetes/configs/dev/catalog_management.sh

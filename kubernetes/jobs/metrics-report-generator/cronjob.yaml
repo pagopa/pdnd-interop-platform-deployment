@@ -6,7 +6,7 @@ metadata:
   name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 spec:
-  schedule: "0 8 * * *"
+  schedule: "0 7 * * THU"
   failedJobsHistoryLimit: 1
   successfulJobsHistoryLimit: 0
   jobTemplate:
@@ -40,7 +40,7 @@ spec:
                   value: "{{READ_MODEL_DB_PORT}}"
                 - name: READ_MODEL_DB_NAME
                   value: "{{READ_MODEL_DB_NAME}}"
-                - name: ENVIROMENT
+                - name: ENVIRONMENT
                   value: "{{LOWERCASE_ENV}}"
                 - name: TENANTS_COLLECTION_NAME
                   valueFrom:

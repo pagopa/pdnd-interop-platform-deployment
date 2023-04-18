@@ -14,11 +14,13 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ACCEPTED_AUDIENCES
-            - name: PERSISTENCE_EVENTS_QUEUE_URL
-              value: "{{AWS_SQS_DOMAIN}}/{{AWS_ACCOUNT_ID}}/{{PERSISTENCE_QUEUE_NAME}}"
-            - name: ENABLED_PROJECTIONS
+            - name: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: ENABLED_PROJECTIONS
-
+                  key: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
+            - name: PARTY_REGISTRY_PROXY_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PARTY_REGISTRY_PROXY_URL
