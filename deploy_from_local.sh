@@ -409,6 +409,11 @@ applyKubeFile 'jobs/padigitale-report-generator/serviceaccount.yaml' $JOB_PADIGI
 jobPADigitaleReportGeneratorImageDigest=$(getDockerImageDigest $JOB_PADIGITALE_REPORT_GENERATOR_SERVICE_NAME $JOB_PADIGITALE_REPORT_GENERATOR_IMAGE_VERSION)
 applyKubeFile 'jobs/padigitale-report-generator/cronjob.yaml' $JOB_PADIGITALE_REPORT_GENERATOR_SERVICE_NAME $jobPADigitaleReportGeneratorImageDigest $JOB_PADIGITALE_REPORT_GENERATOR_RESOURCE_CPU $JOB_PADIGITALE_REPORT_GENERATOR_RESOURCE_MEM
 
+applyKubeFile 'jobs/eservices-monitoring-exporter/configmap.yaml' $JOB_ESERVICES_MONITORING_EXPORTER_SERVICE_NAME
+applyKubeFile 'jobs/eservices-monitoring-exporter/serviceaccount.yaml' $JOB_ESERVICES_MONITORING_EXPORTER_SERVICE_NAME
+jobEservicesMonitoringExporterImageDigest=$(getDockerImageDigest $JOB_ESERVICES_MONITORING_EXPORTER_SERVICE_NAME $JOB_ESERVICES_MONITORING_EXPORTER_IMAGE_VERSION)
+applyKubeFile 'jobs/eservices-monitoring-exporter/cronjob.yaml' $JOB_ESERVICES_MONITORING_EXPORTER_SERVICE_NAME $jobEservicesMonitoringExporterImageDigest $JOB_ESERVICES_MONITORING_EXPORTER_RESOURCE_CPU $JOB_ESERVICES_MONITORING_EXPORTER_RESOURCE_MEM
+
 applyKubeFile 'thirdparty/redis/deployment.yaml' $REDIS_SERVICE_NAME "" $REDIS_RESOURCE_CPU $REDIS_RESOURCE_MEM
 applyKubeFile 'thirdparty/redis/service.yaml' $REDIS_SERVICE_NAME
 
