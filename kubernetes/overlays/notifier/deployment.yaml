@@ -91,11 +91,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: NOTIFICATION_POSTGRES_SCHEMA_NAME
-            - name: KEYS_NOTIFICATION_POSTGRES_TABLE_NAME
+            - name: KEY_NOTIFICATION_POSTGRES_TABLE_NAME
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: KEYS_NOTIFICATION_POSTGRES_TABLE_NAME
+                  key: KEY_NOTIFICATION_POSTGRES_TABLE_NAME
             - name: NOTIFICATION_DB_SERVER_NAME
               value: "{{POSTGRES_PORT}}"
             - name: NOTIFICATION_DB_PORT
