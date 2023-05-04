@@ -97,7 +97,7 @@ spec:
                   name: {{SERVICE_NAME}}
                   key: KEY_NOTIFICATION_POSTGRES_TABLE_NAME
             - name: NOTIFICATION_DB_SERVER_NAME
-              value: "{{POSTGRES_PORT}}"
+              value: "{{POSTGRES_HOST}}"
             - name: NOTIFICATION_DB_PORT
               value: "{{POSTGRES_PORT}}"
             - name: NOTIFICATION_DB_NAME
