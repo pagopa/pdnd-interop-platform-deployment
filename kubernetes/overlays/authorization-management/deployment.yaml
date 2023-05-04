@@ -21,4 +21,14 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ENABLED_PROJECTIONS
+            - name: CQRS_CLIENTS_PROJECTION_COLLECTION_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: CQRS_PROJECTION_COLLECTION_NAME
+            - name: CQRS_KEYS_PROJECTION_COLLECTION_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: CQRS_KEYS_PROJECTION_COLLECTION_NAME
 
