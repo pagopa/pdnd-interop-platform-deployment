@@ -5,9 +5,9 @@ STAGE="DEV"
 DOMAIN_NAME="dev.interop.pagopa.it"
 
 REPOSITORY="505630707203.dkr.ecr.eu-central-1.amazonaws.com"
-POSTGRES_HOST="interop-rds-dev-auroradbcluster-1ws49gkll6459.cluster-c9zr6t2swdpb.eu-central-1.rds.amazonaws.com"
+POSTGRES_HOST="interop-persistence-management-dev.cluster-c9zr6t2swdpb.eu-central-1.rds.amazonaws.com"
 POSTGRES_PORT="5432"
-READ_MODEL_DB_HOST="read-model.cluster-c9zr6t2swdpb.eu-central-1.docdb.amazonaws.com"
+READ_MODEL_DB_HOST="interop-read-model-dev.cluster-c9zr6t2swdpb.eu-central-1.docdb.amazonaws.com:27017"
 READ_MODEL_DB_PORT="27017"
 READ_MODEL_DB_NAME="read-model"
 REPLICAS=1
