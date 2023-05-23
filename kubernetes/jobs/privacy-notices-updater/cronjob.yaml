@@ -25,7 +25,7 @@ spec:
           serviceAccountName: {{SERVICE_NAME}}
           containers:
             - name: {{SERVICE_NAME}}
-              image: {{REPOSITORY}}/{{SERVICE_NAME}}:{{JOB_ATTRIBUTES_LOADER_IMAGE_VERSION}}
+              image: {{REPOSITORY}}/{{SERVICE_NAME}}:{{JOB_PRIVACY_NOTICES_UDPATER_IMAGE_VERSION}}
               imagePullPolicy: Always
               command: ["bin/{{SERVICE_NAME}}"]
               args: ["-Dconfig.override_with_env_vars=true"]
