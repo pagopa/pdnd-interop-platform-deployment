@@ -15,6 +15,7 @@ BACKEND_SERVICE_PORT="8088"
 
 AWS_REGION="eu-central-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
+ENVELOPE_QUEUE_NAME="certified-mail.fifo"
 AWS_SQS_DOMAIN="https://sqs.${AWS_REGION}.amazonaws.com"
 
 ENABLED_PROJECTIONS="true"
