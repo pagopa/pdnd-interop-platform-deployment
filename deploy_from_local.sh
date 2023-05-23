@@ -298,6 +298,7 @@ function loadSecrets() {
     loadSecret 'selfcare-v2' 'SELFCARE_V2_API_KEY' 'SELFCARE_V2_API_KEY'
     loadSecret 'postgres' 'POSTGRES_USR' 'POSTGRES_CREDENTIALS_USR' 'POSTGRES_PSW' 'POSTGRES_CREDENTIALS_PSW'
     loadSecret 'documentdb' 'PROJECTION_USR' 'READ_MODEL_CREDENTIALS_PROJECTION_USR' 'PROJECTION_PSW' 'READ_MODEL_CREDENTIALS_PROJECTION_PSW' 'READONLY_USR' 'READ_MODEL_CREDENTIALS_RO_USR' 'READONLY_PSW' 'READ_MODEL_CREDENTIALS_RO_PSW'
+    loadSecret 'onetrust' 'ONETRUST_CLIENT_ID' 'ONETRUST_CLIENT_SECRET'
 
     echo "*****************************"
 }
@@ -408,6 +409,11 @@ applyKubeFile 'jobs/padigitale-report-generator/configmap.yaml' $JOB_PADIGITALE_
 applyKubeFile 'jobs/padigitale-report-generator/serviceaccount.yaml' $JOB_PADIGITALE_REPORT_GENERATOR_SERVICE_NAME
 jobPADigitaleReportGeneratorImageDigest=$(getDockerImageDigest $JOB_PADIGITALE_REPORT_GENERATOR_SERVICE_NAME $JOB_PADIGITALE_REPORT_GENERATOR_IMAGE_VERSION)
 applyKubeFile 'jobs/padigitale-report-generator/cronjob.yaml' $JOB_PADIGITALE_REPORT_GENERATOR_SERVICE_NAME $jobPADigitaleReportGeneratorImageDigest $JOB_PADIGITALE_REPORT_GENERATOR_RESOURCE_CPU $JOB_PADIGITALE_REPORT_GENERATOR_RESOURCE_MEM
+
+applyKubeFile 'jobs/privacy-notices-updater/configmap.yaml' $JOB_PRIVACY_NOTICES_UPDATER_SERVICE_NAME
+applyKubeFile 'jobs/privacy-notices-updater/serviceaccount.yaml' $JOB_PRIVACY_NOTICES_UPDATER_SERVICE_NAME
+jobPrivacyNoticesUpdaterImageDigest=$(getDockerImageDigest $JOB_PRIVACY_NOTICES_UPDATER_SERVICE_NAME $JOB_PRIVACY_NOTICES_UPDATER_IMAGE_VERSION)
+applyKubeFile 'jobs/privacy-notices-updater/cronjob.yaml' $JOB_PRIVACY_NOTICES_UPDATER_SERVICE_NAME $jobPrivacyNoticesUpdaterImageDigest $JOB_PRIVACY_NOTICES_UPDATER_RESOURCE_CPU $JOB_PRIVACY_NOTICES_UPDATER_RESOURCE_MEM
 
 applyKubeFile 'thirdparty/redis/deployment.yaml' $REDIS_SERVICE_NAME "" $REDIS_RESOURCE_CPU $REDIS_RESOURCE_MEM
 applyKubeFile 'thirdparty/redis/service.yaml' $REDIS_SERVICE_NAME

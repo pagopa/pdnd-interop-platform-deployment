@@ -56,3 +56,4 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/prod/metrics_report_generator.sh
 . $(pwd)/kubernetes/configs/prod/padigitale_report_generator.sh
 . $(pwd)/kubernetes/configs/prod/dashboard_metrics_report_generator.sh
+. $(pwd)/kubernetes/configs/prod/privacy_notices_updater.sh
