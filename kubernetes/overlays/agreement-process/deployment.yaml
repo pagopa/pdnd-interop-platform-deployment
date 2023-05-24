@@ -74,8 +74,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: CONSUMER_DOCS_PATH
-            - name: ENVELOPE_QUEUE_NAME
+            - name: CERTIFIED_MAIL_QUEUE_NAME
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: ENVELOPE_QUEUE_NAME
+                  key: CERTIFIED_MAIL_QUEUE_NAME
