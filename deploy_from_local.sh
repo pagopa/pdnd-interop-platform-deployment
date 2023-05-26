@@ -415,6 +415,11 @@ applyKubeFile 'jobs/privacy-notices-updater/serviceaccount.yaml' $JOB_PRIVACY_NO
 jobPrivacyNoticesUpdaterImageDigest=$(getDockerImageDigest $JOB_PRIVACY_NOTICES_UPDATER_SERVICE_NAME $JOB_PRIVACY_NOTICES_UPDATER_IMAGE_VERSION)
 applyKubeFile 'jobs/privacy-notices-updater/cronjob.yaml' $JOB_PRIVACY_NOTICES_UPDATER_SERVICE_NAME $jobPrivacyNoticesUpdaterImageDigest $JOB_PRIVACY_NOTICES_UPDATER_RESOURCE_CPU $JOB_PRIVACY_NOTICES_UPDATER_RESOURCE_MEM
 
+applyKubeFile 'jobs/dtd-catalog-exporter/configmap.yaml' $JOB_DTD_CATALOG_EXPORTER_SERVICE_NAME
+applyKubeFile 'jobs/dtd-catalog-exporter/serviceaccount.yaml' $JOB_DTD_CATALOG_EXPORTER_SERVICE_NAME
+jobDTDCatalogExporterImageDigest=$(getDockerImageDigest $JOB_DTD_CATALOG_EXPORTER_SERVICE_NAME $JOB_DTD_CATALOG_EXPORTER_IMAGE_VERSION)
+applyKubeFile 'jobs/dtd-catalog-exporter/cronjob.yaml' $JOB_DTD_CATALOG_EXPORTER_SERVICE_NAME $jobDTDCatalogExporterImageDigest $JOB_DTD_CATALOG_EXPORTER_RESOURCE_CPU $JOB_DTD_CATALOG_EXPORTER_RESOURCE_MEM
+
 applyKubeFile 'thirdparty/redis/deployment.yaml' $REDIS_SERVICE_NAME "" $REDIS_RESOURCE_CPU $REDIS_RESOURCE_MEM
 applyKubeFile 'thirdparty/redis/service.yaml' $REDIS_SERVICE_NAME
 
