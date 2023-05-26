@@ -1,0 +1,78 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  labels:
+    app: {{SERVICE_NAME}}
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  schedule: "15 6 * * *"
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 0
+  jobTemplate:
+    metadata:
+      labels:
+        app: {{SERVICE_NAME}}
+      annotations:
+        digest: {{IMAGE_DIGEST}} # Used to force deployment on same image version but different content
+    spec:
+      template:
+        metadata:
+          labels:
+            app: {{SERVICE_NAME}}
+        spec:
+          restartPolicy: OnFailure
+          serviceAccountName: {{SERVICE_NAME}}
+          containers:
+            - name: {{SERVICE_NAME}}
+              image: {{REPOSITORY}}/{{SERVICE_NAME}}:{{JOB_PRIVACY_NOTICES_UDPATER_IMAGE_VERSION}}
+              imagePullPolicy: Always
+              command: ["bin/{{SERVICE_NAME}}"]
+              args: ["-Dconfig.override_with_env_vars=true"]
+              env:
+                - name: NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: PRIVACY_NOTICES_DYNAMO_TABLE_NAME
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: PRIVACY_NOTICES_DYNAMO_TABLE_NAME
+                - name: PRIVACY_NOTICES_ONE_TRUST_TOKEN_URL
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: PRIVACY_NOTICES_ONE_TRUST_TOKEN_URL
+                - name: PRIVACY_NOTICES_ONE_TRUST_PN_URL
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: PRIVACY_NOTICES_ONE_TRUST_PN_URL
+                - name: PRIVACY_NOTICES_PP_UUID
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: PRIVACY_NOTICES_PP_UUID
+                - name: PRIVACY_NOTICES_TOS_UUID
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: PRIVACY_NOTICES_TOS_UUID
+                - name: PRIVACY_NOTICES_CLIENT_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: onetrust
+                      key: ONETRUST_CLIENT_ID
+                - name: PRIVACY_NOTICES_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: onetrust
+                      key: ONETRUST_CLIENT_SECRET
+              resources:
+                requests:
+                  cpu: "{{SERVICE_RESOURCE_CPU}}"
+                  memory: "{{SERVICE_RESOURCE_MEM}}"
+                limits:
+                  cpu: "{{SERVICE_RESOURCE_CPU}}"
+                  memory: "{{SERVICE_RESOURCE_MEM}}"
