@@ -5,9 +5,9 @@ STAGE="PROD"
 DOMAIN_NAME="interop.pagopa.it"
 
 REPOSITORY="505630707203.dkr.ecr.eu-central-1.amazonaws.com"
-POSTGRES_HOST="interop-rds-prod-auroradbcluster-n6mrmtikvktv.cluster-clwq8rah1dfz.eu-central-1.rds.amazonaws.com"
+POSTGRES_HOST="interop-persistence-management-prod.cluster-clwq8rah1dfz.eu-central-1.rds.amazonaws.com"
 POSTGRES_PORT="5432"
-READ_MODEL_DB_HOST="read-model.cluster-clwq8rah1dfz.eu-central-1.docdb.amazonaws.com"
+READ_MODEL_DB_HOST="interop-read-model-prod.cluster-clwq8rah1dfz.eu-central-1.docdb.amazonaws.com"
 READ_MODEL_DB_PORT="27017"
 READ_MODEL_DB_NAME="read-model"
 REPLICAS=2
@@ -36,3 +36,7 @@ USER_REGISTRY_URL="https://api.pdv.pagopa.it/user-registry/v1"
 SELFCARE_V2_URL="https://api.selfcare.pagopa.it/external/v2"
 
 SELFCARE_PRODUCT_ID="prod-interop"
+
+PRIVACY_NOTICES_UPDATER_DYNAMO_TABLE_NAME="interop-privacy-notices-prod"
+PRIVACY_NOTICES_UPDATER_PRIVACY_POLICY_UUID="0df21ff6-3e8f-4320-af8f-23dea9135d57"
+PRIVACY_NOTICES_UPDATER_TERMS_OF_SERVICE_UUID="6bf8412a-41a7-41a0-82dc-26286ce61b1a"

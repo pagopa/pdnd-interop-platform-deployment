@@ -441,6 +441,36 @@ jobs:
       resource_cpu_var_name: JOB_DASHBOARD_METRICS_REPORT_GENERATOR_RESOURCE_CPU
       resource_mem_var_name: JOB_DASHBOARD_METRICS_REPORT_GENERATOR_RESOURCE_MEM
 
+  deploy_dtd_catalog_exporter:
+    name: DTD catalog exporter
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-cronjob.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      k8s_files_path: "jobs/dtd_catalog_exporter"
+      service_name_var_name: JOB_DTD_CATALOG_EXPORTER_SERVICE_NAME
+      image_version_var_name: JOB_DTD_CATALOG_EXPORTER_IMAGE_VERSION
+      resource_cpu_var_name: JOB_DTD_CATALOG_EXPORTER_RESOURCE_CPU
+      resource_mem_var_name: JOB_DTD_CATALOG_EXPORTER_RESOURCE_MEM
+
+  deploy_privacy_notices_updater:
+    name: Privacy Notices Updater
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-cronjob.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      k8s_files_path: "jobs/privacy-notices-updater"
+      service_name_var_name: JOB_PRIVACY_NOTICES_UPDATER_SERVICE_NAME
+      image_version_var_name: JOB_PRIVACY_NOTICES_UPDATER_IMAGE_VERSION
+      resource_cpu_var_name: JOB_PRIVACY_NOTICES_UPDATER_RESOURCE_CPU
+      resource_mem_var_name: JOB_PRIVACY_NOTICES_UPDATER_RESOURCE_MEM
+
   deploy_redis:
     name: Redis
     needs: [deploy_configs]
@@ -454,7 +484,7 @@ jobs:
   deploy_smtp_mock:
     name: SMTP mock
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'prod' }}
+    if: ${{ inputs.environment != 'prod' && inputs.environment != 'prod2' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-smtp-mock.yaml
@@ -489,7 +519,8 @@ jobs:
       deploy_attributes_loader, deploy_token_details_persister, 
       deploy_tenants_certified_attributes_updater, deploy_party_registry_proxy_refresher, 
       deploy_metrics_report_generator, deploy_padigitale_report_generator, 
-      deploy_dashboard_metrics_report_generator, 
+      deploy_dashboard_metrics_report_generator, deploy_dtd_catalog_exporter,
+      deploy_privacy_notices_updater,
       deploy_redis, 
       deploy_smtp_mock
     ]

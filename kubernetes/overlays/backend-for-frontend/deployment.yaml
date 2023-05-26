@@ -189,3 +189,18 @@ spec:
                 secretKeyRef:
                   name: selfcare-v2
                   key: SELFCARE_V2_API_KEY
+            - name: PRIVACY_NOTICES_PP_UUID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRIVACY_NOTICES_PP_UUID
+            - name: PRIVACY_NOTICES_TOS_UUID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRIVACY_NOTICES_TOS_UUID
+            - name: PRIVACY_NOTICES_DYNAMO_TABLE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRIVACY_NOTICES_DYNAMO_TABLE_NAME
