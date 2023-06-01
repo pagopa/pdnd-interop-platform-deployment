@@ -84,3 +84,8 @@ spec:
                 secretKeyRef:
                   name: party-process
                   key: PARTY_PROCESS_API_KEY
+            - name: PARTY_PROCESS_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: PARTY_PROCESS_URL
