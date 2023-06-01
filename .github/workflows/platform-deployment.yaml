@@ -450,7 +450,7 @@ jobs:
     secrets: inherit
     with:
       environment: ${{ inputs.environment }}
-      k8s_files_path: "jobs/dtd_catalog_exporter"
+      k8s_files_path: "jobs/dtd-catalog-exporter"
       service_name_var_name: JOB_DTD_CATALOG_EXPORTER_SERVICE_NAME
       image_version_var_name: JOB_DTD_CATALOG_EXPORTER_IMAGE_VERSION
       resource_cpu_var_name: JOB_DTD_CATALOG_EXPORTER_RESOURCE_CPU
