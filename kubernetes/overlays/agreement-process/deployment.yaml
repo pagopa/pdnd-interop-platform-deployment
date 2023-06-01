@@ -79,3 +79,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: CERTIFIED_MAIL_QUEUE_NAME
+            - name: PARTY_PROCESS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: party-process
+                  key: PARTY_PROCESS_API_KEY
