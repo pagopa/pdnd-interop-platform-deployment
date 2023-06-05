@@ -204,3 +204,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PRIVACY_NOTICES_DYNAMO_TABLE_NAME
+            - name: PRIVACY_NOTICES_USERS_DYNAMO_TABLE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRIVACY_NOTICES_USERS_DYNAMO_TABLE_NAME
