@@ -89,3 +89,8 @@ spec:
                   configMapKeyRef:
                     name: {{SERVICE_NAME}}
                     key: PARTY_PROCESS_URL
+            - name: MESSAGE_GROUP_ID
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: MESSAGE_GROUP_ID

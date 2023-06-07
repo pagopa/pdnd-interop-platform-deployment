@@ -16,3 +16,5 @@ data:
   CONSUMER_DOCS_PATH: "{{NAMESPACE}}/agreement/consumer-docs"
 
   CERTIFIED_MAIL_QUEUE_NAME: "{{CERTIFIED_MAIL_QUEUE_NAME}}"
+
+  MESSAGE_GROUP_ID: "pec_message_group_id"
