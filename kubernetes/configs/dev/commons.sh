@@ -15,6 +15,7 @@ BACKEND_SERVICE_PORT="8088"
 
 AWS_REGION="eu-central-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
+CERTIFIED_MAIL_QUEUE_NAME="certified-mail.fifo"
 AWS_SQS_DOMAIN="https://sqs.${AWS_REGION}.amazonaws.com"
 
 ENABLED_PROJECTIONS="true"
@@ -37,6 +38,7 @@ SELFCARE_V2_URL="https://api.uat.selfcare.pagopa.it/external/v2"
 
 SELFCARE_PRODUCT_ID="prod-interop"
 
-PRIVACY_NOTICES_UPDATER_DYNAMO_TABLE_NAME="interop-privacy-notices-dev"
+PRIVACY_NOTICES_DYNAMO_TABLE_NAME="interop-privacy-notices-dev"
+PRIVACY_NOTICES_ACCEPTANCE_DYNAMO_TABLE_NAME="interop-privacy-notices-acceptances-dev"
 PRIVACY_NOTICES_UPDATER_PRIVACY_POLICY_UUID="0df21ff6-3e8f-4320-af8f-23dea9135d57"
 PRIVACY_NOTICES_UPDATER_TERMS_OF_SERVICE_UUID="6bf8412a-41a7-41a0-82dc-26286ce61b1a"

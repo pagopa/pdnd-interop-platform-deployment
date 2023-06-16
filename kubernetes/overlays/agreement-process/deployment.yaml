@@ -74,3 +74,23 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: CONSUMER_DOCS_PATH
+            - name: CERTIFIED_MAIL_QUEUE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: CERTIFIED_MAIL_QUEUE_NAME
+            - name: PARTY_PROCESS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: party-process
+                  key: PARTY_PROCESS_API_KEY
+            - name: PARTY_PROCESS_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: PARTY_PROCESS_URL
+            - name: MESSAGE_GROUP_ID
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: MESSAGE_GROUP_ID
