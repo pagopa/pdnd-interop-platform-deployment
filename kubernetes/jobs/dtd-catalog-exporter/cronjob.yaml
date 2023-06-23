@@ -6,7 +6,7 @@ metadata:
   name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 spec:
-  schedule: "0 2 * * *"
+  schedule: "0 9 * * *"
   failedJobsHistoryLimit: 1
   successfulJobsHistoryLimit: 0
   jobTemplate:
