@@ -36,6 +36,7 @@ JOB_DASHBOARD_METRICS_REPORT_GENERATOR_SERVICE_NAME="interop-be-dashboard-metric
 JOB_ESERVICES_MONITORING_EXPORTER_SERVICE_NAME="interop-be-eservices-monitoring-exporter"
 JOB_PRIVACY_NOTICES_UPDATER_SERVICE_NAME="interop-be-privacy-notices-updater"
 JOB_DTD_CATALOG_EXPORTER_SERVICE_NAME="interop-be-dtd-catalog-exporter"
+JOB_CERTIFIED_MAIL_SERVICE_NAME="interop-be-certified-mail-sender"
 
 INTEROP_SELFCARE_PRODUCT_NAME="prod-interop"
 

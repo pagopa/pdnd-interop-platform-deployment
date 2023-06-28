@@ -425,6 +425,11 @@ applyKubeFile 'jobs/dtd-catalog-exporter/serviceaccount.yaml' $JOB_DTD_CATALOG_E
 jobDTDCatalogExporterImageDigest=$(getDockerImageDigest $JOB_DTD_CATALOG_EXPORTER_SERVICE_NAME $JOB_DTD_CATALOG_EXPORTER_IMAGE_VERSION)
 applyKubeFile 'jobs/dtd-catalog-exporter/cronjob.yaml' $JOB_DTD_CATALOG_EXPORTER_SERVICE_NAME $jobDTDCatalogExporterImageDigest $JOB_DTD_CATALOG_EXPORTER_RESOURCE_CPU $JOB_DTD_CATALOG_EXPORTER_RESOURCE_MEM
 
+applyKubeFile 'jobs/certified-mail-sender/configmap.yaml' $JOB_CERTIFIED_MAIL_SERVICE_NAME
+applyKubeFile 'jobs/certified-mail-sender/serviceaccount.yaml' $JOB_CERTIFIED_MAIL_SERVICE_NAME
+certifiedMailSenderImageDigest=$(getDockerImageDigest $JOB_CERTIFIED_MAIL_SERVICE_NAME $JOB_CERTIFIED_MAIL_IMAGE_VERSION)
+applyKubeFile 'jobs/certified-mail-sender/job.yaml' $JOB_CERTIFIED_MAIL_SERVICE_NAME $certifiedMailSenderImageDigest $JOB_CERTIFIED_MAIL_RESOURCE_CPU $JOB_CERTIFIED_MAIL_RESOURCE_MEM
+
 applyKubeFile 'thirdparty/redis/deployment.yaml' $REDIS_SERVICE_NAME "" $REDIS_RESOURCE_CPU $REDIS_RESOURCE_MEM
 applyKubeFile 'thirdparty/redis/service.yaml' $REDIS_SERVICE_NAME
 

@@ -60,3 +60,4 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/dev/dashboard_metrics_report_generator.sh
 . $(pwd)/kubernetes/configs/dev/privacy_notices_updater.sh
 . $(pwd)/kubernetes/configs/dev/dtd_catalog_exporter.sh
+. $(pwd)/kubernetes/configs/dev/certified_mail_sender.sh

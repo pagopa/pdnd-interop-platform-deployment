@@ -486,6 +486,21 @@ jobs:
       resource_cpu_var_name: JOB_ESERVICES_MONITORING_EXPORTER_RESOURCE_CPU
       resource_mem_var_name: JOB_ESERVICES_MONITORING_EXPORTER_RESOURCE_MEM
 
+  deploy_certified_mail_sender:
+    name: Certified Mail Sender
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-job.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      k8s_files_path: "jobs/certified-mail-sender"
+      service_name_var_name: JOB_CERTIFIED_MAIL_SERVICE_NAME
+      image_version_var_name: JOB_CERTIFIED_MAIL_IMAGE_VERSION
+      resource_cpu_var_name: JOB_CERTIFIED_MAIL_RESOURCE_CPU
+      resource_mem_var_name: JOB_CERTIFIED_MAIL_RESOURCE_MEM
+
   deploy_redis:
     name: Redis
     needs: [deploy_configs]
@@ -535,7 +550,7 @@ jobs:
       deploy_tenants_certified_attributes_updater, deploy_party_registry_proxy_refresher, 
       deploy_metrics_report_generator, deploy_padigitale_report_generator, 
       deploy_dashboard_metrics_report_generator, deploy_dtd_catalog_exporter,
-      deploy_privacy_notices_updater, deploy_eservices_monitoring_exporter,
+      deploy_privacy_notices_updater, deploy_eservices_monitoring_exporter,deploy_certified_mail_sender,
       deploy_redis, 
       deploy_smtp_mock
     ]

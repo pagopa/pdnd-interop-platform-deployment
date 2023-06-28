@@ -1,0 +1,76 @@
+name: Deploy Cronjob
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: 'Environment name'
+        type: string
+        required: true
+      k8s_files_path:
+        description: 'Path to folder containing k8s files for this cronjob'
+        type: string
+        required: true
+      service_name_var_name:
+        description: 'Name of the environment variable containing the cronjob name'
+        type: string
+        required: true
+      image_version_var_name:
+        description: 'Name of the environment variable containing the image version for this cronjob'
+        type: string
+        required: true
+      resource_cpu_var_name:
+        description: 'Name of the environment variable containing the CPU to allocate for this cronjob'
+        type: string
+        required: true
+      resource_mem_var_name:
+        description: 'Name of the environment variable containing the memory to allocate for this cronjob'
+        type: string
+        required: true
+
+jobs:
+  deploy_job:
+    name: Deploy Job
+    runs-on: [self-hosted, "run_id:${{ github.run_id }}"]
+    environment: ${{ inputs.environment }}
+    permissions:
+      contents: read
+    env:
+      NAMESPACE: ${{ secrets.NAMESPACE }}
+      CONFIG_FILE: ${{ secrets.CONFIG_FILE }}
+      ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+      AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      - name: Update Kubeconfig
+        id: update_kubeconfig
+        run: |
+          set -eo pipefail
+
+          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
+
+      - name: Apply Kube Files
+        id: apply_kube_files
+        run: |
+          set -eo pipefail
+          source $CONFIG_FILE
+          source ./deployment_functions.sh
+
+          serviceName="${${{inputs.service_name_var_name}}}"
+          imageVersion="${${{inputs.image_version_var_name}}}"
+          resourceCpu="${${{inputs.resource_cpu_var_name}}}"
+          resourceMem="${${{inputs.resource_mem_var_name}}}"
+
+          echo "Retrieving image digest for $serviceName version $imageVersion"
+          imageDigest="$(getDockerImageDigest $serviceName $imageVersion)"
+          echo "Image digest: $imageDigest"
+
+          applyKubeFile "${{ inputs.k8s_files_path }}/configmap.yaml" $serviceName
+          applyKubeFile "${{ inputs.k8s_files_path }}/serviceaccount.yaml" $serviceName
+          applyKubeFile "${{ inputs.k8s_files_path }}/job.yaml" $serviceName $imageDigest $resourceCpu $resourceMem
