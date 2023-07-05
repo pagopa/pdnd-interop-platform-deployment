@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+data:
+  LANGS: "{{LANGS}}"
+  PUBLIC_STORAGE_PATH: "{{PUBLIC_STORAGE_PATH}}"
+  CONTENT_STORAGE_BUCKET: "{{CONTENT_STORAGE_BUCKET}}"
+  HISTORY_STORAGE_BUCKET: "{{HISTORY_STORAGE_BUCKET}}"
