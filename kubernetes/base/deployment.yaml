@@ -37,7 +37,7 @@ spec:
               port: management
             periodSeconds: 5
             failureThreshold: 3
-            initialDelaySeconds: 5
+            initialDelaySeconds: 30
           ports:
             - name: management
               containerPort: 8558
