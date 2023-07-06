@@ -103,5 +103,5 @@ jobs:
           createKubeSecret 'documentdb' 'PROJECTION_USR' "$projectionUsername" 'PROJECTION_PSW' "$projectionPassword" 'READONLY_USR' "$projectionROUsername" 'READONLY_PSW' "$projectionROPassword"
           createKubeSecret 'metrics-reports' 'METRICS_REPORT_RECIPIENTS' "$metricsReportRecipients" 'METRICS_REPORT_SMTP_USERNAME' "$metricsReportSmtpUsername" 'METRICS_REPORT_SMTP_PASSWORD' "$metricsReportSmtpPassword"
           createKubeSecret 'onetrust' 'ONETRUST_CLIENT_ID' "$onetrustClientId" 'ONETRUST_CLIENT_SECRET' "$onetrustClientSecret"
-          createKubeSecret 'smtp-certified' 'SMTP_USER' "$smtpPecUsername" 'SMTP_PASSWORD' "$smtpPecPassword" 'SMTP_SENDER' "$pecSender"
+          createKubeSecret 'smtp-certified' 'PEC_SMTP_USER' "$smtpPecUsername" 'PEC_SMTP_PASSWORD' "$smtpPecPassword" 'PEC_SMTP_SENDER' "$pecSender"
 
