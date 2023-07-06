@@ -5,6 +5,6 @@ metadata:
   namespace: {{NAMESPACE}}
 data:
   PEC_QUEUE_URL: "certified-mail.fifo"
-  SMTP_ADDRESS: "{{SMTP_ADDRESS}}"
-  SMTP_PORT: "{{SMTP_PORT}}"
-  WITH_SSL: "{{WITH_SSL}}"
+  PEC_SMTP_ADDRESS: "{{PEC_SMTP_ADDRESS}}"
+  PEC_SMTP_PORT: "{{PEC_SMTP_PORT}}"
+  PEC_WITH_SSL: "{{PEC_WITH_SSL}}"
