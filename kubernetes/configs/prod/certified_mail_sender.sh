@@ -1,6 +1,5 @@
 #!/bin/bash
 
-SMTP_SENDER="interopuser/interoperabilita@pec.pagopa.it"
 SMTP_ADDRESS="smtps.pec.aruba.it"
 SMTP_PORT=465
 WITH_SSL=true

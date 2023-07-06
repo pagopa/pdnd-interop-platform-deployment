@@ -20,8 +20,8 @@ spec:
                   key: PEC_QUEUE_URL
             - name: SMTP_SENDER
               valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
+                secretKeyRef:
+                  name: smtp-certified
                   key: SMTP_SENDER
             - name: SMTP_ADDRESS
               valueFrom:

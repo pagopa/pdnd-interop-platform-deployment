@@ -1,6 +1,5 @@
 #!/bin/bash
 
-SMTP_SENDER="sender"
 SMTP_ADDRESS="smtp-mock.test.svc.cluster.local"
 SMTP_PORT=5025
 WITH_SSL=false
