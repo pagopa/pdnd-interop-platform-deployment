@@ -93,6 +93,7 @@ jobs:
           onetrustClientSecret="$(getSecretValue 'onetrust-clientsecret')"
           smtpPecUsername="$(getSecretValue 'interop-pec-user')"
           smtpPecPassword="$(getSecretValue 'interop-pec-password')"
+          pecSender="$(getSecretValue 'interop-pec-sender')"
 
           createKubeSecret 'user-registry' 'USER_REGISTRY_API_KEY' "$userRegistryApiKey"
           createKubeSecret 'party-process' 'PARTY_PROCESS_API_KEY' "$partyProcessApiKey"
