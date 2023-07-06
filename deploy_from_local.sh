@@ -380,6 +380,7 @@ applyKustomizeToDir 'overlays/tenant-process' $TENANT_PROCESS_SERVICE_NAME $TENA
 applyKustomizeToDir 'overlays/backend-for-frontend' $BACKEND_FOR_FRONTEND_SERVICE_NAME $BACKEND_FOR_FRONTEND_IMAGE_VERSION $BACKEND_FOR_FRONTEND_RESOURCE_CPU $BACKEND_FOR_FRONTEND_RESOURCE_MEM
 applyKustomizeToDir 'overlays/api-gateway' $API_GATEWAY_SERVICE_NAME $API_GATEWAY_IMAGE_VERSION $API_GATEWAY_RESOURCE_CPU $API_GATEWAY_RESOURCE_MEM
 applyKustomizeToDir 'overlays/notifier' $NOTIFIER_SERVICE_NAME $NOTIFIER_IMAGE_VERSION $NOTIFIER_RESOURCE_CPU $NOTIFIER_RESOURCE_MEM
+applyKustomizeToDir 'overlays/certified-mail-sender' $CERTIFIED_MAIL_SENDER_SERVICE_NAME $CERTIFIED_MAIL_SENDER_IMAGE_VERSION $CERTIFIED_MAIL_SENDER_RESOURCE_CPU $CERTIFIED_MAIL_SENDER_RESOURCE_MEM
 
 applyKubeFile 'jobs/attributes-loader/configmap.yaml' $JOB_ATTRIBUTES_LOADER_SERVICE_NAME
 applyKubeFile 'jobs/attributes-loader/serviceaccount.yaml' $JOB_ATTRIBUTES_LOADER_SERVICE_NAME
@@ -424,11 +425,6 @@ applyKubeFile 'jobs/dtd-catalog-exporter/configmap.yaml' $JOB_DTD_CATALOG_EXPORT
 applyKubeFile 'jobs/dtd-catalog-exporter/serviceaccount.yaml' $JOB_DTD_CATALOG_EXPORTER_SERVICE_NAME
 jobDTDCatalogExporterImageDigest=$(getDockerImageDigest $JOB_DTD_CATALOG_EXPORTER_SERVICE_NAME $JOB_DTD_CATALOG_EXPORTER_IMAGE_VERSION)
 applyKubeFile 'jobs/dtd-catalog-exporter/cronjob.yaml' $JOB_DTD_CATALOG_EXPORTER_SERVICE_NAME $jobDTDCatalogExporterImageDigest $JOB_DTD_CATALOG_EXPORTER_RESOURCE_CPU $JOB_DTD_CATALOG_EXPORTER_RESOURCE_MEM
-
-applyKubeFile 'jobs/certified-mail-sender/configmap.yaml' $JOB_CERTIFIED_MAIL_SERVICE_NAME
-applyKubeFile 'jobs/certified-mail-sender/serviceaccount.yaml' $JOB_CERTIFIED_MAIL_SERVICE_NAME
-certifiedMailSenderImageDigest=$(getDockerImageDigest $JOB_CERTIFIED_MAIL_SERVICE_NAME $JOB_CERTIFIED_MAIL_IMAGE_VERSION)
-applyKubeFile 'jobs/certified-mail-sender/job.yaml' $JOB_CERTIFIED_MAIL_SERVICE_NAME $certifiedMailSenderImageDigest $JOB_CERTIFIED_MAIL_RESOURCE_CPU $JOB_CERTIFIED_MAIL_RESOURCE_MEM
 
 applyKubeFile 'thirdparty/redis/deployment.yaml' $REDIS_SERVICE_NAME "" $REDIS_RESOURCE_CPU $REDIS_RESOURCE_MEM
 applyKubeFile 'thirdparty/redis/service.yaml' $REDIS_SERVICE_NAME

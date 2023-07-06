@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: PEC_QUEUE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PEC_QUEUE_URL
+            - name: SMTP_SENDER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SMTP_SENDER
+            - name: SMTP_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SMTP_ADDRESS
+            - name: SMTP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SMTP_PORT
+            - name: WITH_SSL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: WITH_SSL
+            - name: SMTP_USER
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-certified
+                  key: SMTP_USER
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-certified
+                  key: SMTP_PASSWORD

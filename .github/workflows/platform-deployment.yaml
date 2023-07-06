@@ -337,6 +337,21 @@ jobs:
       resource_cpu_var_name: NOTIFIER_RESOURCE_CPU
       resource_mem_var_name: NOTIFIER_RESOURCE_MEM
 
+  deploy_certified_mail_sender:
+    name: Certified Mail Sender
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/certified-mail-sender"
+      service_name_var_name: CERTIFIED_MAIL_SENDER_SERVICE_NAME
+      image_version_var_name: CERTIFIED_MAIL_SENDER_IMAGE_VERSION
+      resource_cpu_var_name: CERTIFIED_MAIL_SENDER_RESOURCE_CPU
+      resource_mem_var_name: CERTIFIED_MAIL_SENDER_RESOURCE_MEM
+
   deploy_attributes_loader:
     name: Attributes Loader
     needs: [deploy_configs]
@@ -485,21 +500,6 @@ jobs:
       image_version_var_name: JOB_ESERVICES_MONITORING_EXPORTER_IMAGE_VERSION
       resource_cpu_var_name: JOB_ESERVICES_MONITORING_EXPORTER_RESOURCE_CPU
       resource_mem_var_name: JOB_ESERVICES_MONITORING_EXPORTER_RESOURCE_MEM
-
-  deploy_certified_mail_sender:
-    name: Certified Mail Sender
-    needs: [deploy_configs]
-    permissions:
-      contents: read
-    uses: ./.github/workflows/deploy-job.yaml
-    secrets: inherit
-    with:
-      environment: ${{ inputs.environment }}
-      k8s_files_path: "jobs/certified-mail-sender"
-      service_name_var_name: JOB_CERTIFIED_MAIL_SERVICE_NAME
-      image_version_var_name: JOB_CERTIFIED_MAIL_IMAGE_VERSION
-      resource_cpu_var_name: JOB_CERTIFIED_MAIL_RESOURCE_CPU
-      resource_mem_var_name: JOB_CERTIFIED_MAIL_RESOURCE_MEM
 
   deploy_redis:
     name: Redis
