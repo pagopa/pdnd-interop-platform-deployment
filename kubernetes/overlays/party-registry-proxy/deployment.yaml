@@ -24,6 +24,16 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PARTY_REGISTRY_INSTITUTIONS_URL
+            - name: PARTY_REGISTRY_AOO_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PARTY_REGISTRY_AOO_URL
+            - name: PARTY_REGISTRY_UO_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PARTY_REGISTRY_UO_URL
           volumeMounts:
             - name: categories-index-volume
               mountPath: /opt/docker/index/categories
