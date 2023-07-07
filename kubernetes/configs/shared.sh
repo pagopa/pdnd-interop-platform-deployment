@@ -34,7 +34,6 @@ JOB_METRICS_REPORT_GENERATOR_SERVICE_NAME="interop-be-metrics-report-generator"
 JOB_PADIGITALE_REPORT_GENERATOR_SERVICE_NAME="interop-be-padigitale-report-generator"
 JOB_DASHBOARD_METRICS_REPORT_GENERATOR_SERVICE_NAME="interop-be-dashboard-metrics-report-generator"
 JOB_ESERVICES_MONITORING_EXPORTER_SERVICE_NAME="interop-be-eservices-monitoring-exporter"
-JOB_PRIVACY_NOTICES_UPDATER_SERVICE_NAME="interop-be-privacy-notices-updater"
 JOB_DTD_CATALOG_EXPORTER_SERVICE_NAME="interop-be-dtd-catalog-exporter"
 JOB_ONE_TRUST_NOTICES_SERVICE_NAME="interop-be-one-trust-notices"
 
