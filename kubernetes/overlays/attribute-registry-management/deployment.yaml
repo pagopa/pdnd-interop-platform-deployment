@@ -14,11 +14,6 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ACCEPTED_AUDIENCES
-            - name: PARTY_PROXY_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: PARTY_REGISTRY_PROXY_URL
             - name: ENABLED_PROJECTIONS
               valueFrom:
                 configMapKeyRef:
