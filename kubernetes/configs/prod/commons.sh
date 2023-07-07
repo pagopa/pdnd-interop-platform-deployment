@@ -39,6 +39,7 @@ SELFCARE_V2_URL="https://api.selfcare.pagopa.it/external/v2"
 SELFCARE_PRODUCT_ID="prod-interop"
 
 PRIVACY_NOTICES_DYNAMO_TABLE_NAME="interop-privacy-notices-prod"
+PRIVACY_NOTICES_ACCEPTANCE_DYNAMO_TABLE_NAME="interop-privacy-notices-acceptances-prod"
 PRIVACY_NOTICES_UPDATER_PRIVACY_POLICY_UUID="0df21ff6-3e8f-4320-af8f-23dea9135d57"
 PRIVACY_NOTICES_UPDATER_TERMS_OF_SERVICE_UUID="6bf8412a-41a7-41a0-82dc-26286ce61b1a"
 

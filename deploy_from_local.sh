@@ -425,6 +425,11 @@ applyKubeFile 'jobs/dtd-catalog-exporter/serviceaccount.yaml' $JOB_DTD_CATALOG_E
 jobDTDCatalogExporterImageDigest=$(getDockerImageDigest $JOB_DTD_CATALOG_EXPORTER_SERVICE_NAME $JOB_DTD_CATALOG_EXPORTER_IMAGE_VERSION)
 applyKubeFile 'jobs/dtd-catalog-exporter/cronjob.yaml' $JOB_DTD_CATALOG_EXPORTER_SERVICE_NAME $jobDTDCatalogExporterImageDigest $JOB_DTD_CATALOG_EXPORTER_RESOURCE_CPU $JOB_DTD_CATALOG_EXPORTER_RESOURCE_MEM
 
+applyKubeFile 'jobs/one-trust-notices/configmap.yaml' $JOB_ONE_TRUST_NOTICES_SERVICE_NAME
+applyKubeFile 'jobs/one-trust-notices/serviceaccount.yaml' $JOB_ONE_TRUST_NOTICES_SERVICE_NAME
+jobOneTrustNoticeImageDigest=$(getDockerImageDigest $JOB_ONE_TRUST_NOTICES_SERVICE_NAME $JOB_ONE_TRUST_NOTICES_IMAGE_VERSION)
+applyKubeFile 'jobs/one-trust-notices/cronjob.yaml' $JOB_ONE_TRUST_NOTICES_SERVICE_NAME $jobOneTrustNoticeImageDigest $JOB_ONE_TRUST_NOTICES_RESOURCE_CPU $JOB_ONE_TRUST_NOTICES_RESOURCE_MEM
+
 applyKubeFile 'thirdparty/redis/deployment.yaml' $REDIS_SERVICE_NAME "" $REDIS_RESOURCE_CPU $REDIS_RESOURCE_MEM
 applyKubeFile 'thirdparty/redis/service.yaml' $REDIS_SERVICE_NAME
 
