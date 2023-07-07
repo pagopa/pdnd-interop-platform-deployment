@@ -69,6 +69,27 @@ spec:
                     configMapKeyRef:
                       name: {{SERVICE_NAME}}
                       key: ATTRIBUTE_REGISTRY_PROCESS_URL
+                - name: PARTY_REGISTRY_PROXY_URL
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: PARTY_REGISTRY_PROXY_URL
+                - name: READ_MODEL_DB_HOST
+                  value: "{{READ_MODEL_DB_HOST}}"
+                - name: READ_MODEL_DB_PORT
+                  value: "{{READ_MODEL_DB_PORT}}"
+                - name: READ_MODEL_DB_NAME
+                  value: "{{READ_MODEL_DB_NAME}}"
+                - name: READ_MODEL_DB_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: documentdb
+                      key: READONLY_USR
+                - name: READ_MODEL_DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: documentdb
+                      key: READONLY_PSW
               resources:
                 requests:
                   cpu: "{{SERVICE_RESOURCE_CPU}}"
