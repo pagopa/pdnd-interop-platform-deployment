@@ -44,19 +44,19 @@ spec:
                   value: "{{PRIVACY_NOTICES_DYNAMO_TABLE_NAME}}"
                 - name: LANGS
                   valueFrom:
-                      configMapKeyRef:
-                        name: {{SERVICE_NAME}}
-                        key: PRIVACY_NOTICES_LANGS
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: PRIVACY_NOTICES_LANGS
                 - name: CONTENT_STORAGE_BUCKET
                   valueFrom:
-                      configMapKeyRef:
-                        name: {{SERVICE_NAME}}
-                        key: PRIVACY_NOTICES_CONTENT_STORAGE_BUCKET
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: PRIVACY_NOTICES_CONTENT_STORAGE_BUCKET
                 - name: HISTORY_STORAGE_BUCKET
                   valueFrom:
-                      configMapKeyRef:
-                        name: {{SERVICE_NAME}}
-                        key: PRIVACY_NOTICES_HISTORY_STORAGE_BUCKET
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: PRIVACY_NOTICES_HISTORY_STORAGE_BUCKET
                 - name: ONETRUST_CLIENT_ID
                   valueFrom:
                     secretKeyRef:
