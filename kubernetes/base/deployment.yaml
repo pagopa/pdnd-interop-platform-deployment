@@ -29,21 +29,15 @@ spec:
             httpGet:
               path: /ready
               port: management
-            periodSeconds: 10
-            failureThreshold: 5
+            periodSeconds: 5
+            failureThreshold: 3
           livenessProbe:
             httpGet:
               path: "/alive"
               port: management
-            periodSeconds: 10
-            failureThreshold: 5
-          startupProbe:
-            httpGet:
-              path: "/alive"
-              port: management
-            periodSeconds: 20
-            failureThreshold: 15
-            initialDelaySeconds: 60
+            periodSeconds: 5
+            failureThreshold: 3
+            initialDelaySeconds: 30
           ports:
             - name: management
               containerPort: 8558
