@@ -64,6 +64,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: STORAGE_ENDPOINT
+            - name: AGREEMENT_PROCESS_STORAGE_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: AGREEMENT_PROCESS_STORAGE_ENDPOINT
             - name: AGREEMENT_CONTRACTS_PATH
               valueFrom:
                 configMapKeyRef:
