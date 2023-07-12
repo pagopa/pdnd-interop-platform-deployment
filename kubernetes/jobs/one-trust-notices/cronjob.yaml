@@ -57,6 +57,16 @@ spec:
                     configMapKeyRef:
                       name: {{SERVICE_NAME}}
                       key: PRIVACY_NOTICES_HISTORY_STORAGE_BUCKET
+                - name: PRIVACY_NOTICES_UPDATER_PRIVACY_POLICY_UUID
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: PRIVACY_NOTICES_UPDATER_PRIVACY_POLICY_UUID
+                - name: PRIVACY_NOTICES_UPDATER_TERMS_OF_SERVICE_UUID
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: PRIVACY_NOTICES_UPDATER_TERMS_OF_SERVICE_UUID
                 - name: ONETRUST_CLIENT_ID
                   valueFrom:
                     secretKeyRef:
