@@ -64,6 +64,16 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: STORAGE_ENDPOINT
+            - name: ARCHIVING_PURPOSES_QUEUE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ARCHIVING_PURPOSES_QUEUE_NAME
+            - name: ARCHIVING_ESERVICES_QUEUE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ARCHIVING_ESERVICES_QUEUE_NAME
             - name: AGREEMENT_CONTRACTS_PATH
               valueFrom:
                 configMapKeyRef:
