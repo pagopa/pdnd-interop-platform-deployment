@@ -209,3 +209,23 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PRIVACY_NOTICES_USERS_DYNAMO_TABLE_NAME
+            - name: PAGOPA_TENANT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PAGOPA_TENANT_ID
+            - name: SAML_CALLBACK_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SAML_CALLBACK_URL
+            - name: SAML_CALLBACK_ERROR_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SAML_CALLBACK_ERROR_URL
+            - name: PRIVACY_NOTICES_CONTAINER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRIVACY_NOTICES_CONTAINER
