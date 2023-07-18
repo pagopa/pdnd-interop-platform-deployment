@@ -39,9 +39,16 @@ spec:
               mountPath: /opt/docker/index/categories
             - name: institutions-index-volume
               mountPath: /opt/docker/index/institutions
+            - name: aoo-index-volume
+              mountPath: /opt/docker/index/aoo
+            - name: uo-index-volume
+              mountPath: /opt/docker/index/uo
       volumes:
         - name: categories-index-volume
           emptyDir: {}
         - name: institutions-index-volume
           emptyDir: {}
-      
+        - name: aoo-index-volume
+          emptyDir: {}
+        - name: uo-index-volume
+          emptyDir: {}
