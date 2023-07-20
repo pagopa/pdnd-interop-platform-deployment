@@ -19,5 +19,6 @@ BFF_RATE_LIMITER_BURST_PERCENTAGE="1.2"
 BFF_RATE_LIMITER_RATE_INTERVAL="1.second"
 BFF_RATE_LIMITER_TIMEOUT="300.milliseconds"
 
+SUPPORT_SAML_AUDIENCE="selfcare.interop.pagopa.it"
 SUPPORT_SAML_CALLBACK_URL="https://selfcare.interop.pagopa.it/ui/it/assistenza/scelta-ente#id="
 SUPPORT_SAML_CALLBACK_ERROR_URL="https://selfcare.interop.pagopa.it/ui/it/assistenza/errore"

@@ -214,6 +214,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PAGOPA_TENANT_ID
+            - name: SAML_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SAML_AUDIENCE
             - name: SAML_CALLBACK_URL
               valueFrom:
                 configMapKeyRef:
