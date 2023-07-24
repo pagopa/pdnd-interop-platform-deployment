@@ -23,6 +23,7 @@ BACKEND_FOR_FRONTEND_SERVICE_NAME="interop-be-backend-for-frontend"
 NOTIFIER_SERVICE_NAME="interop-be-notifier"
 TENANT_MANAGEMENT_SERVICE_NAME="interop-be-tenant-management"
 TENANT_PROCESS_SERVICE_NAME="interop-be-tenant-process"
+CERTIFIED_MAIL_SENDER_SERVICE_NAME="interop-be-certified-mail-sender"
 
 FRONTEND_SERVICE_NAME="interop-frontend"
 
