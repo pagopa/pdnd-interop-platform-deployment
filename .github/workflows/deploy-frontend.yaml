@@ -47,9 +47,9 @@ jobs:
           imageDigest="$(getDockerImageDigest $FRONTEND_SERVICE_NAME $FRONTEND_IMAGE_VERSION)"
           echo "Image digest: $imageDigest"
 
-          applyKubeFile "frontend/configmap.yaml" $FRONTEND_SERVICE_NAME
-          applyKubeFile "frontend/deployment.yaml" $FRONTEND_SERVICE_NAME $imageDigest $FRONTEND_RESOURCE_CPU $FRONTEND_RESOURCE_MEM
-          applyKubeFile "frontend/service.yaml" $FRONTEND_SERVICE_NAME
+          applyKubeFile "frontend/${ENVIRONMENT}/configmap.yaml" $FRONTEND_SERVICE_NAME
+          applyKubeFile "frontend/${ENVIRONMENT}/deployment.yaml" $FRONTEND_SERVICE_NAME $imageDigest $FRONTEND_RESOURCE_CPU $FRONTEND_RESOURCE_MEM
+          applyKubeFile "frontend/${ENVIRONMENT}/service.yaml" $FRONTEND_SERVICE_NAME
 
       - name: Wait for Service Readiness
         id: wait_ready

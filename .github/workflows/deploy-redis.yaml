@@ -43,8 +43,8 @@ jobs:
           source $CONFIG_FILE
           source ./deployment_functions.sh
 
-          applyKubeFile "thirdparty/redis/deployment.yaml" $REDIS_SERVICE_NAME "" $REDIS_RESOURCE_CPU $REDIS_RESOURCE_MEM
-          applyKubeFile "thirdparty/redis/service.yaml" $REDIS_SERVICE_NAME
+          applyKubeFile "thirdparty/redis/${ENVIRONMENT}/deployment.yaml" $REDIS_SERVICE_NAME "" $REDIS_RESOURCE_CPU $REDIS_RESOURCE_MEM
+          applyKubeFile "thirdparty/redis/${ENVIRONMENT}/service.yaml" $REDIS_SERVICE_NAME
 
       - name: Wait for Service Readiness
         id: wait_ready
