@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{SERVICE_NAME}}
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{SERVICE_NAME}}
+  template:
+    metadata:
+      labels:
+        app: {{SERVICE_NAME}}
+      annotations:
+        digest: {{IMAGE_DIGEST}} # Used to force deployment on same image version but different content
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          image: {{REPOSITORY}}/{{SERVICE_NAME}}:{{FRONTEND_IMAGE_VERSION}}
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: default-conf
+              mountPath: /etc/nginx/conf.d/default.conf
+              subPath: default.conf
+              readOnly: true
+            - name: env-js
+              mountPath: /usr/share/nginx/html/ui/env.js
+              subPath: env.js
+              readOnly: true
+          resources:
+            requests:
+              memory: "{{SERVICE_RESOURCE_MEM}}"
+              cpu: "{{SERVICE_RESOURCE_CPU}}"
+            limits:
+              memory: "{{SERVICE_RESOURCE_MEM}}"
+              cpu: "{{SERVICE_RESOURCE_CPU}}"
+      volumes:
+        - name: default-conf
+          configMap:
+            defaultMode: 420
+            name: {{SERVICE_NAME}}
+            items:
+              - key: default.conf
+                path: default.conf
+        - name: env-js
+          configMap:
+            defaultMode: 420
+            name: {{SERVICE_NAME}}
+            items:
+              - key: env.js
+                path: env.js

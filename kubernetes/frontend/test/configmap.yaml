@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+data:
+  default.conf: |-
+    server {
+        listen       80;
+        listen  [::]:80;
+        server_name  localhost;
+        absolute_redirect off;
+
+        location /ui {
+            root   /usr/share/nginx/html;
+            sub_filter_once off;
+            sub_filter_types *;
+            sub_filter **CSP_NONCE** $request_id;
+            add_header Content-Security-Policy "default-src 'self'; object-src 'none'; connect-src 'self' {{PUBLIC_BUCKET_URL}}; script-src 'nonce-$request_id'; style-src 'self' 'unsafe-inline'; worker-src 'none'; font-src 'self'; img-src 'self' data:; base-uri 'self'";
+            add_header Strict-Transport-Security "max-age=31536000";
+            add_header X-Content-Type-Options "nosniff";
+            add_header X-Frame-Options "SAMEORIGIN";
+            add_header Referrer-Policy "no-referrer";
+            rewrite /ui/index.html /ui permanent;
+            try_files $uri /ui/index.html =404;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+    }
+  env.js: |-
+    window.pagopa_env = {
+      STAGE: "{{STAGE}}",
+      AUTHORIZATION_SERVER_TOKEN_CREATION_URL: "https://{{AUTHORIZATION_SERVER_HOST}}/token.oauth2",
+      SELFCARE_LOGIN_URL: "{{SELFCARE_LOGIN_URL}}",
+      INTEROP_RESOURCES_BASE_URL: "{{PUBLIC_BUCKET_URL}}",
+      BACKEND_FOR_FRONTEND_URL: "https://{{EXTERNAL_APPLICATION_HOST}}/{{BACKEND_FOR_FRONTEND_APPLICATION_PATH}}/{{BACKEND_FOR_FRONTEND_INTERFACE_VERSION}}",
+      API_GATEWAY_INTEFACE_URL: "https://{{EXTERNAL_APPLICATION_HOST}}/{{API_GATEWAY_APPLICATION_PATH}}/{{API_GATEWAY_INTERFACE_VERSION}}/interface-specification.yml",
+      MIXPANEL_PROJECT_ID: "{{MIXPANEL_PROJECT_ID}}",
+      ONETRUST_DOMAIN_SCRIPT_ID: "{{ONETRUST_DOMAIN_SCRIPT_ID}}",
+      CLIENT_ASSERTION_JWT_AUDIENCE: "{{CLIENT_ASSERTION_JWT_AUDIENCE}}",
+      M2M_JWT_AUDIENCE: "{{M2M_JWT_AUDIENCE}}",
+      WELL_KNOWN_URLS : "{{WELL_KNOWN_URLS}}",
+      SELFCARE_BASE_URL : "{{SELFCARE_BASE_URL}}"
+    }
