@@ -238,7 +238,7 @@ function createIngress() {
   local compiledFileName='./kubernetes/compiled.ingress.yaml'
 
   local baseCommand="kubectl -n $NAMESPACE create ingress interop-services --class=alb --dry-run=client -o yaml "
-  local annotations='--annotation="alb.ingress.kubernetes.io/scheme=internal" --annotation="alb.ingress.kubernetes.io/target-type=ip" '
+  local annotations='--annotation="alb.ingress.kubernetes.io/scheme=internal" --annotation="alb.ingress.kubernetes.io/target-type=ip" --annotation="alb.ingress.kubernetes.io/group.name=interop-be"'
 
   local rules=''
 
