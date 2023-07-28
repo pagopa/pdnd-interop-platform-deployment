@@ -89,20 +89,20 @@ function createKubeSecret() {
   echo "Compiling $secretName secret manifest"
   eval "$command -o yaml > $compiledFileName"
 
-  echo "Applying $compiledFileName"
-  kubectl apply -f "$compiledFileName"
-  echo "Applied: $compiledFileName"
+  # echo "Applying $compiledFileName"
+  # kubectl apply -f "$compiledFileName"
+  # echo "Applied: $compiledFileName"
 }
 
 function prepareDbMigrations() {
   echo "Creating DB migrations configmap"
 
-  kubectl \
-    create configmap common-db-migrations \
-    --namespace "$NAMESPACE" \
-    --from-file=db/migrations/ \
-    --dry-run=client \
-    -o yaml | kubectl apply -f -
+  # kubectl \
+  #   create configmap common-db-migrations \
+  #   --namespace "$NAMESPACE" \
+  #   --from-file=db/migrations/ \
+  #   --dry-run=client \
+  #   -o yaml | kubectl apply -f -
 
   echo "DB migrations configmap created"
 }
@@ -142,9 +142,9 @@ function applyKubeFile() {
   echo "File $fileName compiled"
   cat "$compiledFileName"
 
-  echo "Applying $compiledFileName"
-  kubectl apply -f "$compiledFileName"
-  echo "File $compiledFileName applied"
+  # echo "Applying $compiledFileName"
+  # kubectl apply -f "$compiledFileName"
+  # echo "File $compiledFileName applied"
 }
 
 function compileDir() {
@@ -207,9 +207,9 @@ function applyKustomizeToDir() {
 
   cat "${serviceName}/full.${serviceName}.yaml"
 
-  echo "Applying files for ${serviceName}"
-  kubectl apply -f "${serviceName}/full.${serviceName}.yaml"
-  echo "Files for ${serviceName} applied"
+  # echo "Applying files for ${serviceName}"
+  # kubectl apply -f "${serviceName}/full.${serviceName}.yaml"
+  # echo "Files for ${serviceName} applied"
 }
 
 function waitForServiceReady() {
@@ -257,7 +257,7 @@ function createIngress() {
 
   eval "$baseCommand $annotations $rules > $compiledFileName"
 
-  echo "Applying $compiledFileName"
-  kubectl apply -f "$compiledFileName"
-  echo "Applied $compiledFileName"
+  # echo "Applying $compiledFileName"
+  # kubectl apply -f "$compiledFileName"
+  # echo "Applied $compiledFileName"
 }
