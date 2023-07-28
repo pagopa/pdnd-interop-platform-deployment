@@ -1,0 +1,236 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          env:
+            - name: ACCEPTED_AUDIENCES
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ACCEPTED_AUDIENCES
+            - name: EC_KEYS_IDENTIFIERS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: EC_KEYS_IDENTIFIERS
+            - name: RSA_KEYS_IDENTIFIERS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: RSA_KEYS_IDENTIFIERS
+            - name: GENERATED_JWT_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: GENERATED_JWT_AUDIENCE
+            - name: GENERATED_JWT_DURATION_SECONDS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: GENERATED_JWT_DURATION_SECONDS
+            - name: GENERATED_JWT_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: GENERATED_JWT_ISSUER
+            - name: INTERNAL_JWT_ISSUER
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: INTERNAL_JWT_ISSUER
+            - name: INTERNAL_JWT_SUBJECT
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: INTERNAL_JWT_SUBJECT
+            - name: INTERNAL_JWT_AUDIENCE
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: INTERNAL_JWT_AUDIENCE
+            - name: INTERNAL_JWT_DURATION_SECONDS
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: INTERNAL_JWT_DURATION_SECONDS
+            - name: CLIENT_ASSERTION_JWT_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: CLIENT_ASSERTION_JWT_AUDIENCE
+            - name: AGREEMENT_PROCESS_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: AGREEMENT_PROCESS_URL
+            - name: AUTHORIZATION_MANAGEMENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: AUTHORIZATION_MANAGEMENT_URL
+            - name: AUTHORIZATION_PROCESS_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: AUTHORIZATION_PROCESS_URL
+            - name: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
+            - name: ATTRIBUTE_REGISTRY_PROCESS_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: ATTRIBUTE_REGISTRY_PROCESS_URL
+            - name: CATALOG_MANAGEMENT_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: CATALOG_MANAGEMENT_URL
+            - name: CATALOG_PROCESS_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: CATALOG_PROCESS_URL
+            - name: TENANT_MANAGEMENT_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: TENANT_MANAGEMENT_URL
+            - name: TENANT_PROCESS_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: TENANT_PROCESS_URL
+            - name: PURPOSE_PROCESS_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: PURPOSE_PROCESS_URL
+            - name: PARTY_PROCESS_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: PARTY_PROCESS_URL
+            - name: USER_REGISTRY_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: USER_REGISTRY_URL
+            - name: USER_REGISTRY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: user-registry
+                  key: USER_REGISTRY_API_KEY
+            - name: PARTY_PROCESS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: party-process
+                  key: PARTY_PROCESS_API_KEY
+            - name: CONSUMER_DOCS_CONTAINER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: CONSUMER_DOCS_CONTAINER
+            - name: CONSUMER_DOCS_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: CONSUMER_DOCS_PATH
+            - name: ESERVICE_DOCS_CONTAINER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ESERVICE_DOCS_CONTAINER
+            - name: RISK_ANALYSIS_DOCS_CONTAINER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: RISK_ANALYSIS_DOCS_CONTAINER
+            - name: RISK_ANALYSIS_DOCS_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: RISK_ANALYSIS_DOCS_PATH
+            - name: ALLOW_LIST_CONTAINER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ALLOW_LIST_CONTAINER
+            - name: ALLOW_LIST_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ALLOW_LIST_PATH
+            - name: ALLOW_LIST_FILENAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ALLOW_LIST_FILENAME
+            - name: SELFCARE_PRODUCT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SELFCARE_PRODUCT_ID
+            - name: SELFCARE_V2_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SELFCARE_V2_URL
+            - name: SELFCARE_V2_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: selfcare-v2
+                  key: SELFCARE_V2_API_KEY
+            - name: PRIVACY_NOTICES_PP_UUID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRIVACY_NOTICES_PP_UUID
+            - name: PRIVACY_NOTICES_TOS_UUID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRIVACY_NOTICES_TOS_UUID
+            - name: PRIVACY_NOTICES_DYNAMO_TABLE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRIVACY_NOTICES_DYNAMO_TABLE_NAME
+            - name: PRIVACY_NOTICES_USERS_DYNAMO_TABLE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRIVACY_NOTICES_USERS_DYNAMO_TABLE_NAME
+            - name: PAGOPA_TENANT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PAGOPA_TENANT_ID
+            - name: SAML_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SAML_AUDIENCE
+            - name: SAML_CALLBACK_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SAML_CALLBACK_URL
+            - name: SAML_CALLBACK_ERROR_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SAML_CALLBACK_ERROR_URL
+            - name: PRIVACY_NOTICES_CONTAINER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRIVACY_NOTICES_CONTAINER
