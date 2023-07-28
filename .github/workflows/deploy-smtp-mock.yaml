@@ -21,7 +21,7 @@ jobs:
       ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
       AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
 
-    steps:         
+    steps:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v3
@@ -43,8 +43,8 @@ jobs:
           source $CONFIG_FILE
           source ./deployment_functions.sh
 
-          applyKubeFile "thirdparty/smtp-mock/deployment.yaml" $SMTP_MOCK_SERVICE_NAME "" $SMTP_MOCK_RESOURCE_CPU $SMTP_MOCK_RESOURCE_MEM
-          applyKubeFile "thirdparty/smtp-mock/service.yaml" $SMTP_MOCK_SERVICE_NAME
+          applyKubeFile "thirdparty/smtp-mock/${ENVIRONMENT}/deployment.yaml" $SMTP_MOCK_SERVICE_NAME "" $SMTP_MOCK_RESOURCE_CPU $SMTP_MOCK_RESOURCE_MEM
+          applyKubeFile "thirdparty/smtp-mock/${ENVIRONMENT}/service.yaml" $SMTP_MOCK_SERVICE_NAME
 
       - name: Wait for Service Readiness
         id: wait_ready
