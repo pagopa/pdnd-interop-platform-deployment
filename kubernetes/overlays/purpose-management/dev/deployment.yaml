@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          env:
+            - name: ENABLED_PROJECTIONS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ENABLED_PROJECTIONS
+            - name: PERSISTENCE_EVENTS_QUEUE_URL
+              value: "{{AWS_SQS_DOMAIN}}/{{AWS_ACCOUNT_ID}}/{{PERSISTENCE_QUEUE_NAME}}"
+            - name: ACCEPTED_AUDIENCES
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ACCEPTED_AUDIENCES

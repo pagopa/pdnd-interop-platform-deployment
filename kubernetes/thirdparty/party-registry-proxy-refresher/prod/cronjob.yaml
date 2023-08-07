@@ -1,0 +1,47 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  labels:
+    app: {{SERVICE_NAME}}
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  schedule: "0 6 * * *"
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 0
+  jobTemplate:
+    metadata:
+      labels:
+        app: {{SERVICE_NAME}}
+    spec:
+      template:
+        metadata:
+          labels:
+            app: {{SERVICE_NAME}}
+        spec:
+          restartPolicy: OnFailure
+          serviceAccountName: {{SERVICE_NAME}}
+          containers:
+            - name: {{SERVICE_NAME}}
+              image: curlimages/curl:7.88.1
+              imagePullPolicy: IfNotPresent
+              command:
+                - /bin/sh
+              args: ["-c", "echo \"Job Started\" && ./entrypoint.sh -X POST -sS $(PARTY_REGISTRY_PROXY_URL)/reload && echo \"Job Completed\""]
+              env:
+                - name: NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: PARTY_REGISTRY_PROXY_URL
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: PARTY_REGISTRY_PROXY_URL
+              resources:
+                requests:
+                  cpu: "{{SERVICE_RESOURCE_CPU}}"
+                  memory: "{{SERVICE_RESOURCE_MEM}}"
+                limits:
+                  cpu: "{{SERVICE_RESOURCE_CPU}}"
+                  memory: "{{SERVICE_RESOURCE_MEM}}"

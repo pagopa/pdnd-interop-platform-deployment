@@ -1,7 +1,0 @@
-bases:
-- ../../base
-patchesStrategicMerge:
-- configmap.yaml
-- deployment.yaml
-- service.yaml
-- ../../commons/rate-limiting/configs.yaml

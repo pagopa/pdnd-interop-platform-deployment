@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          env:
+            - name: ACCEPTED_AUDIENCES
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ACCEPTED_AUDIENCES
+            - name: USER_REGISTRY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: user-registry
+                  key: USER_REGISTRY_API_KEY
+            - name: AGREEMENT_MANAGEMENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: AGREEMENT_MANAGEMENT_URL
+            - name: CATALOG_MANAGEMENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: CATALOG_MANAGEMENT_URL
+            - name: AUTHORIZATION_MANAGEMENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: AUTHORIZATION_MANAGEMENT_URL
+            - name: PARTY_MANAGEMENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PARTY_MANAGEMENT_URL
+            - name: PURPOSE_MANAGEMENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PURPOSE_MANAGEMENT_URL
+            - name: USER_REGISTRY_MANAGEMENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: USER_REGISTRY_MANAGEMENT_URL
+            - name: TENANT_MANAGEMENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: TENANT_MANAGEMENT_URL            
+            - name: USER_REGISTRY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: user-registry
+                  key: USER_REGISTRY_API_KEY
+            - name: PARTY_MANAGEMENT_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: party-management
+                  key: PARTY_MANAGEMENT_API_KEY
+            - name: SELFCARE_PRODUCT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SELFCARE_PRODUCT_ID

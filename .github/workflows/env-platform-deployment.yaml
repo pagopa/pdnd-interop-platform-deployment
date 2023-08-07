@@ -1,4 +1,4 @@
-name: WIP ENV Platform Deployment
+name: ENV Platform Deployment
 
 on:
   workflow_dispatch:

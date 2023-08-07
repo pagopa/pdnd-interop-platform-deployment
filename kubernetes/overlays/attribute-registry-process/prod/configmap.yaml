@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+data:
+  ACCEPTED_AUDIENCES: "{{UI_JWT_AUDIENCE}},{{M2M_JWT_AUDIENCE}},{{INTERNAL_JWT_AUDIENCE}}"

@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          env:
+            - name: INTERNAL_JWT_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTERNAL_JWT_ISSUER
+            - name: INTERNAL_JWT_SUBJECT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTERNAL_JWT_SUBJECT
+            - name: INTERNAL_JWT_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTERNAL_JWT_AUDIENCE
+            - name: INTERNAL_JWT_DURATION_SECONDS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTERNAL_JWT_DURATION_SECONDS
+            - name: EC_KEYS_IDENTIFIERS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: EC_KEYS_IDENTIFIERS
+            - name: RSA_KEYS_IDENTIFIERS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: RSA_KEYS_IDENTIFIERS
+            - name: GENERATED_M2M_JWT_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: GENERATED_M2M_JWT_AUDIENCE
+            - name: GENERATED_M2M_JWT_DURATION_SECONDS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: GENERATED_M2M_JWT_DURATION_SECONDS
+            - name: GENERATED_JWT_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: GENERATED_JWT_ISSUER
+            - name: CLIENT_ASSERTION_JWT_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: CLIENT_ASSERTION_JWT_AUDIENCE
+            - name: AUTHORIZATION_MANAGEMENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: AUTHORIZATION_MANAGEMENT_URL
+            - name: GENERATED_JWT_QUEUE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: GENERATED_JWT_QUEUE_NAME
+            - name: JWT_QUEUE_URL
+              value: "{{AWS_SQS_DOMAIN}}/{{AWS_ACCOUNT_ID}}/$(GENERATED_JWT_QUEUE_NAME)"
