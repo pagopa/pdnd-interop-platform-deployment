@@ -352,6 +352,21 @@ jobs:
       resource_cpu_var_name: CERTIFIED_MAIL_SENDER_RESOURCE_CPU
       resource_mem_var_name: CERTIFIED_MAIL_SENDER_RESOURCE_MEM
 
+  deploy_selfcare_onboarding_consumer:
+    name: Selfcare onboarding consumer
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/selfcare-onboarding-consumer/${{ inputs.environment }}"
+      service_name_var_name: SELFCARE_ONBOARDING_CONSUMER_SERVICE_NAME
+      image_version_var_name: SELFCARE_ONBOARDING_CONSUMER_IMAGE_VERSION
+      resource_cpu_var_name: SELFCARE_ONBOARDING_CONSUMER_RESOURCE_CPU
+      resource_mem_var_name: SELFCARE_ONBOARDING_CONSUMER_RESOURCE_MEM
+
   deploy_attributes_loader:
     name: Attributes Loader
     needs: [deploy_configs]
@@ -550,7 +565,7 @@ jobs:
       deploy_tenants_certified_attributes_updater, deploy_party_registry_proxy_refresher,
       deploy_metrics_report_generator, deploy_padigitale_report_generator,
       deploy_dashboard_metrics_report_generator, deploy_dtd_catalog_exporter,
-      deploy_certified_mail_sender,
+      deploy_certified_mail_sender, deploy_selfcare_onboarding_consumer,
       deploy_eservices_monitoring_exporter,
       deploy_one_trust_notices,
       deploy_redis,
