@@ -25,3 +25,7 @@ spec:
                 secretKeyRef:
                   name: documentdb
                   key: READONLY_PSW
+            - name: READ_MODEL_REPLICA_SET
+              value: "{{READ_MODEL_REPLICA_SET}}"
+            - name: READ_MODEL_READ_PREFERENCE
+              value: "{{READ_MODEL_READ_PREFERENCE}}"

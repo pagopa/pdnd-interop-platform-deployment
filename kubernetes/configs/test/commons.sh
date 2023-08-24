@@ -10,6 +10,8 @@ POSTGRES_PORT="5432"
 READ_MODEL_DB_HOST="interop-read-model-test.cluster-cfx5ud7lsyvt.eu-central-1.docdb.amazonaws.com"
 READ_MODEL_DB_PORT="27017"
 READ_MODEL_DB_NAME="read-model"
+READ_MODEL_REPLICA_SET="rs0"
+READ_MODEL_READ_PREFERENCE="secondaryPreferred"
 REPLICAS=1
 BACKEND_SERVICE_PORT="8088"
 
@@ -46,3 +48,6 @@ PRIVACY_NOTICES_UPDATER_TERMS_OF_SERVICE_UUID="6bf8412a-41a7-41a0-82dc-26286ce61
 PRIVACY_NOTICES_CONTAINER="interop-privacy-notices-content-test"
 
 PAGOPA_TENANT_ID="84871fd4-2fd7-46ab-9d22-f6b452f4b3c5"
+
+SMTP_ADDRESS="smtp.gmail.com"
+SMTP_PORT=465

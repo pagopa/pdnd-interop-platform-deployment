@@ -299,6 +299,7 @@ function loadSecrets() {
     loadSecret 'postgres' 'POSTGRES_USR' 'POSTGRES_CREDENTIALS_USR' 'POSTGRES_PSW' 'POSTGRES_CREDENTIALS_PSW'
     loadSecret 'documentdb' 'PROJECTION_USR' 'READ_MODEL_CREDENTIALS_PROJECTION_USR' 'PROJECTION_PSW' 'READ_MODEL_CREDENTIALS_PROJECTION_PSW' 'READONLY_USR' 'READ_MODEL_CREDENTIALS_RO_USR' 'READONLY_PSW' 'READ_MODEL_CREDENTIALS_RO_PSW'
     loadSecret 'onetrust' 'ONETRUST_CLIENT_ID' 'ONETRUST_CLIENT_ID' 'ONETRUST_CLIENT_SECRET' 'ONETRUST_CLIENT_SECRET'
+    loadSecret 'pn-consumers' 'MAIL_RECIPIENTS' 'MAIL_RECIPIENTS'
 
     echo "*****************************"
 }
@@ -425,6 +426,11 @@ applyKubeFile 'jobs/one-trust-notices/configmap.yaml' $JOB_ONE_TRUST_NOTICES_SER
 applyKubeFile 'jobs/one-trust-notices/serviceaccount.yaml' $JOB_ONE_TRUST_NOTICES_SERVICE_NAME
 jobOneTrustNoticeImageDigest=$(getDockerImageDigest $JOB_ONE_TRUST_NOTICES_SERVICE_NAME $JOB_ONE_TRUST_NOTICES_IMAGE_VERSION)
 applyKubeFile 'jobs/one-trust-notices/cronjob.yaml' $JOB_ONE_TRUST_NOTICES_SERVICE_NAME $jobOneTrustNoticeImageDigest $JOB_ONE_TRUST_NOTICES_RESOURCE_CPU $JOB_ONE_TRUST_NOTICES_RESOURCE_MEM
+
+applyKubeFile 'jobs/pn-consumers/configmap.yaml' $JOB_PN_CONSUMERS_SERVICE_NAME
+applyKubeFile 'jobs/pn-consumers/serviceaccount.yaml' $JOB_PN_CONSUMERS_SERVICE_NAME
+jobPnConsumersImageDigest=$(getDockerImageDigest $JOB_PN_CONSUMERS_SERVICE_NAME $JOB_PN_CONSUMERS_IMAGE_VERSION)
+applyKubeFile 'jobs/pn-consumers/cronjob.yaml' $JOB_PN_CONSUMERS_SERVICE_NAME $jobPnConsumersImageDigest $JOB_PN_CONSUMERS_RESOURCE_CPU $JOB_PN_CONSUMERS_RESOURCE_MEM
 
 applyKubeFile 'thirdparty/redis/deployment.yaml' $REDIS_SERVICE_NAME "" $REDIS_RESOURCE_CPU $REDIS_RESOURCE_MEM
 applyKubeFile 'thirdparty/redis/service.yaml' $REDIS_SERVICE_NAME
