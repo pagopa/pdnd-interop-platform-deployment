@@ -56,6 +56,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/test/party_registry_proxy_refresher.sh
 . $(pwd)/kubernetes/configs/test/eservices_monitoring_exporter.sh
 . $(pwd)/kubernetes/configs/test/metrics_report_generator.sh
+. $(pwd)/kubernetes/configs/test/pn_consumers.sh
 . $(pwd)/kubernetes/configs/test/padigitale_report_generator.sh
 . $(pwd)/kubernetes/configs/test/dashboard_metrics_report_generator.sh
 . $(pwd)/kubernetes/configs/test/dtd_catalog_exporter.sh

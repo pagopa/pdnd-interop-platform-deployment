@@ -426,6 +426,21 @@ jobs:
       resource_cpu_var_name: JOB_METRICS_REPORT_GENERATOR_RESOURCE_CPU
       resource_mem_var_name: JOB_METRICS_REPORT_GENERATOR_RESOURCE_MEM
 
+  deploy_pn_consumers:
+    name: PN Consumers
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-cronjob.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      k8s_files_path: "jobs/pn-consumers/${{ inputs.environment }}"
+      service_name_var_name: JOB_PN_CONSUMERS_SERVICE_NAME
+      image_version_var_name: JOB_PN_CONSUMERS_IMAGE_VERSION
+      resource_cpu_var_name: JOB_PN_CONSUMERS_RESOURCE_CPU
+      resource_mem_var_name: JOB_PN_CONSUMERS_RESOURCE_MEM
+
   deploy_padigitale_report_generator:
     name: PaDigitale report generator
     needs: [deploy_configs]
@@ -549,6 +564,7 @@ jobs:
       deploy_attributes_loader, deploy_token_details_persister,
       deploy_tenants_certified_attributes_updater, deploy_party_registry_proxy_refresher,
       deploy_metrics_report_generator, deploy_padigitale_report_generator,
+      deploy_pn_consumers,
       deploy_dashboard_metrics_report_generator, deploy_dtd_catalog_exporter,
       deploy_certified_mail_sender,
       deploy_eservices_monitoring_exporter,
