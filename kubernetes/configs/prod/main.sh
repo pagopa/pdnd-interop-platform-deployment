@@ -61,3 +61,4 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/prod/dtd_catalog_exporter.sh
 . $(pwd)/kubernetes/configs/prod/certified_mail_sender.sh
 . $(pwd)/kubernetes/configs/prod/one_trust_notices.sh
+. $(pwd)/kubernetes/configs/prod/selfcare_onboarding_consumer.sh
