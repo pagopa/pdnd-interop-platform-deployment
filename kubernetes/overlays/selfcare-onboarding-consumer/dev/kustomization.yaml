@@ -17,5 +17,3 @@ patches:
         path: /spec/template/spec/containers/0/command
       - op: remove
         path: /spec/template/spec/containers/0/args
-
-

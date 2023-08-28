@@ -27,8 +27,6 @@ spec:
             - name: {{SERVICE_NAME}}
               image: {{REPOSITORY}}/{{SERVICE_NAME}}:{{JOB_DTD_CATALOG_EXPORTER_IMAGE_VERSION}}
               imagePullPolicy: Always
-              command: ["node"]
-              args: ["dist"]
               env:
                 - name: NAMESPACE
                   valueFrom:
