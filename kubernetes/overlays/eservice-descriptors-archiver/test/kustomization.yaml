@@ -4,6 +4,7 @@ patchesStrategicMerge:
 - ../../../commons/database/read-model.yaml
 - deployment.yaml
 - configmap.yaml
+- serviceaccount.yaml
 patches:
   - target:
       kind: Deployment
