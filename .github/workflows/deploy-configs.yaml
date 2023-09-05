@@ -96,7 +96,11 @@ jobs:
           smtpPecUsername="$(getSecretValue 'interop-pec-user')"
           smtpPecPassword="$(getSecretValue 'interop-pec-password')"
           pecSender="$(getSecretValue 'interop-pec-sender')"
+          anacSftpHost="$(getSecretValue 'anac-sftp-host')"
+          anacSftpUsername="$(getSecretValue 'anac-sftp-username')"
+          anacSftpPrivateKey="$(getSecretValue 'anac-sftp-private-key')"
 
+          createKubeSecret 'anac' 'SFTP_HOST' "$anacSftpHost" 'SFTP_USERNAME' "$anacSftpUsername" 'SFTP_PRIVATE_KEY' "$anacSftpPrivateKey"
           createKubeSecret 'user-registry' 'USER_REGISTRY_API_KEY' "$userRegistryApiKey"
           createKubeSecret 'party-process' 'PARTY_PROCESS_API_KEY' "$partyProcessApiKey"
           createKubeSecret 'party-management' 'PARTY_MANAGEMENT_API_KEY' "$partyManagementApiKey"
