@@ -24,6 +24,7 @@ NOTIFIER_SERVICE_NAME="interop-be-notifier"
 TENANT_MANAGEMENT_SERVICE_NAME="interop-be-tenant-management"
 TENANT_PROCESS_SERVICE_NAME="interop-be-tenant-process"
 CERTIFIED_MAIL_SENDER_SERVICE_NAME="interop-be-certified-mail-sender"
+ESERVICE_DESCRIPTORS_ARCHIVER_SERVICE_NAME="interop-be-eservice-descriptors-archiver"
 
 FRONTEND_SERVICE_NAME="interop-frontend"
 
