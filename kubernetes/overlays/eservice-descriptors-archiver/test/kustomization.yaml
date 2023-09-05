@@ -1,0 +1,17 @@
+bases:
+- ../../../base
+patchesStrategicMerge:
+- deployment.yaml
+- configmap.yaml
+- ../../../commons/database/read-model.yaml
+patches:
+  - target:
+      kind: Deployment
+      name: interop-be-eservice-descriptors-archiver
+    patch: |-
+      - op: remove
+        path: /spec/template/spec/containers/0/livenessProbe
+      - op: remove
+        path: /spec/template/spec/containers/0/readinessProbe
+
+
