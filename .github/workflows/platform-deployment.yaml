@@ -597,7 +597,7 @@ jobs:
       deploy_pn_consumers,
       deploy_dashboard_metrics_report_generator, deploy_dtd_catalog_exporter,
       deploy_certified_mail_sender, deploy_selfcare_onboarding_consumer,
-      deploy_eservices_monitoring_exporter,
+      deploy_eservices_monitoring_exporter, deploy_eservice_descriptors_archiver
       deploy_one_trust_notices,
       deploy_redis,
       deploy_smtp_mock]
