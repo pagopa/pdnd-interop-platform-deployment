@@ -457,7 +457,7 @@ jobs:
       resource_mem_var_name: JOB_METRICS_REPORT_GENERATOR_RESOURCE_MEM
 
   deploy_anac_certified_attributes_importer:
-    name: PN Consumers
+    name: ANAC Certified Attributes Importer
     needs: [deploy_configs]
     permissions:
       contents: read
