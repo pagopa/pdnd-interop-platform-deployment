@@ -1,9 +1,9 @@
 bases:
 - ../../../base
 patchesStrategicMerge:
+- ../../../commons/database/read-model.yaml
 - deployment.yaml
 - configmap.yaml
-- ../../../commons/database/read-model.yaml
 patches:
   - target:
       kind: Deployment
