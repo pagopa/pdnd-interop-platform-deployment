@@ -25,7 +25,7 @@ spec:
           serviceAccountName: {{SERVICE_NAME}}
           containers:
             - name: {{SERVICE_NAME}}
-              image: {{REPOSITORY}}/{{SERVICE_NAME}}:{{JOB_PN_CONSUMERS_IMAGE_VERSION}}
+              image: {{REPOSITORY}}/{{SERVICE_NAME}}:{{JOB_ANAC_CERTIFIED_ATTRIBUTES_IMPORTER_IMAGE_VERSION}}
               imagePullPolicy: Always
               env:
                 - name: NAMESPACE
