@@ -52,16 +52,6 @@ spec:
                     secretKeyRef:
                       name: documentdb
                       key: READONLY_PSW
-                - name: TENANTS_COLLECTION_NAME
-                  valueFrom:
-                      configMapKeyRef:
-                        name: {{SERVICE_NAME}}
-                        key: TENANTS_COLLECTION_NAME
-                - name: ATTRIBUTES_COLLECTION_NAME
-                  valueFrom:
-                      configMapKeyRef:
-                        name: {{SERVICE_NAME}}
-                        key: ATTRIBUTES_COLLECTION_NAME
 
                 - name: SFTP_HOST
                   valueFrom:
