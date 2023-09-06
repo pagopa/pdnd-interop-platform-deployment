@@ -53,3 +53,13 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: JWT_DURATION_SECONDS
+            - name: EC_KEYS_IDENTIFIERS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: EC_KEYS_IDENTIFIERS
+            - name: RSA_KEYS_IDENTIFIERS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: RSA_KEYS_IDENTIFIERS
