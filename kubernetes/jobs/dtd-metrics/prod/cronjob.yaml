@@ -77,11 +77,6 @@ spec:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
                         key: AGREEMENTS_COLLECTION_NAME    
-                - name: AGREEMENTS_COLLECTION_NAME
-                  valueFrom:
-                      configMapKeyRef:
-                        name: {{SERVICE_NAME}}
-                        key: AGREEMENTS_COLLECTION_NAME    
                 - name: STORAGE_BUCKET
                   valueFrom:
                       configMapKeyRef:
