@@ -6,7 +6,7 @@ metadata:
   name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 spec:
-  schedule: "0 7 */2 * *"
+  schedule: "0 * * * *"
   failedJobsHistoryLimit: 1
   successfulJobsHistoryLimit: 0
   jobTemplate:
@@ -62,46 +62,31 @@ spec:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
                         key: PURPOSES_COLLECTION_NAME
-                - name: PN_ESERVICE_ID
+                - name: ESERVICES_COLLECTION_NAME
                   valueFrom:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
-                        key: PN_ESERVICE_ID
-                - name: COMUNI_E_LORO_CONSORZI_E_ASSOCIAZIONI_ATTRIBUTE_ID
+                        key: ESERVICES_COLLECTION_NAME
+                - name: ATTRIBUTES_COLLECTION_NAME
                   valueFrom:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
-                        key: COMUNI_E_LORO_CONSORZI_E_ASSOCIAZIONI_ATTRIBUTE_ID
-                - name: SMTP_ADDRESS
+                        key: ATTRIBUTES_COLLECTION_NAME  
+                - name: AGREEMENTS_COLLECTION_NAME
                   valueFrom:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
-                        key: SMTP_ADDRESS
-                - name: SMTP_PORT
+                        key: AGREEMENTS_COLLECTION_NAME    
+                - name: STORAGE_BUCKET
                   valueFrom:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
-                        key: SMTP_PORT
-                - name: SMTP_SECURE
+                        key: STORAGE_BUCKET    
+                - name: FILENAME
                   valueFrom:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
-                        key: SMTP_SECURE
-                - name: MAIL_RECIPIENTS
-                  valueFrom:
-                    secretKeyRef:
-                      name: pn-consumers
-                      key: MAIL_RECIPIENTS
-                - name: SMTP_USER
-                  valueFrom:
-                    secretKeyRef:
-                      name: metrics-reports
-                      key: METRICS_REPORT_SMTP_USERNAME
-                - name: SMTP_PASSWORD
-                  valueFrom:
-                    secretKeyRef:
-                      name: metrics-reports
-                      key: METRICS_REPORT_SMTP_PASSWORD
+                        key: FILENAME    
               resources:
                 requests:
                   cpu: "{{SERVICE_RESOURCE_CPU}}"

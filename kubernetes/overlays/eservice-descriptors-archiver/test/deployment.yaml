@@ -33,4 +33,33 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ESERVICES_COLLECTION_NAME
-
+            - name: JWT_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: JWT_ISSUER
+            - name: JWT_SUBJECT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: JWT_SUBJECT
+            - name: JWT_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: JWT_AUDIENCE
+            - name: JWT_DURATION_SECONDS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: JWT_DURATION_SECONDS
+            - name: EC_KEYS_IDENTIFIERS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: EC_KEYS_IDENTIFIERS
+            - name: RSA_KEYS_IDENTIFIERS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: RSA_KEYS_IDENTIFIERS
