@@ -40,6 +40,7 @@ JOB_DASHBOARD_METRICS_REPORT_GENERATOR_SERVICE_NAME="interop-be-dashboard-metric
 JOB_ESERVICES_MONITORING_EXPORTER_SERVICE_NAME="interop-be-eservices-monitoring-exporter"
 JOB_DTD_CATALOG_EXPORTER_SERVICE_NAME="interop-be-dtd-catalog-exporter"
 JOB_ONE_TRUST_NOTICES_SERVICE_NAME="interop-be-one-trust-notices"
+JOB_ANAC_CERTIFIED_ATTRIBUTES_IMPORTER_SERVICE_NAME="interop-be-anac-certified-attributes-importer"
 JOB_PN_CONSUMERS_SERVICE_NAME="interop-be-pn-consumers"
 JOB_DTD_METRICS_SERVICE_NAME="interop-be-dtd-metrics"
 
