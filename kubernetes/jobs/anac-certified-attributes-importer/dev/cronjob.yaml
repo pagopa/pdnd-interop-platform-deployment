@@ -78,6 +78,11 @@ spec:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
                         key: SFTP_PATH
+                - name: SFTP_FILENAME_PREFIX
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: SFTP_FILENAME_PREFIX
 
                 - name: TENANT_PROCESS_URL
                   valueFrom:
