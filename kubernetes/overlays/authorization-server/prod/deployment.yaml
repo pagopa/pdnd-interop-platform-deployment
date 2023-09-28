@@ -71,3 +71,8 @@ spec:
                   key: GENERATED_JWT_QUEUE_NAME
             - name: JWT_QUEUE_URL
               value: "{{AWS_SQS_DOMAIN}}/{{AWS_ACCOUNT_ID}}/$(GENERATED_JWT_QUEUE_NAME)"
+            - name: JWT_FALLBACK_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: JWT_FALLBACK_BUCKET
