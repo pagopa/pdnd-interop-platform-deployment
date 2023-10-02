@@ -54,3 +54,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: NOTIFIER_URL
+            - name: BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: BASE_URL
