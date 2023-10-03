@@ -9,6 +9,7 @@ spec:
   schedule: "0 9 * * *"
   failedJobsHistoryLimit: 1
   successfulJobsHistoryLimit: 0
+  concurrentPolicy: Replace
   jobTemplate:
     metadata:
       labels:
@@ -16,6 +17,7 @@ spec:
       annotations:
         digest: {{IMAGE_DIGEST}} # Used to force deployment on same image version but different content
     spec:
+      activeDeadlineSeconds: 3600 # 1 hour
       template:
         metadata:
           labels:
