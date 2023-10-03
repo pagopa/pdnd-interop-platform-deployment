@@ -9,7 +9,7 @@ spec:
   schedule: "0 9 * * *"
   failedJobsHistoryLimit: 1
   successfulJobsHistoryLimit: 0
-  concurrentPolicy: Replace
+  concurrencyPolicy: Replace
   jobTemplate:
     metadata:
       labels:
