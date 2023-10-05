@@ -71,7 +71,7 @@ spec:
                   valueFrom:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
-                        key: ATTRIBUTES_COLLECTION_NAME  
+                        key: ATTRIBUTES_COLLECTION_NAME
                 - name: AGREEMENTS_COLLECTION_NAME
                   valueFrom:
                       configMapKeyRef:
