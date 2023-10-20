@@ -9,6 +9,7 @@ TOKENS_BUCKET="interop-generated-jwt-details-prod"
 TOKEN_BUCKET_PATH="/"
 METRIC_STORAGE_BUCKET="interop-metrics-reports-prod"
 METRIC_STORAGE_PATH="/"
+INTERFACE_STORAGE_BUCKET="interop-application-documents-prod"
 
 JOB_METRICS_REPORT_GENERATOR_RESOURCE_CPU="2"
 JOB_METRICS_REPORT_GENERATOR_RESOURCE_MEM="4Gi"

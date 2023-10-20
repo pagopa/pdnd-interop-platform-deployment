@@ -82,6 +82,11 @@ spec:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
                         key: METRIC_STORAGE_PATH
+                - name: INTERFACE_STORAGE_BUCKET
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: INTERFACE_STORAGE_BUCKET
                 - name: SMTP_ADDRESS
                   valueFrom:
                       configMapKeyRef:
