@@ -68,11 +68,11 @@ spec:
                     secretKeyRef:
                       name: anac
                       key: SFTP_USERNAME
-                - name: SFTP_PRIVATE_KEY
+                - name: SFTP_PASSWORD
                   valueFrom:
                     secretKeyRef:
                       name: anac
-                      key: SFTP_PRIVATE_KEY
+                      key: SFTP_PASSWORD
                 - name: SFTP_PATH
                   valueFrom:
                       configMapKeyRef:
