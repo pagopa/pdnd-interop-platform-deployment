@@ -84,10 +84,6 @@ spec:
                         name: {{SERVICE_NAME}}
                         key: SFTP_FILENAME_PREFIX
 
-                # Remove this when ANAC file automation will be implemented
-                - name: FORCE_REMOTE_FILE_NAME
-                  value: "collaudo-rolling.csv"
-
                 - name: TENANT_PROCESS_URL
                   valueFrom:
                       configMapKeyRef:
