@@ -69,3 +69,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: SELFCARE_PRODUCT_ID
+            - name: MAX_KEYS_PER_CLIENT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: MAX_KEYS_PER_CLIENT
