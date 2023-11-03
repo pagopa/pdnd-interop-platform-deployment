@@ -100,6 +100,11 @@ spec:
                     configMapKeyRef:
                       name: {{SERVICE_NAME}}
                       key: TENANT_PROCESS_URL
+                - name: IVASS_ASSURANCE_ATTRIBUTE_CODE
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: IVASS_ASSURANCE_ATTRIBUTE_CODE
               resources:
                 requests:
                   cpu: "{{SERVICE_RESOURCE_CPU}}"
