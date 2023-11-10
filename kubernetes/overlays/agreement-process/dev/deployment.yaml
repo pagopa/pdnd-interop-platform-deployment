@@ -39,16 +39,6 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
-            - name: USER_REGISTRY_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: USER_REGISTRY_URL
-            - name: USER_REGISTRY_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: user-registry
-                  key: USER_REGISTRY_API_KEY
             - name: STORAGE_TYPE
               valueFrom:
                 configMapKeyRef:
@@ -96,9 +86,9 @@ spec:
                   key: SELFCARE_V2_API_KEY
             - name: SELFCARE_V2_URL
               valueFrom:
-                  configMapKeyRef:
-                    name: {{SERVICE_NAME}}
-                    key: SELFCARE_V2_URL
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SELFCARE_V2_URL
             - name: MESSAGE_GROUP_ID
               valueFrom:
                   configMapKeyRef:
