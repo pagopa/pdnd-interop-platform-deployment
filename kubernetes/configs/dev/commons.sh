@@ -33,12 +33,8 @@ M2M_JWT_AUDIENCE="dev.interop.pagopa.it/m2m"
 INTERNAL_JWT_AUDIENCE="dev.interop.pagopa.it/internal"
 RSA_KEYS_IDENTIFIERS="17c1177f-d7dc-4181-9f54-6fd416bf229b"
 
-PARTY_PROCESS_URL="https://api.uat.selfcare.pagopa.it/external/party-process/v1"
-PARTY_MANAGEMENT_URL="https://api.uat.selfcare.pagopa.it/external/party-management/v1"
-USER_REGISTRY_URL="https://api.uat.pdv.pagopa.it/user-registry/v1"
 SELFCARE_V2_URL="https://api.uat.selfcare.pagopa.it/external/v2"
 
-SELFCARE_PRODUCT_ID="prod-interop"
 
 PRIVACY_NOTICES_DYNAMO_TABLE_NAME="interop-privacy-notices-dev"
 PRIVACY_NOTICES_ACCEPTANCE_DYNAMO_TABLE_NAME="interop-privacy-notices-acceptances-dev"
