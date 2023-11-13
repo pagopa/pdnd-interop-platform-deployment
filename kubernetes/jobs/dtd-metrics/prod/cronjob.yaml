@@ -87,6 +87,21 @@ spec:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
                         key: FILENAME    
+                - name: GITHUB_REPO
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: GITHUB_REPO
+                - name: GITHUB_REPO_OWNER
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: GITHUB_REPO_OWNER
+                - name: GITHUB_ACCESS_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: metrics-reports
+                      key: BOT_DTD_OPENDATA_GITHUB_ACCESS_TOKEN
               resources:
                 requests:
                   cpu: "{{SERVICE_RESOURCE_CPU}}"
