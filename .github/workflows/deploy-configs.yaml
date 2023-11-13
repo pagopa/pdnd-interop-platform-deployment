@@ -90,7 +90,7 @@ jobs:
           metricsReportRecipients="$(getSecretValue 'metrics-reports-recipients')"
           metricsReportSmtpUsername="$(getSecretValue 'metrics-reports-smtp-username')"
           metricsReportSmtpPassword="$(getSecretValue 'metrics-reports-smtp-password')"
-          botDtdOpendataGithubAccessToken="$(getSecretValue 'interop-external-integration-dtd-opendata-github-bot-pat')"
+          botDtdOpendataGithubAccessToken="$(getSecretValue 'interop-external-integration-github-bot-pat')"
           pnConsumersMailRecipients="$(getSecretValue 'interop-pn-consumers-recipients')"
           onetrustClientId="$(getSecretValue 'onetrust-clientid')"
           onetrustClientSecret="$(getSecretValue 'onetrust-clientsecret')"
