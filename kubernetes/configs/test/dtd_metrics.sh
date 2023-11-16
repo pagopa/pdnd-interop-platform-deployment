@@ -6,7 +6,7 @@ ESERVICES_COLLECTION_NAME="eservices"
 ATTRIBUTES_COLLECTION_NAME="attributes"
 AGREEMENTS_COLLECTION_NAME="agreements"
 STORAGE_BUCKET="interop-public-dashboards-test"
-FILENAME="metrics.json"
+FILENAME="test-metrics.json"
 
 JOB_DTD_METRICS_RESOURCE_CPU="500m"
 JOB_DTD_METRICS_RESOURCE_MEM="1Gi"
