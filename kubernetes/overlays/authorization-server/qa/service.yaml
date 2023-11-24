@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    alb.ingress.kubernetes.io/healthcheck-path: /{{AUTHORIZATION_SERVER_APPLICATION_PATH}}/status
+    alb.ingress.kubernetes.io/healthcheck-port: "{{BACKEND_SERVICE_PORT}}"
+  name: {{AUTHORIZATION_SERVER_SERVICE_NAME}}
+  namespace: {{NAMESPACE}}

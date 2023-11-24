@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{SERVICE_NAME}}
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{SERVICE_NAME}}
+  template:
+    metadata:
+      labels:
+        app: {{SERVICE_NAME}}
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          image: gessnerfl/fake-smtp-server:1.10.4
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: smtp-mock
+              containerPort: 5025
+              protocol: TCP
+          resources:
+            requests:
+              cpu: "{{SERVICE_RESOURCE_CPU}}"
+              memory: "{{SERVICE_RESOURCE_MEM}}"
+            limits:
+              cpu: "{{SERVICE_RESOURCE_CPU}}"
+              memory: "{{SERVICE_RESOURCE_MEM}}"
+          env:
+            - name: fakesmtp.authentication.password
+              value: password
+            - name: fakesmtp.authentication.username
+              value: username
