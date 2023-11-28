@@ -1,0 +1,118 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  labels:
+    app: {{SERVICE_NAME}}
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  schedule: "0 11 * * *"
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 0
+  jobTemplate:
+    metadata:
+      labels:
+        app: {{SERVICE_NAME}}
+      annotations:
+        digest: {{IMAGE_DIGEST}} # Used to force deployment on same image version but different content
+    spec:
+      template:
+        metadata:
+          labels:
+            app: {{SERVICE_NAME}}
+        spec:
+          restartPolicy: OnFailure
+          serviceAccountName: {{SERVICE_NAME}}
+          containers:
+            - name: {{SERVICE_NAME}}
+              image: {{REPOSITORY}}/{{SERVICE_NAME}}:{{JOB_IVASS_CERTIFIED_ATTRIBUTES_IMPORTER_IMAGE_VERSION}}
+              imagePullPolicy: Always
+              env:
+                - name: NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: READ_MODEL_DB_HOST
+                  value: "{{READ_MODEL_DB_HOST}}"
+                - name: READ_MODEL_DB_PORT
+                  value: "{{READ_MODEL_DB_PORT}}"
+                - name: READ_MODEL_DB_NAME
+                  value: "{{READ_MODEL_DB_NAME}}"
+                - name: MONGODB_REPLICA_SET
+                  value: "{{READ_MODEL_REPLICA_SET}}"
+                - name: MONGODB_READ_PREFERENCE
+                  value: "{{READ_MODEL_READ_PREFERENCE}}"
+                - name: READ_MODEL_DB_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: documentdb
+                      key: READONLY_USR
+                - name: READ_MODEL_DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: documentdb
+                      key: READONLY_PSW
+
+                - name: SOURCE_FILE_DOWNLOAD_DIR
+                  value: "/tmp"
+                - name: SOURCE_URL
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: SOURCE_URL
+                - name: HISTORY_BUCKET_NAME
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: HISTORY_BUCKET_NAME
+
+                - name: TENANT_PROCESS_URL
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: TENANT_PROCESS_URL
+
+                - name: IVASS_TENANT_ID
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: IVASS_TENANT_ID
+                - name: RECORDS_PROCESS_BATCH_SIZE
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: RECORDS_PROCESS_BATCH_SIZE
+
+                - name: INTERNAL_JWT_KID
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: INTERNAL_JWT_KID
+                - name: INTERNAL_JWT_SUBJECT
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: INTERNAL_JWT_SUBJECT
+                - name: INTERNAL_JWT_ISSUER
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: INTERNAL_JWT_ISSUER
+                - name: INTERNAL_JWT_AUDIENCE
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: INTERNAL_JWT_AUDIENCE
+                - name: INTERNAL_JWT_SECONDS_DURATION
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: INTERNAL_JWT_SECONDS_DURATION
+
+              resources:
+                requests:
+                  cpu: "{{SERVICE_RESOURCE_CPU}}"
+                  memory: "{{SERVICE_RESOURCE_MEM}}"
+                limits:
+                  cpu: "{{SERVICE_RESOURCE_CPU}}"
+                  memory: "{{SERVICE_RESOURCE_MEM}}"

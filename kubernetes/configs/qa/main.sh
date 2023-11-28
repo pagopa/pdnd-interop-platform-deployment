@@ -58,6 +58,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/qa/eservices_monitoring_exporter.sh
 . $(pwd)/kubernetes/configs/qa/metrics_report_generator.sh
 . $(pwd)/kubernetes/configs/qa/anac_certified_attributes_importer.sh
+. $(pwd)/kubernetes/configs/qa/ivass_certified_attributes_importer.sh
 . $(pwd)/kubernetes/configs/qa/pn_consumers.sh
 . $(pwd)/kubernetes/configs/qa/padigitale_report_generator.sh
 . $(pwd)/kubernetes/configs/qa/dashboard_metrics_report_generator.sh
