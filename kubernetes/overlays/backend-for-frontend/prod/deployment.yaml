@@ -114,26 +114,6 @@ spec:
                   configMapKeyRef:
                     name: {{SERVICE_NAME}}
                     key: PURPOSE_PROCESS_URL
-            - name: PARTY_PROCESS_URL
-              valueFrom:
-                  configMapKeyRef:
-                    name: {{SERVICE_NAME}}
-                    key: PARTY_PROCESS_URL
-            - name: USER_REGISTRY_URL
-              valueFrom:
-                  configMapKeyRef:
-                    name: {{SERVICE_NAME}}
-                    key: USER_REGISTRY_URL
-            - name: USER_REGISTRY_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: user-registry
-                  key: USER_REGISTRY_API_KEY
-            - name: PARTY_PROCESS_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: party-process
-                  key: PARTY_PROCESS_API_KEY
             - name: CONSUMER_DOCS_CONTAINER
               valueFrom:
                 configMapKeyRef:
@@ -174,11 +154,6 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ALLOW_LIST_FILENAME
-            - name: SELFCARE_PRODUCT_ID
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: SELFCARE_PRODUCT_ID
             - name: SELFCARE_V2_URL
               valueFrom:
                 configMapKeyRef:

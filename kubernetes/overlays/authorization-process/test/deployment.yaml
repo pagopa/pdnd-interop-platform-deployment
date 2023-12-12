@@ -14,11 +14,6 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ACCEPTED_AUDIENCES
-            - name: USER_REGISTRY_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: user-registry
-                  key: USER_REGISTRY_API_KEY
             - name: AGREEMENT_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
@@ -34,41 +29,21 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: AUTHORIZATION_MANAGEMENT_URL
-            - name: PARTY_MANAGEMENT_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: PARTY_MANAGEMENT_URL
-            - name: PURPOSE_MANAGEMENT_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: PURPOSE_MANAGEMENT_URL
-            - name: USER_REGISTRY_MANAGEMENT_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: USER_REGISTRY_MANAGEMENT_URL
             - name: TENANT_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: TENANT_MANAGEMENT_URL            
-            - name: USER_REGISTRY_API_KEY
+            - name: SELFCARE_V2_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: user-registry
-                  key: USER_REGISTRY_API_KEY
-            - name: PARTY_MANAGEMENT_API_KEY
+                  name: selfcare-v2
+                  key: SELFCARE_V2_API_KEY
+            - name: SELFCARE_V2_URL
               valueFrom:
-                secretKeyRef:
-                  name: party-management
-                  key: PARTY_MANAGEMENT_API_KEY
-            - name: SELFCARE_PRODUCT_ID
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: SELFCARE_PRODUCT_ID
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: SELFCARE_V2_URL
             - name: MAX_KEYS_PER_CLIENT
               valueFrom:
                 configMapKeyRef:
