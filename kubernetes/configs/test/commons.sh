@@ -35,7 +35,7 @@ PARTY_MANAGEMENT_URL="https://api.selfcare.pagopa.it/external/party-management/v
 USER_REGISTRY_URL="https://api.pdv.pagopa.it/user-registry/v1"
 SELFCARE_V2_URL="https://api.selfcare.pagopa.it/external/v2"
 
-SELFCARE_PRODUCT_ID="prod-interop-coll"
+INTEROP_SELFCARE_PRODUCT_NAME="prod-interop-coll"
 
 INTERNAL_JWT_ISSUER="uat.interop.pagopa.it"
 INTERNAL_JWT_SUBJECT="uat.interop-m2m"

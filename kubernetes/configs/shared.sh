@@ -45,8 +45,6 @@ JOB_IVASS_CERTIFIED_ATTRIBUTES_IMPORTER_SERVICE_NAME="interop-be-ivass-certified
 JOB_PN_CONSUMERS_SERVICE_NAME="interop-be-pn-consumers"
 JOB_DTD_METRICS_SERVICE_NAME="interop-be-dtd-metrics"
 
-INTEROP_SELFCARE_PRODUCT_NAME="prod-interop"
-
 REDIS_SERVICE_NAME="redis"
 
 SMTP_MOCK_SERVICE_NAME="smtp-mock"
