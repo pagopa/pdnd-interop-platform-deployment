@@ -35,6 +35,7 @@ RSA_KEYS_IDENTIFIERS="a1721903-0fc9-4744-96ea-00a4332c452f"
 
 SELFCARE_V2_URL="https://api.uat.selfcare.pagopa.it/external/v2"
 
+INTEROP_SELFCARE_PRODUCT_NAME="prod-interop-coll"
 
 PRIVACY_NOTICES_DYNAMO_TABLE_NAME="interop-privacy-notices-qa"
 PRIVACY_NOTICES_ACCEPTANCE_DYNAMO_TABLE_NAME="interop-privacy-notices-acceptances-qa"
