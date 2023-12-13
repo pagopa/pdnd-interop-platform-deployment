@@ -97,13 +97,16 @@ spec:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
                         key: INTEROP_SELFCARE_PRODUCT_NAME
-                - name: PARTY_MANAGEMENT_URL
-                  value: "{{PARTY_MANAGEMENT_URL}}"
-                - name: PARTY_MANAGEMENT_API_KEY
+                - name: SELFCARE_V2_API_KEY
                   valueFrom:
                     secretKeyRef:
-                      name: party-management
-                      key: PARTY_MANAGEMENT_API_KEY
+                      name: selfcare-v2
+                      key: SELFCARE_V2_API_KEY
+                - name: SELFCARE_V2_URL
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: SELFCARE_V2_URL
               resources:
                 requests:
                   cpu: "{{SERVICE_RESOURCE_CPU}}"
