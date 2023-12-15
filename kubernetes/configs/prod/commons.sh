@@ -33,9 +33,6 @@ M2M_JWT_AUDIENCE="interop.pagopa.it/m2m"
 INTERNAL_JWT_AUDIENCE="interop.pagopa.it/internal"
 RSA_KEYS_IDENTIFIERS="199d08d2-9971-4979-a78d-e6f7a544f296"
 
-PARTY_PROCESS_URL="https://api.selfcare.pagopa.it/external/party-process/v1"
-PARTY_MANAGEMENT_URL="https://api.selfcare.pagopa.it/external/party-management/v1"
-USER_REGISTRY_URL="https://api.pdv.pagopa.it/user-registry/v1"
 SELFCARE_V2_URL="https://api.selfcare.pagopa.it/external/v2"
 
 INTEROP_SELFCARE_PRODUCT_NAME="prod-interop"

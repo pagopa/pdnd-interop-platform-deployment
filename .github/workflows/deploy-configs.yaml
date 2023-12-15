@@ -102,9 +102,6 @@ jobs:
           anacSftpPassword="$(getSecretValue 'anac-sftp-password')"
 
           createKubeSecret 'anac' 'SFTP_HOST' "$anacSftpHost" 'SFTP_USERNAME' "$anacSftpUsername" 'SFTP_PASSWORD' "$anacSftpPassword"
-          createKubeSecret 'user-registry' 'USER_REGISTRY_API_KEY' "$userRegistryApiKey"
-          createKubeSecret 'party-process' 'PARTY_PROCESS_API_KEY' "$partyProcessApiKey"
-          createKubeSecret 'party-management' 'PARTY_MANAGEMENT_API_KEY' "$partyManagementApiKey"
           createKubeSecret 'selfcare-v2' 'SELFCARE_V2_API_KEY' "$selfcareV2ApiKey" 'SELFCARE_BROKER_CONNECTION_STRING' "$selfcareBrokerConnectionString"
           createKubeSecret 'postgres' 'POSTGRES_USR' "$postgresUsername" 'POSTGRES_PSW' "$postgresPassword"
           createKubeSecret 'documentdb' 'PROJECTION_USR' "$projectionUsername" 'PROJECTION_PSW' "$projectionPassword" 'READONLY_USR' "$projectionROUsername" 'READONLY_PSW' "$projectionROPassword"
