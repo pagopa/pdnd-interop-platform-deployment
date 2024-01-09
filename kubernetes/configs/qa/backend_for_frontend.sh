@@ -17,7 +17,7 @@ RISK_ANALYSIS_DOCS_CONTAINER="interop-application-documents-qa"
 BFF_RATE_LIMITER_MAX_REQUESTS="9999999"
 BFF_RATE_LIMITER_BURST_PERCENTAGE="1.0"
 BFF_RATE_LIMITER_RATE_INTERVAL="1.second"
-BFF_RATE_LIMITER_TIMEOUT="50.milliseconds"
+BFF_RATE_LIMITER_TIMEOUT="300.milliseconds"
 
 SUPPORT_SAML_AUDIENCE="selfcare.qa.interop.pagopa.it"
 SUPPORT_SAML_CALLBACK_URL="https://selfcare.qa.interop.pagopa.it/ui/it/assistenza/scelta-ente"
