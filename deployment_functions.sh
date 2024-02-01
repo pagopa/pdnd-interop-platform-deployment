@@ -107,6 +107,19 @@ function prepareDbMigrations() {
   echo "DB migrations configmap created"
 }
 
+function prepareEventStoreMigrations() {
+  echo "Creating Event Store migrations configmap"
+
+  kubectl \
+    create configmap event-store-migrations \
+    --namespace "$NAMESPACE" \
+    --from-file=db/event-store/migrations/ \
+    --dry-run=client \
+    -o yaml | kubectl apply -f -
+
+  echo "Event Store migrations configmap created"
+}
+
 function getDockerImageDigest() {
   local serviceName=$1
   local imageVersion=$2
