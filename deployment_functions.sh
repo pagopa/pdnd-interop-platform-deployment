@@ -250,7 +250,7 @@ function createIngress() {
     local applicationPath="${tuples[$k]}"
     local servicePort="${tuples[$z]}"
 
-    newRule=' --rule="/'${applicationPath}'*='${serviceName}':'${servicePort}'" '
+    newRule=' --rule="${INGRESS_RULES_HOST:+"$INGRESS_RULES_HOST"}/'${applicationPath}'*='${serviceName}':'${servicePort}'" '
     echo "Adding rule: $newRule"
     rules=$rules''$newRule
   done
