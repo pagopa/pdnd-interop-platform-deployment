@@ -50,8 +50,10 @@ jobs:
 
           if [[ ${{ inputs.environment }} = "dev-refactor" ]]; then
             export INGRESS_RULES_HOST="*.refactor.dev.interop.pagopa.it"
+            export INGRESS_RULES_ORDER=0
           elif [[ ${{ inputs.environment }} = "dev" ]]; then
             export INGRESS_RULES_HOST="*.dev.interop.pagopa.it"
+            export INGRESS_RULES_ORDER=1
           fi
 
           createIngress \

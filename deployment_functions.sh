@@ -258,6 +258,9 @@ function createIngress() {
   --annotation="alb.ingress.kubernetes.io/load-balancer-attributes=routing.http.preserve_host_header.enabled=true"
 EOT
 )
+  if [[ ! -z $INGRESS_RULES_ORDER ]]; then
+    annotations="$annotations --annotation alb.ingress.kubernetes.io/group.order=$INGRESS_RULES_ORDER"
+  fi
 
   local rules=''
 
