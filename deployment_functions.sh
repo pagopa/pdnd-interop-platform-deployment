@@ -248,6 +248,8 @@ EOT
 
   local rules=''
 
+  echo "INGRESS_RULES_HOST=$INGRESS_RULES_HOST"
+
   for (( j=0; j<length; j=j+3 )); do
     local i=$j
     local k=$((j+1))
@@ -256,7 +258,7 @@ EOT
     local applicationPath="${tuples[$k]}"
     local servicePort="${tuples[$z]}"
 
-    newRule=' --rule="'${INGRESS_RULES_HOST:+"$INGRESS_RULES_HOST"}'/'${applicationPath}'*='${serviceName}':'${servicePort}'" '
+    newRule=' --rule="'${INGRESS_RULES_HOST:-""}'/'${applicationPath}'*='${serviceName}':'${servicePort}'" '
     echo "Adding rule: $newRule"
     rules=$rules''$newRule
   done
