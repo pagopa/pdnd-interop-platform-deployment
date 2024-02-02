@@ -48,12 +48,10 @@ jobs:
           source $CONFIG_FILE
           source ./deployment_functions.sh
 
-          if [[ ${{ inputs.environment }} = "prod" ]]; then
-            export INGRESS_RULES_HOST="*.interop.pagopa.it"
-          elif [[ ${{ inputs.environment }} = "dev-refactor" ]]; then
+          if [[ ${{ inputs.environment }} = "dev-refactor" ]]; then
             export INGRESS_RULES_HOST="*.refactor.dev.interop.pagopa.it"
-          else
-            export INGRESS_RULES_HOST="*.${{ inputs.environment }}.interop.pagopa.it"
+          elif [[ ${{ inputs.environment }} = "dev" ]]; then
+            export INGRESS_RULES_HOST="*.dev.interop.pagopa.it"
           fi
 
           createIngress \
