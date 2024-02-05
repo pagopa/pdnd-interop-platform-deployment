@@ -147,7 +147,7 @@ function applyKubeFile() {
     IMAGE_DIGEST="$imageDigest" \
     SERVICE_RESOURCE_CPU="$resourceCpu" \
     SERVICE_RESOURCE_MEM="$resourceMem" \
-    LOWERCASE_ENV=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]') \
+    LOWERCASE_ENV=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]' | tr '-refactor' '') \
     ./kubernetes/templater.sh "./kubernetes/$fileName" \
       -s -f "$CONFIG_FILE" \
       > "$compiledFileName"
@@ -177,7 +177,7 @@ function compileDir() {
         IMAGE_DIGEST="$imageDigest" \
         SERVICE_RESOURCE_CPU="$resourceCpu" \
         SERVICE_RESOURCE_MEM="$resourceMem" \
-        LOWERCASE_ENV=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]') \
+        LOWERCASE_ENV=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]' | tr '-refactor' '') \
         ./kubernetes/templater.sh "$f" -s -f "$CONFIG_FILE" \
         > "$serviceName/$f"
     else
