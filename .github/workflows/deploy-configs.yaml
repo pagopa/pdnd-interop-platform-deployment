@@ -78,6 +78,16 @@ jobs:
 
           applyKubeFile "namespace.yaml"
 
+      - name: Apply commons configmap
+        id: apply_commons_configmap
+        if: ${{ inputs.environment == 'dev-refactor' }}
+        run: |
+          set -eo pipefail
+          source $CONFIG_FILE
+          source ./deployment_functions.sh
+
+          applyKubeFile "commons/be-refactor/${{ inputs.environment }}/configmap.yaml"
+
       - name: Create K8s Secrets
         id: create_secrets
         run: |

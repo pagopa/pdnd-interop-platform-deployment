@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: interop-be-common-refactor
+  namespace: {{NAMESPACE}}
+data:
+  READMODEL_DB_HOST: {{READ_MODEL_DB_HOST}}
+  READMODEL_DB_NAME: {{READ_MODEL_DB_NAME}}
+  READMODEL_DB_PORT: {{READ_MODEL_DB_PORT}}
+  EVENTSTORE_DB_HOST: {{POSTGRES_HOST}}
+  EVENTSTORE_DB_PORT: {{POSTGRES_PORT}}
+  EVENTSTORE_DB_NAME: "persistence_management_refactor"
+  SKIP_JWT_VERIFICATION: "true"
+  WELL_KNOWN_URLS: {{WELL_KNOWN_URLS}}
