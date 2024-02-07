@@ -7,6 +7,7 @@ shortVersion() {
 }
 
 AGREEMENT_MANAGEMENT_SERVICE_NAME="interop-be-agreement-management"
+AGREEMENT_READMODEL_WRITER_SERVICE_NAME="interop-be-agreement-readmodel-writer"
 AGREEMENT_PROCESS_SERVICE_NAME="interop-be-agreement-process"
 ATTRIBUTE_REGISTRY_MANAGEMENT_SERVICE_NAME="interop-be-attribute-registry-management"
 ATTRIBUTE_REGISTRY_PROCESS_SERVICE_NAME="interop-be-attribute-registry-process"
@@ -14,6 +15,7 @@ AUTHORIZATION_MANAGEMENT_SERVICE_NAME="interop-be-authorization-management"
 AUTHORIZATION_PROCESS_SERVICE_NAME="interop-be-authorization-process"
 AUTHORIZATION_SERVER_SERVICE_NAME="interop-be-authorization-server"
 CATALOG_MANAGEMENT_SERVICE_NAME="interop-be-catalog-management"
+CATALOG_READMODEL_WRITER_SERVICE_NAME="interop-be-catalog-readmodel-writer"
 PARTY_REGISTRY_PROXY_SERVICE_NAME="interop-be-party-registry-proxy"
 CATALOG_PROCESS_SERVICE_NAME="interop-be-catalog-process"
 PURPOSE_MANAGEMENT_SERVICE_NAME="interop-be-purpose-management"
