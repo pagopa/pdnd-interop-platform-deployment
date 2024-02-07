@@ -1,7 +1,8 @@
 #!/bin/bash
 
+AGREEMENT_PROCESS_SERVICE_NAME="interop-be-agreement-process-refactor"
 AGREEMENT_PROCESS_STORAGE_TYPE="S3"
-AGREEMENT_PROCESS_STORAGE_CONTAINER="interop-application-documents-dev"
+AGREEMENT_PROCESS_STORAGE_CONTAINER="interop-application-documents-refactor-dev"
 AGREEMENT_PROCESS_STORAGE_ENDPOINT=""
 ARCHIVING_PURPOSES_QUEUE_NAME="archived-agreements-for-purposes"
 ARCHIVING_ESERVICES_QUEUE_NAME="archived-agreements-for-eservices"
