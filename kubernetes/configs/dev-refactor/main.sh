@@ -33,7 +33,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/dev-refactor/redis.sh
 . $(pwd)/kubernetes/configs/dev-refactor/smtp_mock.sh
 
-. $(pwd)/kubernetes/configs/dev-refactor/agreement_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/dev-refactor/agreement_management.sh
 . $(pwd)/kubernetes/configs/dev-refactor/agreement_process.sh
 . $(pwd)/kubernetes/configs/dev-refactor/api_gateway.sh
 . $(pwd)/kubernetes/configs/dev-refactor/authorization_management.sh
