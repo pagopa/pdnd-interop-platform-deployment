@@ -17,7 +17,7 @@ REPLICAS=1
 BACKEND_SERVICE_PORT="3000"
 
 AWS_REGION="eu-central-1"
-PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
+PERSISTENCE_QUEUE_NAME="persistence-events-refactor.fifo"
 CERTIFIED_MAIL_QUEUE_NAME="certified-mail.fifo"
 AWS_SQS_DOMAIN="https://sqs.${AWS_REGION}.amazonaws.com"
 
