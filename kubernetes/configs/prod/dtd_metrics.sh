@@ -8,6 +8,9 @@ AGREEMENTS_COLLECTION_NAME="agreements"
 STORAGE_BUCKET="interop-public-dashboards-prod"
 FILENAME="metrics.json"
 
+ATHENA_TOKENS_TABLE_NAME="generated_jwt_prod"
+ATHENA_OUTPUT_BUCKET="interop-athena-query-results-prod"
+
 JOB_DTD_METRICS_RESOURCE_CPU="500m"
 JOB_DTD_METRICS_RESOURCE_MEM="1Gi"
 

@@ -47,7 +47,15 @@ jobs:
           set -eo pipefail
           source $CONFIG_FILE
           source ./deployment_functions.sh
-          
+
+          if [[ ${{ inputs.environment }} = "dev-refactor" ]]; then
+            export INGRESS_RULES_HOST="*.refactor.dev.interop.pagopa.it"
+            export INGRESS_RULES_ORDER=0
+          elif [[ ${{ inputs.environment }} = "dev" ]]; then
+            export INGRESS_RULES_HOST="*.dev.interop.pagopa.it"
+            export INGRESS_RULES_ORDER=1
+          fi
+
           createIngress \
               $API_GATEWAY_SERVICE_NAME $API_GATEWAY_APPLICATION_PATH $BACKEND_SERVICE_PORT \
               $AUTHORIZATION_SERVER_SERVICE_NAME $AUTHORIZATION_SERVER_APPLICATION_PATH $BACKEND_SERVICE_PORT \
