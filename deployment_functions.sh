@@ -207,7 +207,8 @@ function applyKustomizeToDir() {
 
   echo "Compiling base files"
   compileDir "kubernetes/base" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
-  compileDir "kubernetes/base/be-refactor" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
+  compileDir "kubernetes/base/be-refactor/microservice" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
+  compileDir "kubernetes/base/be-refactor/readmodel-writer" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
   echo "Base files compiled"
 
   echo "Compiling common files"
