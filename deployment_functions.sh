@@ -259,7 +259,16 @@ function createIngress() {
   local compiledFileName='./kubernetes/compiled.ingress.yaml'
 
   local baseCommand="kubectl -n $NAMESPACE create ingress interop-services --class=alb --dry-run=client -o yaml "
-  local annotations='--annotation="alb.ingress.kubernetes.io/scheme=internal" --annotation="alb.ingress.kubernetes.io/target-type=ip" --annotation="alb.ingress.kubernetes.io/group.name=interop-be"'
+  local annotations=$(cat <<EOT | tr -s '\n' ' '
+  --annotation="alb.ingress.kubernetes.io/scheme=internal"
+  --annotation="alb.ingress.kubernetes.io/target-type=ip"
+  --annotation="alb.ingress.kubernetes.io/group.name=interop-be"
+  --annotation="alb.ingress.kubernetes.io/load-balancer-attributes=routing.http.preserve_host_header.enabled=true"
+EOT
+)
+  if [[ ! -z $INGRESS_RULES_ORDER ]]; then
+    annotations="$annotations --annotation alb.ingress.kubernetes.io/group.order=$INGRESS_RULES_ORDER"
+  fi
 
   local rules=''
 
@@ -271,7 +280,7 @@ function createIngress() {
     local applicationPath="${tuples[$k]}"
     local servicePort="${tuples[$z]}"
 
-    newRule=' --rule="/'${applicationPath}'*='${serviceName}':'${servicePort}'" '
+    newRule=' --rule="'${INGRESS_RULES_HOST:-""}'/'${applicationPath}'*='${serviceName}':'${servicePort}'" '
     echo "Adding rule: $newRule"
     rules=$rules''$newRule
   done

@@ -88,6 +88,16 @@ spec:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
                         key: FILENAME    
+                - name: ATHENA_TOKENS_TABLE_NAME
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: ATHENA_TOKENS_TABLE_NAME    
+                - name: ATHENA_OUTPUT_BUCKET
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: ATHENA_OUTPUT_BUCKET    
                 - name: GITHUB_REPO
                   valueFrom:
                       configMapKeyRef:
