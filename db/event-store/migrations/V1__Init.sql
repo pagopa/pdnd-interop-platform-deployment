@@ -1,4 +1,4 @@
-CREATE TABLEIF NOT EXISTS "${applicationSchema}".events (
+CREATE TABLE IF NOT EXISTS "${applicationSchema}".events (
     sequence_num BIGSERIAL NOT NULL,
 
     stream_id UUID NOT NULL,
