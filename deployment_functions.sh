@@ -171,7 +171,7 @@ function compileDir() {
 
 
   for f in "$dirPath"/*; do
-    if [ ! "$(basename "$f")" = "kustomization.yaml" ]; then
+    if [ ! -d "$f" ] && [ ! "$(basename "$f")" = "kustomization.yaml" ]; then
       mkdir -p "${serviceName}/${dirPath}"
       SERVICE_NAME="$serviceName" \
         SERVICE_ECR_NAME="$(echo "$serviceName" | sed 's/-refactor//')" \
@@ -197,18 +197,22 @@ function applyKustomizeToDir() {
   local resourceMem=$5
 
   echo "Retrieving image digest for ${serviceName} version ${imageVersion}"
-  serviceImageDigest="$(getDockerImageDigest "$serviceName" "$imageVersion")"
+  serviceEcrName="$(echo "$serviceName" | sed 's/-refactor//')"
+  serviceImageDigest="$(getDockerImageDigest "$serviceEcrName" "$imageVersion")"
   echo "Image digest: $serviceImageDigest"
 
   kubeDirPath="kubernetes/${dirPath}"
 
   echo "Compiling base files"
   compileDir "kubernetes/base" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
+  compileDir "kubernetes/base/be-refactor" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
   echo "Base files compiled"
 
   echo "Compiling common files"
   compileDir "kubernetes/commons/database" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
   compileDir "kubernetes/commons/rate-limiting" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
+  compileDir "kubernetes/commons/be-refactor/database" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
+  compileDir "kubernetes/commons/be-refactor/rate-limiting" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
   echo "Common files compiled"
 
   echo "Compiling directory ${dirPath}"
