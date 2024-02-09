@@ -387,7 +387,7 @@ jobs:
   deploy_selfcare_onboarding_consumer:
     name: Selfcare onboarding consumer
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'qa' }}
+    if: ${{ inputs.environment != 'dev-refactor' && inputs.environment != 'qa' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
