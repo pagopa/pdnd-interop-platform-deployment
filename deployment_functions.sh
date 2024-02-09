@@ -213,6 +213,7 @@ function applyKustomizeToDir() {
   echo "Compiling common files"
   compileDir "kubernetes/commons/database" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
   compileDir "kubernetes/commons/rate-limiting" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
+  compileDir "kubernetes/commons/database/be-refactor" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
   echo "Common files compiled"
 
   echo "Compiling directory ${dirPath}"
