@@ -20,7 +20,7 @@ spec:
       serviceAccountName: {{SERVICE_NAME}}
       containers:
         - name: {{SERVICE_NAME}}
-          image: "{{REPOSITORY}}/{{SERVICE_NAME}}:{{IMAGE_VERSION}}"
+          image: "{{REPOSITORY}}/{{SERVICE_ECR_NAME}}:{{IMAGE_VERSION}}"
           imagePullPolicy: Always
           ports:
             - name: http

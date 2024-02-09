@@ -144,6 +144,7 @@ function applyKubeFile() {
   echo "Compiling file $fileName"
 
   SERVICE_NAME="$serviceName" \
+    SERVICE_ECR_NAME="$(echo "$serviceName" | tr '-refactor' '')" \
     IMAGE_DIGEST="$imageDigest" \
     SERVICE_RESOURCE_CPU="$resourceCpu" \
     SERVICE_RESOURCE_MEM="$resourceMem" \
@@ -173,6 +174,7 @@ function compileDir() {
     if [ ! "$(basename "$f")" = "kustomization.yaml" ]; then
       mkdir -p "${serviceName}/${dirPath}"
       SERVICE_NAME="$serviceName" \
+        SERVICE_ECR_NAME="$(echo "$serviceName" | tr '-refactor' '')" \
         IMAGE_VERSION="$imageVersion" \
         IMAGE_DIGEST="$imageDigest" \
         SERVICE_RESOURCE_CPU="$resourceCpu" \
