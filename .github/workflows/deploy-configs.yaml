@@ -132,7 +132,7 @@ jobs:
           createKubeSecret 'smtp-certified' 'PEC_SMTP_USER' "$smtpPecUsername" 'PEC_SMTP_PASSWORD' "$smtpPecPassword" 'PEC_SMTP_SENDER' "$pecSender"
 
       - name: Create DEV-Refactor K8s Secrets
-        id: create_secrets
+        id: create_dev_refactor_secrets
         if: ${{ inputs.environment == 'dev-refactor' }}
         run: |
           set -eo pipefail
