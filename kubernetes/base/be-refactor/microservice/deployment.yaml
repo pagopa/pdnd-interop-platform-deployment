@@ -47,7 +47,7 @@ spec:
               memory: "{{SERVICE_RESOURCE_MEM}}"
           env:
             - name: PORT
-              value: {{BACKEND_SERVICE_PORT}}
+              value: "{{BACKEND_SERVICE_PORT}}"
             - name: HOST
               value: "0.0.0.0"
             - name: LOG_LEVEL
