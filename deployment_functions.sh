@@ -174,7 +174,7 @@ function compileDir() {
     if [ -d "$f" ]; then continue; fi;
 
     if [ ! "$(basename "$f")" = "kustomization.yaml" ]; then
-      echo "Templating $dirPath/$f"
+      echo "Templating $f"
       mkdir -p "${serviceName}/${dirPath}"
       SERVICE_NAME="$serviceName" \
         SERVICE_ECR_NAME="$(echo "$serviceName" | sed 's/-refactor//')" \
