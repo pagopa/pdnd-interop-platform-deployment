@@ -4,4 +4,4 @@ patchesStrategicMerge:
 - deployment.yaml
 - configmap.yaml
 - ../../../commons/database/be-refactor/db.yaml
-- ../../../commons/database/be-refactor/db.yaml
+- ../../../commons/database/be-refactor/cqrs-projection.yaml
