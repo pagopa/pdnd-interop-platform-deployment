@@ -34,7 +34,7 @@ M2M_JWT_AUDIENCE="refactor.dev.interop.pagopa.it/m2m"
 INTERNAL_JWT_AUDIENCE="refactor.dev.interop.pagopa.it/internal"
 RSA_KEYS_IDENTIFIERS="3281b445-1700-4a46-a6ee-e7e02c9079ae"
 
-SELFCARE_V2_URL="https://api.uat.selfcare.pagopa.it/external/v2"
+SELFCARE_V2_URL="https://api.dev.selfcare.pagopa.it/external/v2"
 
 INTEROP_SELFCARE_PRODUCT_NAME="prod-interop"
 
