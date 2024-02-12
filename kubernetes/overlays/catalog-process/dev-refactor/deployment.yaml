@@ -6,92 +6,91 @@ metadata:
 spec:
   template:
     spec:
-    containers:
-      - name: {{SERVICE_NAME}}
-        env:
-          - name: MOCK_FILE_MANAGER
-            valueFrom:
-              configMapKeyRef:
-                name: {{SERVICE_NAME}}
-                key: MOCK_FILE_MANAGER
-          - name: EVENTSTORE_DB_HOST
-            valueFrom:
-              configMapKeyRef:
-                name: interop-be-common-refactor
-                key: EVENTSTORE_DB_HOST
-          - name: EVENTSTORE_DB_NAME
-            valueFrom:
-              configMapKeyRef:
-                name: interop-be-common-refactor
-                key: EVENTSTORE_DB_NAME
-          - name: EVENTSTORE_DB_PORT
-            valueFrom:
-              configMapKeyRef:
-                name: interop-be-common-refactor
-                key: EVENTSTORE_DB_PORT
-          - name: EVENTSTORE_DB_USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: persistence-management
-                key: REFACTOR_USERNAME
-          - name: EVENTSTORE_DB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: persistence-management
-                key: REFACTOR_USER_PASSWORD
-          - name: EVENTSTORE_DB_SCHEMA
-            valueFrom:
-              configMapKeyRef:
-                name: {{SERVICE_NAME}}
-                key: EVENTSTORE_DB_SCHEMA
-          - name: EVENTSTORE_DB_USE_SSL
-            valueFrom:
-              configMapKeyRef:
-                name: {{SERVICE_NAME}}
-                key: EVENTSTORE_DB_USE_SSL
-          - name: READMODEL_DB_HOST
-            valueFrom:
-              configMapKeyRef:
-                name: interop-be-common-refactor
-                key: READMODEL_DB_HOST
-          - name: READMODEL_DB_NAME
-            valueFrom:
-              configMapKeyRef:
-                name: interop-be-common-refactor
-                key: READMODEL_DB_NAME
-          - name: READMODEL_DB_PORT
-            valueFrom:
-              configMapKeyRef:
-                name: interop-be-common-refactor
-                key: READMODEL_DB_PORT
-          - name: SKIP_JWT_VERIFICATION
-            valueFrom:
-              configMapKeyRef:
-                name: interop-be-common-refactor
-                key: SKIP_JWT_VERIFICATION
-          - name: WELL_KNOWN_URLS
-            valueFrom:
-              configMapKeyRef:
-                name: interop-be-common-refactor
-                key: WELL_KNOWN_URLS
-          - name: READMODEL_DB_USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: read-model
-                key: REFACTOR_USERNAME
-          - name: READMODEL_DB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: read-model
-                key: REFACTOR_USER_PASSWORD
-          - name: STORAGE_CONTAINER
-            valueFrom:
-              configMapKeyRef:
-                name: {{SERVICE_NAME}}
-                key: STORAGE_CONTAINER
-          - name: ESERVICE_DOCUMENTS_PATH
-            valueFrom:
-              configMapKeyRef:
-                name: {{SERVICE_NAME}}
-                key: ESERVICE_DOCUMENTS_PATH
-
+      containers:
+        - name: {{SERVICE_NAME}}
+          env:
+            - name: MOCK_FILE_MANAGER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: MOCK_FILE_MANAGER
+            - name: EVENTSTORE_DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: interop-be-common-refactor
+                  key: EVENTSTORE_DB_HOST
+            - name: EVENTSTORE_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: interop-be-common-refactor
+                  key: EVENTSTORE_DB_NAME
+            - name: EVENTSTORE_DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: interop-be-common-refactor
+                  key: EVENTSTORE_DB_PORT
+            - name: EVENTSTORE_DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: persistence-management
+                  key: REFACTOR_USERNAME
+            - name: EVENTSTORE_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: persistence-management
+                  key: REFACTOR_USER_PASSWORD
+            - name: EVENTSTORE_DB_SCHEMA
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: EVENTSTORE_DB_SCHEMA
+            - name: EVENTSTORE_DB_USE_SSL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: EVENTSTORE_DB_USE_SSL
+            - name: READMODEL_DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: interop-be-common-refactor
+                  key: READMODEL_DB_HOST
+            - name: READMODEL_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: interop-be-common-refactor
+                  key: READMODEL_DB_NAME
+            - name: READMODEL_DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: interop-be-common-refactor
+                  key: READMODEL_DB_PORT
+            - name: SKIP_JWT_VERIFICATION
+              valueFrom:
+                configMapKeyRef:
+                  name: interop-be-common-refactor
+                  key: SKIP_JWT_VERIFICATION
+            - name: WELL_KNOWN_URLS
+              valueFrom:
+                configMapKeyRef:
+                  name: interop-be-common-refactor
+                  key: WELL_KNOWN_URLS
+            - name: READMODEL_DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: read-model
+                  key: REFACTOR_USERNAME
+            - name: READMODEL_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: read-model
+                  key: REFACTOR_USER_PASSWORD
+            - name: STORAGE_CONTAINER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: STORAGE_CONTAINER
+            - name: ESERVICE_DOCUMENTS_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ESERVICE_DOCUMENTS_PATH
