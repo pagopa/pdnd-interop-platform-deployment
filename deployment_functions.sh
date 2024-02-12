@@ -174,16 +174,17 @@ function compileDir() {
     if [ -d "$f" ]; then continue; fi;
 
     if [ ! "$(basename "$f")" = "kustomization.yaml" ]; then
-    mkdir -p "${serviceName}/${dirPath}"
-    SERVICE_NAME="$serviceName" \
-      SERVICE_ECR_NAME="$(echo "$serviceName" | sed 's/-refactor//')" \
-      IMAGE_VERSION="$imageVersion" \
-      IMAGE_DIGEST="$imageDigest" \
-      SERVICE_RESOURCE_CPU="$resourceCpu" \
-      SERVICE_RESOURCE_MEM="$resourceMem" \
-      LOWERCASE_ENV=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]' | sed 's/-refactor//') \
-      ./kubernetes/templater.sh "$f" -s -f "$CONFIG_FILE" \
-      > "$serviceName/$f"
+      echo "Templating $dirPath/$f"
+      mkdir -p "${serviceName}/${dirPath}"
+      SERVICE_NAME="$serviceName" \
+        SERVICE_ECR_NAME="$(echo "$serviceName" | sed 's/-refactor//')" \
+        IMAGE_VERSION="$imageVersion" \
+        IMAGE_DIGEST="$imageDigest" \
+        SERVICE_RESOURCE_CPU="$resourceCpu" \
+        SERVICE_RESOURCE_MEM="$resourceMem" \
+        LOWERCASE_ENV=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]' | sed 's/-refactor//') \
+        ./kubernetes/templater.sh "$f" -s -f "$CONFIG_FILE" \
+        > "$serviceName/$f"
     else
       cp "$f" "$serviceName/$f"
     fi
