@@ -4,7 +4,7 @@ metadata:
   name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 data:
-  POSTGRES_DB: "{{POSTGRES_DB_NAME}}
+  POSTGRES_DB: "{{POSTGRES_DB_NAME}}"
   POSTGRES_SCHEMA: "{{NAMESPACE}}_attribute_registry"
   CQRS_PROJECTION_COLLECTION_NAME: "attributes"
 
