@@ -8,7 +8,7 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: {{BACKEND_SERVICE_PORT}}
+    - port: {{SCALA_BACKEND_SERVICE_PORT}}
       targetPort: http
       protocol: TCP
       name: http

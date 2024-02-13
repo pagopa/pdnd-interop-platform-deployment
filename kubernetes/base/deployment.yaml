@@ -43,7 +43,7 @@ spec:
               containerPort: 8558
               protocol: TCP
             - name: http
-              containerPort: {{BACKEND_SERVICE_PORT}}
+              containerPort: {{SCALA_BACKEND_SERVICE_PORT}}
               protocol: TCP
             - name: monitoring
               containerPort: 9095
