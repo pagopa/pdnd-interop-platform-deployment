@@ -41,6 +41,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: POSTGRES_SCHEMA
+            - name: POSTGRES_DB
+              value: {{POSTGRES_DB_NAME}}
           volumeMounts:
             - name: migrations-files
               mountPath: "/flyway/sql"
