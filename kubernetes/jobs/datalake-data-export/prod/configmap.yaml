@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+data:
+ DATALAKE_STORAGE_BUCKET: {{DATALAKE_STORAGE_BUCKET}}
