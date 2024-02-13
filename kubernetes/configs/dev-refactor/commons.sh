@@ -14,7 +14,7 @@ READ_MODEL_DB_NAME="read-model-refactor"
 READ_MODEL_REPLICA_SET="rs0"
 READ_MODEL_READ_PREFERENCE="secondaryPreferred"
 REPLICAS=1
-BACKEND_SERVICE_PORT="3000"
+BACKEND_SERVICE_PORT="8088" # for hybrid platform, override in service-specific config file
 
 AWS_REGION="eu-central-1"
 PERSISTENCE_QUEUE_NAME="persistence-events-refactor.fifo"

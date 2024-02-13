@@ -22,22 +22,6 @@ spec:
         - name: {{SERVICE_NAME}}
           image: "{{REPOSITORY}}/{{SERVICE_NAME}}:{{IMAGE_VERSION}}"
           imagePullPolicy: Always
-          ports:
-            - name: http
-              containerPort: {{BACKEND_SERVICE_PORT}}
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /status
-              port: http
-            initialDelaySeconds: 15
-            periodSeconds: 5
-          readinessProbe:
-            httpGet:
-              path: /status
-              port: http
-            initialDelaySeconds: 15
-            periodSeconds: 5
           resources:
             requests:
               cpu: "{{SERVICE_RESOURCE_CPU}}"
