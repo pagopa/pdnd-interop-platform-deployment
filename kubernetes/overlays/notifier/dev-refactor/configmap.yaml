@@ -4,7 +4,7 @@ metadata:
   name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 data:
-  POSTGRES_DB: "persistence_management"
+  POSTGRES_DB: "{{POSTGRES_DB_NAME}}
   POSTGRES_SCHEMA: "{{NAMESPACE}}_notifications"
   CQRS_PROJECTION_COLLECTION_NAME: "organizations_events"
   
@@ -26,4 +26,4 @@ data:
   NOTIFICATION_POSTGRES_SCHEMA_NAME: "{{NAMESPACE}}_notification_event"
   NOTIFICATION_DB_SERVER_NAME: "{{POSTGRES_HOST}}"
   NOTIFICATION_DB_PORT: "{{POSTGRES_PORT}}"
-  NOTIFICATION_DB_NAME: "persistence_management"
+  NOTIFICATION_DB_NAME: "{{POSTGRES_DB_NAME}}
