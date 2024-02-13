@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        index: [1, 2, 3, 4 ,5]
+        index: [1, 2, 3, 4 ,5, 6, 7, 8, 9, 10]
       fail-fast: true
     environment: ${{ inputs.environment }}
     permissions:
@@ -669,7 +669,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        index: [1, 2, 3, 4, 5]
+        index: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
       fail-fast: true
     environment: ${{ inputs.environment }}
     permissions:
