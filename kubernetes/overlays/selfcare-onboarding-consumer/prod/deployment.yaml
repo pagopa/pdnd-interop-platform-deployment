@@ -44,6 +44,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: INTEROP_PRODUCT
+            - name: ALLOWED_ORIGINS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ALLOWED_ORIGINS
             - name: TENANT_PROCESS_URL
               valueFrom:
                 configMapKeyRef:
