@@ -4,6 +4,6 @@ metadata:
   # Required only until the service is exposed in the LB
   annotations:
     alb.ingress.kubernetes.io/healthcheck-path: /{{AUTHORIZATION_PROCESS_APPLICATION_PATH}}/{{AUTHORIZATION_PROCESS_INTERFACE_VERSION}}/status
-    alb.ingress.kubernetes.io/healthcheck-port: "{{SCALA_BACKEND_SERVICE_PORT}}"
+    alb.ingress.kubernetes.io/healthcheck-port: "{{BACKEND_SERVICE_PORT}}"
   name: {{AUTHORIZATION_PROCESS_SERVICE_NAME}}
   namespace: {{NAMESPACE}}

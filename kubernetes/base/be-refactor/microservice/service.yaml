@@ -6,7 +6,7 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: {{NODEJS_BACKEND_SERVICE_PORT}}
+    - port: {{BACKEND_SERVICE_PORT}}
       name: http
       targetPort: http
       protocol: TCP
