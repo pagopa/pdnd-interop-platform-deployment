@@ -33,6 +33,7 @@ RSA_KEYS_IDENTIFIERS="32d8a321-1568-44f5-9558-a9072f519d2d"
 SELFCARE_V2_URL="https://api.selfcare.pagopa.it/external/v2"
 
 INTEROP_SELFCARE_PRODUCT_NAME="prod-interop-coll"
+TENANT_ALLOWED_ORIGINS="IPA,ANAC,IVASS"
 
 INTERNAL_JWT_ISSUER="uat.interop.pagopa.it"
 INTERNAL_JWT_SUBJECT="uat.interop-m2m"

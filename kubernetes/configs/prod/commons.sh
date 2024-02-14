@@ -36,6 +36,7 @@ RSA_KEYS_IDENTIFIERS="199d08d2-9971-4979-a78d-e6f7a544f296"
 SELFCARE_V2_URL="https://api.selfcare.pagopa.it/external/v2"
 
 INTEROP_SELFCARE_PRODUCT_NAME="prod-interop"
+TENANT_ALLOWED_ORIGINS="IPA,ANAC,IVASS"
 
 PRIVACY_NOTICES_DYNAMO_TABLE_NAME="interop-privacy-notices-prod"
 PRIVACY_NOTICES_ACCEPTANCE_DYNAMO_TABLE_NAME="interop-privacy-notices-acceptances-prod"

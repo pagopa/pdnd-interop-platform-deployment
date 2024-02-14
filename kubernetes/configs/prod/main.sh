@@ -67,3 +67,4 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/prod/selfcare_onboarding_consumer.sh
 . $(pwd)/kubernetes/configs/prod/eservice_descriptors_archiver.sh
 . $(pwd)/kubernetes/configs/prod/dtd_metrics.sh
+. $(pwd)/kubernetes/configs/prod/datalake_data_export.sh
