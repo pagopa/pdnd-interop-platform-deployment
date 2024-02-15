@@ -4,7 +4,6 @@ metadata:
   name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 data:
-  MOCK_FILE_MANAGER: "true"
   EVENTSTORE_DB_USE_SSL: "true"
   EVENTSTORE_DB_SCHEMA: "{{NAMESPACE}}_catalog"
   ESERVICE_DOCUMENTS_PATH: ""
