@@ -60,9 +60,9 @@ jobs:
           source $CONFIG_FILE
           source ./deployment_functions.sh
 
-          readModelROUsername="readonly"
+          readModelROUsername="readonly-refactor"
           readModelROPassword=$(getSecretValue 'documentdb-ro-password')
-          readModelProjectionUsername="projection"
+          readModelProjectionUsername="projection-refactor"
           readModelProjectionPassword=$(getSecretValue 'documentdb-projection-password')
 
           createReadModelUser "$readModelROUsername" "$readModelROPassword" "read"
