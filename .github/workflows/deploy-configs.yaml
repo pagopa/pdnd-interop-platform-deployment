@@ -53,7 +53,7 @@ jobs:
           createReadModelUser "$readModelProjectionUsername" "$readModelProjectionPassword" "readWrite"
 
       - name: Create DEV-Refactor MongoDB User
-        id: create_mongodb_user
+        id: create_mongodb_user_refactor
         if: ${{ inputs.environment == 'dev-refactor' }}
         run: |
           set -eo pipefail
