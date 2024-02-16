@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        index: [1, 2, 3, 4 ,5]
+        index: [1, 2, 3, 4 ,5, 6, 7, 8, 9, 10]
       fail-fast: true
     environment: ${{ inputs.environment }}
     permissions:
@@ -175,6 +175,7 @@ jobs:
   deploy_catalog_management:
     name: Catalog Management
     needs: [deploy_configs]
+    if: ${{ inputs.environment != 'dev-refactor' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -186,6 +187,22 @@ jobs:
       image_version_var_name: CATALOG_MANAGEMENT_IMAGE_VERSION
       resource_cpu_var_name: CATALOG_MANAGEMENT_RESOURCE_CPU
       resource_mem_var_name: CATALOG_MANAGEMENT_RESOURCE_MEM
+
+  deploy_catalog_readmodel_writer:
+    name: Catalog ReadModel Writer
+    needs: [deploy_configs]
+    if: ${{ inputs.environment == 'dev-refactor' }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/catalog-readmodel-writer/${{ inputs.environment }}"
+      service_name_var_name: CATALOG_READMODEL_WRITER_SERVICE_NAME
+      image_version_var_name: CATALOG_READMODEL_WRITER_IMAGE_VERSION
+      resource_cpu_var_name: CATALOG_READMODEL_WRITER_RESOURCE_CPU
+      resource_mem_var_name: CATALOG_READMODEL_WRITER_RESOURCE_MEM
 
   deploy_catalog_process:
     name: Catalog Process
@@ -370,7 +387,7 @@ jobs:
   deploy_selfcare_onboarding_consumer:
     name: Selfcare onboarding consumer
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'qa' }}
+    if: ${{ inputs.environment != 'dev-refactor' && inputs.environment != 'qa' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -620,7 +637,7 @@ jobs:
   deploy_smtp_mock:
     name: SMTP mock
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'prod' && inputs.environment != 'prod2' }}
+    if: ${{ inputs.environment != 'prod' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-smtp-mock.yaml
@@ -647,7 +664,7 @@ jobs:
       deploy_agreement_management, deploy_agreement_process,
       deploy_attribute_registry_management, deploy_attribute_registry_process,
       deploy_authorization_management, deploy_authorization_process,
-      deploy_catalog_management, deploy_catalog_process,
+      deploy_catalog_management, deploy_catalog_process, deploy_catalog_readmodel_writer,
       deploy_party_registry_proxy,
       deploy_purpose_management, deploy_purpose_process,
       deploy_tenant_management, deploy_tenant_process,
@@ -667,7 +684,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        index: [1, 2, 3, 4, 5]
+        index: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
       fail-fast: true
     environment: ${{ inputs.environment }}
     permissions:

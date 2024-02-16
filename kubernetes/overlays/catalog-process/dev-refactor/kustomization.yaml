@@ -1,0 +1,4 @@
+bases:
+- ../../../base/be-refactor/microservice
+patchesStrategicMerge:
+- deployment.yaml
