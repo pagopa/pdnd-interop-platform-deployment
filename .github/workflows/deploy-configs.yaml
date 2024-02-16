@@ -38,6 +38,7 @@ jobs:
 
       - name: Create MongoDB User
         id: create_mongodb_user
+        if: ${{ inputs.environment != 'dev-refactor' }}
         run: |
           set -eo pipefail
           source $CONFIG_FILE
@@ -46,6 +47,22 @@ jobs:
           readModelROUsername=$(getSecretValue 'documentdb-ro-username')
           readModelROPassword=$(getSecretValue 'documentdb-ro-password')
           readModelProjectionUsername=$(getSecretValue 'documentdb-projection-username')
+          readModelProjectionPassword=$(getSecretValue 'documentdb-projection-password')
+
+          createReadModelUser "$readModelROUsername" "$readModelROPassword" "read"
+          createReadModelUser "$readModelProjectionUsername" "$readModelProjectionPassword" "readWrite"
+
+      - name: Create DEV-Refactor MongoDB User
+        id: create_mongodb_user
+        if: ${{ inputs.environment == 'dev-refactor' }}
+        run: |
+          set -eo pipefail
+          source $CONFIG_FILE
+          source ./deployment_functions.sh
+
+          readModelROUsername="readonly"
+          readModelROPassword=$(getSecretValue 'documentdb-ro-password')
+          readModelProjectionUsername="projection"
           readModelProjectionPassword=$(getSecretValue 'documentdb-projection-password')
 
           createReadModelUser "$readModelROUsername" "$readModelROPassword" "read"
