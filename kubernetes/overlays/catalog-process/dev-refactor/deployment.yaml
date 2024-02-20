@@ -74,11 +74,11 @@ spec:
                 secretKeyRef:
                   name: read-model
                   key: REFACTOR_USER_PASSWORD
-            - name: STORAGE_CONTAINER
+            - name: S3_BUCKET
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: STORAGE_CONTAINER
+                  key: S3_BUCKET
             - name: ESERVICE_DOCUMENTS_PATH
               valueFrom:
                 configMapKeyRef:
