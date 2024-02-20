@@ -74,6 +74,11 @@ spec:
                 secretKeyRef:
                   name: read-model
                   key: REFACTOR_USER_PASSWORD
+            - name: S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: read-model
+                  key: S3_BUCKET
             - name: STORAGE_CONTAINER
               valueFrom:
                 configMapKeyRef:
