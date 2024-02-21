@@ -2,5 +2,4 @@ bases:
 - ../../../base/be-refactor/microservice
 patchesStrategicMerge:
 - deployment.yaml
-- service.yaml
 - ../../../commons/database/be-refactor/db.yaml
