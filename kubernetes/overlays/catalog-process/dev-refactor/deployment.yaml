@@ -27,13 +27,13 @@ spec:
             - name: EVENTSTORE_DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: persistence-management
-                  key: REFACTOR_USERNAME
+                  name: event-store
+                  key: POSTGRES_USR
             - name: EVENTSTORE_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: persistence-management
-                  key: REFACTOR_USER_PASSWORD
+                  name: event-store
+                  key: POSTGRES_PSW
             - name: EVENTSTORE_DB_SCHEMA
               valueFrom:
                 configMapKeyRef:
@@ -68,12 +68,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: read-model
-                  key: REFACTOR_USERNAME
+                  key: READONLY_USR
             - name: READMODEL_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: read-model
-                  key: REFACTOR_USER_PASSWORD
+                  key: READONLY_PSW
             - name: S3_BUCKET
               valueFrom:
                 configMapKeyRef:
