@@ -139,6 +139,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: RISK_ANALYSIS_DOCS_PATH
+            - name: TENANT_ALLOWED_ORIGINS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: TENANT_ALLOWED_ORIGINS
             - name: ALLOW_LIST_CONTAINER
               valueFrom:
                 configMapKeyRef:
