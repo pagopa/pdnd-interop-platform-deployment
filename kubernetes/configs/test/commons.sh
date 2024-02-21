@@ -34,6 +34,7 @@ SELFCARE_V2_URL="https://api.selfcare.pagopa.it/external/v2"
 
 INTEROP_SELFCARE_PRODUCT_NAME="prod-interop-coll"
 TENANT_ALLOWED_ORIGINS="IPA,ANAC,IVASS"
+PRODUCER_ALLOWED_ORIGINS="IPA"
 
 INTERNAL_JWT_ISSUER="uat.interop.pagopa.it"
 INTERNAL_JWT_SUBJECT="uat.interop-m2m"
