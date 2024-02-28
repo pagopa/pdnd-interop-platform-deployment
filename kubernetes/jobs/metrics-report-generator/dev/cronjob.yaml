@@ -76,6 +76,11 @@ spec:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
                         key: SMTP_PORT
+                - name: SMTP_SECURE
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: SMTP_SECURE                        
                 - name: READ_MODEL_DB_USER
                   valueFrom:
                     secretKeyRef:
