@@ -15,17 +15,15 @@ spec:
             - configMapRef:
                 name: {{SERVICE_NAME}}
           env:
-            - name: FLYWAY_URL
-              value: jdbc:postgresql://{{POSTGRES_HOST}}:{{POSTGRES_PORT}}/$(POSTGRES_DB)
             - name: FLYWAY_USER
               valueFrom:
                 secretKeyRef:
-                  name: postgres
+                  name: event-store
                   key: POSTGRES_USR
             - name: FLYWAY_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres
+                  name: event-store
                   key: POSTGRES_PSW
             - name: FLYWAY_CREATE_SCHEMAS
               value: "true"
@@ -33,16 +31,18 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: POSTGRES_SCHEMA
+                  key: EVENTSTORE_DB_SCHEMA
             - name: FLYWAY_PLACEHOLDER_REPLACEMENT
               value: "true"
             - name: FLYWAY_PLACEHOLDERS_APPLICATIONSCHEMA
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: POSTGRES_SCHEMA
+                  key: EVENTSTORE_DB_SCHEMA
             - name: POSTGRES_DB
               value: {{POSTGRES_DB_NAME}}
+            - name: FLYWAY_URL
+              value: jdbc:postgresql://{{POSTGRES_HOST}}:{{POSTGRES_PORT}}/$(POSTGRES_DB)
           volumeMounts:
             - name: migrations-files
               mountPath: "/flyway/sql"
@@ -53,33 +53,6 @@ spec:
             limits:
               memory: "1Gi"
               cpu: "500m"
-      containers:
-        - name: {{SERVICE_NAME}}
-          env:
-            - name: POSTGRES_HOST
-              value: "{{POSTGRES_HOST}}"
-            - name: POSTGRES_PORT
-              value: "{{POSTGRES_PORT}}"
-            - name: POSTGRES_DB
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: POSTGRES_DB
-            - name: POSTGRES_SCHEMA
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: POSTGRES_SCHEMA
-            - name: POSTGRES_USR
-              valueFrom:
-                secretKeyRef:
-                  name: postgres
-                  key: POSTGRES_USR
-            - name: POSTGRES_PSW
-              valueFrom:
-                secretKeyRef:
-                  name: postgres
-                  key: POSTGRES_PSW
       volumes:
         - name: migrations-files
           projected:

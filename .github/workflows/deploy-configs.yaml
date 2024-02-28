@@ -60,13 +60,13 @@ jobs:
           source $CONFIG_FILE
           source ./deployment_functions.sh
 
-          readModelROUsername="readonly-refactor"
-          readModelROPassword=$(getSecretValue 'documentdb-ro-password')
-          readModelProjectionUsername="projection-refactor"
-          readModelProjectionPassword=$(getSecretValue 'documentdb-projection-password')
+          readModelROUsername=$(getSecretValue 'documentdb-ro-username-refactor')
+          readModelROUserPassword=$(getSecretValue 'documentdb-ro-password-refactor')
+          readModelProjectionUsername=$(getSecretValue 'documentdb-projection-username-refactor')
+          readModelProjectionUserPassword=$(getSecretValue 'documentdb-projection-password-refactor')
 
-          createReadModelUser "$readModelROUsername" "$readModelROPassword" "read"
-          createReadModelUser "$readModelProjectionUsername" "$readModelProjectionPassword" "readWrite"
+          createReadModelUser "$readModelROUsername" "$readModelROUserPassword" "read"
+          createReadModelUser "$readModelProjectionUsername" "$readModelProjectionUserPassword" "readWrite"
 
       - name: Prepare DB migrations
         id: prepare_db_migrations
@@ -161,12 +161,12 @@ jobs:
           partyManagementApiKey="$(getSecretValue 'party-management-api-key')"
           selfcareV2ApiKey="$(getSecretValue 'selfcare-api-key-refactor')"
           selfcareBrokerConnectionString="$(getSecretValue 'selfcare-broker-connection-string')"
-          postgresUsername="$(getSecretValue 'postgres-db-username')"
-          postgresPassword="$(getSecretValue 'postgres-db-password')"
-          projectionUsername="$(getSecretValue 'documentdb-projection-username')"
-          projectionPassword="$(getSecretValue 'documentdb-projection-password')"
-          projectionROUsername="$(getSecretValue 'documentdb-ro-username')"
-          projectionROPassword="$(getSecretValue 'documentdb-ro-password')"
+          postgresUsername="$(getSecretValue 'postgres-db-username-refactor')"
+          postgresPassword="$(getSecretValue 'postgres-db-password-refactor')"
+          projectionUsername="$(getSecretValue 'documentdb-projection-username-refactor')"
+          projectionPassword="$(getSecretValue 'documentdb-projection-password-refactor')"
+          projectionROUsername="$(getSecretValue 'documentdb-ro-username-refactor')"
+          projectionROPassword="$(getSecretValue 'documentdb-ro-password-refactor')"
           metricsReportRecipients="$(getSecretValue 'metrics-reports-recipients')"
           metricsReportSmtpUsername="$(getSecretValue 'metrics-reports-smtp-username')"
           metricsReportSmtpPassword="$(getSecretValue 'metrics-reports-smtp-password')"
@@ -183,9 +183,11 @@ jobs:
 
           createKubeSecret 'anac' 'SFTP_HOST' "$anacSftpHost" 'SFTP_USERNAME' "$anacSftpUsername" 'SFTP_PASSWORD' "$anacSftpPassword"
           createKubeSecret 'selfcare-v2' 'SELFCARE_V2_API_KEY' "$selfcareV2ApiKey" 'SELFCARE_BROKER_CONNECTION_STRING' "$selfcareBrokerConnectionString"
-          createKubeSecret 'postgres' 'POSTGRES_USR' "$postgresUsername" 'POSTGRES_PSW' "$postgresPassword"
-          createKubeSecret 'documentdb' 'PROJECTION_USR' "$projectionUsername" 'PROJECTION_PSW' "$projectionPassword" 'READONLY_USR' "$projectionROUsername" 'READONLY_PSW' "$projectionROPassword"
+          createKubeSecret 'event-store' 'POSTGRES_USR' "$postgresUsername" 'POSTGRES_PSW' "$postgresPassword"
+          createKubeSecret 'read-model' 'PROJECTION_USR' "$projectionUsername" 'PROJECTION_PSW' "$projectionPassword" 'READONLY_USR' "$projectionROUsername" 'READONLY_PSW' "$projectionROPassword"
           createKubeSecret 'metrics-reports' 'METRICS_REPORT_RECIPIENTS' "$metricsReportRecipients" 'METRICS_REPORT_SMTP_USERNAME' "$metricsReportSmtpUsername" 'METRICS_REPORT_SMTP_PASSWORD' "$metricsReportSmtpPassword" 'BOT_DTD_OPENDATA_GITHUB_ACCESS_TOKEN' $botDtdOpendataGithubAccessToken
           createKubeSecret 'pn-consumers' 'MAIL_RECIPIENTS' "$pnConsumersMailRecipients"
           createKubeSecret 'onetrust' 'ONETRUST_CLIENT_ID' "$onetrustClientId" 'ONETRUST_CLIENT_SECRET' "$onetrustClientSecret"
           createKubeSecret 'smtp-certified' 'PEC_SMTP_USER' "$smtpPecUsername" 'PEC_SMTP_PASSWORD' "$smtpPecPassword" 'PEC_SMTP_SENDER' "$pecSender"
+
+

@@ -33,12 +33,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: read-model
-                  key: REFACTOR_USERNAME
+                  key: PROJECTION_USR
             - name: READMODEL_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: read-model
-                  key: REFACTOR_USER_PASSWORD
+                  key: PROJECTION_PSW
             - name: KAFKA_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
