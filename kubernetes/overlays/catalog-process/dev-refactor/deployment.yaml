@@ -84,3 +84,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ESERVICE_DOCUMENTS_PATH
+            - name: PRODUCER_ALLOWED_ORIGINS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRODUCER_ALLOWED_ORIGINS
