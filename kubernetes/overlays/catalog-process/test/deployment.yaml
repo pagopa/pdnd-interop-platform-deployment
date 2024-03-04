@@ -64,3 +64,8 @@ spec:
                 secretKeyRef:
                   name: party-management
                   key: PARTY_MANAGEMENT_API_KEY       
+            - name: PRODUCER_ALLOWED_ORIGINS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRODUCER_ALLOWED_ORIGINS
