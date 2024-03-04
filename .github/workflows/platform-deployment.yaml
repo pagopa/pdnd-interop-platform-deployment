@@ -357,6 +357,7 @@ jobs:
   deploy_certified_mail_sender:
     name: Certified Mail Sender
     needs: [deploy_configs]
+    if: ${{ inputs.environment != 'att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -637,7 +638,7 @@ jobs:
   deploy_smtp_mock:
     name: SMTP mock
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'prod' }}
+    if: ${{ inputs.environment != 'prod' && inputs.environment != 'att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-smtp-mock.yaml
