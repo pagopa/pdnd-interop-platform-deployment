@@ -59,8 +59,3 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: RISK_ANALYSIS_DOCS_PATH
-            - name: PARTY_MANAGEMENT_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: party-management
-                  key: PARTY_MANAGEMENT_API_KEY
