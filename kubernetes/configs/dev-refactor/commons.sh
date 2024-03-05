@@ -15,6 +15,7 @@ READ_MODEL_REPLICA_SET="rs0"
 READ_MODEL_READ_PREFERENCE="secondaryPreferred"
 REPLICAS=1
 BACKEND_SERVICE_PORT="8088"
+KAFKA_BROKERS="boot-yqksbq44.c3.kafka-serverless.eu-central-1.amazonaws.com:9098"
 
 
 AWS_REGION="eu-central-1"

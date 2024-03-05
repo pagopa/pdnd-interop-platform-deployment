@@ -1,0 +1,4 @@
+bases:
+- ../../../base/be-refactor/readmodel-writer
+patchesStrategicMerge:
+- deployment.yaml
