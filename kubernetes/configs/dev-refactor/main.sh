@@ -70,5 +70,3 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/dev-refactor/eservice_descriptors_archiver.sh
 . $(pwd)/kubernetes/configs/dev-refactor/dtd_metrics.sh
 . $(pwd)/kubernetes/configs/dev-refactor/datalake_data_export.sh
-
-
