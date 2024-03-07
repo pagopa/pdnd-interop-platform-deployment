@@ -39,6 +39,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/dev-refactor/authorization_management.sh
 . $(pwd)/kubernetes/configs/dev-refactor/authorization_process.sh
 . $(pwd)/kubernetes/configs/dev-refactor/authorization_server.sh
+. $(pwd)/kubernetes/configs/dev-refactor/authorization_updater.sh
 . $(pwd)/kubernetes/configs/dev-refactor/attribute_registry_management.sh
 . $(pwd)/kubernetes/configs/dev-refactor/attribute_registry_process.sh
 . $(pwd)/kubernetes/configs/dev-refactor/attributes_loader.sh
@@ -68,3 +69,4 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/dev-refactor/selfcare_onboarding_consumer.sh
 . $(pwd)/kubernetes/configs/dev-refactor/eservice_descriptors_archiver.sh
 . $(pwd)/kubernetes/configs/dev-refactor/dtd_metrics.sh
+. $(pwd)/kubernetes/configs/dev-refactor/datalake_data_export.sh
