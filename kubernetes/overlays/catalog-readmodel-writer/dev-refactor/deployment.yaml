@@ -12,7 +12,7 @@ spec:
             - name: WELL_KNOWN_URLS
               valueFrom:
                 configMapKeyRef:
-                  name: interop-be-common-refactor
+                  name: interop-be-commons
                   key: WELL_KNOWN_URLS
             - name: KAFKA_CLIENT_ID
               valueFrom:
@@ -29,3 +29,5 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: KAFKA_TOPICS
+
+
