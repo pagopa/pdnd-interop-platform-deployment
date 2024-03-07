@@ -104,7 +104,9 @@ jobs:
           source $CONFIG_FILE
           source ./deployment_functions.sh
 
-          commons_configmaps_path="kubernetes/commons/be-refactor/${{ inputs.environment }}"
+          cd kubernetes/
+
+          commons_configmaps_path="commons/be-refactor/${{ inputs.environment }}"
 
           for f in $commons_configmaps_path/*; do
             applyKubeFile "$f"
