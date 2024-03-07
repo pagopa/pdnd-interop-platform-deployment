@@ -156,9 +156,9 @@ function applyKubeFile() {
   echo "File $fileName compiled"
   cat "$compiledFileName"
 
-  # echo "Applying $compiledFileName"
-  # kubectl apply -f "$compiledFileName"
-  # echo "File $compiledFileName applied"
+  echo "Applying $compiledFileName"
+  kubectl apply -f "$compiledFileName"
+  echo "File $compiledFileName applied"
 }
 
 function compileDir() {
