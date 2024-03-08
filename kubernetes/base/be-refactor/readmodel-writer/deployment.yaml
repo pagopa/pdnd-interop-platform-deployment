@@ -44,7 +44,7 @@ spec:
             - name: READMODEL_DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: interop-be-read-model-commmons
+                  name: interop-be-read-model-commons
                   key: READMODEL_DB_HOST
             - name: READMODEL_DB_NAME
               valueFrom:
