@@ -1,5 +1,5 @@
 bases:
-- ../../../base/be-refactor/readmodel-writer
+- ../../../base/be-refactor/generic-consumer
 resources:
 - configmap.yaml
 patchesStrategicMerge:

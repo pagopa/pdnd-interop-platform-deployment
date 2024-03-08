@@ -19,11 +19,6 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: KAFKA_GROUP_ID
-            - name: KAFKA_BROKERS
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: KAFKA_BROKERS
             - name: KAFKA_TOPICS
               valueFrom:
                 configMapKeyRef:
