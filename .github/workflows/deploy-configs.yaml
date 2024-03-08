@@ -104,12 +104,10 @@ jobs:
           source $CONFIG_FILE
           source ./deployment_functions.sh
 
-          cd kubernetes/
-
-          commons_configmaps_path="commons/be-refactor/${{ inputs.environment }}"
+          commons_configmaps_path="kubernetes/commons/be-refactor/${{ inputs.environment }}"
 
           for f in $commons_configmaps_path/*; do
-            applyKubeFile "$f"
+            applyKubeFile "${f#'kubernetes/'}"
           done;
 
       - name: Create K8s Secrets
