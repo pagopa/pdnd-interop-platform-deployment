@@ -27,7 +27,7 @@ spec:
             - name: AUTH_MNGT_SERVICE_URL
               valueFrom:
                 configMapKeyRef:
-                  name: {{SERVICE_NAME}}
+                  name: common-services-urls
                   key: AUTH_MNGT_SERVICE_URL
             - name: RSA_KEYS_IDENTIFIERS
               valueFrom:

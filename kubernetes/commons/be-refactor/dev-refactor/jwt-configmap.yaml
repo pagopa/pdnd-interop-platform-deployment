@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: interop-be-commons
+  name: common-jwt
   namespace: {{NAMESPACE}}
 data:
   WELL_KNOWN_URLS: {{WELL_KNOWN_URLS}}

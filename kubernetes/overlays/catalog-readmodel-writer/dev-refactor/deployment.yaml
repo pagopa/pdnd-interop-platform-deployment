@@ -12,7 +12,7 @@ spec:
             - name: WELL_KNOWN_URLS
               valueFrom:
                 configMapKeyRef:
-                  name: interop-be-commons
+                  name: common-jwt
                   key: WELL_KNOWN_URLS
             - name: KAFKA_CLIENT_ID
               valueFrom:

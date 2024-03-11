@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: common-services-urls
+  namespace: {{NAMESPACE}}
+data:
+  AUTH_MNGT_SERVICE_URL: "interop-be-authorization-management.dev-refactor.svc.cluster.local"
