@@ -4,4 +4,4 @@ metadata:
   name: common-services-urls
   namespace: {{NAMESPACE}}
 data:
-  AUTH_MNGT_SERVICE_URL: "interop-be-authorization-management.dev-refactor.svc.cluster.local"
+  AUTHORIZATION_MANAGEMENT_URL: "interop-be-authorization-management.dev-refactor.svc.cluster.local"
