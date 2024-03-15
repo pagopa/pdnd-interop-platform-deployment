@@ -24,7 +24,7 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: KAFKA_TOPICS
-            - name: AUTH_MNGT_SERVICE_URL
+            - name: AUTHORIZATION_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
                   name: common-services-urls
