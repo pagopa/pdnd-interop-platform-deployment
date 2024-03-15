@@ -20,8 +20,24 @@ spec:
       serviceAccountName: {{SERVICE_NAME}}
       containers:
         - name: {{SERVICE_NAME}}
-          image: "{{REPOSITORY}}/{{SERVICE_NAME}}:{{IMAGE_VERSION}}"
+          image: "{{REPOSITORY}}/{{SERVICE_ECR_NAME}}:{{IMAGE_VERSION}}"
           imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: {{BACKEND_SERVICE_PORT}}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /status
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /status
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 5
           resources:
             requests:
               cpu: "{{SERVICE_RESOURCE_CPU}}"
@@ -36,11 +52,33 @@ spec:
               value: "0.0.0.0"
             - name: LOG_LEVEL
               value: info
-            - name: KAFKA_BROKERS
+            - name: EVENTSTORE_DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: interop-be-kafka-commons
-                  key: KAFKA_BROKERS
+                  name: common-event-store
+                  key: EVENTSTORE_DB_HOST
+            - name: EVENTSTORE_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: common-event-store
+                  key: EVENTSTORE_DB_NAME
+            - name: EVENTSTORE_DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: common-event-store
+                  key: EVENTSTORE_DB_PORT
+            - name: EVENTSTORE_DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: event-store
+                  key: POSTGRES_USR
+            - name: EVENTSTORE_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: event-store
+                  key: POSTGRES_PSW
+            - name: EVENTSTORE_DB_USE_SSL
+              value: "true"
             - name: READMODEL_DB_HOST
               valueFrom:
                 configMapKeyRef:
@@ -60,12 +98,9 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: read-model
-                  key: PROJECTION_USR
+                  key: READONLY_USR
             - name: READMODEL_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: read-model
-                  key: PROJECTION_PSW
-
-
-
+                  key: READONLY_PSW

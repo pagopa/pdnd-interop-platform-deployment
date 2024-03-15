@@ -1,5 +1,5 @@
 bases:
-- ../../../base/be-refactor/microservice
+- ../../../base/be-refactor/process-microservice
 resources:
 - configmap.yaml
 patchesStrategicMerge:
