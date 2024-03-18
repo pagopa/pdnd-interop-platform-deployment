@@ -5,11 +5,10 @@ PURPOSES_COLLECTION_NAME="purposes"
 AGREEMENTS_COLLECTION_NAME="agreements"
 ESERVICES_COLLECTION_NAME="eservices"
 
-TOKENS_BUCKET="interop-generated-jwt-details-att"
-TOKEN_BUCKET_PATH="/"
-METRIC_STORAGE_BUCKET="interop-metrics-reports-att"
-METRIC_STORAGE_PATH="/"
-INTERFACE_STORAGE_BUCKET="interop-application-documents-att"
+ATHENA_TOKENS_DB_NAME="generated_jwt_att"
+ATHENA_OUTPUT_BUCKET="interop-athena-query-results-att"
+
+SMTP_SECURE=true
 
 JOB_METRICS_REPORT_GENERATOR_RESOURCE_CPU="2"
 JOB_METRICS_REPORT_GENERATOR_RESOURCE_MEM="4Gi"
