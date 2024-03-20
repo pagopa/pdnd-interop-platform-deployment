@@ -33,7 +33,7 @@ M2M_JWT_AUDIENCE="att.interop.pagopa.it/m2m"
 INTERNAL_JWT_AUDIENCE="att.interop.pagopa.it/internal"
 RSA_KEYS_IDENTIFIERS="0e5e106e-0806-4402-9e93-1e0de7c0e458"
 
-SELFCARE_V2_URL="https://api.uat.selfcare.pagopa.it/external/v2"
+SELFCARE_V2_URL="https://api.selfcare.pagopa.it/external/v2"
 
 INTEROP_SELFCARE_PRODUCT_NAME="prod-interop-atst"
 TENANT_ALLOWED_ORIGINS="IPA,ANAC,IVASS,INFOCAMERE,SELC"
