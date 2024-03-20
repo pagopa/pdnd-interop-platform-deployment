@@ -45,12 +45,12 @@ spec:
                 - name: READ_MODEL_DB_USER
                   valueFrom:
                     secretKeyRef:
-                      name: documentdb
+                      name: read-model
                       key: READONLY_USR
                 - name: READ_MODEL_DB_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: documentdb
+                      name: read-model
                       key: READONLY_PSW
 
                 - name: SOURCE_FILE_DOWNLOAD_DIR

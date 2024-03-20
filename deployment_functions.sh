@@ -156,9 +156,9 @@ function applyKubeFile() {
   echo "File $fileName compiled"
   cat "$compiledFileName"
 
-  # echo "Applying $compiledFileName"
-  # kubectl apply -f "$compiledFileName"
-  # echo "File $compiledFileName applied"
+  echo "Applying $compiledFileName"
+  kubectl apply -f "$compiledFileName"
+  echo "File $compiledFileName applied"
 }
 
 function compileDir() {
@@ -208,8 +208,9 @@ function applyKustomizeToDir() {
 
   echo "Compiling base files"
   compileDir "kubernetes/base" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
-  compileDir "kubernetes/base/be-refactor/microservice" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
+  compileDir "kubernetes/base/be-refactor/process-microservice" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
   compileDir "kubernetes/base/be-refactor/readmodel-writer" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
+  compileDir "kubernetes/base/be-refactor/generic-consumer" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
   echo "Base files compiled"
 
   echo "Compiling common files"

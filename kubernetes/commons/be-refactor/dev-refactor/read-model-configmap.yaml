@@ -1,13 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: interop-be-common-refactor
+  name: common-read-model
   namespace: {{NAMESPACE}}
 data:
   READMODEL_DB_HOST: {{READ_MODEL_DB_HOST}}
   READMODEL_DB_NAME: {{READ_MODEL_DB_NAME}}
   READMODEL_DB_PORT: "{{READ_MODEL_DB_PORT}}"
-  EVENTSTORE_DB_HOST: {{POSTGRES_HOST}}
-  EVENTSTORE_DB_PORT: "{{POSTGRES_PORT}}"
-  EVENTSTORE_DB_NAME: {{POSTGRES_DB_NAME}}
-  WELL_KNOWN_URLS: {{WELL_KNOWN_URLS}}

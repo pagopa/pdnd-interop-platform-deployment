@@ -19,21 +19,16 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: KAFKA_GROUP_ID
-            - name: KAFKA_BROKERS
+            - name: CATALOG_TOPIC
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: KAFKA_BROKERS
-            - name: KAFKA_TOPICS
+                  key: CATALOG_TOPIC
+            - name: AUTHORIZATION_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: KAFKA_TOPICS
-            - name: AUTH_MNGT_SERVICE_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: AUTH_MNGT_SERVICE_URL
+                  name: common-services-urls
+                  key: AUTHORIZATION_MANAGEMENT_URL
             - name: RSA_KEYS_IDENTIFIERS
               valueFrom:
                 configMapKeyRef:

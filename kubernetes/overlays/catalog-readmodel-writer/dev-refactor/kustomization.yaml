@@ -1,4 +1,6 @@
 bases:
 - ../../../base/be-refactor/readmodel-writer
+resources:
+- configmap.yaml
 patchesStrategicMerge:
 - deployment.yaml

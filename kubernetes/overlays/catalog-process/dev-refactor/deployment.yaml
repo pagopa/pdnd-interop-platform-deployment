@@ -9,71 +9,16 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
-            - name: EVENTSTORE_DB_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: interop-be-common-refactor
-                  key: EVENTSTORE_DB_HOST
-            - name: EVENTSTORE_DB_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: interop-be-common-refactor
-                  key: EVENTSTORE_DB_NAME
-            - name: EVENTSTORE_DB_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: interop-be-common-refactor
-                  key: EVENTSTORE_DB_PORT
-            - name: EVENTSTORE_DB_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: event-store
-                  key: POSTGRES_USR
-            - name: EVENTSTORE_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: event-store
-                  key: POSTGRES_PSW
             - name: EVENTSTORE_DB_SCHEMA
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: EVENTSTORE_DB_SCHEMA
-            - name: EVENTSTORE_DB_USE_SSL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: EVENTSTORE_DB_USE_SSL
-            - name: READMODEL_DB_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: interop-be-common-refactor
-                  key: READMODEL_DB_HOST
-            - name: READMODEL_DB_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: interop-be-common-refactor
-                  key: READMODEL_DB_NAME
-            - name: READMODEL_DB_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: interop-be-common-refactor
-                  key: READMODEL_DB_PORT
             - name: WELL_KNOWN_URLS
               valueFrom:
                 configMapKeyRef:
-                  name: interop-be-common-refactor
+                  name: common-jwt
                   key: WELL_KNOWN_URLS
-            - name: READMODEL_DB_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: read-model
-                  key: READONLY_USR
-            - name: READMODEL_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: read-model
-                  key: READONLY_PSW
             - name: S3_BUCKET
               valueFrom:
                 configMapKeyRef:
