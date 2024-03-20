@@ -1,0 +1,19 @@
+bases:
+- ../../../base
+patchesStrategicMerge:
+- configmap.yaml
+- deployment.yaml
+- serviceaccount.yaml
+patches:
+  - target:
+      kind: Deployment
+      name: interop-be-selfcare-onboarding-consumer
+    patch: |-
+      - op: remove
+        path: /spec/template/spec/containers/0/livenessProbe
+      - op: remove
+        path: /spec/template/spec/containers/0/readinessProbe
+      - op: remove
+        path: /spec/template/spec/containers/0/command
+      - op: remove
+        path: /spec/template/spec/containers/0/args
