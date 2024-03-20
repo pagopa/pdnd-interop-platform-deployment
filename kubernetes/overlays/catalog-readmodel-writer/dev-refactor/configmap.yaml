@@ -6,4 +6,4 @@ metadata:
 data:
   KAFKA_CLIENT_ID: "dev-pagopa-interop-catalog"
   KAFKA_GROUP_ID: "catalog-readmodel-writer"
-  KAFKA_TOPICS: "event-store.catalog.events"
+  CATALOG_TOPIC: "event-store.catalog.events"
