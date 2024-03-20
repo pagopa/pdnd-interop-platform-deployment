@@ -19,11 +19,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: KAFKA_GROUP_ID
-            - name: KAFKA_TOPICS
+            - name: CATALOG_TOPIC
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: KAFKA_TOPICS
+                  key: CATALOG_TOPIC
             - name: AUTHORIZATION_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
