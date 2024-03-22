@@ -4,6 +4,8 @@ CREATE TABLE IF NOT EXISTS "${applicationSchema}".events (
     stream_id UUID NOT NULL,
     version BIGINT NOT NULL,
 
+    correlation_id text,
+
     type TEXT NOT NULL,
     event_version INT NOT NULL,
     data BYTEA NOT NULL,
