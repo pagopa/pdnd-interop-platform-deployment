@@ -23,6 +23,34 @@ on:
         default: false
 
 jobs:
+  validate_inputs:
+    name: Validate Inputs
+    runs-on: ubuntu-22.04
+    # we could use an "if" here, but if this job is skipped then all the downstream jobs are skipped even if they don't need this job
+
+    steps:
+      - name: Print Inputs
+        id: print_inputs
+        run: |
+          echo "- environment: \`${{ inputs.environment }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- ref: \`${{ github.ref }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- delete_topics: \`${{ inputs.delete_topics }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- delete_topics_prefix: \`${{ inputs.delete_topics_prefix }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- create_topics: \`${{ inputs.create_topics }}\`" >> $GITHUB_STEP_SUMMARY
+
+      - name: Validate Prod Ref
+        id: check_ref
+        run: |
+          set -euxo pipefail
+
+          if [ ! "${{ inputs.environment }}" = "prod" ]; then
+            exit 0
+          fi
+
+          if [ ! "${{ github.ref_type }}" = "tag" ]; then
+            echo >&2 "ERROR: deploy on prod environment must use a git tag"
+            exit 1
+          fi
   create_runner:
     name: Create Self-Hosted Runner
     needs: []
