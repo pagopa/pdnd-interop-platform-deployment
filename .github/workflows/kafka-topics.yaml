@@ -121,7 +121,7 @@ jobs:
 
   delete_runner:
     name: Delete Self-Hosted Runner
-    needs: [create_runner, delete_kafka_topics, create_kafka_topics]
+    needs: [create_runner, create_kafka_topics]
     if: ${{ always() && needs.create_runner.result != 'skipped' }}
     runs-on: ubuntu-22.04
     strategy:
