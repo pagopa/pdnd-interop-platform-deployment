@@ -83,6 +83,7 @@ jobs:
     name: Delete Kafka Topics
     needs: [create_runner]
     runs-on: [self-hosted, "run_id:${{ github.run_id }}"]
+    environment: ${{ inputs.environment }}
     if: ${{ inputs.delete_topics }}
     env:
       AWS_REGION: ${{ secrets.AWS_REGION }}
@@ -110,6 +111,7 @@ jobs:
     name: Create Kafka Topics
     needs: [create_runner, delete_kafka_topics]
     runs-on: [self-hosted, "run_id:${{ github.run_id }}"]
+    environment: ${{ inputs.environment }}
     # workaround due to 'needs' logic when preceding job is skipped
     if: ${{ always() && !failure() && !cancelled() && inputs.create_topics }}
     env:
