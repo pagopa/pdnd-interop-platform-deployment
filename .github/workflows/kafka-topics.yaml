@@ -90,6 +90,13 @@ jobs:
       DOMAIN_TOPIC_PREFIX: ${{ inputs.delete_topics_prefix }}
 
     steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
       - name: Delete Kafka Topics
         id: delete_topics
         working-directory: kafka/scripts
@@ -111,6 +118,13 @@ jobs:
       TOPICS_PROPERTIES_PATH: ../topics/${{ inputs.environment }}
 
     steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
       - name: Create Kafka Topics
         id: create_topics
         working-directory: kafka/scripts
