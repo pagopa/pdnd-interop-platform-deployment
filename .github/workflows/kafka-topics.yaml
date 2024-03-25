@@ -55,7 +55,6 @@ jobs:
     needs: [create_runner]
     runs-on: [self-hosted, "run_id:${{ github.run_id }}"]
     if: ${{ inputs.delete_topics }}
-    working-directory: ./kafka/scripts
     env:
       AWS_REGION: ${{ secrets.AWS_REGION }}
       KAFKA_BROKERS: ${{ secrets.KAFKA_BROKERS }}
@@ -64,6 +63,7 @@ jobs:
     steps:
       - name: Delete Kafka Topics
         id: delete_topics
+        working-directory: ./kafka/scripts
         run: |
           set -eou pipefail
 
@@ -75,7 +75,6 @@ jobs:
     needs: [create_runner, delete_kafka_topics]
     runs-on: [self-hosted, "run_id:${{ github.run_id }}"]
     if: ${{ always() && inputs.delete_topics }}
-    working-directory: ./kafka/scripts
     env:
       AWS_REGION: ${{ secrets.AWS_REGION }}
       KAFKA_BROKERS: ${{ secrets.KAFKA_BROKERS }}
@@ -84,6 +83,7 @@ jobs:
     steps:
       - name: Create Kafka Topics
         id: create_topics
+        working-directory: ./kafka/scripts
         run: |
           set -eou pipefail
 
