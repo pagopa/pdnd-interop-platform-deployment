@@ -72,7 +72,7 @@ jobs:
           aws_region: ${{ secrets.AWS_REGION }}
           iam_role_arn: ${{ secrets.ECS_IAM_ROLE_ARN }}
           ecs_cluster_name: ${{ secrets.ECS_CLUSTER_NAME }}
-          ecs_task_definition: ${{ secrets.TASK_DEFINITION }}
+          ecs_task_definition: interop-github-qa-runner-dev
           ecs_container_name: github-runner
           ecs_task_subnet_id: ${{ secrets.SUBNET_ID }}
           ecs_task_sec_group: ${{ secrets.SEC_GROUP_ID }}
