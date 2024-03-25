@@ -51,9 +51,10 @@ jobs:
             echo >&2 "ERROR: deploy on prod environment must use a git tag"
             exit 1
           fi
+
   create_runner:
     name: Create Self-Hosted Runner
-    needs: []
+    needs: [validate_inputs]
     runs-on: ubuntu-22.04
     strategy:
       matrix:
