@@ -103,7 +103,7 @@ jobs:
     name: Create Kafka Topics
     needs: [create_runner]
     runs-on: [self-hosted, "run_id:${{ github.run_id }}"]
-    if: ${{ always() && !failure() && !cancelled() && inputs.create_topics == 'true' }}
+    if: ${{ always() && !failure() && !cancelled() && inputs.create_topics }}
     env:
       AWS_REGION: ${{ secrets.AWS_REGION }}
       KAFKA_BROKERS: ${{ secrets.KAFKA_BROKERS }}
