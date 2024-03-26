@@ -77,6 +77,8 @@ function readTopicsProperties(topicsConfigurationPath) {
                 }
                 
             }
+
+            console.log(builtConfig);
             
             if (builtConfig["topic"]) {
                 
