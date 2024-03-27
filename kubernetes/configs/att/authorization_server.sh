@@ -1,6 +1,6 @@
 #!/bin/bash
 
-INTEROP_JWT_DURATION_SECONDS=99999999
+INTEROP_JWT_DURATION_SECONDS=600
 INTEROP_JWT_ISSUER="att.interop.pagopa.it"
 
 CLIENT_ASSERTION_JWT_AUDIENCE="auth.att.interop.pagopa.it/client-assertion"
