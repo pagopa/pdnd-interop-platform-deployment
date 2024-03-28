@@ -1,8 +1,10 @@
 import kafkajs from 'kafkajs';
 const { ConfigResourceTypes, Kafka, logLevel } = kafkajs;
 import { generateAuthToken } from "aws-msk-iam-sasl-signer-js";
-import * as fs from "fs";
+import { readFileSync, readdirSync } from "fs";
 import path from 'path';
+import { shouldIgnoreLine, parsePropsLine } from "./utils/propertiesParser.js";
+import { KafkaTopic }  from "./utils/kafkaTopic.js";
 
 const quietModeOn = typeof process.env.QUIET_MODE != 'undefined' && process.env.QUIET_MODE == '1';
 const logInfo = (message) => {
@@ -19,185 +21,52 @@ async function oauthBearerTokenProvider(region) {
    }
 }
 
-const parsingUtility = {
-    sanitizePropsKey: function (propsKey) {
-        let sanitized = propsKey.replaceAll("\"", '');
-        sanitized = sanitized.replaceAll("'", '');
-
-        return sanitized;
-    },
-    sanitizePropsValue: function (propsValue) {
-        let sanitized = propsValue.replaceAll("\"", '');
-        sanitized = sanitized.replaceAll("'", '');
-        
-        return sanitized;
-    },
-    sanitizePropsLine: function (propKey, propValue) {
-        let sanitizedKey = parsingUtility.sanitizePropsKey(propKey);
-        let sanitizedValue = parsingUtility.sanitizePropsValue(propValue);
-        
-        if (kafkaConfigUtility.isTopicOption(sanitizedKey)) {
-            sanitizedValue = JSON.parse(sanitizedValue);
-        }
-
-        return {
-            key: sanitizedKey,
-            value: sanitizedValue
-        }
-    },
-    parsePropsLine: function (propsEntry) {
-        let currentLine = propsEntry.split("=");
-        if (currentLine.length != 2) {
-            throw new Error(`Topic configuration file ${topicConfigurationFile} is not properly formatted.`);
-        }
-
-        return parsingUtility.sanitizePropsLine(currentLine[0], currentLine[1]);
-    },
-    isCommentLine: function (line) {
-        return line && (line.startsWith("#") || line.startsWith("/"));
-    },
-    shouldIgnoreLine: function (line) {
-        return !line || parsingUtility.isCommentLine(line);
-    },
-    buildJsonFromPropertiesFile: function (filePath) {
-        let topicConfigurationContent = fs.readFileSync(filePath).toString().split("\n");
-        let propsToJson = {}
-        
-        if (!topicConfigurationContent.length) {
-            return propsToJson;
-        }
-        
-        for (let topicConfigurationContentEntry of topicConfigurationContent) {
-            //Allow comments in props file but skip parsing
-            if (parsingUtility.shouldIgnoreLine(topicConfigurationContentEntry)) {
-                continue;
-            }
-            
-            let currentLineParsed = parsingUtility.parsePropsLine(topicConfigurationContentEntry);
-            if (!currentLineParsed["key"] || !currentLineParsed["value"]) {
-                throw new Error(`Cannot parse key/value pair for line ${topicConfigurationContentEntry}`);
-            }
-            
-            propsToJson[currentLineParsed["key"].toLowerCase()] = currentLineParsed["value"];
-        }
+function buildJsonFromPropertiesFile (filePath) {
+    let topicConfigurationContent = readFileSync(filePath).toString().split("\n");
+    let propsToJson = {}
     
+    if (!topicConfigurationContent.length) {
         return propsToJson;
     }
-}
-
-const kafkaConfigUtility = {
-    namePropertyKey: "name",
-    getTopicDefaultConfiguration: function() {
-        return [
-            { name: "cleanup.policy", value: "delete" }, 
-            { name: "retention.ms", value: "-1" }, 
-            { name: "compression.type", value: "producer" }
-        ];
-    },
-    getTopicOptions: function () {
-        return [{
-            targetLabel: "numPartitions",
-            expectedLabel: "partitions",
-            required: true
-        },{
-            targetLabel: "replicationFactor",
-            expectedLabel: "replication.factor",
-            required: true
-        }];
-    },
-    getTopicRequiredOptions: function () {
-        return kafkaConfigUtility.getTopicOptions().filter(option => option.required);
-    },
-    isTopicNameProperty: function (propKey) {
-        return propKey === kafkaConfigUtility.namePropertyKey;
-    },
-    isTopicOption: function (optionKey) {
-        return kafkaConfigUtility.getTopicOptions().map(opt => opt.expectedLabel).indexOf(optionKey) >= 0;
-    },
-    isTopicRequiredOption: function (optionKey) {
-        return kafkaConfigUtility.getTopicRequiredOptions().map(opt => opt.expectedLabel).indexOf(optionKey) >= 0;
-    },
-    getTopicRequiredOptionKey: function (optionKey) {
-        return kafkaConfigUtility.getTopicRequiredOptions().find(ro => ro.expectedLabel == optionKey).targetLabel;
-    },
-    isTopicDefaultConfig: function (configKey) {
-        let defaultTopicConfiguration = kafkaConfigUtility.getTopicDefaultConfiguration();
-
-        return defaultTopicConfiguration.findIndex(ce => ce.name === configKey) >= 0;
-    },
-    isValidTopicConfiguration: function (topicConfig) {
-        if (!topicConfig["topic"]) {
-            return {
-                valid: false,
-                error: `Topic name cannot be null`
-            };
-        }
-
-        const requiredOptions = kafkaConfigUtility.getTopicRequiredOptions();
-        for ( let requiredOption of requiredOptions) {
-            if (typeof topicConfig[requiredOption.targetLabel]  == "undefined" || topicConfig[requiredOption.targetLabel] == null) {
-                return {
-                    valid: false,
-                    error: `Topic configuration is missing required option ${requiredOption.expectedLabel}`
-                }
-            }
+    
+    for (let topicConfigurationContentEntry of topicConfigurationContent) {
+        //Allow comments in props file but skip parsing
+        if (shouldIgnoreLine(topicConfigurationContentEntry)) {
+            continue;
         }
         
-        return {
-            valid: true,
-            error: null
-        };
+        let currentLineParsed = parsePropsLine(topicConfigurationContentEntry);
+        if (!currentLineParsed["key"] || !currentLineParsed["value"]) {
+            throw new Error(`Cannot parse key/value pair for line ${topicConfigurationContentEntry}`);
+        }
+        
+        propsToJson[currentLineParsed["key"].toLowerCase()] = currentLineParsed["value"];
     }
+
+    return propsToJson;
 }
+
 
 function buildTopicsConfig(topicsConfigurationPath) {
-    let configurationsFound = fs.readdirSync(topicsConfigurationPath);
+    let configurationsFound = readdirSync(topicsConfigurationPath);
     let outputConfigurations = [];
-
-    const topicConfigurationTemplate = {
-        topic: null,
-        configEntries: kafkaConfigUtility.getTopicDefaultConfiguration()
-    };
     
     for(let topicConfigurationFile of configurationsFound) {
-        let builtConfig = structuredClone(topicConfigurationTemplate);
-        let topicConfigurationJson = parsingUtility.buildJsonFromPropertiesFile(path.join(topicsConfigurationPath, topicConfigurationFile));
+        let topicConfigurationJson = buildJsonFromPropertiesFile(path.join(topicsConfigurationPath, topicConfigurationFile));
         
+        let topicConfigObj = new KafkaTopic();
         if (topicConfigurationJson && Object.keys(topicConfigurationJson).length) {
             
             for (let configurationKey of Object.keys(topicConfigurationJson)) {
-                let configurationValue = topicConfigurationJson[configurationKey];
-
-                if (kafkaConfigUtility.isTopicNameProperty(configurationKey)) {
-                    builtConfig["topic"] = configurationValue;
-                } else if (kafkaConfigUtility.isTopicRequiredOption(configurationKey)) {
-                    let optionToOverride = kafkaConfigUtility.getTopicRequiredOptionKey(configurationKey);
-                    if (optionToOverride) {
-                        builtConfig[optionToOverride] = configurationValue;
-                    }
-                } else {
-                    let overrideIndex = -1;
-                    if (kafkaConfigUtility.isTopicDefaultConfig(configurationKey)) {
-                        overrideIndex = builtConfig["configEntries"].findIndex(ce => ce.name === configurationKey);
-                    }
-
-                    if (overrideIndex != -1) {
-                        builtConfig["configEntries"][overrideIndex].value = configurationValue;
-                    } else {
-                        builtConfig["configEntries"].push({
-                            name: configurationKey,
-                            value: configurationValue
-                        });
-                    }
-                }
+                topicConfigObj.setTopicConfig(configurationKey, topicConfigurationJson[configurationKey]);
             }
-
-            const validationResult = kafkaConfigUtility.isValidTopicConfiguration(builtConfig);            
+            
+            const validationResult = topicConfigObj.isValidTopicConfiguration();            
             if (!validationResult.valid) {
                 throw new Error(validationResult.error);
             }
-
-            outputConfigurations.push(builtConfig);
+            
+            outputConfigurations.push(topicConfigObj);
         }
     }
     
@@ -206,7 +75,7 @@ function buildTopicsConfig(topicsConfigurationPath) {
 
 const run = async () => {
     if (!process.env.TOPICS_PROPERTIES_PATH) {
-        throw new Error(`Missing TOPICS_PROPERTIES_PATH environment variable is required.`);
+        throw new Error(`Missing TOPICS_PROPERTIES_PATH environment variable.`);
     }
     
     logInfo("Setup Kafka connection.");
@@ -236,11 +105,11 @@ const run = async () => {
     
     try {
         for(let topicConfiguration of topicConfigurations) {
-            logInfo(`Create topic ${topicConfiguration["topic"]} with configuration ${JSON.stringify(topicConfiguration)}`);
+            logInfo(`Create topic ${topicConfiguration.getTopicName()}`);// with options:\n${JSON.stringify(topicConfiguration.getTopicOptions())} \nand configuration:\n${JSON.stringify(topicConfiguration.getTopicConfigurations())}\n`);
             let result = await admin.createTopics({
                 validateOnly: false,
                 waitForLeaders: false,
-                topics: [topicConfiguration]
+                topics: [topicConfiguration.getTopic()]
             });
 
             if (!result) { // result == false => implies cannot create topic
@@ -248,8 +117,8 @@ const run = async () => {
                     includeSynonyms: false,
                     resources: [{
                         type: ConfigResourceTypes.TOPIC,
-                        name: topicConfiguration["topic"],
-                        configNames: topicConfiguration["configEntries"].map(entry => entry.name)
+                        name: topicConfiguration.getTopicName(),
+                        configNames: topicConfiguration.getTopicConfigurations().map(entry => entry.name)
                     }]
                 });
                 
@@ -260,7 +129,7 @@ const run = async () => {
 
                 // Check diff between remote topic configuration and provided topic configuration
                 let configDiffFound = [];
-                topicConfiguration["configEntries"].forEach(localConfig => {
+                topicConfiguration.getTopicConfigurations().forEach(localConfig => {
                     let remoteConfig = remoteConfigs.find(c => c.configName == localConfig.name);
                     if (remoteConfig && remoteConfig.configValue != localConfig.value) {
                         configDiffFound.push({
@@ -273,8 +142,8 @@ const run = async () => {
 
                 if (configDiffFound.length) {
                     escalateDiff = true;
-                    let mismatches = configDiffFound.map(cd => `[${cd.name}: remote value ${cd.remoteValue}, local value ${cd.localValue}]`);
-                    let errorMsg = `Topic ${topicConfiguration.topic} already exists, following properties do not match: ${mismatches}`
+                    let mismatches = configDiffFound.map(cd => `{${cd.name}: remote value ${cd.remoteValue}, local value ${cd.localValue}}`);
+                    let errorMsg = `Topic ${topicConfiguration.getTopicName()} already exists, following properties do not match:\n${mismatches}\n`
                     errors.push({
                         type: "TOPIC_CREATION_ERROR",
                         message: errorMsg
@@ -283,16 +152,16 @@ const run = async () => {
                     //Do not print library error message - console.error(errorMsg);
                 } else {
                     // Info (topic esiste e properties matchano)
-                    logInfo(`Topic ${topicConfiguration.topic} already exists, all the specified properties match with remote ones.`);
+                    logInfo(`Topic ${topicConfiguration.getTopicName()} already exists, all the specified properties match with remote ones.`);
                 }
             }
         }
 
         if (escalateDiff) {
-            throw new Error(`${errors.map(anError => `\n  [${anError.type ? anError.type : "GENERIC_ERROR" }: ${anError.message}]`)}`);
+            throw new Error(`${errors.map(anError => `\n[${anError.type ? anError.type : "GENERIC_ERROR" }: ${anError.message}]`)}`);
         }
     } catch (ex) {
-        let invalidConfiguration = ex.errors && ex.errors.filter(e => e.type == "INVALID_CONFIG");
+        let invalidConfiguration = ex.errors ? ex.errors.filter(e => e.type == "INVALID_CONFIG") : [];
         if (invalidConfiguration.length) {
             throw new Error(`[TOPIC INVALID CONFIGURATION] Found invalid configuration for ${invalidConfiguration.map(ic => ic.topic)}`);
         } else {
