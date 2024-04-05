@@ -373,6 +373,7 @@ jobs:
   deploy_notifier_seeder:
     name: Notifier Seeder
     needs: [deploy_configs]
+    if: ${{ inputs.environment == 'dev-refactor' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
