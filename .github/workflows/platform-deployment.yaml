@@ -370,6 +370,21 @@ jobs:
       resource_cpu_var_name: NOTIFIER_RESOURCE_CPU
       resource_mem_var_name: NOTIFIER_RESOURCE_MEM
 
+  deploy_notifier_seeder:
+    name: Notifier Seeder
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/notifier-seeder/${{ inputs.environment }}"
+      service_name_var_name: NOTIFIER_SEEDER_SERVICE_NAME
+      image_version_var_name: NOTIFIER_SEEDER_IMAGE_VERSION
+      resource_cpu_var_name: NOTIFIER_SEEDER_RESOURCE_CPU
+      resource_mem_var_name: NOTIFIER_SEEDER_RESOURCE_MEM
+
   deploy_certified_mail_sender:
     name: Certified Mail Sender
     needs: [deploy_configs]

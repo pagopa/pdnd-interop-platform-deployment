@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+data:
+  KAFKA_CLIENT_ID: "dev-pagopa-interop-notifier-seeder"
+  KAFKA_GROUP_ID: "notifier-seeder"
+  CATALOG_TOPIC: "event-store.dev-refactor_catalog.events"
+  NOTIFICATION_QUEUE_URL: "{{NOTIFICATION_QUEUE_URL}}"
