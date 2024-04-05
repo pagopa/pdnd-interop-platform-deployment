@@ -4,4 +4,4 @@ metadata:
   name: common-services-urls
   namespace: {{NAMESPACE}}
 data:
-  AUTHORIZATION_MANAGEMENT_URL: "interop-be-authorization-management.dev-refactor.svc.cluster.local:8088"
+  AUTHORIZATION_MANAGEMENT_URL: "http://interop-be-authorization-management.dev-refactor.svc.cluster.local:8088"
