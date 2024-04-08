@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: common-services-urls
+  namespace: {{NAMESPACE}}
+data:
+  AUTHORIZATION_MANAGEMENT_URL: {{AUTHORIZATION_MANAGEMENT_URL}}
