@@ -17,11 +17,14 @@ REPLICAS=1
 BACKEND_SERVICE_PORT="8088"
 KAFKA_BROKERS="boot-yqksbq44.c3.kafka-serverless.eu-central-1.amazonaws.com:9098"
 
+CATALOG_TOPIC="event-store.dev-refactor_catalog.events"
 
 AWS_REGION="eu-central-1"
 PERSISTENCE_QUEUE_NAME="persistence-events-refactor.fifo"
 CERTIFIED_MAIL_QUEUE_NAME="certified-mail.fifo"
 AWS_SQS_DOMAIN="https://sqs.${AWS_REGION}.amazonaws.com"
+
+NOTIFICATION_QUEUE_URL="https://sqs.eu-central-1.amazonaws.com/505630707203/persistence-events-refactor.fifo"
 
 ENABLED_PROJECTIONS="true"
 WELL_KNOWN_URLS="https://dev.interop.pagopa.it/.well-known/jwks.json"

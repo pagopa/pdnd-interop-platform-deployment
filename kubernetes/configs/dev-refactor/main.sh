@@ -54,6 +54,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/dev-refactor/tenant_process.sh
 . $(pwd)/kubernetes/configs/dev-refactor/tenants-certified-attributes-updater.sh
 . $(pwd)/kubernetes/configs/dev-refactor/notifier.sh
+. $(pwd)/kubernetes/configs/dev-refactor/notifier_seeder.sh
 . $(pwd)/kubernetes/configs/dev-refactor/token_details_persister.sh
 . $(pwd)/kubernetes/configs/dev-refactor/party_registry_proxy_refresher.sh
 . $(pwd)/kubernetes/configs/dev-refactor/eservices_monitoring_exporter.sh

@@ -370,6 +370,22 @@ jobs:
       resource_cpu_var_name: NOTIFIER_RESOURCE_CPU
       resource_mem_var_name: NOTIFIER_RESOURCE_MEM
 
+  deploy_notifier_seeder:
+    name: Notifier Seeder
+    needs: [deploy_configs]
+    if: ${{ inputs.environment == 'dev-refactor' }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/notifier-seeder/${{ inputs.environment }}"
+      service_name_var_name: NOTIFIER_SEEDER_SERVICE_NAME
+      image_version_var_name: NOTIFIER_SEEDER_IMAGE_VERSION
+      resource_cpu_var_name: NOTIFIER_SEEDER_RESOURCE_CPU
+      resource_mem_var_name: NOTIFIER_SEEDER_RESOURCE_MEM
+
   deploy_certified_mail_sender:
     name: Certified Mail Sender
     needs: [deploy_configs]
@@ -685,7 +701,7 @@ jobs:
       deploy_party_registry_proxy,
       deploy_purpose_management, deploy_purpose_process,
       deploy_tenant_management, deploy_tenant_process,
-      deploy_notifier,
+      deploy_notifier, deploy_notifier_seeder,
       deploy_attributes_loader, deploy_token_details_persister,
       deploy_tenants_certified_attributes_updater, deploy_party_registry_proxy_refresher,
       deploy_metrics_report_generator, deploy_padigitale_report_generator,
