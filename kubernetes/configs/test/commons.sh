@@ -23,6 +23,8 @@ PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
 CERTIFIED_MAIL_QUEUE_NAME="certified-mail.fifo"
 AWS_SQS_DOMAIN="https://sqs.${AWS_REGION}.amazonaws.com"
 
+NOTIFICATION_QUEUE_URL="https://sqs.eu-central-1.amazonaws.com/895646477129/persistence-events.fifo"
+
 ENABLED_PROJECTIONS="true"
 WELL_KNOWN_URLS="https://uat.interop.pagopa.it/.well-known/jwks.json"
 DEV_ENDPOINTS_ENABLED="true"
