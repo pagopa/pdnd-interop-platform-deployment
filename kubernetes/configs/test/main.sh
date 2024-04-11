@@ -39,11 +39,12 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/test/authorization_management.sh
 . $(pwd)/kubernetes/configs/test/authorization_process.sh
 . $(pwd)/kubernetes/configs/test/authorization_server.sh
+. $(pwd)/kubernetes/configs/test/authorization_updater.sh
 . $(pwd)/kubernetes/configs/test/attribute_registry_management.sh
 . $(pwd)/kubernetes/configs/test/attribute_registry_process.sh
 . $(pwd)/kubernetes/configs/test/attributes_loader.sh
 . $(pwd)/kubernetes/configs/test/backend_for_frontend.sh
-. $(pwd)/kubernetes/configs/test/catalog_management.sh
+. $(pwd)/kubernetes/configs/test/catalog_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/test/catalog_process.sh
 . $(pwd)/kubernetes/configs/test/frontend.sh
 . $(pwd)/kubernetes/configs/test/party_registry_proxy.sh
@@ -53,6 +54,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/test/tenant_process.sh
 . $(pwd)/kubernetes/configs/test/tenants-certified-attributes-updater.sh
 . $(pwd)/kubernetes/configs/test/notifier.sh
+. $(pwd)/kubernetes/configs/test/notifier_seeder.sh
 . $(pwd)/kubernetes/configs/test/token_details_persister.sh
 . $(pwd)/kubernetes/configs/test/party_registry_proxy_refresher.sh
 . $(pwd)/kubernetes/configs/test/eservices_monitoring_exporter.sh
