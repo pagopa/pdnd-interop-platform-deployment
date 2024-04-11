@@ -175,7 +175,7 @@ jobs:
   deploy_authorization_updater:
     name: Authorization Updater
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'dev-refactor' }}
+    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -191,7 +191,7 @@ jobs:
   deploy_catalog_management:
     name: Catalog Management
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'dev-refactor' }}
+    if: ${{ inputs.environment != 'dev-refactor' && inputs.environment != 'test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -207,7 +207,7 @@ jobs:
   deploy_catalog_readmodel_writer:
     name: Catalog ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'dev-refactor' }}
+    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -373,7 +373,7 @@ jobs:
   deploy_notifier_seeder:
     name: Notifier Seeder
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'dev-refactor' }}
+    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml

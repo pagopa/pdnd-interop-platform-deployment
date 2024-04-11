@@ -7,6 +7,7 @@ DOMAIN_NAME="uat.interop.pagopa.it"
 REPOSITORY="505630707203.dkr.ecr.eu-central-1.amazonaws.com"
 POSTGRES_HOST="interop-persistence-management-test.cluster-cfx5ud7lsyvt.eu-central-1.rds.amazonaws.com"
 POSTGRES_PORT="5432"
+POSTGRES_DB_NAME="persistence_management"
 READ_MODEL_DB_HOST="interop-read-model-test.cluster-cfx5ud7lsyvt.eu-central-1.docdb.amazonaws.com"
 READ_MODEL_DB_PORT="27017"
 READ_MODEL_DB_NAME="read-model"
@@ -14,11 +15,16 @@ READ_MODEL_REPLICA_SET="rs0"
 READ_MODEL_READ_PREFERENCE="secondaryPreferred"
 REPLICAS=1
 BACKEND_SERVICE_PORT="8088"
+KAFKA_BROKERS="boot-9sxt6jl9.c2.kafka-serverless.eu-central-1.amazonaws.com:9098"
+
+CATALOG_TOPIC="event-store.test_catalog.events"
 
 AWS_REGION="eu-central-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
 CERTIFIED_MAIL_QUEUE_NAME="certified-mail.fifo"
 AWS_SQS_DOMAIN="https://sqs.${AWS_REGION}.amazonaws.com"
+
+NOTIFICATION_QUEUE_URL="https://sqs.eu-central-1.amazonaws.com/895646477129/persistence-events.fifo"
 
 ENABLED_PROJECTIONS="true"
 WELL_KNOWN_URLS="https://uat.interop.pagopa.it/.well-known/jwks.json"
@@ -50,3 +56,5 @@ PAGOPA_TENANT_ID="84871fd4-2fd7-46ab-9d22-f6b452f4b3c5"
 
 SMTP_ADDRESS="smtp.gmail.com"
 SMTP_PORT=465
+
+AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.test.svc.cluster.local:8088/authorization-management/1.0"

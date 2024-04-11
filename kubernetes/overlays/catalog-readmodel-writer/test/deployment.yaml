@@ -9,28 +9,25 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
-            - name: EVENTSTORE_DB_SCHEMA
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: EVENTSTORE_DB_SCHEMA
             - name: WELL_KNOWN_URLS
               valueFrom:
                 configMapKeyRef:
                   name: common-jwt
                   key: WELL_KNOWN_URLS
-            - name: S3_BUCKET
+            - name: KAFKA_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: S3_BUCKET
-            - name: ESERVICE_DOCUMENTS_PATH
+                  key: KAFKA_CLIENT_ID
+            - name: KAFKA_GROUP_ID
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: ESERVICE_DOCUMENTS_PATH
-            - name: PRODUCER_ALLOWED_ORIGINS
+                  key: KAFKA_GROUP_ID
+            - name: CATALOG_TOPIC
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: PRODUCER_ALLOWED_ORIGINS
+                  key: CATALOG_TOPIC
+
+
