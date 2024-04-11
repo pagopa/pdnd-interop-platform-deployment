@@ -39,7 +39,7 @@ spec:
             - name: KAFKA_BROKERS
               valueFrom:
                 configMapKeyRef:
-                  name: interop-be-kafka-commons
+                  name: common-kafka
                   key: KAFKA_BROKERS
             - name: READMODEL_DB_HOST
               valueFrom:
