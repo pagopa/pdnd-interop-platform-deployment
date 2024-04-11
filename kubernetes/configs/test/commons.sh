@@ -7,6 +7,7 @@ DOMAIN_NAME="uat.interop.pagopa.it"
 REPOSITORY="505630707203.dkr.ecr.eu-central-1.amazonaws.com"
 POSTGRES_HOST="interop-persistence-management-test.cluster-cfx5ud7lsyvt.eu-central-1.rds.amazonaws.com"
 POSTGRES_PORT="5432"
+POSTGRES_DB_NAME="persistence_management"
 READ_MODEL_DB_HOST="interop-read-model-test.cluster-cfx5ud7lsyvt.eu-central-1.docdb.amazonaws.com"
 READ_MODEL_DB_PORT="27017"
 READ_MODEL_DB_NAME="read-model"
@@ -14,7 +15,7 @@ READ_MODEL_REPLICA_SET="rs0"
 READ_MODEL_READ_PREFERENCE="secondaryPreferred"
 REPLICAS=1
 BACKEND_SERVICE_PORT="8088"
-KAFKA_BROKERS="boot-yqksbq44.c3.kafka-serverless.eu-central-1.amazonaws.com:9098"
+KAFKA_BROKERS="boot-9sxt6jl9.c2.kafka-serverless.eu-central-1.amazonaws.com:9098"
 
 CATALOG_TOPIC="event-store.test_catalog.events"
 
