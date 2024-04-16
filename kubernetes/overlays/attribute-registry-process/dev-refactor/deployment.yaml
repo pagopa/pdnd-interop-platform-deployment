@@ -14,11 +14,6 @@ spec:
               configMapKeyRef:
                 name: {{SERVICE_NAME}}
                 key: EVENTSTORE_DB_SCHEMA
-          - name: EVENTSTORE_DB_USE_SSL
-            valueFrom:
-              configMapKeyRef:
-                name: {{SERVICE_NAME}}
-                key: EVENTSTORE_DB_USE_SSL
           - name: PRODUCER_ALLOWED_ORIGINS
             valueFrom:
               configMapKeyRef:
