@@ -18,6 +18,7 @@ BACKEND_SERVICE_PORT="8088"
 KAFKA_BROKERS="boot-yqksbq44.c3.kafka-serverless.eu-central-1.amazonaws.com:9098"
 
 CATALOG_TOPIC="event-store.dev-refactor_catalog.events"
+ATTRIBUTE_TOPIC="event-store.dev-refactor_attribute_registry.events"
 
 AWS_REGION="eu-central-1"
 PERSISTENCE_QUEUE_NAME="persistence-events-refactor.fifo"
