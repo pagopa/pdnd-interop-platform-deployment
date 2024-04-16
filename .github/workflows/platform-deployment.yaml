@@ -118,6 +118,7 @@ jobs:
   deploy_attribute_registry_management:
     name: Attribute Registry Management
     needs: [deploy_configs]
+    if: ${{ inputs.environment != 'dev-refactor' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -129,6 +130,22 @@ jobs:
       image_version_var_name: ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION
       resource_cpu_var_name: ATTRIBUTE_REGISTRY_MANAGEMENT_RESOURCE_CPU
       resource_mem_var_name: ATTRIBUTE_REGISTRY_MANAGEMENT_RESOURCE_MEM
+
+  deploy_attribute_registry_readmodel_writer:
+    name: Attribute Registry ReadModel Writer
+    needs: [deploy_configs]
+    if: ${{ inputs.environment == 'dev-refactor' }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/attribute-registry-readmodel-writer/${{ inputs.environment }}"
+      service_name_var_name: ATTRIBUTE_REGISTRY_READMODEL_WRITER_SERVICE_NAME
+      image_version_var_name: ATTRIBUTE_REGISTRY_READMODEL_WRITER_IMAGE_VERSION
+      resource_cpu_var_name: ATTRIBUTE_REGISTRY_READMODEL_WRITER_RESOURCE_CPU
+      resource_mem_var_name: ATTRIBUTE_REGISTRY_READMODEL_WRITER_RESOURCE_MEM
 
   deploy_attribute_registry_process:
     name: Attribute Registry Process
