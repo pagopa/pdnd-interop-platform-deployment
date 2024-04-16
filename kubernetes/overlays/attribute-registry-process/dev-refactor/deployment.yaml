@@ -14,6 +14,11 @@ spec:
               configMapKeyRef:
                 name: {{SERVICE_NAME}}
                 key: EVENTSTORE_DB_SCHEMA
+          - name: WELL_KNOWN_URLS
+            valueFrom:
+              configMapKeyRef:
+                name: common-jwt
+                key: WELL_KNOWN_URLS
           - name: PRODUCER_ALLOWED_ORIGINS
             valueFrom:
               configMapKeyRef:
