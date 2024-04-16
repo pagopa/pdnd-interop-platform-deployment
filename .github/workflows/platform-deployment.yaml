@@ -715,7 +715,7 @@ jobs:
     name: Delete Self-Hosted Runner
     needs: [create_runner, deploy_ingress,
       deploy_agreement_management, deploy_agreement_process,
-      deploy_attribute_registry_management, deploy_attribute_registry_process,
+      deploy_attribute_registry_management, deploy_attribute_registry_process, deploy_attribute_registry_readmodel_writer,
       deploy_authorization_management, deploy_authorization_process, deploy_authorization_updater,
       deploy_catalog_management, deploy_catalog_process, deploy_catalog_readmodel_writer,
       deploy_party_registry_proxy,
