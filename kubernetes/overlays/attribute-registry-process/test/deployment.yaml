@@ -9,18 +9,18 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
-            - name: ACCEPTED_AUDIENCES
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: ACCEPTED_AUDIENCES
-            - name: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
-            - name: PRODUCER_ALLOWED_ORIGINS
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: PRODUCER_ALLOWED_ORIGINS
+          - name: EVENTSTORE_DB_SCHEMA
+            valueFrom:
+              configMapKeyRef:
+                name: {{SERVICE_NAME}}
+                key: EVENTSTORE_DB_SCHEMA
+          - name: WELL_KNOWN_URLS
+            valueFrom:
+              configMapKeyRef:
+                name: common-jwt
+                key: WELL_KNOWN_URLS
+          - name: PRODUCER_ALLOWED_ORIGINS
+            valueFrom:
+              configMapKeyRef:
+                name: {{SERVICE_NAME}}
+                key: PRODUCER_ALLOWED_ORIGINS
