@@ -119,7 +119,7 @@ jobs:
   deploy_attribute_registry_management:
     name: Attribute Registry Management
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'dev-refactor' }}
+    if: ${{ inputs.environment != 'dev-refactor' && inputs.environment != 'test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -135,7 +135,7 @@ jobs:
   deploy_attribute_registry_readmodel_writer:
     name: Attribute Registry ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'dev-refactor' }}
+    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
