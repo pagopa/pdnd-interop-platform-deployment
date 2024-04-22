@@ -31,7 +31,7 @@ on:
 jobs:
   deploy_cronjob:
     name: Deploy Cronjob
-    runs-on: [self-hosted, "run_id:${{ github.run_id }}"]
+    runs-on: [self-hosted, "run_id:${{ inputs.environment }}-${{ github.run_id }}"]
     environment: ${{ inputs.environment }}
     permissions:
       contents: read

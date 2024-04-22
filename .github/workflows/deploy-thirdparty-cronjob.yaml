@@ -27,7 +27,7 @@ on:
 jobs:
   deploy_thirdparty_cronjob:
     name: Deploy Third Party Cronjob
-    runs-on: [self-hosted, "run_id:${{ github.run_id }}"]
+    runs-on: [self-hosted, "run_id:${{ inputs.environment }}-${{ github.run_id }}"]
     environment: ${{ inputs.environment }}
     permissions:
       contents: read
