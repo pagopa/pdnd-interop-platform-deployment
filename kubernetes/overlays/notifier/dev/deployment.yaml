@@ -19,6 +19,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: CATALOG_MANAGEMENT_URL
+            - name: CATALOG_PROCESS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: CATALOG_PROCESS_URL
             - name: PURPOSE_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
