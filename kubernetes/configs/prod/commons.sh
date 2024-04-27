@@ -15,7 +15,7 @@ READ_MODEL_REPLICA_SET="rs0"
 READ_MODEL_READ_PREFERENCE="secondaryPreferred"
 REPLICAS=2
 BACKEND_SERVICE_PORT="8088"
-KAFKA_BROKERS="boot-9sxt6jl9.c2.kafka-serverless.eu-central-1.amazonaws.com:9098"
+KAFKA_BROKERS="boot-g41hzx46.c2.kafka-serverless.eu-central-1.amazonaws.com:9098"
 
 CATALOG_TOPIC="event-store.prod_catalog.events"
 ATTRIBUTE_TOPIC="event-store.prod_attribute_registry.events"
