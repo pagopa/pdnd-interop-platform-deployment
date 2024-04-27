@@ -98,7 +98,7 @@ jobs:
 
       - name: Apply commons configmaps
         id: apply_commons_configmap
-        if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'test' }}
+        if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'test' || inputs.environment == 'prod' }}
         run: |
           set -eo pipefail
           source $CONFIG_FILE
