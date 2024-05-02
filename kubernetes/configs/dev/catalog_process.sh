@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CATALOG_PROCESS_STORAGE_TYPE="S3"
-CATALOG_PROCESS_STORAGE_CONTAINER="interop-application-documents-refactor-dev"
+CATALOG_PROCESS_STORAGE_CONTAINER="interop-application-documents-dev"
 CATALOG_PROCESS_STORAGE_ENDPOINT=""
 CATALOG_PROCESS_ESERVICE_DOCUMENTS_PATH="eservices/docs"
 
