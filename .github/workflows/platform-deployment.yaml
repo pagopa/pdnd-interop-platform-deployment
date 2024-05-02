@@ -196,7 +196,7 @@ jobs:
   deploy_authorization_updater:
     name: Authorization Updater
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'test' || inputs.environment == 'prod' }}
+    if: ${{ inputs.environment == 'dev' || inputs.environment == 'dev-refactor' || inputs.environment == 'test' || inputs.environment == 'prod' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -394,7 +394,7 @@ jobs:
   deploy_notifier_seeder:
     name: Notifier Seeder
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'test' || inputs.environment == 'prod' }}
+    if: ${{ inputs.environment == 'dev' || inputs.environment == 'dev-refactor' || inputs.environment == 'test' || inputs.environment == 'prod' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml

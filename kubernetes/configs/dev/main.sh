@@ -37,6 +37,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/dev/authorization_management.sh
 . $(pwd)/kubernetes/configs/dev/authorization_process.sh
 . $(pwd)/kubernetes/configs/dev/authorization_server.sh
+. $(pwd)/kubernetes/configs/dev/authorization_updater.sh
 . $(pwd)/kubernetes/configs/dev/attribute_registry_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/dev/attribute_registry_process.sh
 . $(pwd)/kubernetes/configs/dev/attributes_loader.sh
@@ -51,6 +52,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/dev/tenant_process.sh
 . $(pwd)/kubernetes/configs/dev/tenants-certified-attributes-updater.sh
 . $(pwd)/kubernetes/configs/dev/notifier.sh
+. $(pwd)/kubernetes/configs/dev/notifier_seeder.sh
 . $(pwd)/kubernetes/configs/dev/token_details_persister.sh
 . $(pwd)/kubernetes/configs/dev/party_registry_proxy_refresher.sh
 . $(pwd)/kubernetes/configs/dev/eservices_monitoring_exporter.sh
