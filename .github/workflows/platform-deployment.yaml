@@ -119,7 +119,7 @@ jobs:
   deploy_attribute_registry_management:
     name: Attribute Registry Management
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'dev-refactor' && inputs.environment != 'test' && inputs.environment != 'prod' }}
+    if: ${{ inputs.environment == 'qa' || inputs.environment == 'att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -212,7 +212,7 @@ jobs:
   deploy_catalog_management:
     name: Catalog Management
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'dev-refactor' && inputs.environment != 'test' && inputs.environment != 'prod' }}
+    if: ${{ inputs.environment == 'qa' || inputs.environment == 'att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
