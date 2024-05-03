@@ -5,6 +5,6 @@ metadata:
   namespace: {{NAMESPACE}}
 data:
   KAFKA_CLIENT_ID: "{{NAMESPACE}}-pagopa-interop-notifier-seeder"
-  KAFKA_GROUP_ID: "notifier-seeder"
+  KAFKA_GROUP_ID: "{{NAMESPACE}}-notifier-seeder"
   CATALOG_TOPIC: "{{CATALOG_TOPIC}}"
   NOTIFICATION_QUEUE_URL: "{{NOTIFICATION_QUEUE_URL}}"

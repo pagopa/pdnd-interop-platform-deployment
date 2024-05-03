@@ -5,7 +5,7 @@ metadata:
   namespace: {{NAMESPACE}}
 data:
   KAFKA_CLIENT_ID: "{{NAMESPACE}}-pagopa-interop-authorization-updater"
-  KAFKA_GROUP_ID: "authorization-updater"
+  KAFKA_GROUP_ID: "{{NAMESPACE}}-authorization-updater"
   CATALOG_TOPIC: "{{CATALOG_TOPIC}}"
   RSA_KEYS_IDENTIFIERS: {{RSA_KEYS_IDENTIFIERS}}
   KMS_MAX_ACQUISITION_TIMEOUT_SECONDS: "10"
