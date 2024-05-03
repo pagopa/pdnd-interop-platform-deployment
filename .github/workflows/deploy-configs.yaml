@@ -79,7 +79,7 @@ jobs:
 
       - name: Prepare Event Store migrations
         id: prepare_event_store_migrations
-        if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'test' || inputs.environment == 'prod' }}
+        if: ${{ inputs.environment == 'dev' || inputs.environment == 'dev-refactor' || inputs.environment == 'test' || inputs.environment == 'prod' }}
         run: |
           set -eo pipefail
           source $CONFIG_FILE
@@ -98,7 +98,7 @@ jobs:
 
       - name: Apply commons configmaps
         id: apply_commons_configmap
-        if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'test' || inputs.environment == 'prod' }}
+        if: ${{ inputs.environment == 'dev' || inputs.environment == 'dev-refactor' || inputs.environment == 'test' || inputs.environment == 'prod' }}
         run: |
           set -eo pipefail
           source $CONFIG_FILE
@@ -152,7 +152,7 @@ jobs:
           createKubeSecret 'onetrust' 'ONETRUST_CLIENT_ID' "$onetrustClientId" 'ONETRUST_CLIENT_SECRET' "$onetrustClientSecret"
           createKubeSecret 'smtp-certified' 'PEC_SMTP_USER' "$smtpPecUsername" 'PEC_SMTP_PASSWORD' "$smtpPecPassword" 'PEC_SMTP_SENDER' "$pecSender"
 
-          if [[ "${{ inputs.environment }}" = "test" ]] || [[ "${{ inputs.environment }}" = "prod" ]]; then
+          if [[ "${{ inputs.environment }}" =~ dev* ]] || [[ "${{ inputs.environment }}" = "test" ]] || [[ "${{ inputs.environment }}" = "prod" ]]; then
             createKubeSecret 'event-store' 'POSTGRES_USR' "$postgresUsername" 'POSTGRES_PSW' "$postgresPassword"
             createKubeSecret 'read-model' 'PROJECTION_USR' "$projectionUsername" 'PROJECTION_PSW' "$projectionPassword" 'READONLY_USR' "$projectionROUsername" 'READONLY_PSW' "$projectionROPassword"
           fi
