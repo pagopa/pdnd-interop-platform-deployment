@@ -16,7 +16,7 @@ data:
             sub_filter_once off;
             sub_filter_types *;
             sub_filter **CSP_NONCE** $request_id;
-            add_header Content-Security-Policy "default-src 'self'; object-src 'none'; connect-src 'self' {{PUBLIC_BUCKET_URL}}; script-src 'nonce-$request_id'; style-src 'self' 'unsafe-inline'; worker-src 'none'; font-src 'self'; img-src 'self' data:; base-uri 'self'";
+            add_header Content-Security-Policy "default-src 'self'; object-src 'none'; connect-src 'self' https://api-eu.mixpanel.com {{PUBLIC_BUCKET_URL}}; script-src 'nonce-$request_id'; style-src 'self' 'unsafe-inline'; worker-src 'none'; font-src 'self'; img-src 'self' {{PUBLIC_BUCKET_URL}} data:; base-uri 'self'";
             add_header Strict-Transport-Security "max-age=31536000";
             add_header X-Content-Type-Options "nosniff";
             add_header X-Frame-Options "SAMEORIGIN";
