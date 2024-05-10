@@ -57,4 +57,4 @@ PAGOPA_TENANT_ID="69e2865e-65ab-4e48-a638-2037a9ee2ee7"
 SMTP_ADDRESS="smtp.gmail.com"
 SMTP_PORT=465
 
-AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.qa.svc.cluster.local:8088/authorization-management/0.0"
+AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.qa.svc.cluster.local:8088/authorization-management/1.0"
