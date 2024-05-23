@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+data:
+  KAFKA_CLIENT_ID: "{{NAMESPACE}}-pagopa-interop-authorization-updater"
+  KAFKA_GROUP_ID: "{{NAMESPACE}}-authorization-updater"
+  CATALOG_TOPIC: "{{CATALOG_TOPIC}}"
+  RSA_KEYS_IDENTIFIERS: {{RSA_KEYS_IDENTIFIERS}}
+  KMS_MAX_ACQUISITION_TIMEOUT_SECONDS: "10"
+  GENERATED_JWT_SECONDS_TO_EXPIRE: "60"
+  GENERATED_JWT_ISSUER: "qa.interop.pagopa.it"
+  GENERATED_JWT_SUBJECT: "qa.interop-attributes-loader"
+  GENERATED_JWT_AUDIENCE: "qa.interop.pagopa.it/internal"

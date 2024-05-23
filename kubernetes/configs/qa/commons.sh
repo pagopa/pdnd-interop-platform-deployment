@@ -7,6 +7,7 @@ DOMAIN_NAME="qa.interop.pagopa.it"
 REPOSITORY="505630707203.dkr.ecr.eu-central-1.amazonaws.com"
 POSTGRES_HOST="interop-persistence-management-qa.cluster-cafe9jumfoc9.eu-central-1.rds.amazonaws.com"
 POSTGRES_PORT="5432"
+POSTGRES_DB_NAME="persistence_management"
 READ_MODEL_DB_HOST="interop-read-model-qa.cluster-cafe9jumfoc9.eu-central-1.docdb.amazonaws.com"
 READ_MODEL_DB_PORT="27017"
 READ_MODEL_DB_NAME="read-model"
@@ -14,15 +15,21 @@ READ_MODEL_REPLICA_SET="rs0"
 READ_MODEL_READ_PREFERENCE="secondaryPreferred"
 REPLICAS=1
 BACKEND_SERVICE_PORT="8088"
+KAFKA_BROKERS="boot-5g5alzwn.c2.kafka-serverless.eu-central-1.amazonaws.com:9098"
+
+CATALOG_TOPIC="event-store.qa_catalog.events"
+ATTRIBUTE_TOPIC="event-store.qa_attribute_registry.events"
 
 AWS_REGION="eu-central-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
 CERTIFIED_MAIL_QUEUE_NAME="certified-mail.fifo"
 AWS_SQS_DOMAIN="https://sqs.${AWS_REGION}.amazonaws.com"
 
+NOTIFICATION_QUEUE_URL="https://sqs.eu-central-1.amazonaws.com/755649575658/persistence-events.fifo"
+
 ENABLED_PROJECTIONS="true"
 WELL_KNOWN_URLS="https://qa.interop.pagopa.it/.well-known/jwks.json"
-DEV_ENDPOINTS_ENABLED="true"
+DEV_ENDPOINTS_ENABLED="false"
 
 INTERNAL_JWT_ISSUER="qa.interop.pagopa.it"
 INTERNAL_JWT_SUBJECT="qa.interop-m2m"
@@ -49,3 +56,5 @@ PAGOPA_TENANT_ID="69e2865e-65ab-4e48-a638-2037a9ee2ee7"
 
 SMTP_ADDRESS="smtp.gmail.com"
 SMTP_PORT=465
+
+AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.qa.svc.cluster.local:8088/authorization-management/1.0"
