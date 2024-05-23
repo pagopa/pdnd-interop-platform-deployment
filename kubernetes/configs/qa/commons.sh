@@ -29,7 +29,7 @@ NOTIFICATION_QUEUE_URL="https://sqs.eu-central-1.amazonaws.com/755649575658/pers
 
 ENABLED_PROJECTIONS="true"
 WELL_KNOWN_URLS="https://qa.interop.pagopa.it/.well-known/jwks.json"
-DEV_ENDPOINTS_ENABLED="true"
+DEV_ENDPOINTS_ENABLED="false"
 
 INTERNAL_JWT_ISSUER="qa.interop.pagopa.it"
 INTERNAL_JWT_SUBJECT="qa.interop-m2m"
