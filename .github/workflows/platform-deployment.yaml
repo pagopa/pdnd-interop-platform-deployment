@@ -102,6 +102,22 @@ jobs:
       resource_cpu_var_name: AGREEMENT_MANAGEMENT_RESOURCE_CPU
       resource_mem_var_name: AGREEMENT_MANAGEMENT_RESOURCE_MEM
 
+  deploy_agreement_readmodel_writer:
+    name: Agreement ReadModel Writer
+    needs: [deploy_configs]
+    if: ${{ inputs.environment == 'dev-refactor' }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/agreement-readmodel-writer/${{ inputs.environment }}"
+      service_name_var_name: AGREEMENT_READMODEL_WRITER_SERVICE_NAME
+      image_version_var_name: AGREEMENT_READMODEL_WRITER_IMAGE_VERSION
+      resource_cpu_var_name: AGREEMENT_READMODEL_WRITER_RESOURCE_CPU
+      resource_mem_var_name: AGREEMENT_READMODEL_WRITER_RESOURCE_MEM
+
   deploy_agreement_process:
     name: Agreement Process
     needs: [deploy_configs]
@@ -716,7 +732,7 @@ jobs:
   delete_runner:
     name: Delete Self-Hosted Runner
     needs: [create_runner, deploy_ingress,
-      deploy_agreement_management, deploy_agreement_process,
+      deploy_agreement_management, deploy_agreement_process, deploy_agreement_readmodel_writer,
       deploy_attribute_registry_management, deploy_attribute_registry_process, deploy_attribute_registry_readmodel_writer,
       deploy_authorization_management, deploy_authorization_process, deploy_authorization_updater,
       deploy_catalog_management, deploy_catalog_process, deploy_catalog_readmodel_writer,
