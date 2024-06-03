@@ -89,6 +89,7 @@ jobs:
   deploy_agreement_management:
     name: Agreement Management
     needs: [deploy_configs]
+    if: ${{ inputs.environment != 'dev-refactor' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
