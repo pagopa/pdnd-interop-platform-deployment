@@ -9,23 +9,19 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
-            - name: READ_MODEL_DB_HOST
+            - name: READMODEL_DB_HOST
               value: "{{READ_MODEL_DB_HOST}}"
-            - name: READ_MODEL_DB_PORT
+            - name: READMODEL_DB_PORT
               value: "{{READ_MODEL_DB_PORT}}"
-            - name: READ_MODEL_DB_NAME
+            - name: READMODEL_DB_NAME
               value: "{{READ_MODEL_DB_NAME}}"
-            - name: READ_MODEL_DB_USER
+            - name: READMODEL_DB_USER
               valueFrom:
                 secretKeyRef:
                   name: read-model
                   key: READONLY_USR
-            - name: READ_MODEL_DB_PASSWORD
+            - name: READMODEL_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: read-model
                   key: READONLY_PSW
-            - name: READ_MODEL_REPLICA_SET
-              value: "{{READ_MODEL_REPLICA_SET}}"
-            - name: READ_MODEL_READ_PREFERENCE
-              value: "{{READ_MODEL_READ_PREFERENCE}}"
