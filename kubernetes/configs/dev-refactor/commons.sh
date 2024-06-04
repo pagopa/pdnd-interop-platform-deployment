@@ -17,6 +17,7 @@ REPLICAS=1
 BACKEND_SERVICE_PORT="8088"
 KAFKA_BROKERS="boot-yqksbq44.c3.kafka-serverless.eu-central-1.amazonaws.com:9098"
 
+AGREEMENT_TOPIC="event-store.dev-refactor_agreement.events"
 CATALOG_TOPIC="event-store.dev-refactor_catalog.events"
 ATTRIBUTE_TOPIC="event-store.dev-refactor_attribute_registry.events"
 PURPOSE_TOPIC="event-store.dev-refactor_purpose.events"
