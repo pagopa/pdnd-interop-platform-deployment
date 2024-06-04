@@ -19,10 +19,6 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: AUTHORIZATION_MANAGEMENT_URL
-            - name: CATALOG_PROCESS_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
                   key: CATALOG_PROCESS_URL
             - name: EVENTSTORE_DB_SCHEMA
               valueFrom:
