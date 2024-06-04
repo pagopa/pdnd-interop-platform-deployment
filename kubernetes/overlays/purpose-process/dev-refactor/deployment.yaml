@@ -19,7 +19,6 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: AUTHORIZATION_MANAGEMENT_URL
-                  key: CATALOG_PROCESS_URL
             - name: EVENTSTORE_DB_SCHEMA
               valueFrom:
                 configMapKeyRef:
@@ -40,3 +39,8 @@ spec:
                 configMapKeyRef:
                   name: common-jwt
                   key: WELL_KNOWN_URLS
+            - name: S3_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: S3_BUCKET
