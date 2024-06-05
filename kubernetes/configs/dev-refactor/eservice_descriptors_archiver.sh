@@ -1,5 +1,6 @@
 #!/bin/bash
 
+ESERVICE_DESCRIPTORS_ARCHIVER_SERVICE_NAME="interop-be-eservice-descriptors-archiver-refactor"
 ARCHIVING_ESERVICES_QUEUE_URL="archived-agreements-for-eservices"
 AGREEMENTS_COLLECTION_NAME="agreements"
 ESERVICES_COLLECTION_NAME="eservices"
