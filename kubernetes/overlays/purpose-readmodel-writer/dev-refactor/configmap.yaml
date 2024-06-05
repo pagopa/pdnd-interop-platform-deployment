@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+data:
+  KAFKA_CLIENT_ID: "{{NAMESPACE}}-pagopa-interop-purpose"
+  KAFKA_GROUP_ID: "{{NAMESPACE}}-purpose-readmodel-writer"
+  PURPOSE_TOPIC: "{{PURPOSE_TOPIC}}"

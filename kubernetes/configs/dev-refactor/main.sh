@@ -15,7 +15,6 @@ ATTRIBUTE_REGISTRY_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $ATTRIBUTE_REGIST
 AUTHORIZATION_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $AUTHORIZATION_MANAGEMENT_IMAGE_VERSION)
 CATALOG_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $CATALOG_MANAGEMENT_IMAGE_VERSION)
 PARTY_REGISTRY_PROXY_INTERFACE_VERSION=$(shortVersion $PARTY_REGISTRY_PROXY_IMAGE_VERSION)
-PURPOSE_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $PURPOSE_MANAGEMENT_IMAGE_VERSION)
 TENANT_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $TENANT_MANAGEMENT_IMAGE_VERSION)
 
 ATTRIBUTE_REGISTRY_PROCESS_INTERFACE_VERSION=$(shortVersion $ATTRIBUTE_REGISTRY_PROCESS_IMAGE_VERSION)
@@ -47,7 +46,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/dev-refactor/catalog_process.sh
 . $(pwd)/kubernetes/configs/dev-refactor/frontend.sh
 . $(pwd)/kubernetes/configs/dev-refactor/party_registry_proxy.sh
-. $(pwd)/kubernetes/configs/dev-refactor/purpose_management.sh
+. $(pwd)/kubernetes/configs/dev-refactor/purpose_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/dev-refactor/purpose_process.sh
 . $(pwd)/kubernetes/configs/dev-refactor/tenant_management.sh
 . $(pwd)/kubernetes/configs/dev-refactor/tenant_process.sh
