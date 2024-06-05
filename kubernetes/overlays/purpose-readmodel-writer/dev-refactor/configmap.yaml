@@ -6,4 +6,3 @@ metadata:
 data:
   KAFKA_CLIENT_ID: "{{NAMESPACE}}-pagopa-interop-purpose"
   KAFKA_GROUP_ID: "{{NAMESPACE}}-purpose-readmodel-writer"
-  PURPOSE_TOPIC: "{{PURPOSE_TOPIC}}"

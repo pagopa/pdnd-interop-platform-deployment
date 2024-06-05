@@ -6,4 +6,3 @@ metadata:
 data:
   KAFKA_CLIENT_ID: "{{NAMESPACE}}-pagopa-interop-catalog"
   KAFKA_GROUP_ID: "catalog-readmodel-writer"
-  CATALOG_TOPIC: "{{CATALOG_TOPIC}}"

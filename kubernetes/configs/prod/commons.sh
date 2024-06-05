@@ -17,8 +17,10 @@ REPLICAS=2
 BACKEND_SERVICE_PORT="8088"
 KAFKA_BROKERS="boot-g41hzx46.c2.kafka-serverless.eu-central-1.amazonaws.com:9098"
 
-CATALOG_TOPIC="event-store.prod_catalog.events"
+AGREEMENT_TOPIC="event-store.prod_agreement.events"
 ATTRIBUTE_TOPIC="event-store.prod_attribute_registry.events"
+CATALOG_TOPIC="event-store.prod_catalog.events"
+PURPOSE_TOPIC="event-store.prod_purpose.events"
 
 AWS_REGION="eu-central-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
