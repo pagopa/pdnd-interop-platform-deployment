@@ -24,6 +24,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: CATALOG_TOPIC
+            - name: PURPOSE_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PURPOSE_TOPIC
             - name: NOTIFICATION_QUEUE_URL
               valueFrom:
                 configMapKeyRef:
