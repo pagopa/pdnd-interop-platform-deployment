@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: common-selfcare
+  namespace: {{NAMESPACE}}
+data:
+  SELFCARE_V2_URL: {{SELFCARE_V2_URL}}
