@@ -19,6 +19,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: KAFKA_GROUP_ID
+            - name: AGREEMENT_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: AGREEMENT_TOPIC
             - name: CATALOG_TOPIC
               valueFrom:
                 configMapKeyRef:
