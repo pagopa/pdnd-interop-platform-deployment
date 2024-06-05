@@ -19,16 +19,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: EVENTSTORE_DB_SCHEMA
-            - name: TENANT_MANAGEMENT_URL
+            - name: RISK_ANALYSIS_DOCUMENTS_PATH
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: TENANT_MANAGEMENT_URL     
-            - name: RISK_ANALYSIS_DOCS_PATH
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: RISK_ANALYSIS_DOCS_PATH
+                  key: RISK_ANALYSIS_DOCUMENTS_PATH
             - name: WELL_KNOWN_URLS
               valueFrom:
                 configMapKeyRef:
