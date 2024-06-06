@@ -6,9 +6,6 @@ metadata:
 data:
   KAFKA_CLIENT_ID: "{{NAMESPACE}}-pagopa-interop-authorization-updater"
   KAFKA_GROUP_ID: "{{NAMESPACE}}-authorization-updater"
-  AGREEMENT_TOPIC: "{{AGREEMENT_TOPIC}}"
-  CATALOG_TOPIC: "{{CATALOG_TOPIC}}"
-  PURPOSE_TOPIC: "{{PURPOSE_TOPIC}}"
 
   INTERNAL_JWT_KID: "{{RSA_KEYS_IDENTIFIERS}}"
   INTERNAL_JWT_SUBJECT: "{{INTERNAL_JWT_SUBJECT}}"

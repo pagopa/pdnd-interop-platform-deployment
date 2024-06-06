@@ -22,5 +22,5 @@ spec:
             - name: PURPOSE_TOPIC
               valueFrom:
                 configMapKeyRef:
-                  name: {{SERVICE_NAME}}
+                  name: common-kafka
                   key: PURPOSE_TOPIC

@@ -6,4 +6,3 @@ metadata:
 data:
   KAFKA_CLIENT_ID: "{{NAMESPACE}}-pagopa-interop-agreement"
   KAFKA_GROUP_ID: "{{NAMESPACE}}-agreement-readmodel-writer"
-  AGREEMENT_TOPIC: "{{AGREEMENT_TOPIC}}"

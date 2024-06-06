@@ -22,7 +22,7 @@ spec:
             - name: CATALOG_TOPIC
               valueFrom:
                 configMapKeyRef:
-                  name: {{SERVICE_NAME}}
+                  name: common-kafka
                   key: CATALOG_TOPIC
 
 

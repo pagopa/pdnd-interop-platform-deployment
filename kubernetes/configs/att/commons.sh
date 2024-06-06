@@ -15,6 +15,11 @@ READ_MODEL_READ_PREFERENCE="secondaryPreferred"
 REPLICAS=1
 BACKEND_SERVICE_PORT="8088"
 
+AGREEMENT_TOPIC="event-store.att_agreement.events"
+ATTRIBUTE_TOPIC="event-store.att_attribute_registry.events"
+CATALOG_TOPIC="event-store.att_catalog.events"
+PURPOSE_TOPIC="event-store.att_purpose.events"
+
 AWS_REGION="eu-central-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
 CERTIFIED_MAIL_QUEUE_NAME="certified-mail.fifo"
