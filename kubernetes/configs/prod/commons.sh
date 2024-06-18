@@ -19,6 +19,7 @@ KAFKA_BROKERS="boot-g41hzx46.c2.kafka-serverless.eu-central-1.amazonaws.com:9098
 
 AGREEMENT_TOPIC="event-store.prod_agreement.events"
 ATTRIBUTE_TOPIC="event-store.prod_attribute_registry.events"
+AUTHORIZATION_TOPIC="event-store.prod_authz.events"
 CATALOG_TOPIC="event-store.prod_catalog.events"
 PURPOSE_TOPIC="event-store.prod_purpose.events"
 
