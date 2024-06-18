@@ -1,0 +1,7 @@
+bases:
+- ../../../base/be-refactor/generic-consumer
+resources:
+- configmap.yaml
+patchesStrategicMerge:
+- deployment.yaml
+- ../../../commons/database/be-refactor/read-model.yaml

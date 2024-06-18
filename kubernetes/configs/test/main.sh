@@ -32,6 +32,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/test/redis.sh
 . $(pwd)/kubernetes/configs/test/smtp_mock.sh
 
+. $(pwd)/kubernetes/configs/test/agreement_email_sender.sh
 . $(pwd)/kubernetes/configs/test/agreement_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/test/agreement_process.sh
 . $(pwd)/kubernetes/configs/test/api_gateway.sh
