@@ -29,6 +29,11 @@ spec:
                 configMapKeyRef:
                   name: common-kafka
                   key: CATALOG_TOPIC
+            - name: PURPOSE_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: PURPOSE_TOPIC
             - name: AUTHORIZATION_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
