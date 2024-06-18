@@ -17,6 +17,7 @@ BACKEND_SERVICE_PORT="8088"
 
 AGREEMENT_TOPIC="event-store.att_agreement.events"
 ATTRIBUTE_TOPIC="event-store.att_attribute_registry.events"
+AUTHORIZATION_TOPIC="event-store.att_authz.events"
 CATALOG_TOPIC="event-store.att_catalog.events"
 PURPOSE_TOPIC="event-store.att_purpose.events"
 
