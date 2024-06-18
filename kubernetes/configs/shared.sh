@@ -6,6 +6,7 @@ shortVersion() {
   echo $1 | grep -oE '^[0-9]+\.[0-9]+\.[0-9]+$' | grep -oE '[0-9]+\.[0-9]+' || echo "0.0"
 }
 
+AGREEMENT_EMAIL_SENDER_SERVICE_NAME="interop-be-agreement-email-sender"
 AGREEMENT_MANAGEMENT_SERVICE_NAME="interop-be-agreement-management"
 AGREEMENT_READMODEL_WRITER_SERVICE_NAME="interop-be-agreement-readmodel-writer"
 AGREEMENT_PROCESS_SERVICE_NAME="interop-be-agreement-process"

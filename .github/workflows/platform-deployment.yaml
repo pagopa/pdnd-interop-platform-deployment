@@ -103,7 +103,7 @@ jobs:
       resource_mem_var_name: AGREEMENT_MANAGEMENT_RESOURCE_MEM
 
   deploy_agreement_email_sender:
-    name: Agreement ReadModel Writer
+    name: Agreement Email Sender
     needs: [deploy_configs]
     if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'test' }}
     permissions:
@@ -112,7 +112,7 @@ jobs:
     secrets: inherit
     with:
       environment: ${{ inputs.environment }}
-      kustomize_overlay_path: "overlays/agreement-readmodel-writer/${{ inputs.environment }}"
+      kustomize_overlay_path: "overlays/agreement-email-sender/${{ inputs.environment }}"
       service_name_var_name: AGREEMENT_EMAIL_SENDER_SERVICE_NAME
       image_version_var_name: AGREEMENT_EMAIL_SENDER_IMAGE_VERSION
       resource_cpu_var_name: AGREEMENT_EMAIL_SENDER_RESOURCE_CPU
