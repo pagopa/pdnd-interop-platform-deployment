@@ -43,7 +43,7 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: SMTP_PORT
-            - name: SMTP_USER
+            - name: SMTP_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: smtp-certified
