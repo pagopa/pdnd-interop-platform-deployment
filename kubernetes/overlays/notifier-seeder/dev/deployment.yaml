@@ -19,11 +19,21 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: KAFKA_GROUP_ID
+            - name: AGREEMENT_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: AGREEMENT_TOPIC
             - name: CATALOG_TOPIC
               valueFrom:
                 configMapKeyRef:
                   name: common-kafka
                   key: CATALOG_TOPIC
+            - name: PURPOSE_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: PURPOSE_TOPIC
             - name: NOTIFICATION_QUEUE_URL
               valueFrom:
                 configMapKeyRef:
