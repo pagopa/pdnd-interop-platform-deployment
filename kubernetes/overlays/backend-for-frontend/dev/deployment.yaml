@@ -224,13 +224,13 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: EXPORT_ESERVICE_PATH
-            - name: GET_URL_DURATION_MINUTES
+            - name: PRESIGNED_URL_GET_DURATION_MINUTES
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: GET_URL_DURATION_MINUTES
-            - name: PUT_URL_DURATION_MINUTES
+                  key: PRESIGNED_URL_GET_DURATION_MINUTES
+            - name: PRESIGNED_URL_PUT_DURATION_MINUTES
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: PUT_URL_DURATION_MINUTES
+                  key: PRESIGNED_URL_PUT_DURATION_MINUTES
