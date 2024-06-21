@@ -84,6 +84,11 @@ spec:
                   configMapKeyRef:
                     name: {{SERVICE_NAME}}
                     key: ATTRIBUTE_REGISTRY_PROCESS_URL
+            - name: CATALOG_MANAGEMENT_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: CATALOG_MANAGEMENT_URL
             - name: CATALOG_PROCESS_URL
               valueFrom:
                   configMapKeyRef:
@@ -204,3 +209,33 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PRIVACY_NOTICES_CONTAINER
+            - name: IMPORT_ESERVICE_CONTAINER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: IMPORT_ESERVICE_CONTAINER
+            - name: IMPORT_ESERVICE_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: IMPORT_ESERVICE_PATH
+            - name: EXPORT_ESERVICE_CONTAINER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: EXPORT_ESERVICE_CONTAINER
+            - name: EXPORT_ESERVICE_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: EXPORT_ESERVICE_PATH
+            - name: PRESIGNED_URL_GET_DURATION_MINUTES
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRESIGNED_URL_GET_DURATION_MINUTES
+            - name: PRESIGNED_URL_PUT_DURATION_MINUTES
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRESIGNED_URL_PUT_DURATION_MINUTES
