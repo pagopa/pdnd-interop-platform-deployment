@@ -53,3 +53,8 @@ spec:
                 secretKeyRef:
                   name: smtp-certified
                   key: PEC_SMTP_PASSWORD
+            - name: SMTP_SECURE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SMTP_SECURE

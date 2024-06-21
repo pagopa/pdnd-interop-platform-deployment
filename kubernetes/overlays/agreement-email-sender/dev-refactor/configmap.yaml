@@ -8,3 +8,4 @@ data:
   KAFKA_GROUP_ID: "{{NAMESPACE}}-agreement-email-sender"
   SMTP_ADDRESS: "{{PEC_SMTP_ADDRESS}}"
   SMTP_PORT: "{{PEC_SMTP_PORT}}"
+  SMTP_SECURE: "{{AGREEMENT_PEC_SMTP_SECURE}}"
