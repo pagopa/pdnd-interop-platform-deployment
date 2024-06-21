@@ -7,6 +7,7 @@ DOMAIN_NAME="interop.pagopa.it"
 REPOSITORY="505630707203.dkr.ecr.eu-central-1.amazonaws.com"
 POSTGRES_HOST="interop-persistence-management-prod.cluster-clwq8rah1dfz.eu-central-1.rds.amazonaws.com"
 POSTGRES_PORT="5432"
+POSTGRES_DB_NAME="persistence_management"
 READ_MODEL_DB_HOST="interop-read-model-prod.cluster-clwq8rah1dfz.eu-central-1.docdb.amazonaws.com"
 READ_MODEL_DB_PORT="27017"
 READ_MODEL_DB_NAME="read-model"
@@ -14,11 +15,20 @@ READ_MODEL_REPLICA_SET="rs0"
 READ_MODEL_READ_PREFERENCE="secondaryPreferred"
 REPLICAS=2
 BACKEND_SERVICE_PORT="8088"
+KAFKA_BROKERS="boot-g41hzx46.c2.kafka-serverless.eu-central-1.amazonaws.com:9098"
+
+AGREEMENT_TOPIC="event-store.prod_agreement.events"
+ATTRIBUTE_TOPIC="event-store.prod_attribute_registry.events"
+AUTHORIZATION_TOPIC="event-store.prod_authz.events"
+CATALOG_TOPIC="event-store.prod_catalog.events"
+PURPOSE_TOPIC="event-store.prod_purpose.events"
 
 AWS_REGION="eu-central-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
 CERTIFIED_MAIL_QUEUE_NAME="certified-mail.fifo"
 AWS_SQS_DOMAIN="https://sqs.${AWS_REGION}.amazonaws.com"
+
+NOTIFICATION_QUEUE_URL="https://sqs.eu-central-1.amazonaws.com/697818730278/persistence-events.fifo"
 
 ENABLED_PROJECTIONS="true"
 WELL_KNOWN_URLS="https://interop.pagopa.it/.well-known/jwks.json"
@@ -36,6 +46,8 @@ RSA_KEYS_IDENTIFIERS="199d08d2-9971-4979-a78d-e6f7a544f296"
 SELFCARE_V2_URL="https://api.selfcare.pagopa.it/external/v2"
 
 INTEROP_SELFCARE_PRODUCT_NAME="prod-interop"
+TENANT_ALLOWED_ORIGINS="IPA,ANAC,IVASS"
+PRODUCER_ALLOWED_ORIGINS="IPA"
 
 PRIVACY_NOTICES_DYNAMO_TABLE_NAME="interop-privacy-notices-prod"
 PRIVACY_NOTICES_ACCEPTANCE_DYNAMO_TABLE_NAME="interop-privacy-notices-acceptances-prod"
@@ -47,3 +59,5 @@ PAGOPA_TENANT_ID="4a4149af-172e-4950-9cc8-63ccc9a6d865"
 
 SMTP_ADDRESS="smtp.gmail.com"
 SMTP_PORT=465
+
+AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.prod.svc.cluster.local:8088/authorization-management/1.0"

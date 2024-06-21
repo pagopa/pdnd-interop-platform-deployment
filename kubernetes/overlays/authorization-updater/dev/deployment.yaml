@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          env:
+            - name: KAFKA_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: KAFKA_CLIENT_ID
+            - name: KAFKA_GROUP_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: KAFKA_GROUP_ID
+            - name: CATALOG_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: CATALOG_TOPIC
+            - name: AUTHORIZATION_MANAGEMENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: common-services-urls
+                  key: AUTHORIZATION_MANAGEMENT_URL
+            - name: RSA_KEYS_IDENTIFIERS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: RSA_KEYS_IDENTIFIERS
+            - name: KMS_MAX_ACQUISITION_TIMEOUT_SECONDS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: KMS_MAX_ACQUISITION_TIMEOUT_SECONDS
+            - name: GENERATED_JWT_SECONDS_TO_EXPIRE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: GENERATED_JWT_SECONDS_TO_EXPIRE
+            - name: GENERATED_JWT_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: GENERATED_JWT_ISSUER
+            - name: GENERATED_JWT_SUBJECT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: GENERATED_JWT_SUBJECT
+            - name: GENERATED_JWT_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: GENERATED_JWT_AUDIENCE

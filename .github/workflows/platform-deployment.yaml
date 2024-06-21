@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        index: [1, 2, 3, 4 ,5]
+        index: [1, 2, 3, 4 ,5, 6, 7, 8, 9, 10]
       fail-fast: true
     environment: ${{ inputs.environment }}
     permissions:
@@ -53,11 +53,15 @@ jobs:
         id: start_runner
         uses: pagopa/interop-github-runner-aws-create-action@main
         with:
+          environment: ${{ inputs.environment }}
           aws_region: ${{ secrets.AWS_REGION }}
           iam_role_arn: ${{ secrets.ECS_IAM_ROLE_ARN }}
           ecs_cluster_name: ${{ secrets.ECS_CLUSTER_NAME }}
           ecs_task_definition: ${{ secrets.TASK_DEFINITION }}
-          ecs_container_name: github-runner
+          ecs_task_cpu: ${{ vars.ECS_TASK_CPU }}
+          ecs_task_memory: ${{ vars.ECS_TASK_MEMORY }}
+          ecs_container_name: ${{ vars.ECS_TASK_CONTAINER_NAME }}
+          ecs_task_max_duration_seconds: ${{ vars.ECS_TASK_MAX_DURATION_SECONDS }}
           ecs_task_subnet_id: ${{ secrets.SUBNET_ID }}
           ecs_task_sec_group: ${{ secrets.SEC_GROUP_ID }}
           pat_token: ${{ secrets.BOT_TOKEN }}
@@ -85,6 +89,7 @@ jobs:
   deploy_agreement_management:
     name: Agreement Management
     needs: [deploy_configs]
+    if: ${{ inputs.environment != 'dev-refactor' && inputs.environment != 'test'}}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -96,6 +101,38 @@ jobs:
       image_version_var_name: AGREEMENT_MANAGEMENT_IMAGE_VERSION
       resource_cpu_var_name: AGREEMENT_MANAGEMENT_RESOURCE_CPU
       resource_mem_var_name: AGREEMENT_MANAGEMENT_RESOURCE_MEM
+
+  deploy_agreement_email_sender:
+    name: Agreement Email Sender
+    needs: [deploy_configs]
+    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'test' }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/agreement-email-sender/${{ inputs.environment }}"
+      service_name_var_name: AGREEMENT_EMAIL_SENDER_SERVICE_NAME
+      image_version_var_name: AGREEMENT_EMAIL_SENDER_IMAGE_VERSION
+      resource_cpu_var_name: AGREEMENT_EMAIL_SENDER_RESOURCE_CPU
+      resource_mem_var_name: AGREEMENT_EMAIL_SENDER_RESOURCE_MEM
+
+  deploy_agreement_readmodel_writer:
+    name: Agreement ReadModel Writer
+    needs: [deploy_configs]
+    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'test' }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/agreement-readmodel-writer/${{ inputs.environment }}"
+      service_name_var_name: AGREEMENT_READMODEL_WRITER_SERVICE_NAME
+      image_version_var_name: AGREEMENT_READMODEL_WRITER_IMAGE_VERSION
+      resource_cpu_var_name: AGREEMENT_READMODEL_WRITER_RESOURCE_CPU
+      resource_mem_var_name: AGREEMENT_READMODEL_WRITER_RESOURCE_MEM
 
   deploy_agreement_process:
     name: Agreement Process
@@ -115,6 +152,7 @@ jobs:
   deploy_attribute_registry_management:
     name: Attribute Registry Management
     needs: [deploy_configs]
+    if: ${{ inputs.environment == 'att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -126,6 +164,22 @@ jobs:
       image_version_var_name: ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION
       resource_cpu_var_name: ATTRIBUTE_REGISTRY_MANAGEMENT_RESOURCE_CPU
       resource_mem_var_name: ATTRIBUTE_REGISTRY_MANAGEMENT_RESOURCE_MEM
+
+  deploy_attribute_registry_readmodel_writer:
+    name: Attribute Registry ReadModel Writer
+    needs: [deploy_configs]
+    if: ${{ inputs.environment != 'att' }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/attribute-registry-readmodel-writer/${{ inputs.environment }}"
+      service_name_var_name: ATTRIBUTE_REGISTRY_READMODEL_WRITER_SERVICE_NAME
+      image_version_var_name: ATTRIBUTE_REGISTRY_READMODEL_WRITER_IMAGE_VERSION
+      resource_cpu_var_name: ATTRIBUTE_REGISTRY_READMODEL_WRITER_RESOURCE_CPU
+      resource_mem_var_name: ATTRIBUTE_REGISTRY_READMODEL_WRITER_RESOURCE_MEM
 
   deploy_attribute_registry_process:
     name: Attribute Registry Process
@@ -172,9 +226,26 @@ jobs:
       resource_cpu_var_name: AUTHORIZATION_PROCESS_RESOURCE_CPU
       resource_mem_var_name: AUTHORIZATION_PROCESS_RESOURCE_MEM
 
+  deploy_authorization_updater:
+    name: Authorization Updater
+    needs: [deploy_configs]
+    if: ${{ inputs.environment != 'att' }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/authorization-updater/${{ inputs.environment }}"
+      service_name_var_name: AUTHORIZATION_UPDATER_SERVICE_NAME
+      image_version_var_name: AUTHORIZATION_UPDATER_IMAGE_VERSION
+      resource_cpu_var_name: AUTHORIZATION_UPDATER_RESOURCE_CPU
+      resource_mem_var_name: AUTHORIZATION_UPDATER_RESOURCE_MEM
+
   deploy_catalog_management:
     name: Catalog Management
     needs: [deploy_configs]
+    if: ${{ inputs.environment == 'att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -186,6 +257,22 @@ jobs:
       image_version_var_name: CATALOG_MANAGEMENT_IMAGE_VERSION
       resource_cpu_var_name: CATALOG_MANAGEMENT_RESOURCE_CPU
       resource_mem_var_name: CATALOG_MANAGEMENT_RESOURCE_MEM
+
+  deploy_catalog_readmodel_writer:
+    name: Catalog ReadModel Writer
+    needs: [deploy_configs]
+    if: ${{ inputs.environment != 'att' }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/catalog-readmodel-writer/${{ inputs.environment }}"
+      service_name_var_name: CATALOG_READMODEL_WRITER_SERVICE_NAME
+      image_version_var_name: CATALOG_READMODEL_WRITER_IMAGE_VERSION
+      resource_cpu_var_name: CATALOG_READMODEL_WRITER_RESOURCE_CPU
+      resource_mem_var_name: CATALOG_READMODEL_WRITER_RESOURCE_MEM
 
   deploy_catalog_process:
     name: Catalog Process
@@ -220,6 +307,7 @@ jobs:
   deploy_purpose_management:
     name: Purpose Management
     needs: [deploy_configs]
+    if: ${{ inputs.environment != 'dev-refactor' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -246,6 +334,22 @@ jobs:
       image_version_var_name: PURPOSE_PROCESS_IMAGE_VERSION
       resource_cpu_var_name: PURPOSE_PROCESS_RESOURCE_CPU
       resource_mem_var_name: PURPOSE_PROCESS_RESOURCE_MEM
+
+  deploy_purpose_readmodel_writer:
+    name: Purpose ReadModel Writer
+    needs: [deploy_configs]
+    if: ${{ inputs.environment == 'dev-refactor' }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/purpose-readmodel-writer/${{ inputs.environment }}"
+      service_name_var_name: PURPOSE_READMODEL_WRITER_SERVICE_NAME
+      image_version_var_name: PURPOSE_READMODEL_WRITER_IMAGE_VERSION
+      resource_cpu_var_name: PURPOSE_READMODEL_WRITER_RESOURCE_CPU
+      resource_mem_var_name: PURPOSE_READMODEL_WRITER_RESOURCE_MEM
 
   deploy_tenant_management:
     name: Tenant Management
@@ -337,9 +441,26 @@ jobs:
       resource_cpu_var_name: NOTIFIER_RESOURCE_CPU
       resource_mem_var_name: NOTIFIER_RESOURCE_MEM
 
+  deploy_notifier_seeder:
+    name: Notifier Seeder
+    needs: [deploy_configs]
+    if: ${{ inputs.environment != 'att' }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/notifier-seeder/${{ inputs.environment }}"
+      service_name_var_name: NOTIFIER_SEEDER_SERVICE_NAME
+      image_version_var_name: NOTIFIER_SEEDER_IMAGE_VERSION
+      resource_cpu_var_name: NOTIFIER_SEEDER_RESOURCE_CPU
+      resource_mem_var_name: NOTIFIER_SEEDER_RESOURCE_MEM
+
   deploy_certified_mail_sender:
     name: Certified Mail Sender
     needs: [deploy_configs]
+    if: ${{ inputs.environment != 'att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -370,7 +491,7 @@ jobs:
   deploy_selfcare_onboarding_consumer:
     name: Selfcare onboarding consumer
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'qa' }}
+    if: ${{ inputs.environment != 'dev-refactor' && inputs.environment != 'qa' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -592,6 +713,21 @@ jobs:
       resource_cpu_var_name: JOB_DTD_METRICS_RESOURCE_CPU
       resource_mem_var_name: JOB_DTD_METRICS_RESOURCE_MEM
 
+  deploy_datalake_data_export:
+    name: Datalake data export
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-cronjob.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      k8s_files_path: "jobs/datalake-data-export/${{ inputs.environment }}"
+      service_name_var_name: JOB_DATALAKE_DATA_EXPORT_SERVICE_NAME
+      image_version_var_name: JOB_DATALAKE_DATA_EXPORT_IMAGE_VERSION
+      resource_cpu_var_name: JOB_DATALAKE_DATA_EXPORT_RESOURCE_CPU
+      resource_mem_var_name: JOB_DATALAKE_DATA_EXPORT_RESOURCE_MEM
+
   deploy_redis:
     name: Redis
     needs: [deploy_configs]
@@ -605,7 +741,7 @@ jobs:
   deploy_smtp_mock:
     name: SMTP mock
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'prod' && inputs.environment != 'prod2' }}
+    if: ${{ inputs.environment != 'prod' && inputs.environment != 'att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-smtp-mock.yaml
@@ -629,14 +765,15 @@ jobs:
   delete_runner:
     name: Delete Self-Hosted Runner
     needs: [create_runner, deploy_ingress,
-      deploy_agreement_management, deploy_agreement_process,
-      deploy_attribute_registry_management, deploy_attribute_registry_process,
-      deploy_authorization_management, deploy_authorization_process,
-      deploy_catalog_management, deploy_catalog_process,
+      deploy_agreement_email_sender,
+      deploy_agreement_management, deploy_agreement_process, deploy_agreement_readmodel_writer,
+      deploy_attribute_registry_management, deploy_attribute_registry_process, deploy_attribute_registry_readmodel_writer,
+      deploy_authorization_management, deploy_authorization_process, deploy_authorization_updater,
+      deploy_catalog_management, deploy_catalog_process, deploy_catalog_readmodel_writer,
       deploy_party_registry_proxy,
-      deploy_purpose_management, deploy_purpose_process,
+      deploy_purpose_management, deploy_purpose_process, deploy_purpose_readmodel_writer,
       deploy_tenant_management, deploy_tenant_process,
-      deploy_notifier,
+      deploy_notifier, deploy_notifier_seeder,
       deploy_attributes_loader, deploy_token_details_persister,
       deploy_tenants_certified_attributes_updater, deploy_party_registry_proxy_refresher,
       deploy_metrics_report_generator, deploy_padigitale_report_generator,
@@ -645,14 +782,14 @@ jobs:
       deploy_dashboard_metrics_report_generator, deploy_dtd_catalog_exporter,
       deploy_certified_mail_sender, deploy_selfcare_onboarding_consumer,
       deploy_eservices_monitoring_exporter, deploy_eservice_descriptors_archiver,
-      deploy_one_trust_notices, deploy_dtd_metrics,
+      deploy_one_trust_notices, deploy_dtd_metrics,deploy_datalake_data_export,
       deploy_redis,
       deploy_smtp_mock]
     if: ${{ always() && needs.create_runner.result != 'skipped' }}
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        index: [1, 2, 3, 4, 5]
+        index: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
       fail-fast: true
     environment: ${{ inputs.environment }}
     permissions:
@@ -664,6 +801,7 @@ jobs:
         id: stop_runner
         uses: pagopa/interop-github-runner-aws-cleanup-action@main
         with:
+          environment: ${{ inputs.environment }}
           aws_region: ${{ secrets.AWS_REGION }}
           iam_role_arn: ${{ secrets.ECS_IAM_ROLE_ARN }}
           ecs_cluster_name: ${{ secrets.ECS_CLUSTER_NAME }}

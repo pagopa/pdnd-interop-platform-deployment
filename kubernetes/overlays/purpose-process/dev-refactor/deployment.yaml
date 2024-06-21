@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          env:
+            - name: ACCEPTED_AUDIENCES
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ACCEPTED_AUDIENCES
+            - name: EVENTSTORE_DB_SCHEMA
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: EVENTSTORE_DB_SCHEMA
+            - name: RISK_ANALYSIS_DOCUMENTS_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: RISK_ANALYSIS_DOCUMENTS_PATH
+            - name: WELL_KNOWN_URLS
+              valueFrom:
+                configMapKeyRef:
+                  name: common-jwt
+                  key: WELL_KNOWN_URLS
+            - name: S3_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: S3_BUCKET

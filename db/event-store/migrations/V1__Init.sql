@@ -1,10 +1,13 @@
-CREATE TABLEIF NOT EXISTS "${applicationSchema}".events (
+CREATE TABLE IF NOT EXISTS "${applicationSchema}".events (
     sequence_num BIGSERIAL NOT NULL,
 
     stream_id UUID NOT NULL,
     version BIGINT NOT NULL,
 
+    correlation_id text,
+
     type TEXT NOT NULL,
+    event_version INT NOT NULL,
     data BYTEA NOT NULL,
 
     log_date TIMESTAMPTZ NOT NULL DEFAULT now(),

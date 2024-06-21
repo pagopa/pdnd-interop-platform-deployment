@@ -6,7 +6,7 @@ metadata:
   name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 spec:
-  schedule: "0 11 * * *"
+  schedule: "15 5,11,17,23 * * *"
   failedJobsHistoryLimit: 1
   successfulJobsHistoryLimit: 0
   jobTemplate:
@@ -53,8 +53,6 @@ spec:
                       name: documentdb
                       key: READONLY_PSW
 
-                - name: SOURCE_FILE_DOWNLOAD_DIR
-                  value: "/tmp"
                 - name: SOURCE_URL
                   valueFrom:
                       configMapKeyRef:

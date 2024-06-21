@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          env:
+            - name: READMODEL_DB_HOST
+              value: "{{READ_MODEL_DB_HOST}}"
+            - name: READMODEL_DB_PORT
+              value: "{{READ_MODEL_DB_PORT}}"
+            - name: READMODEL_DB_NAME
+              value: "{{READ_MODEL_DB_NAME}}"
+            - name: READMODEL_DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: read-model
+                  key: READONLY_USR
+            - name: READMODEL_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: read-model
+                  key: READONLY_PSW

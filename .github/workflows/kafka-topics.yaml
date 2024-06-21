@@ -1,0 +1,161 @@
+name: Kafka Topics
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment
+        required: true
+        type: environment
+      delete_topics:
+        description: Delete Kafka topics
+        required: true
+        type: boolean
+        default: false
+      delete_topics_prefix:
+        description: Topics to delete name prefix (required if delete_topics == true)
+        required: false
+        type: string
+      create_topics:
+        description: Create topics
+        required: true
+        type: boolean
+        default: false
+
+jobs:
+  validate_inputs:
+    name: Validate Inputs
+    runs-on: ubuntu-22.04
+    # we could use an "if" here, but if this job is skipped then all the downstream jobs are skipped even if they don't need this job
+
+    steps:
+      - name: Print Inputs
+        id: print_inputs
+        run: |
+          echo "- environment: \`${{ inputs.environment }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- ref: \`${{ github.ref }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- delete_topics: \`${{ inputs.delete_topics }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- delete_topics_prefix: \`${{ inputs.delete_topics_prefix }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- create_topics: \`${{ inputs.create_topics }}\`" >> $GITHUB_STEP_SUMMARY
+
+      - name: Validate Prod Ref
+        id: check_ref
+        run: |
+          set -euxo pipefail
+
+          if [ ! "${{ inputs.environment }}" = "prod" ]; then
+            exit 0
+          fi
+
+          if [ ! "${{ github.ref_type }}" = "tag" ]; then
+            echo >&2 "ERROR: deploy on prod environment must use a git tag"
+            exit 1
+          fi
+
+  create_runner:
+    name: Create Self-Hosted Runner
+    needs: [validate_inputs]
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        index: [1]
+      fail-fast: true
+    environment: ${{ inputs.environment }}
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Start GitHub Runner
+        id: start_runner
+        uses: pagopa/interop-github-runner-aws-create-action@main
+        with:
+          aws_region: ${{ secrets.AWS_REGION }}
+          iam_role_arn: ${{ secrets.ECS_IAM_ROLE_ARN }}
+          ecs_cluster_name: ${{ secrets.ECS_CLUSTER_NAME }}
+          ecs_task_definition: ${{ secrets.TASK_DEFINITION }}
+          ecs_container_name: github-runner
+          ecs_task_subnet_id: ${{ secrets.SUBNET_ID }}
+          ecs_task_sec_group: ${{ secrets.SEC_GROUP_ID }}
+          pat_token: ${{ secrets.BOT_TOKEN }}
+
+  delete_kafka_topics:
+    name: Delete Kafka Topics
+    needs: [create_runner]
+    runs-on: [self-hosted, "run_id:${{ inputs.environment }}-${{ github.run_id }}"]
+    environment: ${{ inputs.environment }}
+    if: ${{ inputs.delete_topics }}
+    env:
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      KAFKA_BROKERS: ${{ secrets.KAFKA_BROKERS }}
+      DOMAIN_TOPIC_PREFIX: ${{ inputs.delete_topics_prefix }}
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Delete Kafka Topics
+        id: delete_topics
+        working-directory: kafka/scripts
+        run: |
+          set -eou pipefail
+
+          npm ci
+          npm run kafka:deleteTopics
+
+  create_kafka_topics:
+    name: Create Kafka Topics
+    needs: [create_runner, delete_kafka_topics]
+    runs-on: [self-hosted, "run_id:${{ inputs.environment }}-${{ github.run_id }}"]
+    environment: ${{ inputs.environment }}
+    # workaround due to 'needs' logic when preceding job is skipped
+    if: ${{ always() && !failure() && !cancelled() && inputs.create_topics }}
+    env:
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      KAFKA_BROKERS: ${{ secrets.KAFKA_BROKERS }}
+      TOPICS_PROPERTIES_PATH: ../topics/${{ inputs.environment }}
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Create Kafka Topics
+        id: create_topics
+        working-directory: kafka/scripts
+        run: |
+          set -eou pipefail
+
+          npm ci
+          npm run kafka:createTopics
+
+  delete_runner:
+    name: Delete Self-Hosted Runner
+    needs: [create_runner, delete_kafka_topics, create_kafka_topics]
+    if: ${{ always() && needs.create_runner.result != 'skipped' }}
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        index: [1]
+      fail-fast: true
+    environment: ${{ inputs.environment }}
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Stop Github Runner
+        id: stop_runner
+        uses: pagopa/interop-github-runner-aws-cleanup-action@main
+        with:
+          aws_region: ${{ secrets.AWS_REGION }}
+          iam_role_arn: ${{ secrets.ECS_IAM_ROLE_ARN }}
+          ecs_cluster_name: ${{ secrets.ECS_CLUSTER_NAME }}
+          pat_token: ${{ secrets.BOT_TOKEN }}

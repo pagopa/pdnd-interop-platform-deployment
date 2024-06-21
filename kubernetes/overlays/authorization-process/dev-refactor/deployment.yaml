@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          env:
+            - name: ACCEPTED_AUDIENCES
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ACCEPTED_AUDIENCES
+            - name: AUTHORIZATION_MANAGEMENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: AUTHORIZATION_MANAGEMENT_URL
+            - name: TENANT_MANAGEMENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: TENANT_MANAGEMENT_URL            
+            - name: SELFCARE_V2_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: selfcare-v2
+                  key: SELFCARE_V2_API_KEY
+            - name: SELFCARE_V2_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: SELFCARE_V2_URL
+            - name: MAX_KEYS_PER_CLIENT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: MAX_KEYS_PER_CLIENT
+            - name: READ_MODEL_DB_HOST
+              value: "{{READ_MODEL_DB_HOST}}"
+            - name: READ_MODEL_DB_PORT
+              value: "{{READ_MODEL_DB_PORT}}"
+            - name: READ_MODEL_DB_NAME
+              value: "{{READ_MODEL_DB_NAME}}"
+            - name: READ_MODEL_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: read-model
+                  key: READONLY_USR
+            - name: READ_MODEL_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: read-model
+                  key: READONLY_PSW
+            - name: READ_MODEL_REPLICA_SET
+              value: "{{READ_MODEL_REPLICA_SET}}"
+            - name: READ_MODEL_READ_PREFERENCE
+              value: "{{READ_MODEL_READ_PREFERENCE}}"

@@ -39,11 +39,12 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/qa/authorization_management.sh
 . $(pwd)/kubernetes/configs/qa/authorization_process.sh
 . $(pwd)/kubernetes/configs/qa/authorization_server.sh
-. $(pwd)/kubernetes/configs/qa/attribute_registry_management.sh
+. $(pwd)/kubernetes/configs/qa/authorization_updater.sh
+. $(pwd)/kubernetes/configs/qa/attribute_registry_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/qa/attribute_registry_process.sh
 . $(pwd)/kubernetes/configs/qa/attributes_loader.sh
 . $(pwd)/kubernetes/configs/qa/backend_for_frontend.sh
-. $(pwd)/kubernetes/configs/qa/catalog_management.sh
+. $(pwd)/kubernetes/configs/qa/catalog_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/qa/catalog_process.sh
 . $(pwd)/kubernetes/configs/qa/frontend.sh
 . $(pwd)/kubernetes/configs/qa/party_registry_proxy.sh
@@ -53,6 +54,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/qa/tenant_process.sh
 . $(pwd)/kubernetes/configs/qa/tenants-certified-attributes-updater.sh
 . $(pwd)/kubernetes/configs/qa/notifier.sh
+. $(pwd)/kubernetes/configs/qa/notifier_seeder.sh
 . $(pwd)/kubernetes/configs/qa/token_details_persister.sh
 . $(pwd)/kubernetes/configs/qa/party_registry_proxy_refresher.sh
 . $(pwd)/kubernetes/configs/qa/eservices_monitoring_exporter.sh
@@ -68,3 +70,4 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/qa/selfcare_onboarding_consumer.sh
 . $(pwd)/kubernetes/configs/qa/eservice_descriptors_archiver.sh
 . $(pwd)/kubernetes/configs/qa/dtd_metrics.sh
+. $(pwd)/kubernetes/configs/qa/datalake_data_export.sh

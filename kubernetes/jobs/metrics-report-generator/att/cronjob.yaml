@@ -1,0 +1,139 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  labels:
+    app: {{SERVICE_NAME}}
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  schedule: "0 5 * * 1-5"
+  suspend: true
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 0
+  concurrencyPolicy: Replace
+  jobTemplate:
+    metadata:
+      labels:
+        app: {{SERVICE_NAME}}
+      annotations:
+        digest: {{IMAGE_DIGEST}} # Used to force deployment on same image version but different content
+    spec:
+      activeDeadlineSeconds: 3600 # 1 hour
+      template:
+        metadata:
+          labels:
+            app: {{SERVICE_NAME}}
+        spec:
+          restartPolicy: OnFailure
+          serviceAccountName: {{SERVICE_NAME}}
+          containers:
+            - name: {{SERVICE_NAME}}
+              image: {{REPOSITORY}}/{{SERVICE_NAME}}:{{JOB_METRICS_REPORT_GENERATOR_IMAGE_VERSION}}
+              imagePullPolicy: Always
+              command: ["bin/{{SERVICE_NAME}}"]
+              args: ["-Dconfig.override_with_env_vars=true"]
+              env:
+                - name: NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: READ_MODEL_DB_HOST
+                  value: "{{READ_MODEL_DB_HOST}}"
+                - name: READ_MODEL_DB_PORT
+                  value: "{{READ_MODEL_DB_PORT}}"
+                - name: READ_MODEL_DB_NAME
+                  value: "{{READ_MODEL_DB_NAME}}"
+                - name: ENVIRONMENT
+                  value: "{{LOWERCASE_ENV}}"
+                - name: TENANTS_COLLECTION_NAME
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: TENANTS_COLLECTION_NAME
+                - name: PURPOSES_COLLECTION_NAME
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: PURPOSES_COLLECTION_NAME
+                - name: AGREEMENTS_COLLECTION_NAME
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: AGREEMENTS_COLLECTION_NAME
+                - name: ESERVICES_COLLECTION_NAME
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: ESERVICES_COLLECTION_NAME
+                - name: TOKENS_BUCKET
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: TOKENS_BUCKET
+                - name: TOKEN_BUCKET_PATH
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: TOKEN_BUCKET_PATH
+                - name: METRIC_STORAGE_BUCKET
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: METRIC_STORAGE_BUCKET
+                - name: METRIC_STORAGE_PATH
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: METRIC_STORAGE_PATH
+                - name: INTERFACE_STORAGE_BUCKET
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: INTERFACE_STORAGE_BUCKET
+                - name: SMTP_ADDRESS
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: SMTP_ADDRESS
+                - name: SMTP_PORT
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: SMTP_PORT
+                - name: READ_MODEL_DB_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: documentdb
+                      key: READONLY_USR
+                - name: READ_MODEL_DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: documentdb
+                      key: READONLY_PSW
+                - name: METRICS_REPORT_RECIPIENTS
+                  valueFrom:
+                    secretKeyRef:
+                      name: metrics-reports
+                      key: METRICS_REPORT_RECIPIENTS
+                - name: MAIL_SENDER
+                  valueFrom:
+                    secretKeyRef:
+                      name: metrics-reports
+                      key: METRICS_REPORT_SMTP_USERNAME
+                - name: METRICS_REPORT_SMTP_USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: metrics-reports
+                      key: METRICS_REPORT_SMTP_USERNAME
+                - name: METRICS_REPORT_SMTP_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: metrics-reports
+                      key: METRICS_REPORT_SMTP_PASSWORD
+              resources:
+                requests:
+                  cpu: "{{SERVICE_RESOURCE_CPU}}"
+                  memory: "{{SERVICE_RESOURCE_MEM}}"
+                limits:
+                  cpu: "{{SERVICE_RESOURCE_CPU}}"
+                  memory: "{{SERVICE_RESOURCE_MEM}}"

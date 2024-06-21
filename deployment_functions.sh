@@ -144,10 +144,11 @@ function applyKubeFile() {
   echo "Compiling file $fileName"
 
   SERVICE_NAME="$serviceName" \
+    SERVICE_ECR_NAME="$(echo "$serviceName" | sed 's/-refactor//')" \
     IMAGE_DIGEST="$imageDigest" \
     SERVICE_RESOURCE_CPU="$resourceCpu" \
     SERVICE_RESOURCE_MEM="$resourceMem" \
-    LOWERCASE_ENV=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]') \
+    LOWERCASE_ENV=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]' | sed 's/-refactor//') \
     ./kubernetes/templater.sh "./kubernetes/$fileName" \
       -s -f "$CONFIG_FILE" \
       > "$compiledFileName"
@@ -170,14 +171,18 @@ function compileDir() {
 
 
   for f in "$dirPath"/*; do
+    if [ -d "$f" ]; then continue; fi;
+
     if [ ! "$(basename "$f")" = "kustomization.yaml" ]; then
+      echo "Templating $f"
       mkdir -p "${serviceName}/${dirPath}"
       SERVICE_NAME="$serviceName" \
+        SERVICE_ECR_NAME="$(echo "$serviceName" | sed 's/-refactor//')" \
         IMAGE_VERSION="$imageVersion" \
         IMAGE_DIGEST="$imageDigest" \
         SERVICE_RESOURCE_CPU="$resourceCpu" \
         SERVICE_RESOURCE_MEM="$resourceMem" \
-        LOWERCASE_ENV=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]') \
+        LOWERCASE_ENV=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]' | sed 's/-refactor//') \
         ./kubernetes/templater.sh "$f" -s -f "$CONFIG_FILE" \
         > "$serviceName/$f"
     else
@@ -195,18 +200,23 @@ function applyKustomizeToDir() {
   local resourceMem=$5
 
   echo "Retrieving image digest for ${serviceName} version ${imageVersion}"
-  serviceImageDigest="$(getDockerImageDigest "$serviceName" "$imageVersion")"
+  serviceEcrName="$(echo "$serviceName" | sed 's/-refactor//')"
+  serviceImageDigest="$(getDockerImageDigest "$serviceEcrName" "$imageVersion")"
   echo "Image digest: $serviceImageDigest"
 
   kubeDirPath="kubernetes/${dirPath}"
 
   echo "Compiling base files"
   compileDir "kubernetes/base" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
+  compileDir "kubernetes/base/be-refactor/process-microservice" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
+  compileDir "kubernetes/base/be-refactor/readmodel-writer" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
+  compileDir "kubernetes/base/be-refactor/generic-consumer" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
   echo "Base files compiled"
 
   echo "Compiling common files"
   compileDir "kubernetes/commons/database" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
   compileDir "kubernetes/commons/rate-limiting" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
+  compileDir "kubernetes/commons/database/be-refactor" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
   echo "Common files compiled"
 
   echo "Compiling directory ${dirPath}"

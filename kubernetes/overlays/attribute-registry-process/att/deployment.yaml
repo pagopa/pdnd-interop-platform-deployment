@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          env:
+            - name: ACCEPTED_AUDIENCES
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ACCEPTED_AUDIENCES
+            - name: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
+            - name: PRODUCER_ALLOWED_ORIGINS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRODUCER_ALLOWED_ORIGINS

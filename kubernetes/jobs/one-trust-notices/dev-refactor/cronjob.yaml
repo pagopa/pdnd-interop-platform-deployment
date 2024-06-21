@@ -1,0 +1,84 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  labels:
+    app: {{SERVICE_NAME}}
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  schedule: "0 */3 * * *"
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 0
+  jobTemplate:
+    metadata:
+      labels:
+        app: {{SERVICE_NAME}}
+      annotations:
+        digest: {{IMAGE_DIGEST}} # Used to force deployment on same image version but different content
+    spec:
+      template:
+        metadata:
+          labels:
+            app: {{SERVICE_NAME}}
+        spec:
+          restartPolicy: OnFailure
+          serviceAccountName: {{SERVICE_NAME}}
+          containers:
+            - name: {{SERVICE_NAME}}
+              image: {{REPOSITORY}}/{{SERVICE_NAME}}:{{JOB_ONE_TRUST_NOTICES_IMAGE_VERSION}}
+              imagePullPolicy: Always
+              env:
+                - name: NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: ENVIRONMENT
+                  value: "{{LOWERCASE_ENV}}"
+                - name: TERMS_OF_SERVICE_NOTICE_ID
+                  value: "{{TERMS_OF_SERVICE_NOTICE_ID}}"
+                - name: PRIVACY_POLICY_NOTICE_ID
+                  value: "{{PRIVACY_POLICY_NOTICE_ID}}"
+                - name: PRIVACY_NOTICES_DYNAMO_TABLE_NAME
+                  value: "{{PRIVACY_NOTICES_DYNAMO_TABLE_NAME}}"
+                - name: LANGS
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: PRIVACY_NOTICES_LANGS
+                - name: CONTENT_STORAGE_BUCKET
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: PRIVACY_NOTICES_CONTENT_STORAGE_BUCKET
+                - name: HISTORY_STORAGE_BUCKET
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: PRIVACY_NOTICES_HISTORY_STORAGE_BUCKET
+                - name: PRIVACY_NOTICES_UPDATER_PRIVACY_POLICY_UUID
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: PRIVACY_NOTICES_UPDATER_PRIVACY_POLICY_UUID
+                - name: PRIVACY_NOTICES_UPDATER_TERMS_OF_SERVICE_UUID
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: PRIVACY_NOTICES_UPDATER_TERMS_OF_SERVICE_UUID
+                - name: ONETRUST_CLIENT_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: onetrust
+                      key: ONETRUST_CLIENT_ID
+                - name: ONETRUST_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: onetrust
+                      key: ONETRUST_CLIENT_SECRET
+              resources:
+                requests:
+                  cpu: "{{SERVICE_RESOURCE_CPU}}"
+                  memory: "{{SERVICE_RESOURCE_MEM}}"
+                limits:
+                  cpu: "{{SERVICE_RESOURCE_CPU}}"
+                  memory: "{{SERVICE_RESOURCE_MEM}}"

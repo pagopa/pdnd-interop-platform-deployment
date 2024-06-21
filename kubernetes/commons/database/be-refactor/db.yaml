@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  template:
+    spec:
+      initContainers:
+        - name: migrate-db
+          image: flyway/flyway:8.2.3
+          args: 
+            - migrate
+          envFrom:
+            - configMapRef:
+                name: {{SERVICE_NAME}}
+          env:
+            - name: FLYWAY_USER
+              valueFrom:
+                secretKeyRef:
+                  name: event-store
+                  key: POSTGRES_USR
+            - name: FLYWAY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: event-store
+                  key: POSTGRES_PSW
+            - name: FLYWAY_CREATE_SCHEMAS
+              value: "true"
+            - name: FLYWAY_SCHEMAS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: EVENTSTORE_DB_SCHEMA
+            - name: FLYWAY_PLACEHOLDER_REPLACEMENT
+              value: "true"
+            - name: FLYWAY_PLACEHOLDERS_APPLICATIONSCHEMA
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: EVENTSTORE_DB_SCHEMA
+            - name: POSTGRES_DB
+              value: {{POSTGRES_DB_NAME}}
+            - name: FLYWAY_URL
+              value: jdbc:postgresql://{{POSTGRES_HOST}}:{{POSTGRES_PORT}}/$(POSTGRES_DB)
+          volumeMounts:
+            - name: migrations-files
+              mountPath: "/flyway/sql"
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "10m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+      volumes:
+        - name: migrations-files
+          projected:
+            sources:
+              - configMap:
+                  name: event-store-migrations
