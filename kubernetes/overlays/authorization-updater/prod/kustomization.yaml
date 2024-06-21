@@ -4,5 +4,4 @@ resources:
 - configmap.yaml
 patchesStrategicMerge:
 - deployment.yaml
-
-
+- ../../../commons/database/be-refactor/read-model.yaml
