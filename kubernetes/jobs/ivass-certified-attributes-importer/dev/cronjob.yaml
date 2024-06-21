@@ -53,8 +53,6 @@ spec:
                       name: documentdb
                       key: READONLY_PSW
 
-                - name: SOURCE_FILE_DOWNLOAD_DIR
-                  value: "/tmp"
                 - name: SOURCE_URL
                   valueFrom:
                       configMapKeyRef:
