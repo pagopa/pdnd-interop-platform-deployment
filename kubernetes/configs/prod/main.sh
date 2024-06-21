@@ -31,6 +31,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 
 . $(pwd)/kubernetes/configs/prod/redis.sh
 
+. $(pwd)/kubernetes/configs/prod/agreement_email_sender.sh
 . $(pwd)/kubernetes/configs/prod/agreement_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/prod/agreement_process.sh
 . $(pwd)/kubernetes/configs/prod/api_gateway.sh

@@ -105,7 +105,7 @@ jobs:
   deploy_agreement_email_sender:
     name: Agreement Email Sender
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'test' }}
+    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'test' || inputs.environment == 'prod' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
