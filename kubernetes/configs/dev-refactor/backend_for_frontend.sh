@@ -22,3 +22,10 @@ BFF_RATE_LIMITER_TIMEOUT="300.milliseconds"
 SUPPORT_SAML_AUDIENCE="selfcare.refactor.dev.interop.pagopa.it"
 SUPPORT_SAML_CALLBACK_URL="https://selfcare.refactor.dev.interop.pagopa.it/ui/it/assistenza/scelta-ente"
 SUPPORT_SAML_CALLBACK_ERROR_URL="https://selfcare.refactor.dev.interop.pagopa.it/ui/it/assistenza/errore"
+
+IMPORT_ESERVICE_CONTAINER="interop-application-import-export-dev"
+IMPORT_ESERVICE_PATH="{{NAMESPACE}}/eservices-import"
+EXPORT_ESERVICE_CONTAINER="interop-application-import-export-dev"
+EXPORT_ESERVICE_PATH="{{NAMESPACE}}/eservices-export"
+PRESIGNED_URL_GET_DURATION_MINUTES=2
+PRESIGNED_URL_PUT_DURATION_MINUTES=2
