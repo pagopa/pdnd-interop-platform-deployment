@@ -11,7 +11,6 @@ EXTERNAL_APPLICATION_HOST="$UI_SUBDOMAIN.$DOMAIN_NAME"
 AUTHORIZATION_SERVER_HOST="$AUTH_SUBDOMAIN.$DOMAIN_NAME"
 API_GATEWAY_HOST="$API_SUBDOMAIN.$DOMAIN_NAME"
 
-AGREEMENT_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $AGREEMENT_MANAGEMENT_IMAGE_VERSION)
 ATTRIBUTE_REGISTRY_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $ATTRIBUTE_REGISTRY_MANAGEMENT_IMAGE_VERSION)
 AUTHORIZATION_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $AUTHORIZATION_MANAGEMENT_IMAGE_VERSION)
 CATALOG_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $CATALOG_MANAGEMENT_IMAGE_VERSION)
@@ -32,7 +31,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 
 . $(pwd)/kubernetes/configs/prod/redis.sh
 
-. $(pwd)/kubernetes/configs/prod/agreement_management.sh
+. $(pwd)/kubernetes/configs/prod/agreement_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/prod/agreement_process.sh
 . $(pwd)/kubernetes/configs/prod/api_gateway.sh
 . $(pwd)/kubernetes/configs/prod/authorization_management.sh
