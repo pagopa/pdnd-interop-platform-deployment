@@ -5,4 +5,4 @@ metadata:
   namespace: {{NAMESPACE}}
 data:
   KAFKA_CLIENT_ID: "{{NAMESPACE}}-pagopa-interop-attribute"
-  KAFKA_GROUP_ID: "attribute-registry-readmodel-writer"
+  KAFKA_GROUP_ID: "{{NAMESPACE}}-attribute-registry-readmodel-writer"
