@@ -9,6 +9,10 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
             - name: KAFKA_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
@@ -24,23 +28,33 @@ spec:
                 configMapKeyRef:
                   name: common-kafka
                   key: AGREEMENT_TOPIC
-            - name: AUTHORIZATION_TOPIC
+            - name: AGREEMENT_EMAIL_SENDER
               valueFrom:
-                configMapKeyRef:
-                  name: common-kafka
-                  key: AUTHORIZATION_TOPIC
-            - name: CATALOG_TOPIC
-              valueFrom:
-                configMapKeyRef:
-                  name: common-kafka
-                  key: CATALOG_TOPIC
-            - name: PURPOSE_TOPIC
-              valueFrom:
-                configMapKeyRef:
-                  name: common-kafka
-                  key: PURPOSE_TOPIC
-            - name: NOTIFICATION_QUEUE_URL
+                secretKeyRef:
+                  name: smtp-certified
+                  key: PEC_SMTP_SENDER
+            - name: SMTP_ADDRESS
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: NOTIFICATION_QUEUE_URL
+                  key: SMTP_ADDRESS
+            - name: SMTP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SMTP_PORT
+            - name: SMTP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-certified
+                  key: PEC_SMTP_USER
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-certified
+                  key: PEC_SMTP_PASSWORD
+            - name: SMTP_SECURE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SMTP_SECURE

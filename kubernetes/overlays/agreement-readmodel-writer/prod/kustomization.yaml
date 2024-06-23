@@ -1,7 +1,6 @@
 bases:
-- ../../../base/be-refactor/generic-consumer
+- ../../../base/be-refactor/readmodel-writer
 resources:
 - configmap.yaml
 patchesStrategicMerge:
 - deployment.yaml
-
