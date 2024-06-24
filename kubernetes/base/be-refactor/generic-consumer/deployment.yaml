@@ -41,3 +41,5 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+            - name: TOPIC_STARTING_OFFSET
+              value: "latest"
