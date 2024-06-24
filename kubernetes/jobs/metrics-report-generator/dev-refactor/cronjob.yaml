@@ -67,6 +67,11 @@ spec:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
                         key: ESERVICES_COLLECTION_NAME
+                - name: REPORT_SENDER
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: REPORT_SENDER   
                 - name: SMTP_ADDRESS
                   valueFrom:
                       configMapKeyRef:

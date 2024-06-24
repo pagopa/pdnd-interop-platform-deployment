@@ -58,7 +58,9 @@ PRIVACY_NOTICES_CONTAINER="interop-privacy-notices-content-test"
 
 PAGOPA_TENANT_ID="84871fd4-2fd7-46ab-9d22-f6b452f4b3c5"
 
-SMTP_ADDRESS="smtp.gmail.com"
+REPORT_SENDER="noreply@reports.interop.pagopa.it"
+
+SMTP_ADDRESS="email-smtp.eu-central-1.amazonaws.com"
 SMTP_PORT=465
 
 AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.test.svc.cluster.local:8088/authorization-management/1.0"

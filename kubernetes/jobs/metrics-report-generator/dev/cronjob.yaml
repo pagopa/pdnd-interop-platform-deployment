@@ -66,6 +66,11 @@ spec:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
                         key: ESERVICES_COLLECTION_NAME
+                - name: REPORT_SENDER
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: REPORT_SENDER   
                 - name: SMTP_ADDRESS
                   valueFrom:
                       configMapKeyRef:
@@ -80,7 +85,7 @@ spec:
                   valueFrom:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
-                        key: SMTP_SECURE                        
+                        key: SMTP_SECURE            
                 - name: READ_MODEL_DB_USER
                   valueFrom:
                     secretKeyRef:
