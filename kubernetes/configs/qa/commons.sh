@@ -58,7 +58,7 @@ PRIVACY_NOTICES_CONTAINER="interop-privacy-notices-content-qa"
 PAGOPA_TENANT_ID="69e2865e-65ab-4e48-a638-2037a9ee2ee7"
 
 REPORT_SENDER_MAIL="noreply@reports.qa.interop.pagopa.it"
-REPORT_SENDER_LABEL="noreply"
+REPORT_SENDER_LABEL="noreply-qa"
 
 SMTP_ADDRESS="email-smtp.eu-central-1.amazonaws.com"
 SMTP_PORT=465
