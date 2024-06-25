@@ -73,11 +73,16 @@ spec:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
                         key: COMUNI_E_LORO_CONSORZI_E_ASSOCIAZIONI_ATTRIBUTE_ID
-                - name: REPORT_SENDER
+                - name: REPORT_SENDER_MAIL
                   valueFrom:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
-                        key: REPORT_SENDER   
+                        key: REPORT_SENDER_MAIL
+                - name: REPORT_SENDER_LABEL
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: REPORT_SENDER_LABEL
                 - name: SMTP_ADDRESS
                   valueFrom:
                       configMapKeyRef:
