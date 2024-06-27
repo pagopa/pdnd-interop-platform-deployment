@@ -105,12 +105,12 @@ spec:
                 - name: SMTP_USER
                   valueFrom:
                     secretKeyRef:
-                      name: metrics-reports
+                      name: smtp-reports
                       key: SMTP_USER
                 - name: SMTP_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: metrics-reports
+                      name: smtp-reports
                       key: SMTP_PASSWORD
               resources:
                 requests:

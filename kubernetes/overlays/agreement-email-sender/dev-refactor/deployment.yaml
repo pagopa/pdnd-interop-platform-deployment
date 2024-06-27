@@ -86,12 +86,12 @@ spec:
             - name: SMTP_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: metrics-reports
+                  name: smtp-notifications
                   key: SMTP_USER
             - name: SMTP_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: metrics-reports
+                  name: smtp-notifications
                   key: SMTP_PASSWORD
             - name: SMTP_SECURE
               valueFrom:
