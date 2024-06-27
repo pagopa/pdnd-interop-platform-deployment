@@ -60,6 +60,12 @@ PAGOPA_TENANT_ID="69e2865e-65ab-4e48-a638-2037a9ee2ee7"
 REPORT_SENDER_MAIL="noreply@reports.refactor.dev.interop.pagopa.it"
 REPORT_SENDER_LABEL="noreply-dev-refactor"
 
+NOTIFICATION_SENDER_MAIL="noreply@notifiche.dev.interop.pagopa.it"
+NOTIFICATION_SENDER_MAIL="noreply-dev-refactor"
+
+PEC_SMTP_SECURE=false
+
+SMTP_SECURE=false
 SMTP_ADDRESS="email-smtp.eu-central-1.amazonaws.com"
 SMTP_PORT=465
 

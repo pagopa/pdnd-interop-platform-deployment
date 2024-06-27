@@ -28,11 +28,51 @@ spec:
                 configMapKeyRef:
                   name: common-kafka
                   key: AGREEMENT_TOPIC
-            - name: AGREEMENT_EMAIL_SENDER
+            - name: PEC_SENDER_MAIL
               valueFrom:
                 secretKeyRef:
                   name: smtp-certified
-                  key: PEC_SMTP_SENDER
+                  key: PEC_SENDER_MAIL
+            - name: PEC_SENDER_LABEL
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-certified
+                  key: PEC_SENDER_LABEL
+            - name: PEC_SMTP_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PEC_SMTP_ADDRESS
+            - name: PEC_SMTP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PEC_SMTP_PORT
+            - name: PEC_SMTP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-certified
+                  key: PEC_SMTP_USER
+            - name: PEC_SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-certified
+                  key: PEC_SMTP_PASSWORD
+            - name: PEC_SMTP_SECURE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PEC_SMTP_SECURE
+            - name: SENDER_MAIL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SENDER_MAIL
+            - name: SENDER_LABEL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SENDER_LABEL
             - name: SMTP_ADDRESS
               valueFrom:
                 configMapKeyRef:
@@ -46,13 +86,13 @@ spec:
             - name: SMTP_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: smtp-certified
-                  key: PEC_SMTP_USER
+                  name: metrics-reports
+                  key: SMTP_USER
             - name: SMTP_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: smtp-certified
-                  key: PEC_SMTP_PASSWORD
+                  name: metrics-reports
+                  key: SMTP_PASSWORD
             - name: SMTP_SECURE
               valueFrom:
                 configMapKeyRef:
