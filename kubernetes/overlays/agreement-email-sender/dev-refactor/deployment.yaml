@@ -28,6 +28,11 @@ spec:
                 configMapKeyRef:
                   name: common-kafka
                   key: AGREEMENT_TOPIC
+            - name: INTEROP_FE_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTEROP_FE_BASE_URL
             - name: PEC_SENDER_MAIL
               valueFrom:
                 secretKeyRef:
