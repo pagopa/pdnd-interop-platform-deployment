@@ -61,7 +61,7 @@ REPORT_SENDER_MAIL="noreply@reports.refactor.dev.interop.pagopa.it"
 REPORT_SENDER_LABEL="noreply-dev-refactor"
 
 NOTIFICATION_SENDER_MAIL="noreply@notifiche.dev.interop.pagopa.it"
-NOTIFICATION_SENDER_MAIL="noreply-dev-refactor"
+NOTIFICATION_SENDER_LABEL="noreply-dev-refactor"
 
 PEC_SMTP_SECURE=false
 

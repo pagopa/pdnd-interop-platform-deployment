@@ -32,12 +32,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: smtp-certified
-                  key: PEC_SENDER_MAIL
+                  key: PEC_SMTP_SENDER
             - name: PEC_SENDER_LABEL
               valueFrom:
                 secretKeyRef:
                   name: smtp-certified
-                  key: PEC_SENDER_LABEL
+                  key: PEC_SMTP_SENDER
             - name: PEC_SMTP_ADDRESS
               valueFrom:
                 configMapKeyRef:
