@@ -11,9 +11,9 @@ data:
   PEC_SMTP_PORT: "{{PEC_SMTP_PORT}}"
   PEC_SMTP_SECURE: "{{PEC_SMTP_SECURE}}"
 
-  SMTP_ADDRESS: "{{SMTP_ADDRESS}}"
-  SMTP_PORT: "{{SMTP_PORT}}"
-  SMTP_SECURE: "{{SMTP_SECURE}}"
+  SMTP_ADDRESS: "{{PEC_SMTP_ADDRESS}}" # this refers to mock smtp server
+  SMTP_PORT: "{{PEC_SMTP_PORT}}" # this refers to mock smtp server
+  SMTP_SECURE: "{{PEC_SMTP_SECURE}}" # this refers to mock smtp server
   SENDER_MAIL: "{{NOTIFICATION_SENDER_MAIL}}"
   SENDER_LABEL: "{{NOTIFICATION_SENDER_LABEL}}"
 
