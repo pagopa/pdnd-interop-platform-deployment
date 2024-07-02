@@ -61,7 +61,13 @@ PAGOPA_TENANT_ID="84871fd4-2fd7-46ab-9d22-f6b452f4b3c5"
 REPORT_SENDER_MAIL="noreply@reports.uat.interop.pagopa.it"
 REPORT_SENDER_LABEL="noreply-test"
 
-SMTP_ADDRESS="email-smtp.eu-central-1.amazonaws.com"
-SMTP_PORT=465
+NOTIFICATION_SENDER_MAIL="noreply@notifiche.uat.interop.pagopa.it"
+NOTIFICATION_SENDER_LABEL="noreply-test"
+
+PEC_SMTP_SECURE=false
+
+SMTP_SECURE=false
+SMTP_ADDRESS="smtp-mock.uat.svc.cluster.local"
+SMTP_PORT=5025
 
 AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.test.svc.cluster.local:8088/authorization-management/1.0"
