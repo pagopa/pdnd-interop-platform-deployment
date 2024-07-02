@@ -60,6 +60,12 @@ PAGOPA_TENANT_ID="4a4149af-172e-4950-9cc8-63ccc9a6d865"
 REPORT_SENDER_MAIL="noreply@reports.interop.pagopa.it"
 REPORT_SENDER_LABEL="noreply-prod"
 
+NOTIFICATION_SENDER_MAIL="noreply@notifiche.interop.pagopa.it"
+NOTIFICATION_SENDER_LABEL="noreply-prod"
+
+PEC_SMTP_SECURE=true
+
+SMTP_SECURE=true
 SMTP_ADDRESS="email-smtp.eu-central-1.amazonaws.com"
 SMTP_PORT=465
 
