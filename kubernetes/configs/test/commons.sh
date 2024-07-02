@@ -67,7 +67,7 @@ NOTIFICATION_SENDER_LABEL="noreply-test"
 PEC_SMTP_SECURE=false
 
 SMTP_SECURE=false
-SMTP_ADDRESS="smtp-mock.uat.svc.cluster.local"
+SMTP_ADDRESS="smtp-mock.test.svc.cluster.local"
 SMTP_PORT=5025
 
 AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.test.svc.cluster.local:8088/authorization-management/1.0"
