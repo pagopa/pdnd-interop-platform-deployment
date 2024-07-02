@@ -208,8 +208,8 @@ jobs:
           source $CONFIG_FILE
           source ./deployment_functions.sh
 
-          notificationSmtpUsername="$(getSecretValue 'ses/smtp/interop-ses-smtp-notifiche-dev/username')"
-          notificationSmtpPassword="$(getSecretValue 'ses/smtp/interop-ses-smtp-notifiche-dev/password')"
+          notificationSmtpUsername="$(getSecretValue 'ses/smtp/interop-ses-smtp-notifiche-${{ inputs.environment }}/username')"
+          notificationSmtpPassword="$(getSecretValue 'ses/smtp/interop-ses-smtp-notifiche-${{ inputs.environment }}/password')"
 
           createKubeSecret 'smtp-notifications' 'SMTP_USER' "$notificationSmtpUsername" 'SMTP_PASSWORD' "$notificationSmtpPassword" 
       
