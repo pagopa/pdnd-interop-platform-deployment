@@ -66,7 +66,7 @@ NOTIFICATION_SENDER_LABEL="noreply-dev-refactor"
 PEC_SMTP_SECURE=false
 
 SMTP_SECURE=false
-SMTP_ADDRESS="smtp-mock.dev.svc.cluster.local"
+SMTP_ADDRESS="smtp-mock.dev-refactor.svc.cluster.local"
 SMTP_PORT=5025
 
 AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.dev-refactor.svc.cluster.local:8088/authorization-management/0.0"
