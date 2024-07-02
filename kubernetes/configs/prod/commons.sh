@@ -61,7 +61,7 @@ REPORT_SENDER_MAIL="noreply@reports.interop.pagopa.it"
 REPORT_SENDER_LABEL="noreply-prod"
 
 NOTIFICATION_SENDER_MAIL="noreply@notifiche.interop.pagopa.it"
-NOTIFICATION_SENDER_LABEL="noreply-prod"
+NOTIFICATION_SENDER_LABEL="PDND Interop no-reply"
 
 PEC_SMTP_SECURE=true
 
