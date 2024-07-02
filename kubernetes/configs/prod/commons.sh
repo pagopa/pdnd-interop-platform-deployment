@@ -58,7 +58,7 @@ PRIVACY_NOTICES_CONTAINER="interop-privacy-notices-content-prod"
 PAGOPA_TENANT_ID="4a4149af-172e-4950-9cc8-63ccc9a6d865"
 
 REPORT_SENDER_MAIL="noreply@reports.interop.pagopa.it"
-REPORT_SENDER_LABEL="noreply-prod"
+REPORT_SENDER_LABEL="noreply"
 
 NOTIFICATION_SENDER_MAIL="noreply@notifiche.interop.pagopa.it"
 NOTIFICATION_SENDER_LABEL="PDND Interop no-reply"
