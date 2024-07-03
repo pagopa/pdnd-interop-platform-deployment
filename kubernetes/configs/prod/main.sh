@@ -64,7 +64,6 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/prod/padigitale_report_generator.sh
 . $(pwd)/kubernetes/configs/prod/dashboard_metrics_report_generator.sh
 . $(pwd)/kubernetes/configs/prod/dtd_catalog_exporter.sh
-. $(pwd)/kubernetes/configs/prod/certified_mail_sender.sh
 . $(pwd)/kubernetes/configs/prod/one_trust_notices.sh
 . $(pwd)/kubernetes/configs/prod/selfcare_onboarding_consumer.sh
 . $(pwd)/kubernetes/configs/prod/eservice_descriptors_archiver.sh
