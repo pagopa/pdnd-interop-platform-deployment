@@ -58,7 +58,16 @@ PRIVACY_NOTICES_CONTAINER="interop-privacy-notices-content-test"
 
 PAGOPA_TENANT_ID="84871fd4-2fd7-46ab-9d22-f6b452f4b3c5"
 
-SMTP_ADDRESS="smtp.gmail.com"
-SMTP_PORT=465
+REPORT_SENDER_MAIL="noreply@reports.uat.interop.pagopa.it"
+REPORT_SENDER_LABEL="noreply-test"
+
+NOTIFICATION_SENDER_MAIL="noreply@notifiche.uat.interop.pagopa.it"
+NOTIFICATION_SENDER_LABEL="noreply-test"
+
+PEC_SMTP_SECURE=false
+
+SMTP_SECURE=false
+SMTP_ADDRESS="smtp-mock.test.svc.cluster.local"
+SMTP_PORT=5025
 
 AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.test.svc.cluster.local:8088/authorization-management/1.0"

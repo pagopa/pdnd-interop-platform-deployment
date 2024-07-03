@@ -57,7 +57,16 @@ PRIVACY_NOTICES_CONTAINER="interop-privacy-notices-content-prod"
 
 PAGOPA_TENANT_ID="4a4149af-172e-4950-9cc8-63ccc9a6d865"
 
-SMTP_ADDRESS="smtp.gmail.com"
+REPORT_SENDER_MAIL="noreply@reports.interop.pagopa.it"
+REPORT_SENDER_LABEL="noreply"
+
+NOTIFICATION_SENDER_MAIL="noreply@notifiche.interop.pagopa.it"
+NOTIFICATION_SENDER_LABEL="PDND Interop no-reply"
+
+PEC_SMTP_SECURE=true
+
+SMTP_SECURE=true
+SMTP_ADDRESS="email-smtp.eu-central-1.amazonaws.com"
 SMTP_PORT=465
 
 AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.prod.svc.cluster.local:8088/authorization-management/1.0"

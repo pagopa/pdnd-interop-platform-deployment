@@ -30,8 +30,6 @@ spec:
             - name: {{SERVICE_NAME}}
               image: {{REPOSITORY}}/{{SERVICE_NAME}}:{{JOB_METRICS_REPORT_GENERATOR_IMAGE_VERSION}}
               imagePullPolicy: Always
-              command: ["bin/{{SERVICE_NAME}}"]
-              args: ["-Dconfig.override_with_env_vars=true"]
               env:
                 - name: NAMESPACE
                   valueFrom:
@@ -43,6 +41,10 @@ spec:
                   value: "{{READ_MODEL_DB_PORT}}"
                 - name: READ_MODEL_DB_NAME
                   value: "{{READ_MODEL_DB_NAME}}"
+                - name: MONGODB_REPLICA_SET
+                  value: "{{READ_MODEL_REPLICA_SET}}"
+                - name: MONGODB_READ_PREFERENCE
+                  value: "{{READ_MODEL_READ_PREFERENCE}}"
                 - name: ENVIRONMENT
                   value: "{{LOWERCASE_ENV}}"
                 - name: TENANTS_COLLECTION_NAME
@@ -65,31 +67,17 @@ spec:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
                         key: ESERVICES_COLLECTION_NAME
-                - name: TOKENS_BUCKET
+                - name: REPORT_SENDER_MAIL
                   valueFrom:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
-                        key: TOKENS_BUCKET
-                - name: TOKEN_BUCKET_PATH
+                        key: REPORT_SENDER_MAIL
+                - name: REPORT_SENDER_LABEL
                   valueFrom:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
-                        key: TOKEN_BUCKET_PATH
-                - name: METRIC_STORAGE_BUCKET
-                  valueFrom:
-                      configMapKeyRef:
-                        name: {{SERVICE_NAME}}
-                        key: METRIC_STORAGE_BUCKET
-                - name: METRIC_STORAGE_PATH
-                  valueFrom:
-                      configMapKeyRef:
-                        name: {{SERVICE_NAME}}
-                        key: METRIC_STORAGE_PATH
-                - name: INTERFACE_STORAGE_BUCKET
-                  valueFrom:
-                      configMapKeyRef:
-                        name: {{SERVICE_NAME}}
-                        key: INTERFACE_STORAGE_BUCKET
+                        key: REPORT_SENDER_LABEL
+
                 - name: SMTP_ADDRESS
                   valueFrom:
                       configMapKeyRef:
@@ -100,6 +88,11 @@ spec:
                       configMapKeyRef:
                         name: {{SERVICE_NAME}}
                         key: SMTP_PORT
+                - name: SMTP_SECURE
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: SMTP_SECURE
                 - name: READ_MODEL_DB_USER
                   valueFrom:
                     secretKeyRef:
@@ -110,26 +103,31 @@ spec:
                     secretKeyRef:
                       name: documentdb
                       key: READONLY_PSW
-                - name: METRICS_REPORT_RECIPIENTS
+                - name: MAIL_RECIPIENTS
                   valueFrom:
                     secretKeyRef:
                       name: metrics-reports
-                      key: METRICS_REPORT_RECIPIENTS
-                - name: MAIL_SENDER
+                      key: MAIL_RECIPIENTS
+                - name: SMTP_USER
                   valueFrom:
                     secretKeyRef:
-                      name: metrics-reports
-                      key: METRICS_REPORT_SMTP_USERNAME
-                - name: METRICS_REPORT_SMTP_USERNAME
+                      name: smtp-reports
+                      key: SMTP_USER
+                - name: SMTP_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: metrics-reports
-                      key: METRICS_REPORT_SMTP_USERNAME
-                - name: METRICS_REPORT_SMTP_PASSWORD
+                      name: smtp-reports
+                      key: SMTP_PASSWORD
+                - name: ATHENA_TOKENS_DB_NAME
                   valueFrom:
-                    secretKeyRef:
-                      name: metrics-reports
-                      key: METRICS_REPORT_SMTP_PASSWORD
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: ATHENA_TOKENS_DB_NAME
+                - name: ATHENA_OUTPUT_BUCKET
+                  valueFrom:
+                      configMapKeyRef:
+                        name: {{SERVICE_NAME}}
+                        key: ATHENA_OUTPUT_BUCKET
               resources:
                 requests:
                   cpu: "{{SERVICE_RESOURCE_CPU}}"
