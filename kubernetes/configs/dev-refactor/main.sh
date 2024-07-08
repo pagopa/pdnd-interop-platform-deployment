@@ -44,8 +44,10 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/dev-refactor/attributes_loader.sh
 . $(pwd)/kubernetes/configs/dev-refactor/backend_for_frontend.sh
 . $(pwd)/kubernetes/configs/dev-refactor/catalog_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/dev-refactor/client_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/dev-refactor/catalog_process.sh
 . $(pwd)/kubernetes/configs/dev-refactor/frontend.sh
+. $(pwd)/kubernetes/configs/dev-refactor/key_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/dev-refactor/party_registry_proxy.sh
 . $(pwd)/kubernetes/configs/dev-refactor/purpose_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/dev-refactor/purpose_process.sh
