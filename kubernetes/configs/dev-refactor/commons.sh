@@ -63,6 +63,8 @@ REPORT_SENDER_LABEL="noreply-dev-refactor"
 NOTIFICATION_SENDER_MAIL="noreply@notifiche.dev.interop.pagopa.it"
 NOTIFICATION_SENDER_LABEL="noreply-dev-refactor"
 
+PEC_SMTP_ADDRESS="smtp-mock.dev-refactor.svc.cluster.local"
+PEC_SMTP_PORT=5025
 PEC_SMTP_SECURE=false
 
 SMTP_SECURE=false
