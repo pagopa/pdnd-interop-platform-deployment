@@ -24,6 +24,11 @@ spec:
                 configMapKeyRef:
                   name: common-kafka
                   key: AGREEMENT_TOPIC
+            - name: AUTHORIZATION_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: AUTHORIZATION_TOPIC
             - name: CATALOG_TOPIC
               valueFrom:
                 configMapKeyRef:
