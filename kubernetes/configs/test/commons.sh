@@ -19,7 +19,7 @@ KAFKA_BROKERS="boot-9sxt6jl9.c2.kafka-serverless.eu-central-1.amazonaws.com:9098
 
 AGREEMENT_TOPIC="event-store.test_agreement.events"
 ATTRIBUTE_TOPIC="event-store.test_attribute_registry.events"
-AUTHORIZATION_TOPIC="event-store.test_authz.events"
+AUTHORIZATION_TOPIC="event-store.test_authorization.events"
 CATALOG_TOPIC="event-store.test_catalog.events"
 PURPOSE_TOPIC="event-store.test_purpose.events"
 
