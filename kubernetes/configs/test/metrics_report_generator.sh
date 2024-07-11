@@ -10,3 +10,6 @@ ATHENA_OUTPUT_BUCKET="interop-athena-query-results-test"
 
 JOB_METRICS_REPORT_GENERATOR_RESOURCE_CPU="2"
 JOB_METRICS_REPORT_GENERATOR_RESOURCE_MEM="4Gi"
+
+SMTP_ADDRESS="email-smtp.eu-central-1.amazonaws.com"
+SMTP_PORT=465
