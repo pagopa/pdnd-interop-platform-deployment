@@ -339,7 +339,7 @@ jobs:
   deploy_purpose_management:
     name: Purpose Management
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'dev-refactor' && inputs.environment != 'test'}}
+    if: ${{ inputs.environment != 'dev-refactor' && inputs.environment != 'test' && inputs.environment != 'prod'}}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -370,7 +370,7 @@ jobs:
   deploy_purpose_readmodel_writer:
     name: Purpose ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'test'}}
+    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'test' || inputs.environment == 'prod'}}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
