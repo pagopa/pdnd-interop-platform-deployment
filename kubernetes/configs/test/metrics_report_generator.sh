@@ -13,3 +13,4 @@ JOB_METRICS_REPORT_GENERATOR_RESOURCE_MEM="4Gi"
 
 SMTP_ADDRESS="email-smtp.eu-central-1.amazonaws.com"
 SMTP_PORT=465
+SMTP_SECURE=true
