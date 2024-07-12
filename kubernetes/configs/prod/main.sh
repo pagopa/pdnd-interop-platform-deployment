@@ -48,6 +48,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/prod/frontend.sh
 . $(pwd)/kubernetes/configs/prod/party_registry_proxy.sh
 . $(pwd)/kubernetes/configs/prod/purpose_process.sh
+. $(pwd)/kubernetes/configs/prod/purpose_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/prod/tenant_management.sh
 . $(pwd)/kubernetes/configs/prod/tenant_process.sh
 . $(pwd)/kubernetes/configs/prod/tenants-certified-attributes-updater.sh
