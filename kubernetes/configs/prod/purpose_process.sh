@@ -1,6 +1,5 @@
 #!/bin/bash
 
-PURPOSE_PROCESS_SERVICE_NAME="interop-be-purpose-process"
 PURPOSE_PROCESS_STORAGE_CONTAINER="interop-application-documents-prod"
 
 PURPOSE_PROCESS_RESOURCE_CPU="2"
