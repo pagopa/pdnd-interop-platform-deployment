@@ -65,7 +65,7 @@ NOTIFICATION_SENDER_LABEL="PDND Interop no-reply"
 
 PEC_SMTP_ADDRESS="smtps.pec.aruba.it"
 PEC_SMTP_PORT=465
-PEC_WITH_SSL=true
+PEC_SMTP_SECURE=true
 
 SMTP_SECURE=true
 SMTP_ADDRESS="email-smtp.eu-central-1.amazonaws.com"
