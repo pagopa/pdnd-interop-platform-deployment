@@ -11,10 +11,8 @@ EXTERNAL_APPLICATION_HOST="$UI_SUBDOMAIN.$DOMAIN_NAME"
 AUTHORIZATION_SERVER_HOST="$AUTH_SUBDOMAIN.$DOMAIN_NAME"
 API_GATEWAY_HOST="$API_SUBDOMAIN.$DOMAIN_NAME"
 
-AGREEMENT_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $AGREEMENT_MANAGEMENT_IMAGE_VERSION)
 AUTHORIZATION_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $AUTHORIZATION_MANAGEMENT_IMAGE_VERSION)
 PARTY_REGISTRY_PROXY_INTERFACE_VERSION=$(shortVersion $PARTY_REGISTRY_PROXY_IMAGE_VERSION)
-PURPOSE_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $PURPOSE_MANAGEMENT_IMAGE_VERSION)
 TENANT_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $TENANT_MANAGEMENT_IMAGE_VERSION)
 
 ATTRIBUTE_REGISTRY_PROCESS_INTERFACE_VERSION=$(shortVersion $ATTRIBUTE_REGISTRY_PROCESS_IMAGE_VERSION)
@@ -31,7 +29,8 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/dev/redis.sh
 . $(pwd)/kubernetes/configs/dev/smtp_mock.sh
 
-. $(pwd)/kubernetes/configs/dev/agreement_management.sh
+. $(pwd)/kubernetes/configs/dev/agreement_email_sender.sh
+. $(pwd)/kubernetes/configs/dev/agreement_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/dev/agreement_process.sh
 . $(pwd)/kubernetes/configs/dev/api_gateway.sh
 . $(pwd)/kubernetes/configs/dev/authorization_management.sh
@@ -46,7 +45,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/dev/catalog_process.sh
 . $(pwd)/kubernetes/configs/dev/frontend.sh
 . $(pwd)/kubernetes/configs/dev/party_registry_proxy.sh
-. $(pwd)/kubernetes/configs/dev/purpose_management.sh
+. $(pwd)/kubernetes/configs/dev/purpose_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/dev/purpose_process.sh
 . $(pwd)/kubernetes/configs/dev/tenant_management.sh
 . $(pwd)/kubernetes/configs/dev/tenant_process.sh

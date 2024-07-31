@@ -60,8 +60,15 @@ PAGOPA_TENANT_ID="69e2865e-65ab-4e48-a638-2037a9ee2ee7"
 REPORT_SENDER_MAIL="noreply@reports.dev.interop.pagopa.it"
 REPORT_SENDER_LABEL="noreply-dev"
 
+NOTIFICATION_SENDER_MAIL="noreply@notifiche.dev.interop.pagopa.it"
+NOTIFICATION_SENDER_LABEL="noreply-dev"
 
-SMTP_ADDRESS="email-smtp.eu-central-1.amazonaws.com"
-SMTP_PORT=465
+PEC_SMTP_ADDRESS="smtp-mock.dev.svc.cluster.local"
+PEC_SMTP_PORT=5025
+PEC_SMTP_SECURE=false
+
+SMTP_SECURE=false
+SMTP_ADDRESS="smtp-mock.dev.svc.cluster.local"
+SMTP_PORT=5025
 
 AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.dev.svc.cluster.local:8088/authorization-management/0.0"
