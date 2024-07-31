@@ -14,48 +14,23 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ACCEPTED_AUDIENCES
-            - name: AGREEMENT_MANAGEMENT_URL
+            - name: EVENTSTORE_DB_SCHEMA
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: AGREEMENT_MANAGEMENT_URL
-            - name: AUTHORIZATION_MANAGEMENT_URL
+                  key: EVENTSTORE_DB_SCHEMA
+            - name: RISK_ANALYSIS_DOCUMENTS_PATH
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: AUTHORIZATION_MANAGEMENT_URL
-            - name: PURPOSE_MANAGEMENT_URL
+                  key: RISK_ANALYSIS_DOCUMENTS_PATH
+            - name: WELL_KNOWN_URLS
+              valueFrom:
+                configMapKeyRef:
+                  name: common-jwt
+                  key: WELL_KNOWN_URLS
+            - name: S3_BUCKET
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: PURPOSE_MANAGEMENT_URL
-            - name: TENANT_MANAGEMENT_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: TENANT_MANAGEMENT_URL     
-            - name: STORAGE_TYPE
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: STORAGE_TYPE
-            - name: STORAGE_CONTAINER
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: STORAGE_CONTAINER
-            - name: STORAGE_ENDPOINT
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: STORAGE_ENDPOINT
-            - name: RISK_ANALYSIS_DOCS_PATH
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: RISK_ANALYSIS_DOCS_PATH
-            - name: PARTY_MANAGEMENT_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: party-management
-                  key: PARTY_MANAGEMENT_API_KEY
+                  key: S3_BUCKET
