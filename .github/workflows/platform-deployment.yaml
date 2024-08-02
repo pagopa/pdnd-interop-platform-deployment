@@ -35,16 +35,6 @@ jobs:
             exit 1
           fi
 
-      - name: Normalize environment
-        id: norm_env
-        run: |
-          set -euo pipefail
-          
-          INPUT_ENV="${{ inputs.environment }}"
-          NORM_ENV="${INPUT_ENV#"es1-"}"
-
-          echo "NORM_ENV=$NORM_ENV" >> $GITHUB_ENV
-
   create_runner:
     name: Create Self-Hosted Runner
     needs: [validate_inputs]
@@ -99,7 +89,7 @@ jobs:
   deploy_agreement_management:
     name: Agreement Management
     needs: [deploy_configs]
-    if: ${{ env.NORM_ENV != 'dev-refactor' && env.NORM_ENV != 'test' && env.NORM_ENV != 'prod'}}
+    if: ${{ vars.NORM_ENV != 'dev-refactor' && vars.NORM_ENV != 'test' && vars.NORM_ENV != 'prod'}}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -115,7 +105,7 @@ jobs:
   deploy_agreement_email_sender:
     name: Agreement Email Sender
     needs: [deploy_configs]
-    if: ${{ env.NORM_ENV == 'dev-refactor' || env.NORM_ENV == 'test' || env.NORM_ENV == 'prod' }}
+    if: ${{ vars.NORM_ENV == 'dev-refactor' || vars.NORM_ENV == 'test' || vars.NORM_ENV == 'prod' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -131,7 +121,7 @@ jobs:
   deploy_agreement_readmodel_writer:
     name: Agreement ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ env.NORM_ENV == 'dev-refactor' || env.NORM_ENV == 'test' || env.NORM_ENV == 'prod' }}
+    if: ${{ vars.NORM_ENV == 'dev-refactor' || vars.NORM_ENV == 'test' || vars.NORM_ENV == 'prod' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -162,7 +152,7 @@ jobs:
   deploy_attribute_registry_management:
     name: Attribute Registry Management
     needs: [deploy_configs]
-    if: ${{ env.NORM_ENV == 'att' }}
+    if: ${{ vars.NORM_ENV == 'att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -178,7 +168,7 @@ jobs:
   deploy_attribute_registry_readmodel_writer:
     name: Attribute Registry ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ env.NORM_ENV != 'att' }}
+    if: ${{ vars.NORM_ENV != 'att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -239,7 +229,7 @@ jobs:
   deploy_authorization_updater:
     name: Authorization Updater
     needs: [deploy_configs]
-    if: ${{ env.NORM_ENV != 'att' }}
+    if: ${{ vars.NORM_ENV != 'att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -255,7 +245,7 @@ jobs:
   deploy_catalog_management:
     name: Catalog Management
     needs: [deploy_configs]
-    if: ${{ env.NORM_ENV == 'att' }}
+    if: ${{ vars.NORM_ENV == 'att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -271,7 +261,7 @@ jobs:
   deploy_catalog_readmodel_writer:
     name: Catalog ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ env.NORM_ENV != 'att' }}
+    if: ${{ vars.NORM_ENV != 'att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -302,7 +292,7 @@ jobs:
   deploy_client_readmodel_writer:
     name: Client ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ env.NORM_ENV == 'dev-refactor'}}
+    if: ${{ vars.NORM_ENV == 'dev-refactor'}}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -318,7 +308,7 @@ jobs:
   deploy_key_readmodel_writer:
     name: Key ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ env.NORM_ENV == 'dev-refactor'}}
+    if: ${{ vars.NORM_ENV == 'dev-refactor'}}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -349,7 +339,7 @@ jobs:
   deploy_purpose_management:
     name: Purpose Management
     needs: [deploy_configs]
-    if: ${{ env.NORM_ENV != 'dev-refactor' && env.NORM_ENV != 'test' && env.NORM_ENV != 'prod'}}
+    if: ${{ vars.NORM_ENV != 'dev-refactor' && vars.NORM_ENV != 'test' && vars.NORM_ENV != 'prod'}}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -380,7 +370,7 @@ jobs:
   deploy_purpose_readmodel_writer:
     name: Purpose ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ env.NORM_ENV == 'dev-refactor' || env.NORM_ENV == 'test' || env.NORM_ENV == 'prod'}}
+    if: ${{ vars.NORM_ENV == 'dev-refactor' || vars.NORM_ENV == 'test' || vars.NORM_ENV == 'prod'}}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -486,7 +476,7 @@ jobs:
   deploy_notifier_seeder:
     name: Notifier Seeder
     needs: [deploy_configs]
-    if: ${{ env.NORM_ENV != 'att' }}
+    if: ${{ vars.NORM_ENV != 'att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -517,7 +507,7 @@ jobs:
   deploy_selfcare_onboarding_consumer:
     name: Selfcare onboarding consumer
     needs: [deploy_configs]
-    if: ${{ env.NORM_ENV != 'dev-refactor' && env.NORM_ENV != 'qa' }}
+    if: ${{ vars.NORM_ENV != 'dev-refactor' && vars.NORM_ENV != 'qa' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -767,7 +757,7 @@ jobs:
   deploy_smtp_mock:
     name: SMTP mock
     needs: [deploy_configs]
-    if: ${{ env.NORM_ENV != 'prod' && env.NORM_ENV != 'att' }}
+    if: ${{ vars.NORM_ENV != 'prod' && vars.NORM_ENV != 'att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-smtp-mock.yaml
