@@ -204,7 +204,7 @@ function applyKustomizeToDir() {
   serviceImageDigest="$(getDockerImageDigest "$serviceEcrName" "$imageVersion")"
   echo "Image digest: $serviceImageDigest"
 
-  kubeDirPath="kubernetes/${dirPath%"-es1"}"
+  kubeDirPath="kubernetes/${dirPath#"es1-"}"
 
   echo "Compiling base files"
   compileDir "kubernetes/base" "$serviceName" "$imageVersion" "$serviceImageDigest" "$resourceCpu" "$resourceMem"
