@@ -98,7 +98,8 @@ jobs:
   deploy_agreement_management:
     name: Agreement Management
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'dev-refactor' && inputs.environment != 'es1-dev-refactor'
+    if: |
+        ${{ inputs.environment != 'dev-refactor' && inputs.environment != 'es1-dev-refactor'
         && inputs.environment != 'test' && inputs.environment != 'es1-test'
         && inputs.environment != 'prod' && inputs.environment != 'es1-prod }}
     permissions:
@@ -116,7 +117,8 @@ jobs:
   deploy_agreement_email_sender:
     name: Agreement Email Sender
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
+    if: |
+        ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
         || inputs.environment == 'test' || inputs.environment == 'es1-test'
         || inputs.environment == 'prod' || inputs.environment == 'es1-prod' }}
     permissions:
@@ -134,7 +136,8 @@ jobs:
   deploy_agreement_readmodel_writer:
     name: Agreement ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
+    if: |
+        ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
         || inputs.environment == 'test' || inputs.environment == 'es1-test'
         || inputs.environment == 'prod' || inputs.environment == 'es1-prod' }}
     permissions:
@@ -354,7 +357,8 @@ jobs:
   deploy_purpose_management:
     name: Purpose Management
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'dev' || inputs.environment == 'es1-dev'
+    if: |
+        ${{ inputs.environment == 'dev' || inputs.environment == 'es1-dev'
         || inputs.environment == 'qa' || inputs.environment == 'es1-qa'
         || inputs.environment == 'att' || inputs.environment == 'es1-att' }}
     permissions:
@@ -387,7 +391,8 @@ jobs:
   deploy_purpose_readmodel_writer:
     name: Purpose ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
+    if: |
+        ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
         || inputs.environment == 'test' || inputs.environment == 'es1-test'
         || inputs.environment == 'prod' || inputs.environment == 'es1-prod' }}
     permissions:
@@ -526,7 +531,8 @@ jobs:
   deploy_selfcare_onboarding_consumer:
     name: Selfcare onboarding consumer
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'dev-refactor' && inputs.environment != 'es1-dev-refactor'
+    if: |
+        ${{ inputs.environment != 'dev-refactor' && inputs.environment != 'es1-dev-refactor'
         && inputs.environment != 'qa' && inputs.environment != 'es1-qa' }}
     permissions:
       contents: read
@@ -777,7 +783,8 @@ jobs:
   deploy_smtp_mock:
     name: SMTP mock
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'att' && inputs.environment != 'es1-att'
+    if: |
+        ${{ inputs.environment != 'att' && inputs.environment != 'es1-att'
         && inputs.environment != 'prod' && inputs.environment !) 'es1-prod' }}
     permissions:
       contents: read
