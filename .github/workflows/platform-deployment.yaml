@@ -73,6 +73,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-configs.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
 
@@ -83,6 +84,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-frontend.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
 
@@ -94,6 +96,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/agreement-management/${{ vars.NORM_ENV }}"
@@ -110,6 +113,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/agreement-email-sender/${{ vars.NORM_ENV }}"
@@ -126,6 +130,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/agreement-readmodel-writer/${{ vars.NORM_ENV }}"
@@ -141,6 +146,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/agreement-process/${{ vars.NORM_ENV }}"
@@ -157,6 +163,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/attribute-registry-management/${{ vars.NORM_ENV }}"
@@ -173,6 +180,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/attribute-registry-readmodel-writer/${{ vars.NORM_ENV }}"
@@ -188,6 +196,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/attribute-registry-process/${{ vars.NORM_ENV }}"
@@ -203,6 +212,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/authorization-management/${{ vars.NORM_ENV }}"
@@ -218,6 +228,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/authorization-process/${{ vars.NORM_ENV }}"
@@ -234,6 +245,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/authorization-updater/${{ vars.NORM_ENV }}"
@@ -250,6 +262,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/catalog-management/${{ vars.NORM_ENV }}"
@@ -266,6 +279,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/catalog-readmodel-writer/${{ vars.NORM_ENV }}"
@@ -281,6 +295,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/catalog-process/${{ vars.NORM_ENV }}"
@@ -297,6 +312,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/client-readmodel-writer/${{ vars.NORM_ENV }}"
@@ -313,6 +329,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/key-readmodel-writer/${{ vars.NORM_ENV }}"
@@ -328,6 +345,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/party-registry-proxy/${{ vars.NORM_ENV }}"
@@ -344,6 +362,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/purpose-management/${{ vars.NORM_ENV }}"
@@ -359,6 +378,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/purpose-process/${{ vars.NORM_ENV }}"
@@ -375,6 +395,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/purpose-readmodel-writer/${{ vars.NORM_ENV }}"
@@ -390,6 +411,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/tenant-management/${{ vars.NORM_ENV }}"
@@ -405,6 +427,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/tenant-process/${{ vars.NORM_ENV }}"
@@ -420,6 +443,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/backend-for-frontend/${{ vars.NORM_ENV }}"
@@ -435,6 +459,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/api-gateway/${{ vars.NORM_ENV }}"
@@ -450,6 +475,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/authorization-server/${{ vars.NORM_ENV }}"
@@ -465,6 +491,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/notifier/${{ vars.NORM_ENV }}"
@@ -481,6 +508,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/notifier-seeder/${{ vars.NORM_ENV }}"
@@ -496,6 +524,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/eservice-descriptors-archiver/${{ vars.NORM_ENV }}"
@@ -512,6 +541,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       kustomize_overlay_path: "overlays/selfcare-onboarding-consumer/${{ vars.NORM_ENV }}"
@@ -527,6 +557,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       k8s_files_path: "jobs/attributes-loader/${{ vars.NORM_ENV }}"
@@ -542,6 +573,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       k8s_files_path: "jobs/token-details-persister/${{ vars.NORM_ENV }}"
@@ -557,6 +589,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       k8s_files_path: "jobs/tenants-certified-attributes-updater/${{ vars.NORM_ENV }}"
@@ -572,6 +605,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-thirdparty-cronjob.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       k8s_files_path: "thirdparty/party-registry-proxy-refresher/${{ vars.NORM_ENV }}"
@@ -586,6 +620,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       k8s_files_path: "jobs/metrics-report-generator/${{ vars.NORM_ENV }}"
@@ -601,6 +636,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       k8s_files_path: "jobs/anac-certified-attributes-importer/${{ vars.NORM_ENV }}"
@@ -616,6 +652,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       k8s_files_path: "jobs/ivass-certified-attributes-importer/${{ vars.NORM_ENV }}"
@@ -631,6 +668,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       k8s_files_path: "jobs/pn-consumers/${{ vars.NORM_ENV }}"
@@ -646,6 +684,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       k8s_files_path: "jobs/padigitale-report-generator/${{ vars.NORM_ENV }}"
@@ -661,6 +700,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       k8s_files_path: "jobs/dashboard-metrics-report-generator/${{ vars.NORM_ENV }}"
@@ -676,6 +716,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       k8s_files_path: "jobs/dtd-catalog-exporter/${{ vars.NORM_ENV }}"
@@ -691,6 +732,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       k8s_files_path: "jobs/eservices-monitoring-exporter/${{ vars.NORM_ENV }}"
@@ -706,6 +748,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       k8s_files_path: "jobs/one-trust-notices/${{ vars.NORM_ENV }}"
@@ -721,6 +764,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       k8s_files_path: "jobs/dtd-metrics/${{ vars.NORM_ENV }}"
@@ -736,6 +780,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
       k8s_files_path: "jobs/datalake-data-export/${{ vars.NORM_ENV }}"
@@ -751,6 +796,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-redis.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
 
@@ -762,6 +808,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-smtp-mock.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
 
@@ -775,6 +822,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/deploy-ingress.yaml
     secrets: inherit
+    environment: ${{ inputs.environment }}
     with:
       environment: ${{ inputs.environment }}
 
@@ -816,6 +864,7 @@ jobs:
       - name: Stop Github Runner
         id: stop_runner
         uses: pagopa/interop-github-runner-aws-cleanup-action@main
+        environment: ${{ inputs.environment }}
         with:
           environment: ${{ inputs.environment }}
           aws_region: ${{ secrets.AWS_REGION }}
