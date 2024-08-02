@@ -101,7 +101,7 @@ jobs:
     if: |
         inputs.environment != 'dev-refactor' && inputs.environment != 'es1-dev-refactor'
         && inputs.environment != 'test' && inputs.environment != 'es1-test'
-        && inputs.environment != 'prod' && inputs.environment != 'es1-prod
+        && inputs.environment != 'prod' && inputs.environment != 'es1-prod'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -785,7 +785,7 @@ jobs:
     needs: [deploy_configs]
     if: |
         inputs.environment != 'att' && inputs.environment != 'es1-att'
-        && inputs.environment != 'prod' && inputs.environment !) 'es1-prod'
+        && inputs.environment != 'prod' && inputs.environment != 'es1-prod'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-smtp-mock.yaml
