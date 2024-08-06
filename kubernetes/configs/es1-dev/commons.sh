@@ -28,6 +28,7 @@ PURPOSE_TOPIC="event-store.dev_purpose.events"
 AGREEMENT_OUTBOUND_TOPIC="outbound.dev_agreement.events"
 CATALOG_OUTBOUND_TOPIC="outbound.dev_catalog.events"
 PURPOSE_OUTBOUND_TOPIC="outbound.dev_purpose.events"
+TENANT_OUTBOUND_TOPIC="outbound.dev_tenant.events"
 
 AWS_REGION="eu-south-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
