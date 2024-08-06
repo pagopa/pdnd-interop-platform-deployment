@@ -6,4 +6,3 @@ metadata:
 data:
   KAFKA_CLIENT_ID: "{{NAMESPACE}}-pagopa-interop-catalog-outbound-writer"
   KAFKA_GROUP_ID: "{{NAMESPACE}}-catalog-outbound-writer"
-  TOPIC_STARTING_OFFSET: "earliest"

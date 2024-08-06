@@ -40,7 +40,4 @@ spec:
                   name: common-kafka
                   key: CATALOG_OUTBOUND_TOPIC
             - name: TOPIC_STARTING_OFFSET
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: TOPIC_STARTING_OFFSET
+              value: "earliest"
