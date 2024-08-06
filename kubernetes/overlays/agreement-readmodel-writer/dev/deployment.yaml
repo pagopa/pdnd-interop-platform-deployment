@@ -9,15 +9,20 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
-            - name: ENABLED_PROJECTIONS
+            - name: KAFKA_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: ENABLED_PROJECTIONS
-            - name: PERSISTENCE_EVENTS_QUEUE_URL
-              value: "{{AWS_SQS_DOMAIN}}/{{AWS_ACCOUNT_ID}}/{{PERSISTENCE_QUEUE_NAME}}"
-            - name: ACCEPTED_AUDIENCES
+                  key: KAFKA_CLIENT_ID
+            - name: KAFKA_GROUP_ID
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: ACCEPTED_AUDIENCES
+                  key: KAFKA_GROUP_ID
+            - name: AGREEMENT_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: AGREEMENT_TOPIC
+
+

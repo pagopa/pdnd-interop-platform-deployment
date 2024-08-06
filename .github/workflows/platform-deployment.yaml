@@ -100,7 +100,8 @@ jobs:
     name: Agreement Management
     needs: [deploy_configs]
     if: |
-        inputs.environment != 'dev-refactor' && inputs.environment != 'es1-dev-refactor'
+        inputs.environment != 'dev' && inputs.environment != 'es1-dev'
+        && inputs.environment != 'dev-refactor' && inputs.environment != 'es1-dev-refactor'
         && inputs.environment != 'test' && inputs.environment != 'es1-test'
         && inputs.environment != 'prod' && inputs.environment != 'es1-prod'
     permissions:
@@ -119,7 +120,8 @@ jobs:
     name: Agreement Email Sender
     needs: [deploy_configs]
     if: |
-        inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
+        inputs.environment == 'dev' || inputs.environment == 'es1-dev'
+        || inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
         || inputs.environment == 'test' || inputs.environment == 'es1-test'
         || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
     permissions:
@@ -138,7 +140,8 @@ jobs:
     name: Agreement ReadModel Writer
     needs: [deploy_configs]
     if: |
-        inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
+        inputs.environment == 'dev' || inputs.environment == 'es1-dev'
+        || inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
         || inputs.environment == 'test' || inputs.environment == 'es1-test'
         || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
     permissions:
@@ -359,8 +362,7 @@ jobs:
     name: Purpose Management
     needs: [deploy_configs]
     if: |
-        inputs.environment == 'dev' || inputs.environment == 'es1-dev'
-        || inputs.environment == 'qa' || inputs.environment == 'es1-qa'
+        inputs.environment == 'qa' || inputs.environment == 'es1-qa'
         || inputs.environment == 'att' || inputs.environment == 'es1-att'
     permissions:
       contents: read
@@ -393,7 +395,8 @@ jobs:
     name: Purpose ReadModel Writer
     needs: [deploy_configs]
     if: |
-        inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
+        inputs.environment == 'dev' || inputs.environment == 'es1-dev'
+        || inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
         || inputs.environment == 'test' || inputs.environment == 'es1-test'
         || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
     permissions:
