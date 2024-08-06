@@ -62,6 +62,8 @@ jobs:
           resourceCpu="${${{inputs.resource_cpu_var_name}}}"
           resourceMem="${${{inputs.resource_mem_var_name}}}"
 
-          applyKubeFile "${{ inputs.k8s_files_path }}/configmap.yaml" $serviceName
-          applyKubeFile "${{ inputs.k8s_files_path }}/serviceaccount.yaml" $serviceName
-          applyKubeFile "${{ inputs.k8s_files_path }}/cronjob.yaml" $serviceName "fixed" $resourceCpu $resourceMem
+          normFilesPath="$(echo "${{ inputs.k8s_files_path }}" | sed 's/es1-//')"
+
+          applyKubeFile "$normFilesPath/configmap.yaml" $serviceName
+          applyKubeFile "$normFilesPath/serviceaccount.yaml" $serviceName
+          applyKubeFile "$normFilesPath/cronjob.yaml" $serviceName "fixed" $resourceCpu $resourceMem

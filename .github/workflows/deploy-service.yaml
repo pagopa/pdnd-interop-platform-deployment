@@ -67,7 +67,9 @@ jobs:
           resourceCpu="${${{inputs.resource_cpu_var_name}}}"
           resourceMem="${${{inputs.resource_mem_var_name}}}"
 
-          applyKustomizeToDir ${{ inputs.kustomize_overlay_path }} \
+          normKustomizePath="$(echo "${{ inputs.kustomize_overlay_path }}" | sed 's/es1-//')"
+
+          applyKustomizeToDir $normKustomizePath \
             $serviceName $imageVersion $resourceCpu $resourceMem
 
       - name: Wait for Service Readiness

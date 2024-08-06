@@ -38,7 +38,7 @@ jobs:
 
       - name: Create MongoDB User
         id: create_mongodb_user
-        if: ${{ inputs.environment != 'dev-refactor' }}
+        if: ${{ vars.NORM_ENV != 'dev-refactor' }}
         run: |
           set -eo pipefail
           source $CONFIG_FILE
@@ -54,7 +54,7 @@ jobs:
 
       - name: Create DEV-Refactor MongoDB User
         id: create_mongodb_user_refactor
-        if: ${{ inputs.environment == 'dev-refactor' }}
+        if: ${{ vars.NORM_ENV == 'dev-refactor' }}
         run: |
           set -eo pipefail
           source $CONFIG_FILE
@@ -79,7 +79,7 @@ jobs:
 
       - name: Prepare Event Store migrations
         id: prepare_event_store_migrations
-        if: ${{ inputs.environment != 'att' }}
+        if: ${{ vars.NORM_ENV != 'att' }}
         run: |
           set -eo pipefail
           source $CONFIG_FILE
@@ -98,7 +98,7 @@ jobs:
 
       - name: Apply commons configmaps
         id: apply_commons_configmap
-        if: ${{ inputs.environment != 'att' }}
+        if: ${{ vars.NORM_ENV != 'att' }}
         run: |
           set -eo pipefail
           source $CONFIG_FILE
@@ -112,7 +112,7 @@ jobs:
 
       - name: Create K8s Secrets
         id: create_secrets
-        if: ${{ inputs.environment != 'dev-refactor' }}
+        if: ${{ vars.NORM_ENV != 'dev-refactor' }}
         run: |
           set -eo pipefail
           source $CONFIG_FILE
@@ -159,7 +159,7 @@ jobs:
 
       - name: Create DEV-Refactor K8s Secrets
         id: create_dev_refactor_secrets
-        if: ${{ inputs.environment == 'dev-refactor' }}
+        if: ${{ vars.NORM_ENV == 'dev-refactor' }}
         run: |
           set -eo pipefail
           source $CONFIG_FILE
@@ -202,7 +202,7 @@ jobs:
 
       - name: Create Notifications K8s Secrets - Prod
         id: create_prod_notification_secrets
-        if: ${{ inputs.environment == 'prod' }}
+        if: ${{ vars.NORM_ENV == 'prod' }}
         run: |
           set -eo pipefail
           source $CONFIG_FILE
@@ -215,7 +215,7 @@ jobs:
       
       - name: Create Notification K8s Secrets - No Prod
         id: create_no_prod_notification_secrets
-        if: ${{ inputs.environment != 'prod' }}
+        if: ${{ vars.NORM_ENV != 'prod' }}
         run: |
           set -eo pipefail
           source $CONFIG_FILE
