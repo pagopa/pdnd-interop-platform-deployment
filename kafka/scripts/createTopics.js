@@ -81,7 +81,7 @@ const run = async () => {
     logInfo("Setup Kafka connection.");
     const kafka = new Kafka({
         clientId: 'kafka-scripts',
-        brokers: [process.env.KAFKA_BROKERS],
+        brokers: process.env.KAFKA_BROKERS.split(","),
         logLevel: logLevel.NOTHING,
         ssl: true,
         sasl: {
@@ -95,7 +95,7 @@ const run = async () => {
     try {
         await admin.connect();
     } catch (ex) {
-        throw new Error(`Cannot connect to Kafka with admin client.`);
+      throw new Error(`Cannot connect to Kafka with admin client:\n${ex}`);
     }
 
     const topicsConfigurationPath = process.env.TOPICS_PROPERTIES_PATH;

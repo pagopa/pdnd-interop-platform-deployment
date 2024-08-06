@@ -12,6 +12,7 @@ jobs:
   validate_inputs:
     name: Validate Inputs
     runs-on: ubuntu-22.04
+    environment: ${{ inputs.environment }}
     # we could use an "if" here, but if this job is skipped then all the downstream jobs are skipped even if they don't need this job
 
     steps:
@@ -19,6 +20,7 @@ jobs:
         id: print_inputs
         run: |
           echo "- environment: \`${{ inputs.environment }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- normalized environment: \`${{ vars.NORM_ENV }}\`" >> $GITHUB_STEP_SUMMARY
           echo "- ref: \`${{ github.ref }}\`" >> $GITHUB_STEP_SUMMARY
 
       - name: Validate Prod Ref
@@ -34,6 +36,14 @@ jobs:
             echo >&2 "ERROR: deploy on prod environment must use a git tag"
             exit 1
           fi
+
+      - name: Set NORM_ENV in 'env' context
+        id: norm_env
+        run: |
+          set -euo pipefail
+          
+          NORM_ENV="${{ vars.NORM_ENV }}"
+          echo "NORM_ENV=$NORM_ENV" >> $GITHUB_ENV
 
   create_runner:
     name: Create Self-Hosted Runner
@@ -89,7 +99,10 @@ jobs:
   deploy_agreement_management:
     name: Agreement Management
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'dev-refactor' && inputs.environment != 'test' && inputs.environment != 'prod'}}
+    if: |
+        inputs.environment != 'dev-refactor' && inputs.environment != 'es1-dev-refactor'
+        && inputs.environment != 'test' && inputs.environment != 'es1-test'
+        && inputs.environment != 'prod' && inputs.environment != 'es1-prod'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -105,7 +118,10 @@ jobs:
   deploy_agreement_email_sender:
     name: Agreement Email Sender
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'test' || inputs.environment == 'prod' }}
+    if: |
+        inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
+        || inputs.environment == 'test' || inputs.environment == 'es1-test'
+        || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -121,7 +137,10 @@ jobs:
   deploy_agreement_readmodel_writer:
     name: Agreement ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'test' || inputs.environment == 'prod' }}
+    if: |
+        inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
+        || inputs.environment == 'test' || inputs.environment == 'es1-test'
+        || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -152,7 +171,7 @@ jobs:
   deploy_attribute_registry_management:
     name: Attribute Registry Management
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'att' }}
+    if: ${{ inputs.environment == 'att' || inputs.environment == 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -168,7 +187,7 @@ jobs:
   deploy_attribute_registry_readmodel_writer:
     name: Attribute Registry ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'att' }}
+    if: ${{ inputs.environment != 'att' && inputs.environment != 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -229,7 +248,7 @@ jobs:
   deploy_authorization_updater:
     name: Authorization Updater
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'att' }}
+    if: ${{ inputs.environment != 'att' && inputs.environment != 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -245,7 +264,7 @@ jobs:
   deploy_catalog_management:
     name: Catalog Management
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'att' }}
+    if: ${{ inputs.environment == 'att' || inputs.environment == 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -261,7 +280,7 @@ jobs:
   deploy_catalog_readmodel_writer:
     name: Catalog ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'att' }}
+    if: ${{ inputs.environment != 'att' && inputs.environment != 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -292,7 +311,7 @@ jobs:
   deploy_client_readmodel_writer:
     name: Client ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'dev-refactor'}}
+    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -308,7 +327,7 @@ jobs:
   deploy_key_readmodel_writer:
     name: Key ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'dev-refactor'}}
+    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -339,7 +358,10 @@ jobs:
   deploy_purpose_management:
     name: Purpose Management
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'dev-refactor' && inputs.environment != 'test' && inputs.environment != 'prod'}}
+    if: |
+        inputs.environment == 'dev' || inputs.environment == 'es1-dev'
+        || inputs.environment == 'qa' || inputs.environment == 'es1-qa'
+        || inputs.environment == 'att' || inputs.environment == 'es1-att'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -370,7 +392,10 @@ jobs:
   deploy_purpose_readmodel_writer:
     name: Purpose ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'test' || inputs.environment == 'prod'}}
+    if: |
+        inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
+        || inputs.environment == 'test' || inputs.environment == 'es1-test'
+        || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -476,7 +501,7 @@ jobs:
   deploy_notifier_seeder:
     name: Notifier Seeder
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'att' }}
+    if: ${{ inputs.environment != 'att' && inputs.environment != 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -507,7 +532,9 @@ jobs:
   deploy_selfcare_onboarding_consumer:
     name: Selfcare onboarding consumer
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'dev-refactor' && inputs.environment != 'qa' }}
+    if: |
+        inputs.environment != 'dev-refactor' && inputs.environment != 'es1-dev-refactor'
+        && inputs.environment != 'qa' && inputs.environment != 'es1-qa'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -757,7 +784,9 @@ jobs:
   deploy_smtp_mock:
     name: SMTP mock
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'prod' && inputs.environment != 'att' }}
+    if: |
+        inputs.environment != 'att' && inputs.environment != 'es1-att'
+        && inputs.environment != 'prod' && inputs.environment != 'es1-prod'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-smtp-mock.yaml

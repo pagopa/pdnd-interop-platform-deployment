@@ -26,6 +26,7 @@ jobs:
   validate_inputs:
     name: Validate Inputs
     runs-on: ubuntu-22.04
+    environment: ${{ inputs.environment }}
     # we could use an "if" here, but if this job is skipped then all the downstream jobs are skipped even if they don't need this job
 
     steps:
@@ -33,6 +34,7 @@ jobs:
         id: print_inputs
         run: |
           echo "- environment: \`${{ inputs.environment }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- normalized environment: \`${{ vars.NORM_ENV }}\`" >> $GITHUB_STEP_SUMMARY
           echo "- ref: \`${{ github.ref }}\`" >> $GITHUB_STEP_SUMMARY
           echo "- delete_topics: \`${{ inputs.delete_topics }}\`" >> $GITHUB_STEP_SUMMARY
           echo "- delete_topics_prefix: \`${{ inputs.delete_topics_prefix }}\`" >> $GITHUB_STEP_SUMMARY
@@ -70,6 +72,7 @@ jobs:
         id: start_runner
         uses: pagopa/interop-github-runner-aws-create-action@main
         with:
+          environment: ${{ inputs.environment }}
           aws_region: ${{ secrets.AWS_REGION }}
           iam_role_arn: ${{ secrets.ECS_IAM_ROLE_ARN }}
           ecs_cluster_name: ${{ secrets.ECS_CLUSTER_NAME }}
@@ -117,7 +120,7 @@ jobs:
     env:
       AWS_REGION: ${{ secrets.AWS_REGION }}
       KAFKA_BROKERS: ${{ secrets.KAFKA_BROKERS }}
-      TOPICS_PROPERTIES_PATH: ../topics/${{ inputs.environment }}
+      TOPICS_PROPERTIES_PATH: ../topics/${{ vars.NORM_ENV }}
 
     steps:
       - name: Checkout
@@ -155,6 +158,7 @@ jobs:
         id: stop_runner
         uses: pagopa/interop-github-runner-aws-cleanup-action@main
         with:
+          environment: ${{ inputs.environment }}
           aws_region: ${{ secrets.AWS_REGION }}
           iam_role_arn: ${{ secrets.ECS_IAM_ROLE_ARN }}
           ecs_cluster_name: ${{ secrets.ECS_CLUSTER_NAME }}

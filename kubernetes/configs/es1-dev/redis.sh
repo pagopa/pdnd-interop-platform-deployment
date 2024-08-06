@@ -1,0 +1,7 @@
+#!/bin/bash
+
+REDIS_HOST="redis"
+REDIS_PORT="6379"
+
+REDIS_RESOURCE_CPU="1"
+REDIS_RESOURCE_MEM="2Gi"

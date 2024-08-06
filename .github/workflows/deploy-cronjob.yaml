@@ -71,6 +71,8 @@ jobs:
           imageDigest="$(getDockerImageDigest $serviceName $imageVersion)"
           echo "Image digest: $imageDigest"
 
-          applyKubeFile "${{ inputs.k8s_files_path }}/configmap.yaml" $serviceName
-          applyKubeFile "${{ inputs.k8s_files_path }}/serviceaccount.yaml" $serviceName
-          applyKubeFile "${{ inputs.k8s_files_path }}/cronjob.yaml" $serviceName $imageDigest $resourceCpu $resourceMem
+          normFilesPath="$(echo "${{ inputs.k8s_files_path }}" | sed 's/es1-//')"
+
+          applyKubeFile "$normFilesPath/configmap.yaml" $serviceName
+          applyKubeFile "$normFilesPath/serviceaccount.yaml" $serviceName
+          applyKubeFile "$normFilesPath/cronjob.yaml" $serviceName $imageDigest $resourceCpu $resourceMem
