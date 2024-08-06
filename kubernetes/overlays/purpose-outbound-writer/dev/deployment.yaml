@@ -39,3 +39,8 @@ spec:
                 configMapKeyRef:
                   name: common-kafka
                   key: PURPOSE_OUTBOUND_TOPIC
+            - name: TOPIC_STARTING_OFFSET
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: TOPIC_STARTING_OFFSET
