@@ -31,6 +31,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 
 
 . $(pwd)/kubernetes/configs/es1-dev/agreement_email_sender.sh
+. $(pwd)/kubernetes/configs/es1-dev/agreement_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/agreement_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/agreement_process.sh
 . $(pwd)/kubernetes/configs/es1-dev/api_gateway.sh
@@ -42,11 +43,13 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-dev/attribute_registry_process.sh
 . $(pwd)/kubernetes/configs/es1-dev/attributes_loader.sh
 . $(pwd)/kubernetes/configs/es1-dev/backend_for_frontend.sh
+. $(pwd)/kubernetes/configs/es1-dev/catalog_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/catalog_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/catalog_process.sh
 . $(pwd)/kubernetes/configs/es1-dev/frontend.sh
 . $(pwd)/kubernetes/configs/es1-dev/party_registry_proxy.sh
 . $(pwd)/kubernetes/configs/es1-dev/purpose_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-dev/purpose_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/purpose_process.sh
 . $(pwd)/kubernetes/configs/es1-dev/tenant_management.sh
 . $(pwd)/kubernetes/configs/es1-dev/tenant_process.sh
