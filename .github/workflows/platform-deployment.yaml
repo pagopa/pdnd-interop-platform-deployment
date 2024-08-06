@@ -136,6 +136,22 @@ jobs:
       resource_cpu_var_name: AGREEMENT_EMAIL_SENDER_RESOURCE_CPU
       resource_mem_var_name: AGREEMENT_EMAIL_SENDER_RESOURCE_MEM
 
+  deploy_agreement_outbound_writer:
+    name: Agreement Outbound Writer
+    needs: [deploy_configs]
+    if: ${{ inputs.environment == 'es1-dev' }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/agreement-outbound-writer/${{ inputs.environment }}"
+      service_name_var_name: AGREEMENT_OUTBOUND_WRITER_SERVICE_NAME
+      image_version_var_name: AGREEMENT_OUTBOUND_WRITER_IMAGE_VERSION
+      resource_cpu_var_name: AGREEMENT_OUTBOUND_WRITER_RESOURCE_CPU
+      resource_mem_var_name: AGREEMENT_OUTBOUND_WRITER_RESOURCE_MEM
+
   deploy_agreement_readmodel_writer:
     name: Agreement ReadModel Writer
     needs: [deploy_configs]
@@ -280,6 +296,22 @@ jobs:
       resource_cpu_var_name: CATALOG_MANAGEMENT_RESOURCE_CPU
       resource_mem_var_name: CATALOG_MANAGEMENT_RESOURCE_MEM
 
+  deploy_catalog_outbound_writer:
+    name: Catalog Outbound Writer
+    needs: [deploy_configs]
+    if: ${{ inputs.environment == 'es1-dev' }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/catalog-outbound-writer/${{ inputs.environment }}"
+      service_name_var_name: CATALOG_OUTBOUND_WRITER_SERVICE_NAME
+      image_version_var_name: CATALOG_OUTBOUND_WRITER_IMAGE_VERSION
+      resource_cpu_var_name: CATALOG_OUTBOUND_WRITER_RESOURCE_CPU
+      resource_mem_var_name: CATALOG_OUTBOUND_WRITER_RESOURCE_MEM
+
   deploy_catalog_readmodel_writer:
     name: Catalog ReadModel Writer
     needs: [deploy_configs]
@@ -390,6 +422,22 @@ jobs:
       image_version_var_name: PURPOSE_PROCESS_IMAGE_VERSION
       resource_cpu_var_name: PURPOSE_PROCESS_RESOURCE_CPU
       resource_mem_var_name: PURPOSE_PROCESS_RESOURCE_MEM
+
+  deploy_purpose_outbound_writer:
+    name: Purpose Outbound Writer
+    needs: [deploy_configs]
+    if: ${{ inputs.environment == 'es1-dev' }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/purpose-outbound-writer/${{ inputs.environment }}"
+      service_name_var_name: PURPOSE_OUTBOUND_WRITER_SERVICE_NAME
+      image_version_var_name: PURPOSE_OUTBOUND_WRITER_IMAGE_VERSION
+      resource_cpu_var_name: PURPOSE_OUTBOUND_WRITER_RESOURCE_CPU
+      resource_mem_var_name: PURPOSE_OUTBOUND_WRITER_RESOURCE_MEM
 
   deploy_purpose_readmodel_writer:
     name: Purpose ReadModel Writer
@@ -814,12 +862,12 @@ jobs:
     name: Delete Self-Hosted Runner
     needs: [create_runner, deploy_ingress,
       deploy_agreement_email_sender,
-      deploy_agreement_management, deploy_agreement_process, deploy_agreement_readmodel_writer,
+      deploy_agreement_management, deploy_agreement_process, deploy_agreement_readmodel_writer, deploy_agreement_outbound_writer,
       deploy_attribute_registry_management, deploy_attribute_registry_process, deploy_attribute_registry_readmodel_writer,
       deploy_authorization_management, deploy_authorization_process, deploy_authorization_updater, deploy_client_readmodel_writer, deploy_key_readmodel_writer,
-      deploy_catalog_management, deploy_catalog_process, deploy_catalog_readmodel_writer,
+      deploy_catalog_management, deploy_catalog_process, deploy_catalog_readmodel_writer, deploy_catalog_outbound_writer,
       deploy_party_registry_proxy,
-      deploy_purpose_management, deploy_purpose_process, deploy_purpose_readmodel_writer,
+      deploy_purpose_management, deploy_purpose_process, deploy_purpose_readmodel_writer, deploy_purpose_outbound_writer,
       deploy_tenant_management, deploy_tenant_process,
       deploy_notifier, deploy_notifier_seeder,
       deploy_attributes_loader, deploy_token_details_persister,
