@@ -346,7 +346,7 @@ jobs:
   deploy_client_readmodel_writer:
     name: Client ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor' }}
+    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor' || inputs.environment == 'test'}}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -362,7 +362,7 @@ jobs:
   deploy_key_readmodel_writer:
     name: Key ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor' }}
+    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor' || inputs.environment == 'test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
