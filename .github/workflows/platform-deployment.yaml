@@ -792,21 +792,6 @@ jobs:
       resource_cpu_var_name: JOB_ONE_TRUST_NOTICES_RESOURCE_CPU
       resource_mem_var_name: JOB_ONE_TRUST_NOTICES_RESOURCE_MEM
 
-  deploy_dtd_metrics:
-    name: DTD metrics
-    needs: [deploy_configs]
-    permissions:
-      contents: read
-    uses: ./.github/workflows/deploy-cronjob.yaml
-    secrets: inherit
-    with:
-      environment: ${{ inputs.environment }}
-      k8s_files_path: "jobs/dtd-metrics/${{ inputs.environment }}"
-      service_name_var_name: JOB_DTD_METRICS_SERVICE_NAME
-      image_version_var_name: JOB_DTD_METRICS_IMAGE_VERSION
-      resource_cpu_var_name: JOB_DTD_METRICS_RESOURCE_CPU
-      resource_mem_var_name: JOB_DTD_METRICS_RESOURCE_MEM
-
   deploy_datalake_data_export:
     name: Datalake data export
     needs: [deploy_configs]
@@ -878,7 +863,7 @@ jobs:
       deploy_dashboard_metrics_report_generator, deploy_dtd_catalog_exporter,
       deploy_selfcare_onboarding_consumer,
       deploy_eservices_monitoring_exporter, deploy_eservice_descriptors_archiver,
-      deploy_one_trust_notices, deploy_dtd_metrics,deploy_datalake_data_export,
+      deploy_one_trust_notices, deploy_datalake_data_export,
       deploy_redis,
       deploy_smtp_mock]
     if: ${{ always() && needs.create_runner.result != 'skipped' }}

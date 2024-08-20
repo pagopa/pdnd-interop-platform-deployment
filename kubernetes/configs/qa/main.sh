@@ -68,5 +68,4 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/qa/one_trust_notices.sh
 . $(pwd)/kubernetes/configs/qa/selfcare_onboarding_consumer.sh
 . $(pwd)/kubernetes/configs/qa/eservice_descriptors_archiver.sh
-. $(pwd)/kubernetes/configs/qa/dtd_metrics.sh
 . $(pwd)/kubernetes/configs/qa/datalake_data_export.sh
