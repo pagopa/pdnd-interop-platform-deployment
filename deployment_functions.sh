@@ -6,7 +6,7 @@ function getSecretValue() {
     | jq -r '.SecretString')"
 
   if [[ $? -ne 0 ]]; then
-    echo "Failed fetching secret \'$secretId\'" >&2
+    echo "Failed fetching secret $secretId" >&2
   fi
 
   echo "$secretValue"
