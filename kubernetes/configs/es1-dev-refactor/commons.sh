@@ -1,5 +1,7 @@
 #!/bin/bash
 
+REGION_SUFFIX="-es1"
+
 STAGE="DEV"
 
 DOMAIN_NAME="refactor.dev.interop.pagopa.it"
