@@ -4,18 +4,18 @@ STAGE="DEV"
 
 DOMAIN_NAME="refactor.dev.interop.pagopa.it"
 
-REPOSITORY="505630707203.dkr.ecr.eu-central-1.amazonaws.com"
-POSTGRES_HOST="interop-persistence-management-dev.cluster-c9zr6t2swdpb.eu-central-1.rds.amazonaws.com"
+REPOSITORY="505630707203.dkr.ecr.eu-south-1.amazonaws.com"
+POSTGRES_HOST="interop-platform-data-dev.cluster-cevisn7oellx.eu-south-1.rds.amazonaws.com"
 POSTGRES_PORT="5432"
 POSTGRES_DB_NAME="persistence_management_refactor"
-READ_MODEL_DB_HOST="interop-read-model-dev.cluster-c9zr6t2swdpb.eu-central-1.docdb.amazonaws.com"
+READ_MODEL_DB_HOST="interop-read-model-dev.cluster-cevisn7oellx.eu-south-1.docdb.amazonaws.com"
 READ_MODEL_DB_PORT="27017"
 READ_MODEL_DB_NAME="read-model-refactor"
 READ_MODEL_REPLICA_SET="rs0"
 READ_MODEL_READ_PREFERENCE="secondaryPreferred"
 REPLICAS=1
 BACKEND_SERVICE_PORT="8088"
-KAFKA_BROKERS="boot-yqksbq44.c3.kafka-serverless.eu-central-1.amazonaws.com:9098"
+KAFKA_BROKERS="b-1.interopplatformevents.2doelu.c2.kafka.eu-south-1.amazonaws.com:9098,b-2.interopplatformevents.2doelu.c2.kafka.eu-south-1.amazonaws.com:9098,b-3.interopplatformevents.2doelu.c2.kafka.eu-south-1.amazonaws.com:9098"
 
 AGREEMENT_TOPIC="event-store.dev-refactor_agreement.events"
 ATTRIBUTE_TOPIC="event-store.dev-refactor_attribute_registry.events"
@@ -23,12 +23,12 @@ AUTHORIZATION_TOPIC="event-store.dev-refactor_authorization.events"
 CATALOG_TOPIC="event-store.dev-refactor_catalog.events"
 PURPOSE_TOPIC="event-store.dev-refactor_purpose.events"
 
-AWS_REGION="eu-central-1"
+AWS_REGION="eu-south-1"
 PERSISTENCE_QUEUE_NAME="persistence-events-refactor.fifo"
 CERTIFIED_MAIL_QUEUE_NAME="certified-mail.fifo"
 AWS_SQS_DOMAIN="https://sqs.${AWS_REGION}.amazonaws.com"
 
-NOTIFICATION_QUEUE_URL="https://sqs.eu-central-1.amazonaws.com/505630707203/persistence-events-refactor.fifo"
+NOTIFICATION_QUEUE_URL="https://sqs.eu-south-1.amazonaws.com/505630707203/persistence-events-refactor.fifo"
 
 ENABLED_PROJECTIONS="true"
 WELL_KNOWN_URLS="https://dev.interop.pagopa.it/.well-known/jwks.json"
