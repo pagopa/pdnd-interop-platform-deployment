@@ -45,6 +45,8 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/prod/backend_for_frontend.sh
 . $(pwd)/kubernetes/configs/prod/catalog_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/prod/catalog_process.sh
+. $(pwd)/kubernetes/configs/prod/client_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/prod/key_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/prod/frontend.sh
 . $(pwd)/kubernetes/configs/prod/party_registry_proxy.sh
 . $(pwd)/kubernetes/configs/prod/purpose_process.sh
