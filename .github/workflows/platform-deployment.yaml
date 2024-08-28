@@ -463,7 +463,7 @@ jobs:
     name: Tenant Management
     needs: [deploy_configs]
     if: |
-        inputs.environment != 'dev-refactor' && inputs.environment != 'es1-dev-refactor'
+        inputs.environment != 'es1-dev-refactor'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
