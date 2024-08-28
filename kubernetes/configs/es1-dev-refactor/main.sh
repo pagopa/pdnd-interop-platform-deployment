@@ -36,6 +36,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-dev-refactor/catalog_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/client_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/catalog_process.sh
+. $(pwd)/kubernetes/configs/es1-dev-refactor/compute_agreements_consumer.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/frontend.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/key_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/party_registry_proxy.sh
