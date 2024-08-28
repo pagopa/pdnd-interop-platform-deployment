@@ -53,7 +53,6 @@ JOB_ONE_TRUST_NOTICES_SERVICE_NAME="interop-be-one-trust-notices"
 JOB_ANAC_CERTIFIED_ATTRIBUTES_IMPORTER_SERVICE_NAME="interop-be-anac-certified-attributes-importer"
 JOB_IVASS_CERTIFIED_ATTRIBUTES_IMPORTER_SERVICE_NAME="interop-be-ivass-certified-attributes-importer"
 JOB_PN_CONSUMERS_SERVICE_NAME="interop-be-pn-consumers"
-JOB_DTD_METRICS_SERVICE_NAME="interop-be-dtd-metrics"
 JOB_DATALAKE_DATA_EXPORT_SERVICE_NAME="interop-be-datalake-data-export"
 
 REDIS_SERVICE_NAME="redis"
