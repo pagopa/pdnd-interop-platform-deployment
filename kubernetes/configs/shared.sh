@@ -47,7 +47,6 @@ JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_SERVICE_NAME="interop-be-tenants-cert-a
 JOB_PARTY_REGISTRY_PROXY_REFRESHER_SERVICE_NAME="interop-be-party-registry-proxy-refresher"
 JOB_METRICS_REPORT_GENERATOR_SERVICE_NAME="interop-be-metrics-report-generator"
 JOB_PADIGITALE_REPORT_GENERATOR_SERVICE_NAME="interop-be-padigitale-report-generator"
-JOB_DASHBOARD_METRICS_REPORT_GENERATOR_SERVICE_NAME="interop-be-dashboard-metrics-report-generator"
 JOB_ESERVICES_MONITORING_EXPORTER_SERVICE_NAME="interop-be-eservices-monitoring-exporter"
 JOB_DTD_CATALOG_EXPORTER_SERVICE_NAME="interop-be-dtd-catalog-exporter"
 JOB_ONE_TRUST_NOTICES_SERVICE_NAME="interop-be-one-trust-notices"

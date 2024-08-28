@@ -64,7 +64,6 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/dev-refactor/ivass_certified_attributes_importer.sh
 . $(pwd)/kubernetes/configs/dev-refactor/pn_consumers.sh
 . $(pwd)/kubernetes/configs/dev-refactor/padigitale_report_generator.sh
-. $(pwd)/kubernetes/configs/dev-refactor/dashboard_metrics_report_generator.sh
 . $(pwd)/kubernetes/configs/dev-refactor/dtd_catalog_exporter.sh
 . $(pwd)/kubernetes/configs/dev-refactor/one_trust_notices.sh
 . $(pwd)/kubernetes/configs/dev-refactor/selfcare_onboarding_consumer.sh

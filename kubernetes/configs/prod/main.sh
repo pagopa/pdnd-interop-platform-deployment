@@ -45,6 +45,8 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/prod/backend_for_frontend.sh
 . $(pwd)/kubernetes/configs/prod/catalog_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/prod/catalog_process.sh
+. $(pwd)/kubernetes/configs/prod/client_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/prod/key_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/prod/frontend.sh
 . $(pwd)/kubernetes/configs/prod/party_registry_proxy.sh
 . $(pwd)/kubernetes/configs/prod/purpose_process.sh
@@ -62,7 +64,6 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/prod/ivass_certified_attributes_importer.sh
 . $(pwd)/kubernetes/configs/prod/pn_consumers.sh
 . $(pwd)/kubernetes/configs/prod/padigitale_report_generator.sh
-. $(pwd)/kubernetes/configs/prod/dashboard_metrics_report_generator.sh
 . $(pwd)/kubernetes/configs/prod/dtd_catalog_exporter.sh
 . $(pwd)/kubernetes/configs/prod/one_trust_notices.sh
 . $(pwd)/kubernetes/configs/prod/selfcare_onboarding_consumer.sh
