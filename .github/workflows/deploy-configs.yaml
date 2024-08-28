@@ -194,6 +194,8 @@ jobs:
           createKubeSecret 'selfcare-v2' 'SELFCARE_V2_API_KEY' "$selfcareV2ApiKey" 'SELFCARE_BROKER_CONNECTION_STRING' "$selfcareBrokerConnectionString"
           createKubeSecret 'event-store' 'POSTGRES_USR' "$postgresUsername" 'POSTGRES_PSW' "$postgresPassword"
           createKubeSecret 'read-model' 'PROJECTION_USR' "$projectionUsername" 'PROJECTION_PSW' "$projectionPassword" 'READONLY_USR' "$projectionROUsername" 'READONLY_PSW' "$projectionROPassword"
+          createKubeSecret 'postgres' 'POSTGRES_USR' "$postgresUsername" 'POSTGRES_PSW' "$postgresPassword"
+          createKubeSecret 'documentdb' 'PROJECTION_USR' "$projectionUsername" 'PROJECTION_PSW' "$projectionPassword" 'READONLY_USR' "$projectionROUsername" 'READONLY_PSW' "$projectionROPassword"
           createKubeSecret 'metrics-reports' 'MAIL_RECIPIENTS' "$metricsReportRecipients" 'BOT_DTD_OPENDATA_GITHUB_ACCESS_TOKEN' $botDtdOpendataGithubAccessToken
           createKubeSecret 'smtp-reports' 'SMTP_USER' "$reportSmtpUsername" 'SMTP_PASSWORD' "$reportSmtpPassword" 
           createKubeSecret 'pn-consumers' 'MAIL_RECIPIENTS' "$pnConsumersMailRecipients"
