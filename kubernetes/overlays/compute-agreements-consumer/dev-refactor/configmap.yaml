@@ -4,8 +4,8 @@ metadata:
   name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 data:
-  KAFKA_CLIENT_ID: "{{NAMESPACE}}-pagopa-interop-compute-agreements"
-  KAFKA_GROUP_ID: "{{NAMESPACE}}-compute-agreements"
+  KAFKA_CLIENT_ID: "{{NAMESPACE}}-pagopa-interop-compute-agreements-consumer"
+  KAFKA_GROUP_ID: "{{NAMESPACE}}-compute-agreements-consumer"
 
   INTERNAL_JWT_KID: "{{RSA_KEYS_IDENTIFIERS}}"
   INTERNAL_JWT_SUBJECT: "{{INTERNAL_JWT_SUBJECT}}"
