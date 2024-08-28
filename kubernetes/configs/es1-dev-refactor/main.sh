@@ -41,6 +41,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-dev-refactor/party_registry_proxy.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/purpose_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/purpose_process.sh
+. $(pwd)/kubernetes/configs/es1-dev-refactor/tenant_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/tenant_process.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/tenants-certified-attributes-updater.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/notifier.sh
