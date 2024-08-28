@@ -35,7 +35,7 @@ BACKEND_FOR_FRONTEND_SERVICE_NAME="interop-be-backend-for-frontend"
 NOTIFIER_SERVICE_NAME="interop-be-notifier"
 NOTIFIER_SEEDER_SERVICE_NAME="interop-be-notifier-seeder"
 TENANT_MANAGEMENT_SERVICE_NAME="interop-be-tenant-management"
-TENANT_READMODEL_WRITER_NAME="interop-be-tenant-readmodel-writer"
+TENANT_READMODEL_WRITER_SERVICE_NAME="interop-be-tenant-readmodel-writer"
 TENANT_PROCESS_SERVICE_NAME="interop-be-tenant-process"
 ESERVICE_DESCRIPTORS_ARCHIVER_SERVICE_NAME="interop-be-eservice-descriptors-archiver"
 
