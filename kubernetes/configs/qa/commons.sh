@@ -60,6 +60,8 @@ PAGOPA_TENANT_ID="69e2865e-65ab-4e48-a638-2037a9ee2ee7"
 REPORT_SENDER_MAIL="noreply@reports.qa.interop.pagopa.it"
 REPORT_SENDER_LABEL="noreply-qa"
 
+SES_ENDPOINT="ses-mock.dev-refactor.svc.cluster.local"
+
 SMTP_ADDRESS="email-smtp.eu-central-1.amazonaws.com"
 SMTP_PORT=465
 
