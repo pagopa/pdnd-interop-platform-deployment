@@ -823,7 +823,7 @@ jobs:
         && inputs.environment != 'prod' && inputs.environment != 'es1-prod'
     permissions:
       contents: read
-    uses: ./.github/workflows/deploy-smtp-mock.yaml
+    uses: ./.github/workflows/deploy-ses-mock.yaml
     secrets: inherit
     with:
       environment: ${{ inputs.environment }}
