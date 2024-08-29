@@ -28,6 +28,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 
 . $(pwd)/kubernetes/configs/es1-dev/redis.sh
 . $(pwd)/kubernetes/configs/es1-dev/smtp_mock.sh
+. $(pwd)/kubernetes/configs/es1-dev/ses_mock.sh
 
 
 . $(pwd)/kubernetes/configs/es1-dev/agreement_email_sender.sh

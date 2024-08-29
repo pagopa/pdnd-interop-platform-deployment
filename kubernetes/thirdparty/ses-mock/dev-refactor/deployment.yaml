@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{SERVICE_NAME}}
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{SERVICE_NAME}}
+  template:
+    metadata:
+      labels:
+        app: {{SERVICE_NAME}}
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          image: node:20
+          command: ["/bin/bash"]
+          args: ["-c 'npm install -g aws-ses-v2-local; aws-ses-v2-local --port=8005 --host=0.0.0.0'"]
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: ses-mock
+              containerPort: 8005
+              protocol: TCP
+          resources:
+            requests:
+              cpu: "{{SERVICE_RESOURCE_CPU}}"
+              memory: "{{SERVICE_RESOURCE_MEM}}"
+            limits:
+              cpu: "{{SERVICE_RESOURCE_CPU}}"
+              memory: "{{SERVICE_RESOURCE_MEM}}"
