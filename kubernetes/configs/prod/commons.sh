@@ -63,7 +63,7 @@ REPORT_SENDER_LABEL="noreply"
 NOTIFICATION_SENDER_MAIL="noreply@notifiche.interop.pagopa.it"
 NOTIFICATION_SENDER_LABEL="PDND Interop no-reply"
 
-SES_ENDPOINT="email.${AWS_REGION}.amazonaws.com"
+SES_ENDPOINT="https://email.${AWS_REGION}.amazonaws.com"
 
 PEC_SMTP_ADDRESS="smtps.pec.aruba.it"
 PEC_SMTP_PORT=465

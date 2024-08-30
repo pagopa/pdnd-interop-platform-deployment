@@ -70,7 +70,7 @@ REPORT_SENDER_LABEL="noreply-dev"
 NOTIFICATION_SENDER_MAIL="noreply@notifiche.dev.interop.pagopa.it"
 NOTIFICATION_SENDER_LABEL="noreply-dev"
 
-SES_ENDPOINT="ses-mock.dev.svc.cluster.local"
+SES_ENDPOINT="http://ses-mock.dev.svc.cluster.local:8005"
 
 PEC_SMTP_ADDRESS="smtp-mock.dev.svc.cluster.local"
 PEC_SMTP_PORT=5025
