@@ -24,6 +24,7 @@ ATTRIBUTE_TOPIC="event-store.dev-refactor_attribute_registry.events"
 AUTHORIZATION_TOPIC="event-store.dev-refactor_authorization.events"
 CATALOG_TOPIC="event-store.dev-refactor_catalog.events"
 PURPOSE_TOPIC="event-store.dev-refactor_purpose.events"
+TENANT_TOPIC="event-store.dev-refactor_tenant.events"
 
 AWS_REGION="eu-south-1"
 PERSISTENCE_QUEUE_NAME="persistence-events-refactor.fifo"
