@@ -64,7 +64,7 @@ REPORT_SENDER_LABEL="noreply-test"
 NOTIFICATION_SENDER_MAIL="noreply@notifiche.uat.interop.pagopa.it"
 NOTIFICATION_SENDER_LABEL="noreply-test"
 
-SES_ENDPOINT="ses-mock.dev-refactor.svc.cluster.local"
+SES_ENDPOINT="ses-mock.test.svc.cluster.local"
 
 PEC_SMTP_ADDRESS="smtp-mock.test.svc.cluster.local"
 PEC_SMTP_PORT=5025

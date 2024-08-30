@@ -19,7 +19,7 @@ spec:
         - name: {{SERVICE_NAME}}
           image: node:20
           command: ["/bin/bash"]
-          args: ["-c 'npm install -g aws-ses-v2-local; aws-ses-v2-local --port=8005 --host=0.0.0.0'"]
+          args: ["-c", "npm install -g aws-ses-v2-local; aws-ses-v2-local --port=8005 --host=0.0.0.0"]
           imagePullPolicy: IfNotPresent
           ports:
             - name: ses-mock
