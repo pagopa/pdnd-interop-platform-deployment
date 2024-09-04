@@ -7,6 +7,8 @@ data:
   KAFKA_CLIENT_ID: "{{NAMESPACE}}-pagopa-interop-agreement-email-sender"
   KAFKA_GROUP_ID: "{{NAMESPACE}}-agreement-email-sender"
   
+  AWS_SES_ENDPOINT: "{{SES_ENDPOINT}}"
+
   PEC_SMTP_ADDRESS: "{{PEC_SMTP_ADDRESS}}"
   PEC_SMTP_PORT: "{{PEC_SMTP_PORT}}"
   PEC_SMTP_SECURE: "{{PEC_SMTP_SECURE}}"

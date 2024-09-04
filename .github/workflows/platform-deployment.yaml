@@ -850,6 +850,19 @@ jobs:
     with:
       environment: ${{ inputs.environment }}
 
+  deploy_ses_mock:
+    name: SES mock
+    needs: [deploy_configs]
+    if: |
+        inputs.environment != 'att' && inputs.environment != 'es1-att'
+        && inputs.environment != 'prod' && inputs.environment != 'es1-prod'
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-ses-mock.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+
   deploy_ingress:
     name: Ingress
     needs: [deploy_configs,
@@ -885,7 +898,7 @@ jobs:
       deploy_eservices_monitoring_exporter, deploy_eservice_descriptors_archiver,
       deploy_one_trust_notices, deploy_datalake_data_export,
       deploy_redis,
-      deploy_smtp_mock]
+      deploy_smtp_mock, deploy_ses_mock]
     if: ${{ always() && needs.create_runner.result != 'skipped' }}
     runs-on: ubuntu-22.04
     strategy:
