@@ -7,7 +7,7 @@ STAGE="UAT"
 DOMAIN_NAME="uat.interop.pagopa.it"
 
 REPOSITORY="505630707203.dkr.ecr.eu-south-1.amazonaws.com"
-POSTGRES_HOST=""
+POSTGRES_HOST="interop-platform-data-test.cluster-ciwztfqful5r.eu-south-1.rds.amazonaws.com"
 POSTGRES_PORT="5432"
 POSTGRES_DB_NAME="persistence_management"
 READ_MODEL_DB_HOST="interop-read-model-test.cluster-ciwztfqful5r.eu-south-1.docdb.amazonaws.com"
