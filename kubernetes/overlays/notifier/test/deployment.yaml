@@ -86,6 +86,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: KEY_NOTIFICATION_POSTGRES_TABLE_NAME
+            - name: PRODUCER_KEY_NOTIFICATION_POSTGRES_TABLE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRODUCER_KEY_NOTIFICATION_POSTGRES_TABLE_NAME
             - name: NOTIFICATION_DB_SERVER_NAME
               value: "{{POSTGRES_HOST}}"
             - name: NOTIFICATION_DB_PORT
