@@ -44,8 +44,3 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: MAX_KEYS_PER_CLIENT
-            - name: MAX_KEYS_PER_PRODUCER_KEYCHAIN
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: MAX_KEYS_PER_PRODUCER_KEYCHAIN
