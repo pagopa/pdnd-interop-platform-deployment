@@ -63,3 +63,5 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-dev-refactor/eservice_descriptors_archiver.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/dtd_metrics.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/datalake_data_export.sh
+. $(pwd)/kubernetes/configs/es1-dev-refactor/producer-key-readmodel-writer.sh
+. $(pwd)/kubernetes/configs/es1-dev-refactor/producer-keychain-readmodel-writer.sh
