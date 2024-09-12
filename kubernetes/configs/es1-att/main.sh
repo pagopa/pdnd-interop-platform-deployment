@@ -2,8 +2,8 @@
 
 . $(pwd)/kubernetes/configs/shared.sh
 
-. $(pwd)/kubernetes/configs/att/versions.sh
-. $(pwd)/kubernetes/configs/att/commons.sh
+. $(pwd)/kubernetes/configs/es1-att/versions.sh
+. $(pwd)/kubernetes/configs/es1-att/commons.sh
 
 # Calculated
 NAMESPACE=$NAMESPACE
@@ -30,40 +30,40 @@ API_GATEWAY_INTERFACE_VERSION=$(shortVersion $API_GATEWAY_IMAGE_VERSION)
 BACKEND_FOR_FRONTEND_INTERFACE_VERSION=$(shortVersion $BACKEND_FOR_FRONTEND_IMAGE_VERSION)
 NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 
-. $(pwd)/kubernetes/configs/att/redis.sh
-. $(pwd)/kubernetes/configs/att/smtp_mock.sh
-. $(pwd)/kubernetes/configs/att/ses_mock.sh
+. $(pwd)/kubernetes/configs/es1-att/redis.sh
+. $(pwd)/kubernetes/configs/es1-att/smtp_mock.sh
+. $(pwd)/kubernetes/configs/es1-att/ses_mock.sh
 
-. $(pwd)/kubernetes/configs/att/agreement_management.sh
-. $(pwd)/kubernetes/configs/att/agreement_process.sh
-. $(pwd)/kubernetes/configs/att/api_gateway.sh
-. $(pwd)/kubernetes/configs/att/authorization_management.sh
-. $(pwd)/kubernetes/configs/att/authorization_process.sh
-. $(pwd)/kubernetes/configs/att/authorization_server.sh
-. $(pwd)/kubernetes/configs/att/attribute_registry_management.sh
-. $(pwd)/kubernetes/configs/att/attribute_registry_process.sh
-. $(pwd)/kubernetes/configs/att/attributes_loader.sh
-. $(pwd)/kubernetes/configs/att/backend_for_frontend.sh
-. $(pwd)/kubernetes/configs/att/catalog_management.sh
-. $(pwd)/kubernetes/configs/att/catalog_process.sh
-. $(pwd)/kubernetes/configs/att/frontend.sh
-. $(pwd)/kubernetes/configs/att/party_registry_proxy.sh
-. $(pwd)/kubernetes/configs/att/purpose_management.sh
-. $(pwd)/kubernetes/configs/att/purpose_process.sh
-. $(pwd)/kubernetes/configs/att/tenant_management.sh
-. $(pwd)/kubernetes/configs/att/tenant_process.sh
-. $(pwd)/kubernetes/configs/att/tenants-certified-attributes-updater.sh
-. $(pwd)/kubernetes/configs/att/notifier.sh
-. $(pwd)/kubernetes/configs/att/token_details_persister.sh
-. $(pwd)/kubernetes/configs/att/party_registry_proxy_refresher.sh
-. $(pwd)/kubernetes/configs/att/eservices_monitoring_exporter.sh
-. $(pwd)/kubernetes/configs/att/metrics_report_generator.sh
-. $(pwd)/kubernetes/configs/att/anac_certified_attributes_importer.sh
-. $(pwd)/kubernetes/configs/att/ivass_certified_attributes_importer.sh
-. $(pwd)/kubernetes/configs/att/pn_consumers.sh
-. $(pwd)/kubernetes/configs/att/padigitale_report_generator.sh
-. $(pwd)/kubernetes/configs/att/dtd_catalog_exporter.sh
-. $(pwd)/kubernetes/configs/att/one_trust_notices.sh
-. $(pwd)/kubernetes/configs/att/selfcare_onboarding_consumer.sh
-. $(pwd)/kubernetes/configs/att/eservice_descriptors_archiver.sh
-. $(pwd)/kubernetes/configs/att/datalake_data_export.sh
+. $(pwd)/kubernetes/configs/es1-att/agreement_management.sh
+. $(pwd)/kubernetes/configs/es1-att/agreement_process.sh
+. $(pwd)/kubernetes/configs/es1-att/api_gateway.sh
+. $(pwd)/kubernetes/configs/es1-att/authorization_management.sh
+. $(pwd)/kubernetes/configs/es1-att/authorization_process.sh
+. $(pwd)/kubernetes/configs/es1-att/authorization_server.sh
+. $(pwd)/kubernetes/configs/es1-att/attribute_registry_management.sh
+. $(pwd)/kubernetes/configs/es1-att/attribute_registry_process.sh
+. $(pwd)/kubernetes/configs/es1-att/attributes_loader.sh
+. $(pwd)/kubernetes/configs/es1-att/backend_for_frontend.sh
+. $(pwd)/kubernetes/configs/es1-att/catalog_management.sh
+. $(pwd)/kubernetes/configs/es1-att/catalog_process.sh
+. $(pwd)/kubernetes/configs/es1-att/frontend.sh
+. $(pwd)/kubernetes/configs/es1-att/party_registry_proxy.sh
+. $(pwd)/kubernetes/configs/es1-att/purpose_management.sh
+. $(pwd)/kubernetes/configs/es1-att/purpose_process.sh
+. $(pwd)/kubernetes/configs/es1-att/tenant_management.sh
+. $(pwd)/kubernetes/configs/es1-att/tenant_process.sh
+. $(pwd)/kubernetes/configs/es1-att/tenants-certified-attributes-updater.sh
+. $(pwd)/kubernetes/configs/es1-att/notifier.sh
+. $(pwd)/kubernetes/configs/es1-att/token_details_persister.sh
+. $(pwd)/kubernetes/configs/es1-att/party_registry_proxy_refresher.sh
+. $(pwd)/kubernetes/configs/es1-att/eservices_monitoring_exporter.sh
+. $(pwd)/kubernetes/configs/es1-att/metrics_report_generator.sh
+. $(pwd)/kubernetes/configs/es1-att/anac_certified_attributes_importer.sh
+. $(pwd)/kubernetes/configs/es1-att/ivass_certified_attributes_importer.sh
+. $(pwd)/kubernetes/configs/es1-att/pn_consumers.sh
+. $(pwd)/kubernetes/configs/es1-att/padigitale_report_generator.sh
+. $(pwd)/kubernetes/configs/es1-att/dtd_catalog_exporter.sh
+. $(pwd)/kubernetes/configs/es1-att/one_trust_notices.sh
+. $(pwd)/kubernetes/configs/es1-att/selfcare_onboarding_consumer.sh
+. $(pwd)/kubernetes/configs/es1-att/eservice_descriptors_archiver.sh
+. $(pwd)/kubernetes/configs/es1-att/datalake_data_export.sh
