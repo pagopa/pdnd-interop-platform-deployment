@@ -14,33 +14,13 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ACCEPTED_AUDIENCES
-            - name: TENANT_MANAGEMENT_URL
+            - name: EVENTSTORE_DB_SCHEMA
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: TENANT_MANAGEMENT_URL
-            - name: AGREEMENT_PROCESS_URL
+                  key: EVENTSTORE_DB_SCHEMA
+            - name: WELL_KNOWN_URLS
               valueFrom:
                 configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: AGREEMENT_PROCESS_URL
-            - name: READ_MODEL_DB_HOST
-              value: "{{READ_MODEL_DB_HOST}}"
-            - name: READ_MODEL_DB_PORT
-              value: "{{READ_MODEL_DB_PORT}}"
-            - name: READ_MODEL_DB_NAME
-              value: "{{READ_MODEL_DB_NAME}}"
-            - name: READ_MODEL_DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: read-model
-                  key: READONLY_USR
-            - name: READ_MODEL_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: read-model
-                  key: READONLY_PSW
-            - name: READ_MODEL_REPLICA_SET
-              value: "{{READ_MODEL_REPLICA_SET}}"
-            - name: READ_MODEL_READ_PREFERENCE
-              value: "{{READ_MODEL_READ_PREFERENCE}}"
+                  name: common-jwt
+                  key: WELL_KNOWN_URLS

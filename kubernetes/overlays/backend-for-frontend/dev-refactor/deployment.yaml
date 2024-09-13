@@ -79,11 +79,6 @@ spec:
                   configMapKeyRef:
                     name: {{SERVICE_NAME}}
                     key: AUTHORIZATION_PROCESS_URL
-            - name: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
-              valueFrom:
-                  configMapKeyRef:
-                    name: {{SERVICE_NAME}}
-                    key: ATTRIBUTE_REGISTRY_MANAGEMENT_URL
             - name: ATTRIBUTE_REGISTRY_PROCESS_URL
               valueFrom:
                   configMapKeyRef:
@@ -99,11 +94,6 @@ spec:
                   configMapKeyRef:
                     name: {{SERVICE_NAME}}
                     key: CATALOG_PROCESS_URL
-            - name: TENANT_MANAGEMENT_URL
-              valueFrom:
-                  configMapKeyRef:
-                    name: {{SERVICE_NAME}}
-                    key: TENANT_MANAGEMENT_URL
             - name: TENANT_PROCESS_URL
               valueFrom:
                   configMapKeyRef:
