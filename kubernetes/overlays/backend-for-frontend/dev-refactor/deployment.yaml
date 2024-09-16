@@ -14,16 +14,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ACCEPTED_AUDIENCES
-            - name: EC_KEYS_IDENTIFIERS
+            - name: GENERATED_JWT_KID
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: EC_KEYS_IDENTIFIERS
-            - name: RSA_KEYS_IDENTIFIERS
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: RSA_KEYS_IDENTIFIERS
+                  key: GENERATED_JWT_KID
             - name: GENERATED_JWT_AUDIENCE
               valueFrom:
                 configMapKeyRef:
@@ -39,6 +34,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: GENERATED_JWT_ISSUER
+            - name: INTERNAL_JWT_KID
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: INTERNAL_JWT_KID
             - name: INTERNAL_JWT_ISSUER
               valueFrom:
                   configMapKeyRef:
@@ -109,6 +109,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ESERVICE_DOCUMENTS_CONTAINER
+            - name: ESERVICE_DOCUMENTS_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ESERVICE_DOCUMENTS_PATH                  
             - name: RISK_ANALYSIS_DOCUMENTS_CONTAINER
               valueFrom:
                 configMapKeyRef:
@@ -164,6 +169,16 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PRIVACY_NOTICES_TOS_UUID
+            - name: PRIVACY_NOTICES_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRIVACY_NOTICES_PATH    
+            - name: PRIVACY_NOTICES_FILE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRIVACY_NOTICES_FILE_NAME
             - name: PRIVACY_NOTICES_DYNAMO_TABLE_NAME
               valueFrom:
                 configMapKeyRef:

@@ -11,6 +11,7 @@ BACKEND_FOR_FRONTEND_RESOURCE_MEM="2Gi"
 
 CONSUMER_DOCS_CONTAINER="interop-application-documents-refactor-dev-es1"
 ESERVICE_DOCS_CONTAINER="interop-application-documents-refactor-dev-es1"
+ESERVICE_DOCUMENTS_PATH="eservices/docs"
 ALLOW_LIST_CONTAINER="interop-allow-list-dev-es1"
 RISK_ANALYSIS_DOCS_CONTAINER="interop-application-documents-refactor-dev-es1"
 
@@ -27,3 +28,6 @@ IMPORT_ESERVICE_CONTAINER="interop-application-import-export-dev-es1"
 EXPORT_ESERVICE_CONTAINER="interop-application-import-export-dev-es1"
 PRESIGNED_URL_GET_DURATION_MINUTES=2
 PRESIGNED_URL_PUT_DURATION_MINUTES=2
+
+PRIVACY_NOTICES_PATH="consent"
+PRIVACY_NOTICES_FILE_NAME="pp.json"
