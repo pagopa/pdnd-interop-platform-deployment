@@ -139,11 +139,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ALLOW_LIST_PATH
-            - name: ALLOW_LIST_FILENAME
+            - name: ALLOW_LIST_FILE_NAME
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: ALLOW_LIST_FILENAME
+                  key: ALLOW_LIST_FILE_NAME
             - name: SELFCARE_V2_URL
               valueFrom:
                 configMapKeyRef:
