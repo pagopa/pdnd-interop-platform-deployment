@@ -20,6 +20,7 @@ ATTRIBUTE_TOPIC="event-store.att_attribute_registry.events"
 AUTHORIZATION_TOPIC="event-store.att_authorization.events"
 CATALOG_TOPIC="event-store.att_catalog.events"
 PURPOSE_TOPIC="event-store.att_purpose.events"
+TENANT_TOPIC="event-store.att_tenant.events"
 
 AWS_REGION="eu-central-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"

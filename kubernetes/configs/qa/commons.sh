@@ -22,6 +22,7 @@ ATTRIBUTE_TOPIC="event-store.qa_attribute_registry.events"
 AUTHORIZATION_TOPIC="event-store.qa_authorization.events"
 CATALOG_TOPIC="event-store.qa_catalog.events"
 PURPOSE_TOPIC="event-store.qa_purpose.events"
+TENANT_TOPIC="event-store.qa_tenant.events"
 
 AWS_REGION="eu-central-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
@@ -59,6 +60,8 @@ PAGOPA_TENANT_ID="69e2865e-65ab-4e48-a638-2037a9ee2ee7"
 
 REPORT_SENDER_MAIL="noreply@reports.qa.interop.pagopa.it"
 REPORT_SENDER_LABEL="noreply-qa"
+
+SES_ENDPOINT="http://ses-mock.qa.svc.cluster.local:8005"
 
 SMTP_ADDRESS="email-smtp.eu-central-1.amazonaws.com"
 SMTP_PORT=465

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{SERVICE_NAME}}
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  replicas: {{REPLICAS}}
+  selector:
+    matchLabels:
+      app: {{SERVICE_NAME}}
+  template:
+    metadata:
+      labels:
+        app: {{SERVICE_NAME}}
+      annotations:
+        digest: {{IMAGE_DIGEST}} # Used to force deployment on same image version but different content
+    spec:
+      serviceAccountName: {{SERVICE_NAME}}
+      containers:
+        - name: {{SERVICE_NAME}}
+          image: "{{REPOSITORY}}/{{SERVICE_ECR_NAME}}:{{IMAGE_VERSION}}"
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: {{BACKEND_SERVICE_PORT}}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /status
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /status
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: "{{SERVICE_RESOURCE_CPU}}"
+              memory: "{{SERVICE_RESOURCE_MEM}}"
+            limits:
+              cpu: "{{SERVICE_RESOURCE_CPU}}"
+              memory: "{{SERVICE_RESOURCE_MEM}}"
+          env:
+            - name: PORT
+              value: "{{BACKEND_SERVICE_PORT}}"
+            - name: HOST
+              value: "0.0.0.0"
+            - name: LOG_LEVEL
+              value: info

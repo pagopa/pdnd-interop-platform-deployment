@@ -24,6 +24,7 @@ ATTRIBUTE_TOPIC="event-store.dev-refactor_attribute_registry.events"
 AUTHORIZATION_TOPIC="event-store.dev-refactor_authorization.events"
 CATALOG_TOPIC="event-store.dev-refactor_catalog.events"
 PURPOSE_TOPIC="event-store.dev-refactor_purpose.events"
+TENANT_TOPIC="event-store.dev-refactor_tenant.events"
 
 AWS_REGION="eu-south-1"
 PERSISTENCE_QUEUE_NAME="persistence-events-refactor.fifo"
@@ -64,6 +65,8 @@ REPORT_SENDER_LABEL="noreply-dev-refactor"
 
 NOTIFICATION_SENDER_MAIL="noreply@notifiche.dev.interop.pagopa.it"
 NOTIFICATION_SENDER_LABEL="noreply-dev-refactor"
+
+SES_ENDPOINT="http://ses-mock.dev-refactor.svc.cluster.local:8005"
 
 PEC_SMTP_ADDRESS="smtp-mock.dev-refactor.svc.cluster.local"
 PEC_SMTP_PORT=5025

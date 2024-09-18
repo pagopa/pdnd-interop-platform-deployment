@@ -22,6 +22,7 @@ ATTRIBUTE_TOPIC="event-store.prod_attribute_registry.events"
 AUTHORIZATION_TOPIC="event-store.prod_authorization.events"
 CATALOG_TOPIC="event-store.prod_catalog.events"
 PURPOSE_TOPIC="event-store.prod_purpose.events"
+TENANT_TOPIC="event-store.prod_tenant.events"
 
 AWS_REGION="eu-central-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
@@ -62,6 +63,8 @@ REPORT_SENDER_LABEL="noreply"
 
 NOTIFICATION_SENDER_MAIL="noreply@notifiche.interop.pagopa.it"
 NOTIFICATION_SENDER_LABEL="PDND Interop no-reply"
+
+SES_ENDPOINT="https://email.${AWS_REGION}.amazonaws.com"
 
 PEC_SMTP_ADDRESS="smtps.pec.aruba.it"
 PEC_SMTP_PORT=465

@@ -346,7 +346,11 @@ jobs:
   deploy_client_readmodel_writer:
     name: Client ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor' || inputs.environment == 'test' || inputs.environment == 'prod'}}
+    if: |     
+      inputs.environment == 'dev' || inputs.environment == 'es1-dev'
+      || inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
+      || inputs.environment == 'test' || inputs.environment == 'es1-test'
+      || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -359,10 +363,30 @@ jobs:
       resource_cpu_var_name: CLIENT_READMODEL_WRITER_RESOURCE_CPU
       resource_mem_var_name: CLIENT_READMODEL_WRITER_RESOURCE_MEM
 
+  deploy_compute_agreements_consumer:
+    name: Compute Agreements
+    needs: [deploy_configs]
+    if: ${{ inputs.environment == 'es1-dev-refactor' }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/compute-agreements-consumer/${{ inputs.environment }}"
+      service_name_var_name: COMPUTE_AGREEMENTS_CONSUMER_SERVICE_NAME
+      image_version_var_name: COMPUTE_AGREEMENTS_CONSUMER_IMAGE_VERSION
+      resource_cpu_var_name: COMPUTE_AGREEMENTS_CONSUMER_RESOURCE_CPU
+      resource_mem_var_name: COMPUTE_AGREEMENTS_CONSUMER_RESOURCE_MEM
+
   deploy_key_readmodel_writer:
     name: Key ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor' || inputs.environment == 'test' || inputs.environment == 'prod'}}
+    if: | 
+        inputs.environment == 'dev' || inputs.environment == 'es1-dev'
+        || inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
+        || inputs.environment == 'test' || inputs.environment == 'es1-test'
+        || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -374,6 +398,40 @@ jobs:
       image_version_var_name: KEY_READMODEL_WRITER_IMAGE_VERSION
       resource_cpu_var_name: KEY_READMODEL_WRITER_RESOURCE_CPU
       resource_mem_var_name: KEY_READMODEL_WRITER_RESOURCE_MEM
+
+  deploy_producer_key_readmodel_writer:
+    name: Producer Key ReadModel Writer
+    needs: [deploy_configs]
+    if: | 
+        inputs.environment == 'es1-dev' || inputs.environment == 'es1-dev-refactor'
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/producer-key-readmodel-writer/${{ inputs.environment }}"
+      service_name_var_name: PRODUCER_KEY_READMODEL_WRITER_SERVICE_NAME
+      image_version_var_name: PRODUCER_KEY_READMODEL_WRITER_IMAGE_VERSION
+      resource_cpu_var_name: PRODUCER_KEY_READMODEL_WRITER_RESOURCE_CPU
+      resource_mem_var_name: PRODUCER_KEY_READMODEL_WRITER_RESOURCE_MEM
+
+  deploy_producer_keychain_readmodel_writer:
+    name: Producer Keychain ReadModel Writer
+    needs: [deploy_configs]
+    if: | 
+        inputs.environment == 'es1-dev' || inputs.environment == 'es1-dev-refactor'
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/producer-keychain-readmodel-writer/${{ inputs.environment }}"
+      service_name_var_name: PRODUCER_KEYCHAIN_READMODEL_WRITER_SERVICE_NAME
+      image_version_var_name: PRODUCER_KEYCHAIN_READMODEL_WRITER_IMAGE_VERSION
+      resource_cpu_var_name: PRODUCER_KEYCHAIN_READMODEL_WRITER_RESOURCE_CPU
+      resource_mem_var_name: PRODUCER_KEYCHAIN_READMODEL_WRITER_RESOURCE_MEM
 
   deploy_party_registry_proxy:
     name: Party Registry Proxy
@@ -462,6 +520,8 @@ jobs:
   deploy_tenant_management:
     name: Tenant Management
     needs: [deploy_configs]
+    if: |
+        inputs.environment != 'es1-dev-refactor'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -488,6 +548,23 @@ jobs:
       image_version_var_name: TENANT_PROCESS_IMAGE_VERSION
       resource_cpu_var_name: TENANT_PROCESS_RESOURCE_CPU
       resource_mem_var_name: TENANT_PROCESS_RESOURCE_MEM
+
+  deploy_tenant_readmodel_writer:
+    name: Tenant ReadModel Writer
+    needs: [deploy_configs]
+    if: |
+        inputs.environment == 'es1-dev-refactor'
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/tenant-readmodel-writer/${{ inputs.environment }}"
+      service_name_var_name: TENANT_READMODEL_WRITER_SERVICE_NAME
+      image_version_var_name: TENANT_READMODEL_WRITER_IMAGE_VERSION
+      resource_cpu_var_name: TENANT_READMODEL_WRITER_RESOURCE_CPU
+      resource_mem_var_name: TENANT_READMODEL_WRITER_RESOURCE_MEM
 
   deploy_backend_for_frontend:
     name: Backend For Frontend
@@ -800,6 +877,19 @@ jobs:
     with:
       environment: ${{ inputs.environment }}
 
+  deploy_ses_mock:
+    name: SES mock
+    needs: [deploy_configs]
+    if: |
+        inputs.environment != 'att' && inputs.environment != 'es1-att'
+        && inputs.environment != 'prod' && inputs.environment != 'es1-prod'
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-ses-mock.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+
   deploy_ingress:
     name: Ingress
     needs: [deploy_configs,
@@ -819,11 +909,11 @@ jobs:
       deploy_agreement_email_sender,
       deploy_agreement_management, deploy_agreement_process, deploy_agreement_readmodel_writer, deploy_agreement_outbound_writer,
       deploy_attribute_registry_management, deploy_attribute_registry_process, deploy_attribute_registry_readmodel_writer,
-      deploy_authorization_management, deploy_authorization_process, deploy_authorization_updater, deploy_client_readmodel_writer, deploy_key_readmodel_writer,
+      deploy_authorization_management, deploy_authorization_process, deploy_authorization_updater, deploy_client_readmodel_writer, deploy_key_readmodel_writer, deploy_producer_key_readmodel_writer, deploy_producer_keychain_readmodel_writer,
       deploy_catalog_management, deploy_catalog_process, deploy_catalog_readmodel_writer, deploy_catalog_outbound_writer,
-      deploy_party_registry_proxy,
+      deploy_compute_agreements_consumer, deploy_party_registry_proxy,
       deploy_purpose_management, deploy_purpose_process, deploy_purpose_readmodel_writer, deploy_purpose_outbound_writer,
-      deploy_tenant_management, deploy_tenant_process,
+      deploy_tenant_management, deploy_tenant_process, deploy_tenant_readmodel_writer,
       deploy_notifier, deploy_notifier_seeder,
       deploy_attributes_loader, deploy_token_details_persister,
       deploy_tenants_certified_attributes_updater, deploy_party_registry_proxy_refresher,
@@ -835,7 +925,7 @@ jobs:
       deploy_eservices_monitoring_exporter, deploy_eservice_descriptors_archiver,
       deploy_one_trust_notices, deploy_datalake_data_export,
       deploy_redis,
-      deploy_smtp_mock]
+      deploy_smtp_mock, deploy_ses_mock]
     if: ${{ always() && needs.create_runner.result != 'skipped' }}
     runs-on: ubuntu-22.04
     strategy:

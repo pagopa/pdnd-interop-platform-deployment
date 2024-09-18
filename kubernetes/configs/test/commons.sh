@@ -22,6 +22,7 @@ ATTRIBUTE_TOPIC="event-store.test_attribute_registry.events"
 AUTHORIZATION_TOPIC="event-store.test_authorization.events"
 CATALOG_TOPIC="event-store.test_catalog.events"
 PURPOSE_TOPIC="event-store.test_purpose.events"
+TENANT_TOPIC="event-store.test_tenant.events"
 
 AWS_REGION="eu-central-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
@@ -63,6 +64,8 @@ REPORT_SENDER_LABEL="noreply-test"
 
 NOTIFICATION_SENDER_MAIL="noreply@notifiche.uat.interop.pagopa.it"
 NOTIFICATION_SENDER_LABEL="noreply-test"
+
+SES_ENDPOINT="http://ses-mock.test.svc.cluster.local:8005"
 
 PEC_SMTP_ADDRESS="smtp-mock.test.svc.cluster.local"
 PEC_SMTP_PORT=5025
