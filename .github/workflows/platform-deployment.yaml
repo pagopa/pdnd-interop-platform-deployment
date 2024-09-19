@@ -366,7 +366,8 @@ jobs:
   deploy_compute_agreements_consumer:
     name: Compute Agreements
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev-refactor' }}
+    if: |
+        inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-test'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -521,7 +522,7 @@ jobs:
     name: Tenant Management
     needs: [deploy_configs]
     if: |
-        inputs.environment != 'es1-dev-refactor'
+        inputs.environment != 'es1-dev-refactor' && inputs.environment != 'es1-test'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -553,7 +554,7 @@ jobs:
     name: Tenant ReadModel Writer
     needs: [deploy_configs]
     if: |
-        inputs.environment == 'es1-dev-refactor'
+        inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-test'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
