@@ -735,21 +735,6 @@ jobs:
       resource_cpu_var_name: JOB_PARTY_REGISTRY_PROXY_REFRESHER_RESOURCE_CPU
       resource_mem_var_name: JOB_PARTY_REGISTRY_PROXY_REFRESHER_RESOURCE_MEM
 
-  deploy_metrics_report_generator:
-    name: Metrics report generator
-    needs: [deploy_configs]
-    permissions:
-      contents: read
-    uses: ./.github/workflows/deploy-cronjob.yaml
-    secrets: inherit
-    with:
-      environment: ${{ inputs.environment }}
-      k8s_files_path: "jobs/metrics-report-generator/${{ inputs.environment }}"
-      service_name_var_name: JOB_METRICS_REPORT_GENERATOR_SERVICE_NAME
-      image_version_var_name: JOB_METRICS_REPORT_GENERATOR_IMAGE_VERSION
-      resource_cpu_var_name: JOB_METRICS_REPORT_GENERATOR_RESOURCE_CPU
-      resource_mem_var_name: JOB_METRICS_REPORT_GENERATOR_RESOURCE_MEM
-
   deploy_anac_certified_attributes_importer:
     name: ANAC Certified Attributes Importer
     needs: [deploy_configs]
@@ -933,7 +918,7 @@ jobs:
       deploy_notifier, deploy_notifier_seeder,
       deploy_attributes_loader, deploy_token_details_persister,
       deploy_tenants_certified_attributes_updater, deploy_party_registry_proxy_refresher,
-      deploy_metrics_report_generator, deploy_padigitale_report_generator,
+      deploy_padigitale_report_generator,
       deploy_anac_certified_attributes_importer, deploy_pn_consumers,
       deploy_ivass_certified_attributes_importer,
       deploy_dtd_catalog_exporter,
