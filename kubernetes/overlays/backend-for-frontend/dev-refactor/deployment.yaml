@@ -147,7 +147,7 @@ spec:
             - name: WELL_KNOWN_URLS
               valueFrom:
                 configMapKeyRef:
-                  name: common-jwt
+                  name: {{SERVICE_NAME}}
                   key: WELL_KNOWN_URLS
             - name: SELFCARE_V2_API_KEY
               valueFrom:
