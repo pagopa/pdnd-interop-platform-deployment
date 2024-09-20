@@ -23,6 +23,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-test/ses_mock.sh
 
 . $(pwd)/kubernetes/configs/es1-test/agreement_email_sender.sh
+. $(pwd)/kubernetes/configs/es1-test/agreement_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/agreement_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/agreement_process.sh
 . $(pwd)/kubernetes/configs/es1-test/api_gateway.sh
@@ -34,6 +35,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-test/attribute_registry_process.sh
 . $(pwd)/kubernetes/configs/es1-test/attributes_loader.sh
 . $(pwd)/kubernetes/configs/es1-test/backend_for_frontend.sh
+. $(pwd)/kubernetes/configs/es1-test/catalog_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/catalog_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/catalog_process.sh
 . $(pwd)/kubernetes/configs/es1-test/compute_agreements_consumer.sh
@@ -41,6 +43,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-test/key_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/frontend.sh
 . $(pwd)/kubernetes/configs/es1-test/party_registry_proxy.sh
+. $(pwd)/kubernetes/configs/es1-test/purpose_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/purpose_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/purpose_process.sh
 . $(pwd)/kubernetes/configs/es1-test/tenant_process.sh

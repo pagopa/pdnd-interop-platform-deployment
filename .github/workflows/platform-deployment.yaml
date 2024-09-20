@@ -139,7 +139,7 @@ jobs:
   deploy_agreement_outbound_writer:
     name: Agreement Outbound Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' }}
+    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -299,7 +299,7 @@ jobs:
   deploy_catalog_outbound_writer:
     name: Catalog Outbound Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' }}
+    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -485,7 +485,7 @@ jobs:
   deploy_purpose_outbound_writer:
     name: Purpose Outbound Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' }}
+    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
