@@ -24,6 +24,12 @@ ATTRIBUTE_TOPIC="event-store.test_attribute_registry.events"
 AUTHORIZATION_TOPIC="event-store.test_authorization.events"
 CATALOG_TOPIC="event-store.test_catalog.events"
 PURPOSE_TOPIC="event-store.test_purpose.events"
+TENANT_TOPIC="event-store.test_tenant.events"
+
+AGREEMENT_OUTBOUND_TOPIC="outbound.test_agreement.events"
+CATALOG_OUTBOUND_TOPIC="outbound.test_catalog.events"
+PURPOSE_OUTBOUND_TOPIC="outbound.test_purpose.events"
+TENANT_OUTBOUND_TOPIC="outbound.test_tenant.events"
 
 AWS_REGION="eu-south-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"

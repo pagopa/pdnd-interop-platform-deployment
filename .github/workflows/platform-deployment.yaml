@@ -139,7 +139,7 @@ jobs:
   deploy_agreement_outbound_writer:
     name: Agreement Outbound Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' }}
+    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -299,7 +299,7 @@ jobs:
   deploy_catalog_outbound_writer:
     name: Catalog Outbound Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' }}
+    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -366,7 +366,8 @@ jobs:
   deploy_compute_agreements_consumer:
     name: Compute Agreements
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev-refactor' }}
+    if: |
+        inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-test'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -484,7 +485,7 @@ jobs:
   deploy_purpose_outbound_writer:
     name: Purpose Outbound Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' }}
+    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -521,7 +522,7 @@ jobs:
     name: Tenant Management
     needs: [deploy_configs]
     if: |
-        inputs.environment != 'es1-dev-refactor'
+        inputs.environment != 'es1-dev-refactor' && inputs.environment != 'es1-test'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -553,7 +554,7 @@ jobs:
     name: Tenant ReadModel Writer
     needs: [deploy_configs]
     if: |
-        inputs.environment == 'es1-dev-refactor'
+        inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-test'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -733,21 +734,6 @@ jobs:
       service_name_var_name: JOB_PARTY_REGISTRY_PROXY_REFRESHER_SERVICE_NAME
       resource_cpu_var_name: JOB_PARTY_REGISTRY_PROXY_REFRESHER_RESOURCE_CPU
       resource_mem_var_name: JOB_PARTY_REGISTRY_PROXY_REFRESHER_RESOURCE_MEM
-
-  deploy_metrics_report_generator:
-    name: Metrics report generator
-    needs: [deploy_configs]
-    permissions:
-      contents: read
-    uses: ./.github/workflows/deploy-cronjob.yaml
-    secrets: inherit
-    with:
-      environment: ${{ inputs.environment }}
-      k8s_files_path: "jobs/metrics-report-generator/${{ inputs.environment }}"
-      service_name_var_name: JOB_METRICS_REPORT_GENERATOR_SERVICE_NAME
-      image_version_var_name: JOB_METRICS_REPORT_GENERATOR_IMAGE_VERSION
-      resource_cpu_var_name: JOB_METRICS_REPORT_GENERATOR_RESOURCE_CPU
-      resource_mem_var_name: JOB_METRICS_REPORT_GENERATOR_RESOURCE_MEM
 
   deploy_anac_certified_attributes_importer:
     name: ANAC Certified Attributes Importer
@@ -932,7 +918,7 @@ jobs:
       deploy_notifier, deploy_notifier_seeder,
       deploy_attributes_loader, deploy_token_details_persister,
       deploy_tenants_certified_attributes_updater, deploy_party_registry_proxy_refresher,
-      deploy_metrics_report_generator, deploy_padigitale_report_generator,
+      deploy_padigitale_report_generator,
       deploy_anac_certified_attributes_importer, deploy_pn_consumers,
       deploy_ivass_certified_attributes_importer,
       deploy_dtd_catalog_exporter,
