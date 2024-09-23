@@ -244,3 +244,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PRESIGNED_URL_PUT_DURATION_MINUTES
+            - name: BACKEND_FOR_FRONTEND_INTERFACE_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: BACKEND_FOR_FRONTEND_INTERFACE_VERSION
