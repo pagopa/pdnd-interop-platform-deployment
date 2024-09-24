@@ -14,31 +14,31 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ACCEPTED_AUDIENCES
-            - name: EC_KEYS_IDENTIFIERS
+            - name: GENERATED_JWT_KID
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: EC_KEYS_IDENTIFIERS
-            - name: RSA_KEYS_IDENTIFIERS
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: RSA_KEYS_IDENTIFIERS
+                  key: GENERATED_JWT_KID
             - name: GENERATED_JWT_AUDIENCE
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: GENERATED_JWT_AUDIENCE
-            - name: GENERATED_JWT_DURATION_SECONDS
+            - name: GENERATED_JWT_SECONDS_DURATION
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: GENERATED_JWT_DURATION_SECONDS
+                  key: GENERATED_JWT_SECONDS_DURATION
             - name: GENERATED_JWT_ISSUER
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: GENERATED_JWT_ISSUER
+            - name: INTERNAL_JWT_KID
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: INTERNAL_JWT_KID
             - name: INTERNAL_JWT_ISSUER
               valueFrom:
                   configMapKeyRef:
@@ -54,11 +54,11 @@ spec:
                   configMapKeyRef:
                     name: {{SERVICE_NAME}}
                     key: INTERNAL_JWT_AUDIENCE
-            - name: INTERNAL_JWT_DURATION_SECONDS
+            - name: INTERNAL_JWT_SECONDS_DURATION
               valueFrom:
                   configMapKeyRef:
                     name: {{SERVICE_NAME}}
-                    key: INTERNAL_JWT_DURATION_SECONDS
+                    key: INTERNAL_JWT_SECONDS_DURATION
             - name: CLIENT_ASSERTION_JWT_AUDIENCE
               valueFrom:
                 configMapKeyRef:
@@ -94,31 +94,36 @@ spec:
                   configMapKeyRef:
                     name: {{SERVICE_NAME}}
                     key: PURPOSE_PROCESS_URL
-            - name: CONSUMER_DOCS_CONTAINER
+            - name: CONSUMER_DOCUMENTS_CONTAINER
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: CONSUMER_DOCS_CONTAINER
-            - name: CONSUMER_DOCS_PATH
+                  key: CONSUMER_DOCUMENTS_CONTAINER
+            - name: CONSUMER_DOCUMENTS_PATH
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: CONSUMER_DOCS_PATH
-            - name: ESERVICE_DOCS_CONTAINER
+                  key: CONSUMER_DOCUMENTS_PATH
+            - name: ESERVICE_DOCUMENTS_CONTAINER
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: ESERVICE_DOCS_CONTAINER
-            - name: RISK_ANALYSIS_DOCS_CONTAINER
+                  key: ESERVICE_DOCUMENTS_CONTAINER
+            - name: ESERVICE_DOCUMENTS_PATH
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: RISK_ANALYSIS_DOCS_CONTAINER
-            - name: RISK_ANALYSIS_DOCS_PATH
+                  key: ESERVICE_DOCUMENTS_PATH                  
+            - name: RISK_ANALYSIS_DOCUMENTS_CONTAINER
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: RISK_ANALYSIS_DOCS_PATH
+                  key: RISK_ANALYSIS_DOCUMENTS_CONTAINER
+            - name: RISK_ANALYSIS_DOCUMENTS_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: RISK_ANALYSIS_DOCUMENTS_PATH
             - name: TENANT_ALLOWED_ORIGINS
               valueFrom:
                 configMapKeyRef:
@@ -134,11 +139,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ALLOW_LIST_PATH
-            - name: ALLOW_LIST_FILENAME
+            - name: ALLOW_LIST_FILE_NAME
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: ALLOW_LIST_FILENAME
+                  key: ALLOW_LIST_FILE_NAME
             - name: SELFCARE_V2_URL
               valueFrom:
                 configMapKeyRef:
@@ -164,6 +169,16 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PRIVACY_NOTICES_TOS_UUID
+            - name: PRIVACY_NOTICES_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRIVACY_NOTICES_PATH    
+            - name: PRIVACY_NOTICES_FILE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRIVACY_NOTICES_FILE_NAME
             - name: PRIVACY_NOTICES_DYNAMO_TABLE_NAME
               valueFrom:
                 configMapKeyRef:
@@ -229,3 +244,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PRESIGNED_URL_PUT_DURATION_MINUTES
+            - name: BACKEND_FOR_FRONTEND_INTERFACE_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: BACKEND_FOR_FRONTEND_INTERFACE_VERSION
