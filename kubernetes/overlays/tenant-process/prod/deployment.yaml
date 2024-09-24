@@ -14,13 +14,13 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ACCEPTED_AUDIENCES
-            - name: TENANT_MANAGEMENT_URL
+            - name: EVENTSTORE_DB_SCHEMA
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: TENANT_MANAGEMENT_URL
-            - name: AGREEMENT_PROCESS_URL
+                  key: EVENTSTORE_DB_SCHEMA
+            - name: WELL_KNOWN_URLS
               valueFrom:
                 configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: AGREEMENT_PROCESS_URL
+                  name: common-jwt
+                  key: WELL_KNOWN_URLS

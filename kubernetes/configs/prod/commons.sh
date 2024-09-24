@@ -4,7 +4,7 @@ STAGE="PROD"
 
 DOMAIN_NAME="interop.pagopa.it"
 
-REPOSITORY="505630707203.dkr.ecr.eu-central-1.amazonaws.com"
+REPOSITORY="505630707203.dkr.ecr.eu-south-1.amazonaws.com"
 POSTGRES_HOST="interop-persistence-management-prod.cluster-clwq8rah1dfz.eu-central-1.rds.amazonaws.com"
 POSTGRES_PORT="5432"
 POSTGRES_DB_NAME="persistence_management"
