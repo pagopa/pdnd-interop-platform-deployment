@@ -14,7 +14,7 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: KAFKA_BROKERS
-            - name: BROKER_CONNECTION_STRING
+            - name: KAFKA_BROKER_CONNECTION_STRING
               valueFrom:
                 secretKeyRef:
                   name: selfcare-v2
