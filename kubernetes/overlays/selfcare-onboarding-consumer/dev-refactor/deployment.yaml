@@ -9,11 +9,11 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
-            - name: SELFCARE_BROKER_URLS
+            - name: KAFKA_BROKERS
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: SELFCARE_BROKER_URLS
+                  key: KAFKA_BROKERS
             - name: BROKER_CONNECTION_STRING
               valueFrom:
                 secretKeyRef:
@@ -29,11 +29,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: KAFKA_GROUP_ID
-            - name: TOPIC_NAME
+            - name: SELFCARE_TOPIC
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: TOPIC_NAME
+                  key: SELFCARE_TOPIC
             - name: RESET_CONSUMER_OFFSETS
               valueFrom:
                 configMapKeyRef:
@@ -44,6 +44,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: INTEROP_PRODUCT
+            - name: ALLOWED_ORIGINS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ALLOWED_ORIGINS
             - name: TENANT_PROCESS_URL
               valueFrom:
                 configMapKeyRef:
