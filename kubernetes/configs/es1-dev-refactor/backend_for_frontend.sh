@@ -24,8 +24,8 @@ SUPPORT_SAML_AUDIENCE="selfcare.refactor.dev.interop.pagopa.it"
 SUPPORT_SAML_CALLBACK_URL="https://selfcare.refactor.dev.interop.pagopa.it/ui/it/assistenza/scelta-ente"
 SUPPORT_SAML_CALLBACK_ERROR_URL="https://selfcare.refactor.dev.interop.pagopa.it/ui/it/assistenza/errore"
 
-IMPORT_ESERVICE_CONTAINER="interop-application-import-export-dev-es1"
-EXPORT_ESERVICE_CONTAINER="interop-application-import-export-dev-es1"
+IMPORT_ESERVICE_CONTAINER="interop-application-import-export-dev"
+EXPORT_ESERVICE_CONTAINER="interop-application-import-export-dev"
 PRESIGNED_URL_GET_DURATION_MINUTES=2
 PRESIGNED_URL_PUT_DURATION_MINUTES=2
 
