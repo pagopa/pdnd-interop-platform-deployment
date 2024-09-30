@@ -6,7 +6,7 @@ STAGE="ATT"
 
 DOMAIN_NAME="att.interop.pagopa.it"
 
-REPOSITORY="505630707203.dkr.ecr.eu-central-1.amazonaws.com"
+REPOSITORY="505630707203.dkr.ecr.eu-south-1.amazonaws.com"
 POSTGRES_HOST="interop-platform-data-att.cluster-c5mm6mwy4v3q.eu-south-1.rds.amazonaws.com"
 POSTGRES_PORT="5432"
 READ_MODEL_DB_HOST="interop-read-model-att.cluster-c5mm6mwy4v3q.eu-south-1.docdb.amazonaws.com"
