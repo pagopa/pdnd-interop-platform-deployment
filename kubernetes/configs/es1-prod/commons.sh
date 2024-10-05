@@ -10,14 +10,14 @@ REPOSITORY="505630707203.dkr.ecr.eu-south-1.amazonaws.com"
 POSTGRES_HOST=""
 POSTGRES_PORT="5432"
 POSTGRES_DB_NAME="persistence_management"
-READ_MODEL_DB_HOST=""
+READ_MODEL_DB_HOST="interop-read-model-prod.cluster-cgo3fcsduspu.eu-south-1.docdb.amazonaws.com"
 READ_MODEL_DB_PORT="27017"
 READ_MODEL_DB_NAME="read-model"
 READ_MODEL_REPLICA_SET="rs0"
 READ_MODEL_READ_PREFERENCE="secondaryPreferred"
 REPLICAS=2
 BACKEND_SERVICE_PORT="8088"
-KAFKA_BROKERS=""
+KAFKA_BROKERS="b-2.interopplatformevents.gfkljw.c4.kafka.eu-south-1.amazonaws.com:9098,b-1.interopplatformevents.gfkljw.c4.kafka.eu-south-1.amazonaws.com:9098,b-3.interopplatformevents.gfkljw.c4.kafka.eu-south-1.amazonaws.com:9098"
 
 AGREEMENT_TOPIC="event-store.prod_agreement.events"
 ATTRIBUTE_TOPIC="event-store.prod_attribute_registry.events"
@@ -44,7 +44,7 @@ INTERNAL_JWT_DURATION_SECONDS=3600
 UI_JWT_AUDIENCE="interop.pagopa.it/ui"
 M2M_JWT_AUDIENCE="interop.pagopa.it/m2m"
 INTERNAL_JWT_AUDIENCE="interop.pagopa.it/internal"
-RSA_KEYS_IDENTIFIERS="199d08d2-9971-4979-a78d-e6f7a544f296"
+RSA_KEYS_IDENTIFIERS="9432c16b-7aae-49df-b9c4-ea61b556652b"
 
 SELFCARE_V2_URL="https://api.selfcare.pagopa.it/external/v2"
 
