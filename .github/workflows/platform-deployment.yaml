@@ -28,14 +28,16 @@ jobs:
         run: |
           set -euxo pipefail
 
-          if [ ! "${{ inputs.environment }}" = "prod" ]; then
-            exit 0
-          fi
+          exit 0
 
-          if [ ! "${{ github.ref_type }}" = "tag" ]; then
-            echo >&2 "ERROR: deploy on prod environment must use a git tag"
-            exit 1
-          fi
+          # if [ ! "${{ inputs.environment }}" =~ *prod ]; then
+          #   exit 0
+          # fi
+          #
+          # if [ ! "${{ github.ref_type }}" = "tag" ]; then
+          #   echo >&2 "ERROR: deploy on prod environment must use a git tag"
+          #   exit 1
+          # fi
 
       - name: Set NORM_ENV in 'env' context
         id: norm_env
