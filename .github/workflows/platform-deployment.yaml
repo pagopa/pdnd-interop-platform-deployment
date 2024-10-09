@@ -28,7 +28,7 @@ jobs:
         run: |
           set -euxo pipefail
 
-          if [ ! "${{ inputs.environment }}" = "prod" ]; then
+          if [[ ! "${{ inputs.environment }}" =~ *prod ]]; then
             exit 0
           fi
 
