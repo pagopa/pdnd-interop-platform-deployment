@@ -38,7 +38,7 @@ spec:
                   value: "{{READ_MODEL_DB_PORT}}"
                 - name: READMODEL_DB_NAME
                   value: "{{READ_MODEL_DB_NAME}}"
-                - name: READMODEL_DB_USER
+                - name: READMODEL_DB_USERNAME
                   valueFrom:
                     secretKeyRef:
                       name: documentdb
@@ -98,6 +98,8 @@ spec:
                     secretKeyRef:
                       name: smtp-reports
                       key: SMTP_PASSWORD
+                - name: LOG_LEVEL
+                  value: info
               resources:
                 requests:
                   cpu: "{{SERVICE_RESOURCE_CPU}}"
