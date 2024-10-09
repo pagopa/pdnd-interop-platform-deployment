@@ -59,3 +59,43 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: BASE_URL
+            - name: WELL_KNOWN_URLS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: WELL_KNOWN_URLS
+            - name: RATE_LIMITER_RATE_INTERVAL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: RATE_LIMITER_RATE_INTERVAL
+            - name: RATE_LIMITER_TIMEOUT
+              valueFrom:
+                configMapKeyRef::
+                  name:  {{SERVICE_NAME}}
+                  key: RATE_LIMITER_TIMEOUT
+            - name: READMODEL_DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: common-read-model
+                  key: READMODEL_DB_HOST
+            - name: READMODEL_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: common-read-model
+                  key: READMODEL_DB_NAME
+            - name: READMODEL_DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: common-read-model
+                  key: READMODEL_DB_USERNAME           
+            - name: READMODEL_DB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: common-read-model
+                  key: READMODEL_DB_PASSWORD
+            - name: READMODEL_DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: common-read-model
+                  key: READMODEL_DB_PORT
