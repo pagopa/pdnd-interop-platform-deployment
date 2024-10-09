@@ -8,6 +8,18 @@ spec:
     spec:
       containers:
         - name: {{SERVICE_NAME}}
+          livenessProbe:
+            httpGet:
+              path: "/api-getaway/{{API_GATEWAY_INTERFACE_VERSION}}/status"
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: "/api-getaway/{{API_GATEWAY_INTERFACE_VERSION}}/status"
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 5
           env:
             - name: ACCEPTED_AUDIENCES
               valueFrom:
@@ -86,14 +98,14 @@ spec:
                   key: READMODEL_DB_NAME
             - name: READMODEL_DB_USERNAME
               valueFrom:
-                configMapKeyRef:
-                  name: common-read-model
-                  key: READMODEL_DB_USERNAME           
+                secretKeyRef:
+                  name: read-model
+                  key: READONLY_USR
             - name: READMODEL_DB_PASSWORD
               valueFrom:
-                configMapKeyRef:
-                  name: common-read-model
-                  key: READMODEL_DB_PASSWORD
+                secretKeyRef:
+                  name: read-model
+                  key: READONLY_PSW
             - name: READMODEL_DB_PORT
               valueFrom:
                 configMapKeyRef:
