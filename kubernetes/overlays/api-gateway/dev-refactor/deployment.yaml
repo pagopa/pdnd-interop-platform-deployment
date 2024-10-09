@@ -10,13 +10,13 @@ spec:
         - name: {{SERVICE_NAME}}
           livenessProbe:
             httpGet:
-              path: "/api-getaway/{{API_GATEWAY_INTERFACE_VERSION}}/status"
+              path: "/status"
               port: http
             initialDelaySeconds: 15
             periodSeconds: 5
           readinessProbe:
             httpGet:
-              path: "/api-getaway/{{API_GATEWAY_INTERFACE_VERSION}}/status"
+              path: "/status"
               port: http
             initialDelaySeconds: 15
             periodSeconds: 5
