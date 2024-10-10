@@ -32,36 +32,22 @@ spec:
                   valueFrom:
                     fieldRef:
                       fieldPath: metadata.namespace
-                - name: READ_MODEL_DB_HOST
+                - name: READMODEL_DB_HOST
                   value: "{{READ_MODEL_DB_HOST}}"
-                - name: READ_MODEL_DB_PORT
+                - name: READMODEL_DB_PORT
                   value: "{{READ_MODEL_DB_PORT}}"
-                - name: READ_MODEL_DB_NAME
+                - name: READMODEL_DB_NAME
                   value: "{{READ_MODEL_DB_NAME}}"
-                - name: MONGODB_REPLICA_SET
-                  value: "{{READ_MODEL_REPLICA_SET}}"
-                - name: MONGODB_READ_PREFERENCE
-                  value: "{{READ_MODEL_READ_PREFERENCE}}"
-                - name: READ_MODEL_DB_USER
+                - name: READMODEL_DB_USERNAME
                   valueFrom:
                     secretKeyRef:
                       name: documentdb
                       key: READONLY_USR
-                - name: READ_MODEL_DB_PASSWORD
+                - name: READMODEL_DB_PASSWORD
                   valueFrom:
                     secretKeyRef:
                       name: documentdb
                       key: READONLY_PSW
-                - name: TENANTS_COLLECTION_NAME
-                  valueFrom:
-                      configMapKeyRef:
-                        name: {{SERVICE_NAME}}
-                        key: TENANTS_COLLECTION_NAME
-                - name: PURPOSES_COLLECTION_NAME
-                  valueFrom:
-                      configMapKeyRef:
-                        name: {{SERVICE_NAME}}
-                        key: PURPOSES_COLLECTION_NAME
                 - name: PN_ESERVICE_ID
                   valueFrom:
                       configMapKeyRef:
@@ -112,6 +98,8 @@ spec:
                     secretKeyRef:
                       name: smtp-reports
                       key: SMTP_PASSWORD
+                - name: LOG_LEVEL
+                  value: info
               resources:
                 requests:
                   cpu: "{{SERVICE_RESOURCE_CPU}}"
