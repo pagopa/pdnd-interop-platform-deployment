@@ -4,5 +4,4 @@ resources:
 - configmap.yaml
 patchesStrategicMerge:
 - deployment.yaml
-- ../../../commons/be-refactor/rate-limiting-deployment.yaml
 - ../../../commons/database/read-model.yaml
