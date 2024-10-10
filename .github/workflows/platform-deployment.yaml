@@ -568,7 +568,7 @@ jobs:
       resource_mem_var_name: TENANT_READMODEL_WRITER_RESOURCE_MEM
 
   deploy_tenant_outbound_writer:
-    name: Purpose Outbound Writer
+    name: Tenant Outbound Writer
     needs: [deploy_configs]
     if: ${{ inputs.environment == 'es1-dev' }}
     permissions:
