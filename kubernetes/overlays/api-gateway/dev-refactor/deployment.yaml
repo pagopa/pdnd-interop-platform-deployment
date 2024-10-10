@@ -71,6 +71,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: BASE_URL
+            - name: API_GATEWAY_INTERFACE_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: API_GATEWAY_INTERFACE_VERSION
             - name: WELL_KNOWN_URLS
               valueFrom:
                 configMapKeyRef:
