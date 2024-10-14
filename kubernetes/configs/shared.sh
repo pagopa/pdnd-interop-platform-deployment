@@ -39,6 +39,7 @@ NOTIFIER_SEEDER_SERVICE_NAME="interop-be-notifier-seeder"
 TENANT_MANAGEMENT_SERVICE_NAME="interop-be-tenant-management"
 TENANT_READMODEL_WRITER_SERVICE_NAME="interop-be-tenant-readmodel-writer"
 TENANT_PROCESS_SERVICE_NAME="interop-be-tenant-process"
+TENANT_OUTBOUND_WRITER_SERVICE_NAME="interop-be-tenant-outbound-writer"
 ESERVICE_DESCRIPTORS_ARCHIVER_SERVICE_NAME="interop-be-eservice-descriptors-archiver"
 
 FRONTEND_SERVICE_NAME="interop-frontend"
