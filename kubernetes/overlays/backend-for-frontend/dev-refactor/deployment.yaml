@@ -261,3 +261,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: BACKEND_FOR_FRONTEND_INTERFACE_VERSION
+            - name: CLIENT_ASSERTION_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: CLIENT_ASSERTION_AUDIENCE
