@@ -404,7 +404,7 @@ jobs:
     name: Producer Key ReadModel Writer
     needs: [deploy_configs]
     if: | 
-        inputs.environment == 'es1-dev' || inputs.environment == 'es1-dev-refactor'
+        inputs.environment == 'es1-dev-refactor'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -421,7 +421,7 @@ jobs:
     name: Producer Keychain ReadModel Writer
     needs: [deploy_configs]
     if: | 
-        inputs.environment == 'es1-dev' || inputs.environment == 'es1-dev-refactor'
+        inputs.environment == 'es1-dev-refactor'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
