@@ -367,7 +367,7 @@ jobs:
     name: Compute Agreements
     needs: [deploy_configs]
     if: |
-        inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-test' || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
+        inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-dev' || inputs.environment == 'es1-test' || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
