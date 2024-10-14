@@ -19,11 +19,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: KAFKA_GROUP_ID
-            - name: PURPOSE_TOPIC
+            - name: TENANT_TOPIC
               valueFrom:
                 configMapKeyRef:
                   name: common-kafka
-                  key: PURPOSE_TOPIC
+                  key: TENANT_TOPIC
             - name: PRODUCER_KAFKA_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
