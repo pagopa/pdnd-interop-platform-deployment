@@ -8,6 +8,18 @@ spec:
     spec:
       containers:
         - name: {{SERVICE_NAME}}
+          livenessProbe:
+            httpGet:
+              path: "/backend-for-frontend/{{BACKEND_FOR_FRONTEND_INTERFACE_VERSION}}/status"
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: "/backend-for-frontend/{{BACKEND_FOR_FRONTEND_INTERFACE_VERSION}}/status"
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 5
           env:
             - name: ACCEPTED_AUDIENCES
               valueFrom:
@@ -249,3 +261,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: BACKEND_FOR_FRONTEND_INTERFACE_VERSION
+            - name: CLIENT_ASSERTION_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: CLIENT_ASSERTION_AUDIENCE
