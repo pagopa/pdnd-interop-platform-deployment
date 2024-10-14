@@ -1,6 +1,6 @@
 #!/bin/bash
 
-AUTHORIZATION_PROCESS_SERVICE_NAME="interop-be-authorization-process-refactor"
+AUTHORIZATION_PROCESS_SERVICE_NAME="interop-be-authorization-process"
 
 AUTHORIZATION_PROCESS_RESOURCE_CPU="500m"
 AUTHORIZATION_PROCESS_RESOURCE_MEM="2Gi"
