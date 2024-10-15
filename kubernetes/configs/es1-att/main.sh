@@ -19,6 +19,8 @@ BACKEND_FOR_FRONTEND_INTERFACE_VERSION=$(shortVersion $BACKEND_FOR_FRONTEND_IMAG
 NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 
 . $(pwd)/kubernetes/configs/es1-att/redis.sh
+. $(pwd)/kubernetes/configs/es1-att/smtp_mock.sh
+. $(pwd)/kubernetes/configs/es1-att/ses_mock.sh
 
 . $(pwd)/kubernetes/configs/es1-att/agreement_email_sender.sh
 . $(pwd)/kubernetes/configs/es1-att/agreement_readmodel_writer.sh
