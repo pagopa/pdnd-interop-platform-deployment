@@ -17,16 +17,23 @@ READ_MODEL_READ_PREFERENCE="secondaryPreferred"
 REPLICAS=1
 BACKEND_SERVICE_PORT="8088"
 
+ #TBD
+KAFKA_BROKERS="b-2.interopplatformevents.gfkljw.c4.kafka.eu-south-1.amazonaws.com:9098,b-1.interopplatformevents.gfkljw.c4.kafka.eu-south-1.amazonaws.com:9098,b-3.interopplatformevents.gfkljw.c4.kafka.eu-south-1.amazonaws.com:9098"
+
 AGREEMENT_TOPIC="event-store.att_agreement.events"
 ATTRIBUTE_TOPIC="event-store.att_attribute_registry.events"
 AUTHORIZATION_TOPIC="event-store.att_authorization.events"
 CATALOG_TOPIC="event-store.att_catalog.events"
 PURPOSE_TOPIC="event-store.att_purpose.events"
+TENANT_TOPIC="event-store.att_tenant.events"
 
 AWS_REGION="eu-south-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
 CERTIFIED_MAIL_QUEUE_NAME="certified-mail.fifo"
 AWS_SQS_DOMAIN="https://sqs.${AWS_REGION}.amazonaws.com"
+
+ #TBD
+NOTIFICATION_QUEUE_URL="https://sqs.eu-south-1.amazonaws.com/697818730278/persistence-events.fifo"
 
 ENABLED_PROJECTIONS="true"
 WELL_KNOWN_URLS="https://att.interop.pagopa.it/.well-known/jwks.json"
@@ -58,6 +65,17 @@ PAGOPA_TENANT_ID="69e2865e-65ab-4e48-a638-2037a9ee2ee7"
 REPORT_SENDER_MAIL="noreply@reports.att.interop.pagopa.it"
 REPORT_SENDER_LABEL="noreply-att"
 
+NOTIFICATION_SENDER_MAIL="noreply@notifiche.att.interop.pagopa.it"
+NOTIFICATION_SENDER_LABEL="noreply-att"
+
+SES_ENDPOINT="http://ses-mock.att.svc.cluster.local:8005"
+
+PEC_SMTP_ADDRESS="smtp-mock.att.svc.cluster.local"
+PEC_SMTP_PORT=5025
+PEC_SMTP_SECURE=false
+
 SMTP_SECURE=false
 SMTP_ADDRESS="smtp-mock.att.svc.cluster.local"
 SMTP_PORT=5025
+
+AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.att.svc.cluster.local:8088/authorization-management/0.0"
