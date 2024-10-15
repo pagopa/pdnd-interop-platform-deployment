@@ -104,6 +104,7 @@ jobs:
         && inputs.environment != 'dev-refactor' && inputs.environment != 'es1-dev-refactor'
         && inputs.environment != 'test' && inputs.environment != 'es1-test'
         && inputs.environment != 'prod' && inputs.environment != 'es1-prod'
+        && inputs.environment != 'att' && inputs.environment != 'es1-att'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -124,6 +125,7 @@ jobs:
         || inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
         || inputs.environment == 'test' || inputs.environment == 'es1-test'
         || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
+        || inputs.environment == 'att' || inputs.environment == 'es1-att'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -160,6 +162,7 @@ jobs:
         || inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
         || inputs.environment == 'test' || inputs.environment == 'es1-test'
         || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
+        || inputs.environment == 'att' || inputs.environment == 'es1-att'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -190,7 +193,6 @@ jobs:
   deploy_attribute_registry_management:
     name: Attribute Registry Management
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'att' || inputs.environment == 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -206,7 +208,6 @@ jobs:
   deploy_attribute_registry_readmodel_writer:
     name: Attribute Registry ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'att' && inputs.environment != 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -267,7 +268,6 @@ jobs:
   deploy_authorization_updater:
     name: Authorization Updater
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'att' && inputs.environment != 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -279,22 +279,6 @@ jobs:
       image_version_var_name: AUTHORIZATION_UPDATER_IMAGE_VERSION
       resource_cpu_var_name: AUTHORIZATION_UPDATER_RESOURCE_CPU
       resource_mem_var_name: AUTHORIZATION_UPDATER_RESOURCE_MEM
-
-  deploy_catalog_management:
-    name: Catalog Management
-    needs: [deploy_configs]
-    if: ${{ inputs.environment == 'att' || inputs.environment == 'es1-att' }}
-    permissions:
-      contents: read
-    uses: ./.github/workflows/deploy-service.yaml
-    secrets: inherit
-    with:
-      environment: ${{ inputs.environment }}
-      kustomize_overlay_path: "overlays/catalog-management/${{ inputs.environment }}"
-      service_name_var_name: CATALOG_MANAGEMENT_SERVICE_NAME
-      image_version_var_name: CATALOG_MANAGEMENT_IMAGE_VERSION
-      resource_cpu_var_name: CATALOG_MANAGEMENT_RESOURCE_CPU
-      resource_mem_var_name: CATALOG_MANAGEMENT_RESOURCE_MEM
 
   deploy_catalog_outbound_writer:
     name: Catalog Outbound Writer
@@ -315,7 +299,6 @@ jobs:
   deploy_catalog_readmodel_writer:
     name: Catalog ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'att' && inputs.environment != 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -351,6 +334,7 @@ jobs:
       || inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
       || inputs.environment == 'test' || inputs.environment == 'es1-test'
       || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
+      || inputs.environment == 'att' || inputs.environment == 'es1-att'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -367,7 +351,10 @@ jobs:
     name: Compute Agreements
     needs: [deploy_configs]
     if: |
-        inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-dev' || inputs.environment == 'es1-test' || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
+        inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-dev' 
+        || inputs.environment == 'es1-test' 
+        || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
+        || inputs.environment == 'att' || inputs.environment == 'es1-att'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -388,6 +375,7 @@ jobs:
         || inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
         || inputs.environment == 'test' || inputs.environment == 'es1-test'
         || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
+        || inputs.environment == 'att' || inputs.environment == 'es1-att'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -454,7 +442,6 @@ jobs:
     needs: [deploy_configs]
     if: |
         inputs.environment == 'qa' || inputs.environment == 'es1-qa'
-        || inputs.environment == 'att' || inputs.environment == 'es1-att'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -506,6 +493,7 @@ jobs:
         || inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
         || inputs.environment == 'test' || inputs.environment == 'es1-test'
         || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
+        || inputs.environment == 'att' || inputs.environment == 'es1-att'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -522,7 +510,11 @@ jobs:
     name: Tenant Management
     needs: [deploy_configs]
     if: |
-        inputs.environment != 'es1-dev-refactor' && inputs.environment != 'es1-dev' && inputs.environment != 'es1-test' && inputs.environment != 'prod' && inputs.environment != 'es1-prod'
+        inputs.environment != 'es1-dev-refactor' 
+        && inputs.environment != 'es1-dev' 
+        && inputs.environment != 'es1-test'
+        && inputs.environment != 'prod' && inputs.environment != 'es1-prod'
+        && inputs.environment != 'att' && inputs.environment != 'es1-att'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -554,7 +546,11 @@ jobs:
     name: Tenant ReadModel Writer
     needs: [deploy_configs]
     if: |
-        inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-dev' || inputs.environment == 'es1-test' || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
+        inputs.environment == 'es1-dev-refactor' 
+        || inputs.environment == 'es1-dev' 
+        || inputs.environment == 'es1-test' 
+        || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
+        || inputs.environment == 'att' || inputs.environment == 'es1-att'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -646,7 +642,6 @@ jobs:
   deploy_notifier_seeder:
     name: Notifier Seeder
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'att' && inputs.environment != 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -927,7 +922,7 @@ jobs:
       deploy_agreement_management, deploy_agreement_process, deploy_agreement_readmodel_writer, deploy_agreement_outbound_writer,
       deploy_attribute_registry_management, deploy_attribute_registry_process, deploy_attribute_registry_readmodel_writer,
       deploy_authorization_management, deploy_authorization_process, deploy_authorization_updater, deploy_client_readmodel_writer, deploy_key_readmodel_writer, deploy_producer_key_readmodel_writer, deploy_producer_keychain_readmodel_writer,
-      deploy_catalog_management, deploy_catalog_process, deploy_catalog_readmodel_writer, deploy_catalog_outbound_writer,
+      deploy_catalog_process, deploy_catalog_readmodel_writer, deploy_catalog_outbound_writer,
       deploy_compute_agreements_consumer, deploy_party_registry_proxy,
       deploy_purpose_management, deploy_purpose_process, deploy_purpose_readmodel_writer, deploy_purpose_outbound_writer,
       deploy_tenant_management, deploy_tenant_process, deploy_tenant_readmodel_writer, deploy_tenant_outbound_writer,
