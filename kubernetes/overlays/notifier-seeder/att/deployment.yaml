@@ -9,15 +9,6 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
-            - name: NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
-            - name: CATALOG_PROCESS_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: CATALOG_PROCESS_URL
             - name: KAFKA_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
@@ -33,28 +24,23 @@ spec:
                 configMapKeyRef:
                   name: common-kafka
                   key: AGREEMENT_TOPIC
-            - name: INTERNAL_JWT_KID
+            - name: AUTHORIZATION_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: AUTHORIZATION_TOPIC
+            - name: CATALOG_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: CATALOG_TOPIC
+            - name: PURPOSE_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: PURPOSE_TOPIC
+            - name: NOTIFICATION_QUEUE_URL
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: INTERNAL_JWT_KID
-            - name: INTERNAL_JWT_SECONDS_DURATION
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: INTERNAL_JWT_SECONDS_DURATION
-            - name: INTERNAL_JWT_ISSUER
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: INTERNAL_JWT_ISSUER
-            - name: INTERNAL_JWT_SUBJECT
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: INTERNAL_JWT_SUBJECT
-            - name: INTERNAL_JWT_AUDIENCE
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: INTERNAL_JWT_AUDIENCE
+                  key: NOTIFICATION_QUEUE_URL

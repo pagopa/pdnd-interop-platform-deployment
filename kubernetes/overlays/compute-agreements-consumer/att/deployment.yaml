@@ -9,15 +9,6 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
-            - name: NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
-            - name: CATALOG_PROCESS_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: CATALOG_PROCESS_URL
             - name: KAFKA_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
@@ -28,11 +19,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: KAFKA_GROUP_ID
-            - name: AGREEMENT_TOPIC
+            - name: TENANT_TOPIC
               valueFrom:
                 configMapKeyRef:
                   name: common-kafka
-                  key: AGREEMENT_TOPIC
+                  key: TENANT_TOPIC
             - name: INTERNAL_JWT_KID
               valueFrom:
                 configMapKeyRef:
@@ -58,3 +49,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: INTERNAL_JWT_AUDIENCE
+            - name: AGREEMENT_PROCESS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: AGREEMENT_PROCESS_URL

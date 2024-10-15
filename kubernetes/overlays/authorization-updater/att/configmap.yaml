@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+data:
+  KAFKA_CLIENT_ID: "{{NAMESPACE}}-pagopa-interop-authorization-updater"
+  KAFKA_GROUP_ID: "{{NAMESPACE}}-authorization-updater"
+
+  INTERNAL_JWT_KID: "{{RSA_KEYS_IDENTIFIERS}}"
+  INTERNAL_JWT_SUBJECT: "{{INTERNAL_JWT_SUBJECT}}"
+  INTERNAL_JWT_ISSUER: "{{INTERNAL_JWT_ISSUER}}"
+  INTERNAL_JWT_AUDIENCE: "{{INTERNAL_JWT_AUDIENCE}}"
+  INTERNAL_JWT_SECONDS_DURATION: "{{INTERNAL_JWT_DURATION_SECONDS}}"
+
