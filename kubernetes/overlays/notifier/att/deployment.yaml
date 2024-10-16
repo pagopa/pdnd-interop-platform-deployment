@@ -9,21 +9,11 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
-            - name: AGREEMENT_MANAGEMENT_URL
+            - name: CATALOG_PROCESS_URL
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: AGREEMENT_MANAGEMENT_URL
-            - name: CATALOG_MANAGEMENT_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: CATALOG_MANAGEMENT_URL
-            - name: PURPOSE_MANAGEMENT_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: PURPOSE_MANAGEMENT_URL
+                  key: CATALOG_PROCESS_URL
             - name: PERSISTENCE_EVENTS_QUEUE_URL
               value: "{{AWS_SQS_DOMAIN}}/{{AWS_ACCOUNT_ID}}/{{PERSISTENCE_QUEUE_NAME}}"
             - name: INTERNAL_JWT_ISSUER
