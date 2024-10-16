@@ -17,8 +17,7 @@ READ_MODEL_READ_PREFERENCE="secondaryPreferred"
 REPLICAS=1
 BACKEND_SERVICE_PORT="8088"
 
- #TBD
-KAFKA_BROKERS="b-2.interopplatformevents.gfkljw.c4.kafka.eu-south-1.amazonaws.com:9098,b-1.interopplatformevents.gfkljw.c4.kafka.eu-south-1.amazonaws.com:9098,b-3.interopplatformevents.gfkljw.c4.kafka.eu-south-1.amazonaws.com:9098"
+ KAFKA_BROKERS="b-3.interopplatformevents.1e4dzm.c3.kafka.eu-south-1.amazonaws.com:9098,b-1.interopplatformevents.1e4dzm.c3.kafka.eu-south-1.amazonaws.com:9098,b-2.interopplatformevents.1e4dzm.c3.kafka.eu-south-1.amazonaws.com:9098"
 
 AGREEMENT_TOPIC="event-store.att_agreement.events"
 ATTRIBUTE_TOPIC="event-store.att_attribute_registry.events"
