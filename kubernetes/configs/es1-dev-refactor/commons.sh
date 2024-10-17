@@ -77,3 +77,4 @@ SMTP_ADDRESS="smtp-mock.dev-refactor.svc.cluster.local"
 SMTP_PORT=5025
 
 AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.dev-refactor.svc.cluster.local:8088/authorization-management/0.0"
+CLIENT_ASSERTION_JWT_AUDIENCE="auth.refactor.dev.interop.pagopa.it/client-assertion"
