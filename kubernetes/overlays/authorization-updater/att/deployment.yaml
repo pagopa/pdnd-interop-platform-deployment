@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          env:
+            - name: KAFKA_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: KAFKA_CLIENT_ID
+            - name: KAFKA_GROUP_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: KAFKA_GROUP_ID
+            - name: AGREEMENT_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: AGREEMENT_TOPIC
+            - name: AUTHORIZATION_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: AUTHORIZATION_TOPIC
+            - name: CATALOG_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: CATALOG_TOPIC
+            - name: PURPOSE_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: PURPOSE_TOPIC
+            - name: AUTHORIZATION_MANAGEMENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: common-services-urls
+                  key: AUTHORIZATION_MANAGEMENT_URL
+            - name: INTERNAL_JWT_KID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTERNAL_JWT_KID
+            - name: INTERNAL_JWT_SECONDS_DURATION
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTERNAL_JWT_SECONDS_DURATION
+            - name: INTERNAL_JWT_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTERNAL_JWT_ISSUER
+            - name: INTERNAL_JWT_SUBJECT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTERNAL_JWT_SUBJECT
+            - name: INTERNAL_JWT_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTERNAL_JWT_AUDIENCE

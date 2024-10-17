@@ -1,7 +1,6 @@
 #!/bin/bash
 
-DTD_CATALOG_STORAGE_BUCKET="interop-public-catalog-att-es1"
-DTD_CATALOG_STORAGE_PATH="catalog"
+DATALAKE_STORAGE_BUCKET="interop-data-lake-exports-prod-es1"
 
 JOB_DTD_CATALOG_EXPORTER_RESOURCE_CPU="500m"
 JOB_DTD_CATALOG_EXPORTER_RESOURCE_MEM="1Gi"

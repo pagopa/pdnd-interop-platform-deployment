@@ -9,31 +9,21 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
+            - name: EVENTSTORE_DB_SCHEMA
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: EVENTSTORE_DB_SCHEMA
+            - name: WELL_KNOWN_URLS
+              valueFrom:
+                configMapKeyRef:
+                  name: common-jwt
+                  key: WELL_KNOWN_URLS
             - name: ACCEPTED_AUDIENCES
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ACCEPTED_AUDIENCES
-            - name: AGREEMENT_MANAGEMENT_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: AGREEMENT_MANAGEMENT_URL
-            - name: CATALOG_MANAGEMENT_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: CATALOG_MANAGEMENT_URL
-            - name: AUTHORIZATION_MANAGEMENT_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: AUTHORIZATION_MANAGEMENT_URL
-            - name: TENANT_MANAGEMENT_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: TENANT_MANAGEMENT_URL            
             - name: SELFCARE_V2_API_KEY
               valueFrom:
                 secretKeyRef:
@@ -49,3 +39,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: MAX_KEYS_PER_CLIENT
+            - name: MAX_KEYS_PER_PRODUCER_KEYCHAIN
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: MAX_KEYS_PER_PRODUCER_KEYCHAIN

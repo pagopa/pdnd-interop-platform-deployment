@@ -1,0 +1,110 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: KAFKA_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: KAFKA_CLIENT_ID
+            - name: KAFKA_GROUP_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: KAFKA_GROUP_ID
+            - name: AGREEMENT_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: AGREEMENT_TOPIC
+            - name: INTEROP_FE_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTEROP_FE_BASE_URL
+            - name: PEC_SENDER_MAIL
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-certified
+                  key: PEC_SMTP_SENDER
+            - name: PEC_SENDER_LABEL
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-certified
+                  key: PEC_SMTP_SENDER
+            - name: PEC_SMTP_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PEC_SMTP_ADDRESS
+            - name: PEC_SMTP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PEC_SMTP_PORT
+            - name: PEC_SMTP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-certified
+                  key: PEC_SMTP_USER
+            - name: PEC_SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-certified
+                  key: PEC_SMTP_PASSWORD
+            - name: PEC_SMTP_SECURE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PEC_SMTP_SECURE
+            - name: SENDER_MAIL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SENDER_MAIL
+            - name: SENDER_LABEL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SENDER_LABEL
+            - name: SMTP_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SMTP_ADDRESS
+            - name: SMTP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SMTP_PORT
+            - name: SMTP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-notifications
+                  key: SMTP_USER
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-notifications
+                  key: SMTP_PASSWORD
+            - name: SMTP_SECURE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: SMTP_SECURE
+            - name: AWS_SES_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: AWS_SES_ENDPOINT

@@ -79,7 +79,6 @@ jobs:
 
       - name: Prepare Event Store migrations
         id: prepare_event_store_migrations
-        if: ${{ vars.NORM_ENV != 'att' }}
         run: |
           set -eo pipefail
           source $CONFIG_FILE
@@ -98,7 +97,6 @@ jobs:
 
       - name: Apply commons configmaps
         id: apply_commons_configmap
-        if: ${{ vars.NORM_ENV != 'att' }}
         run: |
           set -eo pipefail
           source $CONFIG_FILE
