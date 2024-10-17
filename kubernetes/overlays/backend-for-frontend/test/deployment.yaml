@@ -71,11 +71,6 @@ spec:
                   configMapKeyRef:
                     name: {{SERVICE_NAME}}
                     key: INTERNAL_JWT_SECONDS_DURATION
-            - name: CLIENT_ASSERTION_JWT_AUDIENCE
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: CLIENT_ASSERTION_JWT_AUDIENCE
             - name: AGREEMENT_PROCESS_URL
               valueFrom:
                   configMapKeyRef:
