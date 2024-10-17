@@ -64,3 +64,5 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-test/selfcare_onboarding_consumer.sh
 . $(pwd)/kubernetes/configs/es1-test/eservice_descriptors_archiver.sh
 . $(pwd)/kubernetes/configs/es1-test/datalake_data_export.sh
+. $(pwd)/kubernetes/configs/es1-test/producer-key-readmodel-writer.sh
+. $(pwd)/kubernetes/configs/es1-test/producer-keychain-readmodel-writer.sh

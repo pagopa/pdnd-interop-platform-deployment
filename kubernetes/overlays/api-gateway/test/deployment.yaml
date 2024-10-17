@@ -8,6 +8,18 @@ spec:
     spec:
       containers:
         - name: {{SERVICE_NAME}}
+          livenessProbe:
+            httpGet:
+              path: "/{{API_GATEWAY_APPLICATION_PATH}}/{{API_GATEWAY_INTERFACE_VERSION}}/status"
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: "/{{API_GATEWAY_APPLICATION_PATH}}/{{API_GATEWAY_INTERFACE_VERSION}}/status"
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 5
           env:
             - name: ACCEPTED_AUDIENCES
               valueFrom:
@@ -59,3 +71,38 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: BASE_URL
+            - name: API_GATEWAY_INTERFACE_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: API_GATEWAY_INTERFACE_VERSION
+            - name: WELL_KNOWN_URLS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: WELL_KNOWN_URLS
+            - name: READMODEL_DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: common-read-model
+                  key: READMODEL_DB_HOST
+            - name: READMODEL_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: common-read-model
+                  key: READMODEL_DB_NAME
+            - name: READMODEL_DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: read-model
+                  key: READONLY_USR
+            - name: READMODEL_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: read-model
+                  key: READONLY_PSW
+            - name: READMODEL_DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: common-read-model
+                  key: READMODEL_DB_PORT
