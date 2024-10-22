@@ -2,7 +2,7 @@
 
 REGION_SUFFIX="-es1"
 
-STAGE="DEV"
+STAGE="DEV_REF"
 
 DOMAIN_NAME="refactor.dev.interop.pagopa.it"
 
