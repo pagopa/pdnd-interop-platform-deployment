@@ -4,6 +4,8 @@
 
 . $(pwd)/kubernetes/configs/es1-dev/versions.sh
 . $(pwd)/kubernetes/configs/es1-dev/commons.sh
+. $(pwd)/kubernetes/configs/es1-dev/smtp_mock.sh
+. $(pwd)/kubernetes/configs/es1-dev/ses_mock.sh
 
 # Calculated
 NAMESPACE=$NAMESPACE
