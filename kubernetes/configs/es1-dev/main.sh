@@ -13,14 +13,6 @@ API_GATEWAY_HOST="$API_SUBDOMAIN.$DOMAIN_NAME"
 
 AUTHORIZATION_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $AUTHORIZATION_MANAGEMENT_IMAGE_VERSION)
 PARTY_REGISTRY_PROXY_INTERFACE_VERSION=$(shortVersion $PARTY_REGISTRY_PROXY_IMAGE_VERSION)
-TENANT_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $TENANT_MANAGEMENT_IMAGE_VERSION)
-
-ATTRIBUTE_REGISTRY_PROCESS_INTERFACE_VERSION=$(shortVersion $ATTRIBUTE_REGISTRY_PROCESS_IMAGE_VERSION)
-AGREEMENT_PROCESS_INTERFACE_VERSION=$(shortVersion $AGREEMENT_PROCESS_IMAGE_VERSION)
-AUTHORIZATION_PROCESS_INTERFACE_VERSION=$(shortVersion $AUTHORIZATION_PROCESS_IMAGE_VERSION)
-CATALOG_PROCESS_INTERFACE_VERSION=$(shortVersion $CATALOG_PROCESS_IMAGE_VERSION)
-PURPOSE_PROCESS_INTERFACE_VERSION=$(shortVersion $PURPOSE_PROCESS_IMAGE_VERSION)
-TENANT_PROCESS_INTERFACE_VERSION=$(shortVersion $TENANT_PROCESS_IMAGE_VERSION)
 
 API_GATEWAY_INTERFACE_VERSION=$(shortVersion $API_GATEWAY_IMAGE_VERSION)
 BACKEND_FOR_FRONTEND_INTERFACE_VERSION=$(shortVersion $BACKEND_FOR_FRONTEND_IMAGE_VERSION)
@@ -30,9 +22,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-dev/smtp_mock.sh
 . $(pwd)/kubernetes/configs/es1-dev/ses_mock.sh
 
-
 . $(pwd)/kubernetes/configs/es1-dev/agreement_email_sender.sh
-. $(pwd)/kubernetes/configs/es1-dev/agreement_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/agreement_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/agreement_process.sh
 . $(pwd)/kubernetes/configs/es1-dev/api_gateway.sh
@@ -44,20 +34,17 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-dev/attribute_registry_process.sh
 . $(pwd)/kubernetes/configs/es1-dev/attributes_loader.sh
 . $(pwd)/kubernetes/configs/es1-dev/backend_for_frontend.sh
-. $(pwd)/kubernetes/configs/es1-dev/catalog_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/catalog_readmodel_writer.sh
-. $(pwd)/kubernetes/configs/es1-dev/client_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/catalog_process.sh
 . $(pwd)/kubernetes/configs/es1-dev/compute_agreements_consumer.sh
-. $(pwd)/kubernetes/configs/es1-dev/frontend.sh
+. $(pwd)/kubernetes/configs/es1-dev/client_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/key_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-dev/frontend.sh
 . $(pwd)/kubernetes/configs/es1-dev/party_registry_proxy.sh
-. $(pwd)/kubernetes/configs/es1-dev/purpose_readmodel_writer.sh
-. $(pwd)/kubernetes/configs/es1-dev/purpose_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/purpose_process.sh
-. $(pwd)/kubernetes/configs/es1-dev/tenant_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-dev/purpose_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/tenant_process.sh
-. $(pwd)/kubernetes/configs/es1-dev/tenant_outbound_writer.sh
+. $(pwd)/kubernetes/configs/es1-dev/tenant_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/tenants-certified-attributes-updater.sh
 . $(pwd)/kubernetes/configs/es1-dev/notifier.sh
 . $(pwd)/kubernetes/configs/es1-dev/notifier_seeder.sh
