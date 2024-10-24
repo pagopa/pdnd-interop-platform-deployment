@@ -5,7 +5,6 @@
 . $(pwd)/kubernetes/configs/es1-dev/versions.sh
 . $(pwd)/kubernetes/configs/es1-dev/commons.sh
 
-
 # Calculated
 NAMESPACE=$NAMESPACE
 EXTERNAL_APPLICATION_HOST="$UI_SUBDOMAIN.$DOMAIN_NAME"
