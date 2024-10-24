@@ -4,8 +4,7 @@
 
 . $(pwd)/kubernetes/configs/es1-dev/versions.sh
 . $(pwd)/kubernetes/configs/es1-dev/commons.sh
-. $(pwd)/kubernetes/configs/es1-dev/smtp_mock.sh
-. $(pwd)/kubernetes/configs/es1-dev/ses_mock.sh
+
 
 # Calculated
 NAMESPACE=$NAMESPACE
@@ -21,6 +20,8 @@ BACKEND_FOR_FRONTEND_INTERFACE_VERSION=$(shortVersion $BACKEND_FOR_FRONTEND_IMAG
 NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 
 . $(pwd)/kubernetes/configs/es1-dev/redis.sh
+. $(pwd)/kubernetes/configs/es1-dev/smtp_mock.sh
+. $(pwd)/kubernetes/configs/es1-dev/ses_mock.sh
 
 . $(pwd)/kubernetes/configs/es1-dev/agreement_email_sender.sh
 . $(pwd)/kubernetes/configs/es1-dev/agreement_readmodel_writer.sh
