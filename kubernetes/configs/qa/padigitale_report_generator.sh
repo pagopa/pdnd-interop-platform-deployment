@@ -1,8 +1,8 @@
 #!/bin/bash
 
-INTERFACES_CONTAINER="interop-application-documents-qa"
+INTERFACES_CONTAINER="interop-application-documents-qa-es1"
 
-REPORTS_CONTAINER="interop-platform-metrics-qa"
+REPORTS_CONTAINER="interop-platform-metrics-qa-es1"
 PA_DIGITALE_STORAGE_PATH="pa-digitale"
 AGREEMENTS_CSV_STORAGE_PATH="agreements/csv"
 AGREEMENTS_JSON_STORAGE_PATH="agreements/json"

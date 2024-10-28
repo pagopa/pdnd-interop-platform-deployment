@@ -51,17 +51,14 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-dev-refactor/token_details_persister.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/party_registry_proxy_refresher.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/eservices_monitoring_exporter.sh
-. $(pwd)/kubernetes/configs/es1-dev-refactor/metrics_report_generator.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/anac_certified_attributes_importer.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/ivass_certified_attributes_importer.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/pn_consumers.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/padigitale_report_generator.sh
-. $(pwd)/kubernetes/configs/es1-dev-refactor/dashboard_metrics_report_generator.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/dtd_catalog_exporter.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/one_trust_notices.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/selfcare_onboarding_consumer.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/eservice_descriptors_archiver.sh
-. $(pwd)/kubernetes/configs/es1-dev-refactor/dtd_metrics.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/datalake_data_export.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/producer-key-readmodel-writer.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/producer-keychain-readmodel-writer.sh

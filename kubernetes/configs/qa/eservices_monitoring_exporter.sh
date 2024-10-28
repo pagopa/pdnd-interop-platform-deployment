@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ESERVICE_MONITORING_EXPORT_BUCKET="interop-probing-eservices-qa"
+ESERVICE_MONITORING_EXPORT_BUCKET="interop-probing-eservices-qa-es1"
 ESERVICE_MONITORING_EXPORT_FILENAME="eservices"
 TENANTS_COLLECTION_NAME="tenants"
 ESERVICES_COLLECTION_NAME="eservices"
