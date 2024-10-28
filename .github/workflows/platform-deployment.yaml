@@ -99,12 +99,6 @@ jobs:
   deploy_agreement_email_sender:
     name: Agreement Email Sender
     needs: [deploy_configs]
-    if: |
-        inputs.environment == 'dev' || inputs.environment == 'es1-dev'
-        || inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
-        || inputs.environment == 'test' || inputs.environment == 'es1-test'
-        || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
-        || inputs.environment == 'att' || inputs.environment == 'es1-att'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -136,12 +130,6 @@ jobs:
   deploy_agreement_readmodel_writer:
     name: Agreement ReadModel Writer
     needs: [deploy_configs]
-    if: |
-        inputs.environment == 'dev' || inputs.environment == 'es1-dev'
-        || inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
-        || inputs.environment == 'test' || inputs.environment == 'es1-test'
-        || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
-        || inputs.environment == 'att' || inputs.environment == 'es1-att'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -293,12 +281,6 @@ jobs:
   deploy_client_readmodel_writer:
     name: Client ReadModel Writer
     needs: [deploy_configs]
-    if: |     
-      inputs.environment == 'dev' || inputs.environment == 'es1-dev'
-      || inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
-      || inputs.environment == 'test' || inputs.environment == 'es1-test'
-      || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
-      || inputs.environment == 'att' || inputs.environment == 'es1-att'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -314,11 +296,6 @@ jobs:
   deploy_compute_agreements_consumer:
     name: Compute Agreements
     needs: [deploy_configs]
-    if: |
-        inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-dev' 
-        || inputs.environment == 'es1-test' 
-        || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
-        || inputs.environment == 'att' || inputs.environment == 'es1-att'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -334,12 +311,6 @@ jobs:
   deploy_key_readmodel_writer:
     name: Key ReadModel Writer
     needs: [deploy_configs]
-    if: | 
-        inputs.environment == 'dev' || inputs.environment == 'es1-dev'
-        || inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
-        || inputs.environment == 'test' || inputs.environment == 'es1-test'
-        || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
-        || inputs.environment == 'att' || inputs.environment == 'es1-att'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -357,6 +328,7 @@ jobs:
     needs: [deploy_configs]
     if: | 
         inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-test'
+        || inputs.environment == 'es1-qa'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -374,6 +346,7 @@ jobs:
     needs: [deploy_configs]
     if: | 
         inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-test'
+        || inputs.environment == 'es1-test'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -435,12 +408,6 @@ jobs:
   deploy_purpose_readmodel_writer:
     name: Purpose ReadModel Writer
     needs: [deploy_configs]
-    if: |
-        inputs.environment == 'dev' || inputs.environment == 'es1-dev'
-        || inputs.environment == 'dev-refactor' || inputs.environment == 'es1-dev-refactor'
-        || inputs.environment == 'test' || inputs.environment == 'es1-test'
-        || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
-        || inputs.environment == 'att' || inputs.environment == 'es1-att'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -471,12 +438,6 @@ jobs:
   deploy_tenant_readmodel_writer:
     name: Tenant ReadModel Writer
     needs: [deploy_configs]
-    if: |
-        inputs.environment == 'es1-dev-refactor' 
-        || inputs.environment == 'es1-dev' 
-        || inputs.environment == 'es1-test' 
-        || inputs.environment == 'prod' || inputs.environment == 'es1-prod'
-        || inputs.environment == 'att' || inputs.environment == 'es1-att'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
