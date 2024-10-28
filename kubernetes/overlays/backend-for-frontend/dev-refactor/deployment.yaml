@@ -186,11 +186,16 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PRIVACY_NOTICES_PATH    
-            - name: PRIVACY_NOTICES_FILE_NAME
+            - name: PRIVACY_NOTICES_PP_FILE_NAME
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: PRIVACY_NOTICES_FILE_NAME
+                  key: PRIVACY_NOTICES_PP_FILE_NAME
+            - name: PRIVACY_NOTICES_TOS_FILE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRIVACY_NOTICES_TOS_FILE_NAME
             - name: PRIVACY_NOTICES_DYNAMO_TABLE_NAME
               valueFrom:
                 configMapKeyRef:
