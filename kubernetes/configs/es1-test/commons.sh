@@ -42,6 +42,10 @@ ENABLED_PROJECTIONS="true"
 WELL_KNOWN_URLS="https://uat.interop.pagopa.it/.well-known/jwks.json"
 DEV_ENDPOINTS_ENABLED="true"
 
+INTERNAL_JWT_ISSUER="uat.interop.pagopa.it"
+INTERNAL_JWT_SUBJECT="uat.interop-m2m"
+INTERNAL_JWT_DURATION_SECONDS=3600
+
 UI_JWT_AUDIENCE="uat.interop.pagopa.it/ui"
 M2M_JWT_AUDIENCE="uat.interop.pagopa.it/m2m"
 INTERNAL_JWT_AUDIENCE="uat.interop.pagopa.it/internal"
@@ -53,10 +57,6 @@ SELFCARE_V2_URL="https://api.selfcare.pagopa.it/external/v2"
 INTEROP_SELFCARE_PRODUCT_NAME="prod-interop-coll"
 TENANT_ALLOWED_ORIGINS="IPA,ANAC,IVASS,PDND_INFOCAMERE-SCP"
 PRODUCER_ALLOWED_ORIGINS="IPA"
-
-INTERNAL_JWT_ISSUER="uat.interop.pagopa.it"
-INTERNAL_JWT_SUBJECT="uat.interop-m2m"
-INTERNAL_JWT_DURATION_SECONDS=3600
 
 PRIVACY_NOTICES_DYNAMO_TABLE_NAME="interop-privacy-notices-test"
 PRIVACY_NOTICES_ACCEPTANCE_DYNAMO_TABLE_NAME="interop-privacy-notices-acceptances-test"

@@ -54,7 +54,6 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-test/token_details_persister.sh
 . $(pwd)/kubernetes/configs/es1-test/party_registry_proxy_refresher.sh
 . $(pwd)/kubernetes/configs/es1-test/eservices_monitoring_exporter.sh
-. $(pwd)/kubernetes/configs/es1-test/metrics_report_generator.sh
 . $(pwd)/kubernetes/configs/es1-test/anac_certified_attributes_importer.sh
 . $(pwd)/kubernetes/configs/es1-test/ivass_certified_attributes_importer.sh
 . $(pwd)/kubernetes/configs/es1-test/pn_consumers.sh
