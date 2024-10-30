@@ -78,3 +78,4 @@ SMTP_ADDRESS="smtp-mock.att.svc.cluster.local"
 SMTP_PORT=5025
 
 AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.att.svc.cluster.local:8088/authorization-management/1.0"
+CLIENT_ASSERTION_JWT_AUDIENCE="auth.att.interop.pagopa.it/client-assertion"

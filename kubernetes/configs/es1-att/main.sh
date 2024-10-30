@@ -14,7 +14,7 @@ API_GATEWAY_HOST="$API_SUBDOMAIN.$DOMAIN_NAME"
 AUTHORIZATION_MANAGEMENT_INTERFACE_VERSION=$(shortVersion $AUTHORIZATION_MANAGEMENT_IMAGE_VERSION)
 PARTY_REGISTRY_PROXY_INTERFACE_VERSION=$(shortVersion $PARTY_REGISTRY_PROXY_IMAGE_VERSION)
 
-API_GATEWAY_INTERFACE_VERSION=$(shortVersion $API_GATEWAY_IMAGE_VERSION)
+API_GATEWAY_INTERFACE_VERSION="1.0"
 BACKEND_FOR_FRONTEND_INTERFACE_VERSION=$(shortVersion $BACKEND_FOR_FRONTEND_IMAGE_VERSION)
 NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 
@@ -60,3 +60,5 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-att/selfcare_onboarding_consumer.sh
 . $(pwd)/kubernetes/configs/es1-att/eservice_descriptors_archiver.sh
 . $(pwd)/kubernetes/configs/es1-att/datalake_data_export.sh
+. $(pwd)/kubernetes/configs/es1-att/producer-key-readmodel-writer.sh
+. $(pwd)/kubernetes/configs/es1-att/producer-keychain-readmodel-writer.sh

@@ -44,7 +44,6 @@ INTERNAL_JWT_DURATION_SECONDS=3600
 UI_JWT_AUDIENCE="interop.pagopa.it/ui"
 M2M_JWT_AUDIENCE="interop.pagopa.it/m2m"
 INTERNAL_JWT_AUDIENCE="interop.pagopa.it/internal"
-
 RSA_KEYS_IDENTIFIERS="9432c16b-7aae-49df-b9c4-ea61b556652b"
 
 SELFCARE_V2_URL="https://api.selfcare.pagopa.it/external/v2"
