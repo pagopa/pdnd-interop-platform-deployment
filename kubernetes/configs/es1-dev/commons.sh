@@ -61,7 +61,7 @@ PRIVACY_NOTICES_DYNAMO_TABLE_NAME="interop-privacy-notices-dev"
 PRIVACY_NOTICES_ACCEPTANCE_DYNAMO_TABLE_NAME="interop-privacy-notices-acceptances-dev"
 PRIVACY_NOTICES_UPDATER_PRIVACY_POLICY_UUID="0df21ff6-3e8f-4320-af8f-23dea9135d57"
 PRIVACY_NOTICES_UPDATER_TERMS_OF_SERVICE_UUID="6bf8412a-41a7-41a0-82dc-26286ce61b1a"
-PRIVACY_NOTICES_CONTAINER="interop-privacy-notices-content-dev"
+PRIVACY_NOTICES_CONTAINER="interop-privacy-notices-content-dev-es1"
 
 PAGOPA_TENANT_ID="69e2865e-65ab-4e48-a638-2037a9ee2ee7"
 
@@ -81,4 +81,5 @@ SMTP_SECURE=false
 SMTP_ADDRESS="smtp-mock.dev.svc.cluster.local"
 SMTP_PORT=5025
 
-AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.dev.svc.cluster.local:8088/authorization-management/1.0"
+AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.dev.svc.cluster.local:8088/authorization-management/0.0"
+CLIENT_ASSERTION_JWT_AUDIENCE="auth.dev.interop.pagopa.it/client-assertion"

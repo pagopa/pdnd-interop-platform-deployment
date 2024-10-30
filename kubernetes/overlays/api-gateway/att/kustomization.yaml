@@ -1,8 +1,7 @@
 bases:
-- ../../../base
-patchesStrategicMerge:
+- ../../../base/be-refactor/public-microservice
+resources:
 - configmap.yaml
+patchesStrategicMerge:
 - deployment.yaml
-- service.yaml
-- ../../../commons/rate-limiting/configs.yaml
 - ../../../commons/database/read-model.yaml
