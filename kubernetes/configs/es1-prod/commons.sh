@@ -77,3 +77,4 @@ SMTP_ADDRESS="email-smtp.eu-central-1.amazonaws.com"
 SMTP_PORT=465
 
 AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.prod.svc.cluster.local:8088/authorization-management/1.0"
+CLIENT_ASSERTION_JWT_AUDIENCE="auth.interop.pagopa.it/client-assertion"
