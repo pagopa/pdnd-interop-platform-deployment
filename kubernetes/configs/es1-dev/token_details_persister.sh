@@ -9,7 +9,7 @@ JOB_DETAILS_PERSISTER_RESOURCE_MEM="2Gi"
 
 
 ################################################
-7# Configurations for Node version
+# Configurations for Node version
 # Remove configs above when dismissing the old service
 ################################################
 S3_BUCKET="interop-generated-jwt-details-dev-es1"
