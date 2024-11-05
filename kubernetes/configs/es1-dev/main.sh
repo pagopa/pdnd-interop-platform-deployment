@@ -28,6 +28,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-dev/agreement_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/agreement_process.sh
 . $(pwd)/kubernetes/configs/es1-dev/api_gateway.sh
+. $(pwd)/kubernetes/configs/es1-dev/authorization_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/authorization_management.sh
 . $(pwd)/kubernetes/configs/es1-dev/authorization_process.sh
 . $(pwd)/kubernetes/configs/es1-dev/authorization_server.sh
