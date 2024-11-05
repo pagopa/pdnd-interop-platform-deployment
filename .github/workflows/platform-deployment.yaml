@@ -678,6 +678,21 @@ jobs:
       resource_cpu_var_name: SELFCARE_ONBOARDING_CONSUMER_RESOURCE_CPU
       resource_mem_var_name: SELFCARE_ONBOARDING_CONSUMER_RESOURCE_MEM
 
+  deploy_token_details_persister_node:
+    name: Token Details Persister Node
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-cronjob.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      k8s_files_path: "overlays/token-details-persister/${{ inputs.environment }}"
+      service_name_var_name: TOKEN_DETAILS_PERSISTER_SERVICE_NAME
+      image_version_var_name: TOKEN_DETAILS_PERSISTER_IMAGE_VERSION
+      resource_cpu_var_name: TOKEN_DETAILS_PERSISTER_RESOURCE_CPU
+      resource_mem_var_name: TOKEN_DETAILS_PERSISTER_RESOURCE_MEM
+
   deploy_attributes_loader:
     name: Attributes Loader
     needs: [deploy_configs]
