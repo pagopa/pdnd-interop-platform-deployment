@@ -37,6 +37,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-dev/backend_for_frontend.sh
 . $(pwd)/kubernetes/configs/es1-dev/catalog_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/catalog_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-dev/catalog_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/catalog_process.sh
 . $(pwd)/kubernetes/configs/es1-dev/compute_agreements_consumer.sh
 . $(pwd)/kubernetes/configs/es1-dev/client_readmodel_writer.sh

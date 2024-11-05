@@ -19,6 +19,9 @@ REPLICAS=1
 BACKEND_SERVICE_PORT="8088"
 KAFKA_BROKERS="b-1.interopplatformevents.2doelu.c2.kafka.eu-south-1.amazonaws.com:9098,b-3.interopplatformevents.2doelu.c2.kafka.eu-south-1.amazonaws.com:9098,b-2.interopplatformevents.2doelu.c2.kafka.eu-south-1.amazonaws.com:9098"
 
+TOKEN_GENERATION_READMODEL_TABLE_NAME_PLATFORM="platform-states"
+TOKEN_GENERATION_READMODEL_TABLE_NAME_TOKEN_GENERATION="token-generation-states"
+
 AGREEMENT_TOPIC="event-store.dev_agreement.events"
 ATTRIBUTE_TOPIC="event-store.dev_attribute_registry.events"
 AUTHORIZATION_TOPIC="event-store.dev_authorization.events"
