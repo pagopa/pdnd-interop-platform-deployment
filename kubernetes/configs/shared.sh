@@ -35,6 +35,7 @@ PRODUCER_KEYCHAIN_READMODEL_WRITER_SERVICE_NAME="interop-be-producer-keychain-re
 PURPOSE_OUTBOUND_WRITER_SERVICE_NAME="interop-be-purpose-outbound-writer"
 PURPOSE_PROCESS_SERVICE_NAME="interop-be-purpose-process"
 PURPOSE_READMODEL_WRITER_SERVICE_NAME="interop-be-purpose-readmodel-writer"
+PURPOSE_PLATFORMSTATE_WRITER_SERVICE_NAME="interop-be-purpose-platformstate-writer"
 API_GATEWAY_SERVICE_NAME="interop-be-api-gateway"
 BACKEND_FOR_FRONTEND_SERVICE_NAME="interop-be-backend-for-frontend"
 NOTIFIER_SERVICE_NAME="interop-be-notifier"

@@ -49,6 +49,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-dev/purpose_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/purpose_process.sh
 . $(pwd)/kubernetes/configs/es1-dev/purpose_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-dev/purpose_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/tenant_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/tenant_process.sh
 . $(pwd)/kubernetes/configs/es1-dev/tenant_readmodel_writer.sh
