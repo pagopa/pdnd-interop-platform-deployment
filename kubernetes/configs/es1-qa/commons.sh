@@ -7,17 +7,17 @@ STAGE="QA"
 DOMAIN_NAME="qa.interop.pagopa.it"
 
 REPOSITORY="505630707203.dkr.ecr.eu-south-1.amazonaws.com"
-POSTGRES_HOST="TBD"
+POSTGRES_HOST="interop-platform-data-qa.cluster-cwgb5whmdqov.eu-south-1.rds.amazonaws.com"
 POSTGRES_PORT="5432"
 POSTGRES_DB_NAME="persistence_management"
-READ_MODEL_DB_HOST="TBD"
+READ_MODEL_DB_HOST="interop-read-model-qa.cluster-cwgb5whmdqov.eu-south-1.docdb.amazonaws.com"
 READ_MODEL_DB_PORT="27017"
 READ_MODEL_DB_NAME="read-model"
 READ_MODEL_REPLICA_SET="rs0"
 READ_MODEL_READ_PREFERENCE="secondaryPreferred"
 REPLICAS=1
 BACKEND_SERVICE_PORT="8088"
-KAFKA_BROKERS="TBD"
+KAFKA_BROKERS="b-2.interopplatformevents.js15v7.c4.kafka.eu-south-1.amazonaws.com:9098,b-1.interopplatformevents.js15v7.c4.kafka.eu-south-1.amazonaws.com:9098,b-3.interopplatformevents.js15v7.c4.kafka.eu-south-1.amazonaws.com:9098"
 
 AGREEMENT_TOPIC="event-store.qa_agreement.events"
 ATTRIBUTE_TOPIC="event-store.qa_attribute_registry.events"
@@ -46,7 +46,7 @@ UI_JWT_AUDIENCE="qa.interop.pagopa.it/ui"
 M2M_JWT_AUDIENCE="qa.interop.pagopa.it/m2m"
 INTERNAL_JWT_AUDIENCE="qa.interop.pagopa.it/internal"
 
-RSA_KEYS_IDENTIFIERS="cdb52532-dd94-40ef-824d-9c55b10e6bc9"
+RSA_KEYS_IDENTIFIERS="17d3f3c0-5730-45a9-be8a-655e77bf3555"
 
 SELFCARE_V2_URL="https://api.selfcare.pagopa.it/external/v2"
 
