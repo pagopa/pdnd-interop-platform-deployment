@@ -9,12 +9,12 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
-            - name: SELFCARE_BROKER_URLS
+            - name: KAFKA_BROKERS
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: SELFCARE_BROKER_URLS
-            - name: BROKER_CONNECTION_STRING
+                  key: KAFKA_BROKERS
+            - name: KAFKA_BROKER_CONNECTION_STRING
               valueFrom:
                 secretKeyRef:
                   name: selfcare-v2
@@ -29,11 +29,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: KAFKA_GROUP_ID
-            - name: TOPIC_NAME
+            - name: SELFCARE_TOPIC
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: TOPIC_NAME
+                  key: SELFCARE_TOPIC
             - name: RESET_CONSUMER_OFFSETS
               valueFrom:
                 configMapKeyRef:
