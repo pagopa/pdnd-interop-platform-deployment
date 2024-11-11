@@ -27,6 +27,11 @@ CATALOG_TOPIC="event-store.att_catalog.events"
 PURPOSE_TOPIC="event-store.att_purpose.events"
 TENANT_TOPIC="event-store.att_tenant.events"
 
+AGREEMENT_OUTBOUND_TOPIC="outbound.att_agreement.events"
+CATALOG_OUTBOUND_TOPIC="outbound.att_catalog.events"
+PURPOSE_OUTBOUND_TOPIC="outbound.att_purpose.events"
+TENANT_OUTBOUND_TOPIC="outbound.att_tenant.events"
+
 AWS_REGION="eu-south-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
 CERTIFIED_MAIL_QUEUE_NAME="certified-mail.fifo"
