@@ -28,11 +28,11 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: common-token-generation-read-model
-                  key: TOKEN_GENERATION_READMODEL_TABLE_NAME_PLATFORM
+                  key: TOKEN_READMODEL_PLATFORM_STATES_TABLE_NAME
             - name: TOKEN_GENERATION_READMODEL_TABLE_NAME_TOKEN_GENERATION
               valueFrom:
                 configMapKeyRef:
                   name: common-token-generation-read-model
-                  key: TOKEN_GENERATION_READMODEL_TABLE_NAME_TOKEN_GENERATION
+                  key: TOKEN_READMODEL_TOKEN_STATES_TABLE_NAME
             - name: TOPIC_STARTING_OFFSET
               value: "earliest"
