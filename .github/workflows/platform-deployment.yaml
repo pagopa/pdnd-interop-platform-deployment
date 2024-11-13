@@ -571,6 +571,7 @@ jobs:
   deploy_token_details_persister_node:
     name: Token Details Persister Node
     needs: [deploy_configs]
+    if: ${{ inputs.environment == 'es1-dev' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
