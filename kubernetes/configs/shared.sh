@@ -42,6 +42,9 @@ FRONTEND_SERVICE_NAME="interop-frontend"
 
 SELFCARE_ONBOARDING_CONSUMER_SERVICE_NAME="interop-be-selfcare-onboarding-consumer"
 
+# The postfix is to avoid overlap with existing job
+TOKEN_DETAILS_PERSISTER_SERVICE_NAME="interop-be-token-details-persister-node"
+
 JOB_ATTRIBUTES_LOADER_SERVICE_NAME="interop-be-attributes-loader"
 JOB_DETAILS_PERSISTER_SERVICE_NAME="interop-be-token-details-persister"
 JOB_TENANTS_CERTIFIED_ATTRIBUTES_UPDATER_SERVICE_NAME="interop-be-tenants-cert-attr-updater"
