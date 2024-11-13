@@ -62,7 +62,7 @@ spec:
             - name: AUTHORIZATION_MANAGEMENT_URL
               valueFrom:
                 configMapKeyRef:
-                  name: {{SERVICE_NAME}}
+                  name: common-services-urls
                   key: AUTHORIZATION_MANAGEMENT_URL
             - name: GENERATED_JWT_QUEUE_NAME
               valueFrom:

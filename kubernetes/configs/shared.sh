@@ -24,6 +24,7 @@ CATALOG_READMODEL_WRITER_SERVICE_NAME="interop-be-catalog-readmodel-writer"
 CATALOG_PLATFORMSTATE_WRITER_SERVICE_NAME="interop-be-catalog-platformstate-writer"
 CLIENT_READMODEL_WRITER_SERVICE_NAME="interop-be-client-readmodel-writer"
 COMPUTE_AGREEMENTS_CONSUMER_SERVICE_NAME="interop-be-compute-agreements-consumer"
+DELEGATION_PROCESS_SERVICE_NAME="interop-be-delegation-process"
 KEY_READMODEL_WRITER_SERVICE_NAME="interop-be-key-readmodel-writer"
 PARTY_REGISTRY_PROXY_SERVICE_NAME="interop-be-party-registry-proxy"
 PRODUCER_KEY_READMODEL_WRITER_SERVICE_NAME="interop-be-producer-key-readmodel-writer"
@@ -44,6 +45,9 @@ ESERVICE_DESCRIPTORS_ARCHIVER_SERVICE_NAME="interop-be-eservice-descriptors-arch
 FRONTEND_SERVICE_NAME="interop-frontend"
 
 SELFCARE_ONBOARDING_CONSUMER_SERVICE_NAME="interop-be-selfcare-onboarding-consumer"
+
+# The postfix is to avoid overlap with existing job
+TOKEN_DETAILS_PERSISTER_SERVICE_NAME="interop-be-token-details-persister-node"
 
 JOB_ATTRIBUTES_LOADER_SERVICE_NAME="interop-be-attributes-loader"
 JOB_DETAILS_PERSISTER_SERVICE_NAME="interop-be-token-details-persister"
