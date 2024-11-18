@@ -6,6 +6,8 @@ PUBLIC_BUCKET_URL="https://interop-${ENVIRONMENT}-public${REGION_SUFFIX}.s3.${AW
 MIXPANEL_PROJECT_ID="fill_me"
 ONETRUST_DOMAIN_SCRIPT_ID="fill_me"
 SELFCARE_BASE_URL="https://selfcare.pagopa.it"
+API_SIGNAL_HUB_PUSH_INTEFACE_URL="https://github.com/pagopa/interop-signalhub-core/blob/main/docs/openAPI/push-signals_1.0.0.yaml"
+API_SIGNAL_HUB_PULL_INTEFACE_URL="https://github.com/pagopa/interop-signalhub-core/blob/main/docs/openAPI/pull-signals_1.0.0.yaml"
 
 FRONTEND_RESOURCE_CPU="250m"
 FRONTEND_RESOURCE_MEM="1Gi"
