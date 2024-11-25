@@ -4,7 +4,7 @@ metadata:
   name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 data:
-  KAFKA_CLIENT_ID: "{{NAMESPACE}}-pagopa-datalake-interfaces-exporter"
-  KAFKA_GROUP_ID: "{{NAMESPACE}}-datalake-interfaces-exporter"
+  KAFKA_CLIENT_ID: "{{NAMESPACE}}-pagopa-datalake-interface-exporter"
+  KAFKA_GROUP_ID: "{{NAMESPACE}}-datalake-interface-exporter"
   ESERVICE_DOCUMENTS_S3_BUCKET: "{{CATALOG_PROCESS_STORAGE_CONTAINER}}"
   DATALAKE_INTERFACES_EXPORT_S3_BUCKET: "{{DATALAKE_INTERFACES_EXPORT_S3_BUCKET}}"
