@@ -34,3 +34,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: DATALAKE_INTERFACES_EXPORT_S3_BUCKET
+            - name: DATALAKE_INTERFACES_EXPORT_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: DATALAKE_INTERFACES_EXPORT_PATH
