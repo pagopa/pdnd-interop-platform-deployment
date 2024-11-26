@@ -19,6 +19,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: KAFKA_GROUP_ID
+            - name: TOPIC_STARTING_OFFSET
+              value: "earliest"
             - name: CATALOG_TOPIC
               valueFrom:
                 configMapKeyRef:
