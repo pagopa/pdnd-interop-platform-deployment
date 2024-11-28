@@ -141,6 +141,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: RISK_ANALYSIS_DOCUMENTS_PATH
+            - name: DELEGATION_CONTRACTS_CONTAINER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: DELEGATION_CONTRACTS_CONTAINER
             - name: TENANT_ALLOWED_ORIGINS
               valueFrom:
                 configMapKeyRef:
