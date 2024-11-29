@@ -14,6 +14,7 @@ ESERVICE_DOCS_CONTAINER="interop-application-documents-refactor-dev-es1"
 ESERVICE_DOCUMENTS_PATH="eservices/docs"
 ALLOW_LIST_CONTAINER="interop-allow-list-dev-es1"
 RISK_ANALYSIS_DOCS_CONTAINER="interop-application-documents-refactor-dev-es1"
+DELEGATION_CONTRACTS_CONTAINER="interop-application-documents-refactor-dev-es1"
 
 BFF_RATE_LIMITER_MAX_REQUESTS="9999999"
 BFF_RATE_LIMITER_BURST_PERCENTAGE="1.0"
