@@ -36,6 +36,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-prod/catalog_process.sh
 . $(pwd)/kubernetes/configs/es1-prod/compute_agreements_consumer.sh
 . $(pwd)/kubernetes/configs/es1-prod/client_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-prod/datalake_interface_exporter.sh
 . $(pwd)/kubernetes/configs/es1-prod/key_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-prod/frontend.sh
 . $(pwd)/kubernetes/configs/es1-prod/party_registry_proxy.sh
