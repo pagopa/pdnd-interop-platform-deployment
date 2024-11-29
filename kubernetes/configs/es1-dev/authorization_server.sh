@@ -14,3 +14,10 @@ AUTH_SERVER_RATE_LIMITER_RATE_INTERVAL="1.second"
 AUTH_SERVER_RATE_LIMITER_TIMEOUT="300.milliseconds"
 
 JWT_FALLBACK_BUCKET="interop-generated-jwt-details-fallback-dev-es1"
+
+
+################################################
+# Configurations for Node version
+################################################
+AUTHORIZATION_SERVER_NODE_RESOURCE_CPU="500m"
+AUTHORIZATION_SERVER_NODE_RESOURCE_MEM="2Gi"
