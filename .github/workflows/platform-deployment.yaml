@@ -572,7 +572,7 @@ jobs:
     name: DataLake Interface Exporter
     needs: [deploy_configs]
     if: |
-        inputs.environment == 'es1-dev' || inputs.environment == 'es1-test'
+        inputs.environment == 'es1-dev' || inputs.environment == 'es1-test' || inputs.environment == 'es1-prod'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
