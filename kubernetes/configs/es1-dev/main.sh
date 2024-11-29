@@ -25,8 +25,10 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-dev/agreement_email_sender.sh
 . $(pwd)/kubernetes/configs/es1-dev/agreement_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/agreement_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-dev/agreement_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/agreement_process.sh
 . $(pwd)/kubernetes/configs/es1-dev/api_gateway.sh
+. $(pwd)/kubernetes/configs/es1-dev/authorization_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/authorization_management.sh
 . $(pwd)/kubernetes/configs/es1-dev/authorization_process.sh
 . $(pwd)/kubernetes/configs/es1-dev/authorization_server.sh
@@ -37,6 +39,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-dev/backend_for_frontend.sh
 . $(pwd)/kubernetes/configs/es1-dev/catalog_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/catalog_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-dev/catalog_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/catalog_process.sh
 . $(pwd)/kubernetes/configs/es1-dev/compute_agreements_consumer.sh
 . $(pwd)/kubernetes/configs/es1-dev/client_readmodel_writer.sh
@@ -47,6 +50,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-dev/purpose_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/purpose_process.sh
 . $(pwd)/kubernetes/configs/es1-dev/purpose_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-dev/purpose_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/tenant_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/tenant_process.sh
 . $(pwd)/kubernetes/configs/es1-dev/tenant_readmodel_writer.sh
