@@ -24,13 +24,10 @@ CATALOG_READMODEL_WRITER_SERVICE_NAME="interop-be-catalog-readmodel-writer"
 CATALOG_PLATFORMSTATE_WRITER_SERVICE_NAME="interop-be-catalog-platformstate-writer"
 CLIENT_READMODEL_WRITER_SERVICE_NAME="interop-be-client-readmodel-writer"
 COMPUTE_AGREEMENTS_CONSUMER_SERVICE_NAME="interop-be-compute-agreements-consumer"
-<<<<<<< HEAD
 DELEGATION_PROCESS_SERVICE_NAME="interop-be-delegation-process"
 DELEGATION_READMODEL_WRITER_SERVICE_NAME="interop-be-delegation-readmodel-writer"
-=======
 DATALAKE_INTERFACE_EXPORTER_SERVICE_NAME="interop-be-datalake-interface-exporter"
 DELEGATION_PROCESS_SERVICE_NAME="interop-be-delegation-process"
->>>>>>> 1.0.x
 KEY_READMODEL_WRITER_SERVICE_NAME="interop-be-key-readmodel-writer"
 PARTY_REGISTRY_PROXY_SERVICE_NAME="interop-be-party-registry-proxy"
 PRODUCER_KEY_READMODEL_WRITER_SERVICE_NAME="interop-be-producer-key-readmodel-writer"
