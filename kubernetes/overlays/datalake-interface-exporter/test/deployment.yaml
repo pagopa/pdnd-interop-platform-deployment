@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          env:
+            - name: KAFKA_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: KAFKA_CLIENT_ID
+            - name: KAFKA_GROUP_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: KAFKA_GROUP_ID
+            - name: TOPIC_STARTING_OFFSET
+              value: "earliest"
+            - name: CATALOG_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: CATALOG_TOPIC
+            - name: ESERVICE_DOCUMENTS_S3_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ESERVICE_DOCUMENTS_S3_BUCKET
+            - name: DATALAKE_INTERFACES_EXPORT_S3_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: DATALAKE_INTERFACES_EXPORT_S3_BUCKET
+            - name: DATALAKE_INTERFACES_EXPORT_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: DATALAKE_INTERFACES_EXPORT_PATH

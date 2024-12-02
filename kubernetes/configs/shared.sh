@@ -9,9 +9,11 @@ shortVersion() {
 AGREEMENT_EMAIL_SENDER_SERVICE_NAME="interop-be-agreement-email-sender"
 AGREEMENT_OUTBOUND_WRITER_SERVICE_NAME="interop-be-agreement-outbound-writer"
 AGREEMENT_READMODEL_WRITER_SERVICE_NAME="interop-be-agreement-readmodel-writer"
+AGREEMENT_PLATFORMSTATE_WRITER_SERVICE_NAME="interop-be-agreement-platformstate-writer"
 AGREEMENT_PROCESS_SERVICE_NAME="interop-be-agreement-process"
 ATTRIBUTE_REGISTRY_PROCESS_SERVICE_NAME="interop-be-attribute-registry-process"
 ATTRIBUTE_REGISTRY_READMODEL_WRITER_SERVICE_NAME="interop-be-attribute-registry-readmodel-writer"
+AUTHORIZATION_PLATFORMSTATE_WRITER_SERVICE_NAME="interop-be-authorization-platformstate-writer"
 AUTHORIZATION_MANAGEMENT_SERVICE_NAME="interop-be-authorization-management"
 AUTHORIZATION_PROCESS_SERVICE_NAME="interop-be-authorization-process"
 AUTHORIZATION_SERVER_SERVICE_NAME="interop-be-authorization-server"
@@ -19,10 +21,16 @@ AUTHORIZATION_UPDATER_SERVICE_NAME="interop-be-authorization-updater"
 CATALOG_OUTBOUND_WRITER_SERVICE_NAME="interop-be-catalog-outbound-writer"
 CATALOG_PROCESS_SERVICE_NAME="interop-be-catalog-process"
 CATALOG_READMODEL_WRITER_SERVICE_NAME="interop-be-catalog-readmodel-writer"
+CATALOG_PLATFORMSTATE_WRITER_SERVICE_NAME="interop-be-catalog-platformstate-writer"
 CLIENT_READMODEL_WRITER_SERVICE_NAME="interop-be-client-readmodel-writer"
 COMPUTE_AGREEMENTS_CONSUMER_SERVICE_NAME="interop-be-compute-agreements-consumer"
+<<<<<<< HEAD
 DELEGATION_PROCESS_SERVICE_NAME="interop-be-delegation-process"
 DELEGATION_READMODEL_WRITER_SERVICE_NAME="interop-be-delegation-readmodel-writer"
+=======
+DATALAKE_INTERFACE_EXPORTER_SERVICE_NAME="interop-be-datalake-interface-exporter"
+DELEGATION_PROCESS_SERVICE_NAME="interop-be-delegation-process"
+>>>>>>> 1.0.x
 KEY_READMODEL_WRITER_SERVICE_NAME="interop-be-key-readmodel-writer"
 PARTY_REGISTRY_PROXY_SERVICE_NAME="interop-be-party-registry-proxy"
 PRODUCER_KEY_READMODEL_WRITER_SERVICE_NAME="interop-be-producer-key-readmodel-writer"
@@ -30,6 +38,7 @@ PRODUCER_KEYCHAIN_READMODEL_WRITER_SERVICE_NAME="interop-be-producer-keychain-re
 PURPOSE_OUTBOUND_WRITER_SERVICE_NAME="interop-be-purpose-outbound-writer"
 PURPOSE_PROCESS_SERVICE_NAME="interop-be-purpose-process"
 PURPOSE_READMODEL_WRITER_SERVICE_NAME="interop-be-purpose-readmodel-writer"
+PURPOSE_PLATFORMSTATE_WRITER_SERVICE_NAME="interop-be-purpose-platformstate-writer"
 API_GATEWAY_SERVICE_NAME="interop-be-api-gateway"
 BACKEND_FOR_FRONTEND_SERVICE_NAME="interop-be-backend-for-frontend"
 NOTIFIER_SERVICE_NAME="interop-be-notifier"
@@ -42,6 +51,9 @@ ESERVICE_DESCRIPTORS_ARCHIVER_SERVICE_NAME="interop-be-eservice-descriptors-arch
 FRONTEND_SERVICE_NAME="interop-frontend"
 
 SELFCARE_ONBOARDING_CONSUMER_SERVICE_NAME="interop-be-selfcare-onboarding-consumer"
+
+# The postfix is to avoid overlap with existing job
+TOKEN_DETAILS_PERSISTER_SERVICE_NAME="interop-be-token-details-persister-node"
 
 JOB_ATTRIBUTES_LOADER_SERVICE_NAME="interop-be-attributes-loader"
 JOB_DETAILS_PERSISTER_SERVICE_NAME="interop-be-token-details-persister"
