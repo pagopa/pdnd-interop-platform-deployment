@@ -87,4 +87,6 @@ SMTP_ADDRESS="smtp-mock.dev.svc.cluster.local"
 SMTP_PORT=5025
 
 AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.dev.svc.cluster.local:8088/authorization-management/0.0"
+DELEGATION_PROCESS_URL="http://interop-be-delegation-process.dev.svc.cluster.local:8088"
+
 CLIENT_ASSERTION_JWT_AUDIENCE="auth.dev.interop.pagopa.it/client-assertion"
