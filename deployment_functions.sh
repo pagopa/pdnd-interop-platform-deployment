@@ -148,7 +148,7 @@ function applyKubeFile() {
   echo "Compiling file $fileName"
 
   SERVICE_NAME="$serviceName" \
-    SERVICE_ECR_NAME="$(echo "$serviceName" | sed 's/-refactor//')" \
+    SERVICE_ECR_NAME="$(echo "$serviceName" | sed 's/-refactor//' | sed 's/-node//')" \
     IMAGE_DIGEST="$imageDigest" \
     SERVICE_RESOURCE_CPU="$resourceCpu" \
     SERVICE_RESOURCE_MEM="$resourceMem" \
@@ -181,7 +181,7 @@ function compileDir() {
       echo "Templating $f"
       mkdir -p "${serviceName}/${dirPath}"
       SERVICE_NAME="$serviceName" \
-        SERVICE_ECR_NAME="$(echo "$serviceName" | sed 's/-refactor//')" \
+        SERVICE_ECR_NAME="$(echo "$serviceName" | sed 's/-refactor//' | sed 's/-node//')" \
         IMAGE_VERSION="$imageVersion" \
         IMAGE_DIGEST="$imageDigest" \
         SERVICE_RESOURCE_CPU="$resourceCpu" \
