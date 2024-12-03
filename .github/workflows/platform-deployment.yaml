@@ -460,6 +460,36 @@ jobs:
       resource_cpu_var_name: TENANT_OUTBOUND_WRITER_RESOURCE_CPU
       resource_mem_var_name: TENANT_OUTBOUND_WRITER_RESOURCE_MEM
 
+  deploy_delegation_process:
+    name: Delegation Process
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/delegation-process/${{ inputs.environment }}"
+      service_name_var_name: DELEGATION_PROCESS_SERVICE_NAME
+      image_version_var_name: DELEGATION_PROCESS_IMAGE_VERSION
+      resource_cpu_var_name: DELEGATION_PROCESS_RESOURCE_CPU
+      resource_mem_var_name: DELEGATION_PROCESS_RESOURCE_MEM
+
+  deploy_delegation_readmodel_writer:
+    name: Delegation ReadModel Writer
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/delegation-readmodel-writer/${{ inputs.environment }}"
+      service_name_var_name: DELEGATION_READMODEL_WRITER_SERVICE_NAME
+      image_version_var_name: DELEGATION_READMODEL_WRITER_IMAGE_VERSION
+      resource_cpu_var_name: DELEGATION_READMODEL_WRITER_RESOURCE_CPU
+      resource_mem_var_name: DELEGATION_READMODEL_WRITER_RESOURCE_MEM
+
   deploy_backend_for_frontend:
     name: Backend For Frontend
     needs: [deploy_configs]
