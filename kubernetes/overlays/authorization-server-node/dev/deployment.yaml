@@ -8,6 +8,7 @@ spec:
     spec:
       containers:
         - name: {{SERVICE_NAME}}
+          image: "{{REPOSITORY}}/interop-be-authorization-server:{{IMAGE_VERSION}}"
           livenessProbe:
             httpGet:
               path: /status
