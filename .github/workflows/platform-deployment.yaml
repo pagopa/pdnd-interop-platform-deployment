@@ -535,6 +535,22 @@ jobs:
       resource_cpu_var_name: AUTHORIZATION_SERVER_RESOURCE_CPU
       resource_mem_var_name: AUTHORIZATION_SERVER_RESOURCE_MEM
 
+  deploy_authorization_server_node:
+    name: Authorization Server Node
+    needs: [deploy_configs]
+    if: ${{ inputs.environment == 'es1-dev' }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/authorization-server-node/${{ inputs.environment }}"
+      service_name_var_name: AUTHORIZATION_SERVER_NODE_SERVICE_NAME
+      image_version_var_name: AUTHORIZATION_SERVER_NODE_IMAGE_VERSION
+      resource_cpu_var_name: AUTHORIZATION_SERVER_NODE_RESOURCE_CPU
+      resource_mem_var_name: AUTHORIZATION_SERVER_NODE_RESOURCE_MEM
+
   deploy_catalog_platformstate_writer:
     name: Catalog Platform State Writer
     needs: [deploy_configs]
@@ -944,6 +960,7 @@ jobs:
       deploy_selfcare_onboarding_consumer, deploy_datalake_interface_exporter,
       deploy_eservices_monitoring_exporter, deploy_eservice_descriptors_archiver,
       deploy_one_trust_notices, deploy_datalake_data_export,
+      deploy_authorization_server_node,
       deploy_redis,
       deploy_smtp_mock, deploy_ses_mock]
     if: ${{ always() && needs.create_runner.result != 'skipped' }}

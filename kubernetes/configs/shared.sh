@@ -17,6 +17,7 @@ AUTHORIZATION_PLATFORMSTATE_WRITER_SERVICE_NAME="interop-be-authorization-platfo
 AUTHORIZATION_MANAGEMENT_SERVICE_NAME="interop-be-authorization-management"
 AUTHORIZATION_PROCESS_SERVICE_NAME="interop-be-authorization-process"
 AUTHORIZATION_SERVER_SERVICE_NAME="interop-be-authorization-server"
+AUTHORIZATION_SERVER_NODE_SERVICE_NAME="interop-be-authorization-server-node"
 AUTHORIZATION_UPDATER_SERVICE_NAME="interop-be-authorization-updater"
 CATALOG_OUTBOUND_WRITER_SERVICE_NAME="interop-be-catalog-outbound-writer"
 CATALOG_PROCESS_SERVICE_NAME="interop-be-catalog-process"
