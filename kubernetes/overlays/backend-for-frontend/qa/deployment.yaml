@@ -71,6 +71,11 @@ spec:
                   configMapKeyRef:
                     name: {{SERVICE_NAME}}
                     key: INTERNAL_JWT_SECONDS_DURATION
+            - name: CLIENT_ASSERTION_JWT_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: CLIENT_ASSERTION_JWT_AUDIENCE
             - name: AGREEMENT_PROCESS_URL
               valueFrom:
                   configMapKeyRef:
@@ -91,6 +96,11 @@ spec:
                   configMapKeyRef:
                     name: {{SERVICE_NAME}}
                     key: CATALOG_PROCESS_URL
+            - name: DELEGATION_PROCESS_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: {{SERVICE_NAME}}
+                    key: DELEGATION_PROCESS_URL
             - name: TENANT_PROCESS_URL
               valueFrom:
                   configMapKeyRef:
@@ -131,6 +141,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: RISK_ANALYSIS_DOCUMENTS_PATH
+            - name: DELEGATION_CONTRACTS_CONTAINER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: DELEGATION_CONTRACTS_CONTAINER
             - name: TENANT_ALLOWED_ORIGINS
               valueFrom:
                 configMapKeyRef:
@@ -181,11 +196,16 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PRIVACY_NOTICES_PATH    
-            - name: PRIVACY_NOTICES_FILE_NAME
+            - name: PRIVACY_NOTICES_PP_FILE_NAME
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: PRIVACY_NOTICES_FILE_NAME
+                  key: PRIVACY_NOTICES_PP_FILE_NAME
+            - name: PRIVACY_NOTICES_TOS_FILE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: PRIVACY_NOTICES_TOS_FILE_NAME
             - name: PRIVACY_NOTICES_DYNAMO_TABLE_NAME
               valueFrom:
                 configMapKeyRef:
