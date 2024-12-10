@@ -25,7 +25,7 @@ AUTHORIZATION_TOPIC="event-store.qa_authorization.events"
 CATALOG_TOPIC="event-store.qa_catalog.events"
 PURPOSE_TOPIC="event-store.qa_purpose.events"
 TENANT_TOPIC="event-store.qa_tenant.events"
-DELEGATION_TOPIC="event-store.dev_delegation.events"
+DELEGATION_TOPIC="event-store.qa_delegation.events"
 
 AGREEMENT_OUTBOUND_TOPIC="outbound.qa_agreement.events"
 CATALOG_OUTBOUND_TOPIC="outbound.qa_catalog.events"
