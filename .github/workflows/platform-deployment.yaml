@@ -700,7 +700,7 @@ jobs:
     if: ${{ inputs.environment == 'es1-dev' }}
     permissions:
       contents: read
-    uses: ./.github/workflows/deploy-cronjob.yaml
+    uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
     with:
       environment: ${{ inputs.environment }}
