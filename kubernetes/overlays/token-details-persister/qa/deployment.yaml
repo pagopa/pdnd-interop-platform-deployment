@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          env:
+            - name: KAFKA_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: KAFKA_CLIENT_ID
+            - name: KAFKA_GROUP_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: KAFKA_GROUP_ID
+            - name: TOKEN_AUDITING_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: TOKEN_AUDITING_TOPIC
+            - name: S3_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: S3_BUCKET
+            - name: AVERAGE_KAFKA_MESSAGE_SIZE_IN_BYTES
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: AVERAGE_KAFKA_MESSAGE_SIZE_IN_BYTES
+            - name: MESSAGES_TO_READ_PER_BATCH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: MESSAGES_TO_READ_PER_BATCH
+            - name: MAX_WAIT_KAFKA_BATCH_MILLIS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: MAX_WAIT_KAFKA_BATCH_MILLIS
+            - name: TOPIC_STARTING_OFFSET
+              value: "earliest"
