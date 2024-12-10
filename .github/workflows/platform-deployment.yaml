@@ -949,6 +949,7 @@ jobs:
       deploy_compute_agreements_consumer, deploy_party_registry_proxy,
       deploy_purpose_process, deploy_purpose_readmodel_writer, deploy_purpose_outbound_writer,
       deploy_tenant_process, deploy_tenant_readmodel_writer, deploy_tenant_outbound_writer,
+      deploy_delegation_process, deploy_delegation_readmodel_writer,
       deploy_notifier, deploy_notifier_seeder,
       deploy_catalog_platformstate_writer, deploy_agreement_platformstate_writer, deploy_authorization_platformstate_writer, deploy_purpose_platformstate_writer,
       deploy_attributes_loader, deploy_token_details_persister, deploy_token_details_persister_node,
