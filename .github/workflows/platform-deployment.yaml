@@ -278,6 +278,21 @@ jobs:
       resource_cpu_var_name: CATALOG_PROCESS_RESOURCE_CPU
       resource_mem_var_name: CATALOG_PROCESS_RESOURCE_MEM
 
+  deploy_client_purpose_updater:
+    name: Client Purpose Updater
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/client-purpose-updater/${{ inputs.environment }}"
+      service_name_var_name: CLIENT_PURPOSE_UPDATER_SERVICE_NAME
+      image_version_var_name: CLIENT_PURPOSE_UPDATER_IMAGE_VERSION
+      resource_cpu_var_name: CLIENT_PURPOSE_UPDATER_RESOURCE_CPU
+      resource_mem_var_name: CLIENT_PURPOSE_UPDATER_RESOURCE_MEM
+
   deploy_client_readmodel_writer:
     name: Client ReadModel Writer
     needs: [deploy_configs]
@@ -944,7 +959,7 @@ jobs:
       deploy_agreement_email_sender,
       deploy_agreement_process, deploy_agreement_readmodel_writer, deploy_agreement_outbound_writer,
       deploy_attribute_registry_process, deploy_attribute_registry_readmodel_writer,
-      deploy_authorization_management, deploy_authorization_process, deploy_authorization_updater, deploy_client_readmodel_writer, deploy_key_readmodel_writer, deploy_producer_key_readmodel_writer, deploy_producer_keychain_readmodel_writer,
+      deploy_authorization_management, deploy_authorization_process, deploy_authorization_updater, deploy_client_readmodel_writer, deploy_key_readmodel_writer, deploy_producer_key_readmodel_writer, deploy_producer_keychain_readmodel_writer, deploy_client_purpose_updater,
       deploy_catalog_process, deploy_catalog_readmodel_writer, deploy_catalog_outbound_writer,
       deploy_compute_agreements_consumer, deploy_party_registry_proxy,
       deploy_purpose_process, deploy_purpose_readmodel_writer, deploy_purpose_outbound_writer,
