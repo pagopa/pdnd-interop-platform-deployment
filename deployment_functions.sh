@@ -204,7 +204,7 @@ function applyKustomizeToDir() {
   local resourceMem=$5
 
   echo "Retrieving image digest for ${serviceName} version ${imageVersion}"
-  serviceEcrName="$(echo "$serviceName" | sed 's/-refactor//')"
+  serviceEcrName="$(echo "$serviceName" | sed 's/-refactor//' | sed 's/-node//')"
   serviceImageDigest="$(getDockerImageDigest "$serviceEcrName" "$imageVersion")"
   echo "Image digest: $serviceImageDigest"
 

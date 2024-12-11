@@ -35,7 +35,7 @@ CATALOG_OUTBOUND_TOPIC="outbound.dev_catalog.events"
 PURPOSE_OUTBOUND_TOPIC="outbound.dev_purpose.events"
 TENANT_OUTBOUND_TOPIC="outbound.dev_tenant.events"
 
-TOKEN_AUDITING_TOPIC="authorization-server.generated-jwt"
+TOKEN_AUDITING_TOPIC="dev_authorization-server.generated-jwt"
 
 AWS_REGION="eu-south-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"

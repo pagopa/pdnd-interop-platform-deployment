@@ -700,11 +700,11 @@ jobs:
     if: ${{ inputs.environment == 'es1-dev' }}
     permissions:
       contents: read
-    uses: ./.github/workflows/deploy-cronjob.yaml
+    uses: ./.github/workflows/deploy-service.yaml
     secrets: inherit
     with:
       environment: ${{ inputs.environment }}
-      k8s_files_path: "overlays/token-details-persister/${{ inputs.environment }}"
+      kustomize_overlay_path: "overlays/token-details-persister/${{ inputs.environment }}"
       service_name_var_name: TOKEN_DETAILS_PERSISTER_SERVICE_NAME
       image_version_var_name: TOKEN_DETAILS_PERSISTER_IMAGE_VERSION
       resource_cpu_var_name: TOKEN_DETAILS_PERSISTER_RESOURCE_CPU
