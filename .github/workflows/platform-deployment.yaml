@@ -479,6 +479,7 @@ jobs:
   deploy_delegation_process:
     name: Delegation Process
     needs: [deploy_configs]
+    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-qa' || inputs.environment == 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -494,6 +495,7 @@ jobs:
   deploy_delegation_readmodel_writer:
     name: Delegation ReadModel Writer
     needs: [deploy_configs]
+    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-qa' || inputs.environment == 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml

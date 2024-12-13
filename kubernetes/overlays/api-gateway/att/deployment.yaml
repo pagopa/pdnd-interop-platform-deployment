@@ -106,3 +106,8 @@ spec:
                 configMapKeyRef:
                   name: common-read-model
                   key: READMODEL_DB_PORT
+            - name: DELEGATION_PROCESS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: common-services-urls
+                  key: DELEGATION_PROCESS_URL
