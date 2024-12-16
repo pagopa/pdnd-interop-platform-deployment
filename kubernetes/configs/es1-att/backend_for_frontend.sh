@@ -15,6 +15,7 @@ ESERVICE_DOCS_CONTAINER="interop-application-documents-att-es1"
 ESERVICE_DOCUMENTS_PATH="eservices/docs"
 ALLOW_LIST_CONTAINER="interop-allow-list-att-es1"
 RISK_ANALYSIS_DOCS_CONTAINER="interop-application-documents-att-es1"
+DELEGATION_CONTRACTS_CONTAINER="interop-application-documents-att-es1"
 
 BFF_RATE_LIMITER_MAX_REQUESTS="10"
 BFF_RATE_LIMITER_BURST_PERCENTAGE="1.0"
