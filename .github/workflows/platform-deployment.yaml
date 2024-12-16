@@ -281,7 +281,7 @@ jobs:
   deploy_client_purpose_updater:
     name: Client Purpose Updater
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-test' || inputs.environment == 'es1-att' }}
+    if: ${{ inputs.environment != 'es1-qa' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
