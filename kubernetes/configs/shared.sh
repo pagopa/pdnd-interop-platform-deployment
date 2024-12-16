@@ -66,6 +66,7 @@ JOB_ANAC_CERTIFIED_ATTRIBUTES_IMPORTER_SERVICE_NAME="interop-be-anac-certified-a
 JOB_IVASS_CERTIFIED_ATTRIBUTES_IMPORTER_SERVICE_NAME="interop-be-ivass-certified-attributes-importer"
 JOB_PN_CONSUMERS_SERVICE_NAME="interop-be-pn-consumers"
 JOB_DATALAKE_DATA_EXPORT_SERVICE_NAME="interop-be-datalake-data-export"
+JOB_TOKEN_GENERATION_READMODEL_CHECKER_SERVICE_NAME="token-generation-readmodel-checker"
 
 REDIS_SERVICE_NAME="redis"
 
