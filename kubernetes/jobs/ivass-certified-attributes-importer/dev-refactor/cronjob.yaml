@@ -7,6 +7,7 @@ metadata:
   namespace: {{NAMESPACE}}
 spec:
   schedule: "15 5,11,17,23 * * *"
+  suspend: true
   failedJobsHistoryLimit: 1
   successfulJobsHistoryLimit: 0
   jobTemplate:
@@ -45,16 +46,14 @@ spec:
                 - name: READ_MODEL_DB_USER
                   valueFrom:
                     secretKeyRef:
-                      name: read-model
+                      name: documentdb
                       key: READONLY_USR
                 - name: READ_MODEL_DB_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: read-model
+                      name: documentdb
                       key: READONLY_PSW
 
-                - name: SOURCE_FILE_DOWNLOAD_DIR
-                  value: "/tmp"
                 - name: SOURCE_URL
                   valueFrom:
                       configMapKeyRef:
