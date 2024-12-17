@@ -715,7 +715,7 @@ jobs:
   deploy_token_details_persister_node:
     name: Token Details Persister Node
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-qa' }}
+    if: inputs.environment == 'es1-dev' || inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-qa'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
