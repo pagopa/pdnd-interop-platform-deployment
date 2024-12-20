@@ -479,7 +479,7 @@ jobs:
   deploy_delegation_outbound_writer:
     name: Delegation Outbound Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-test' || inputs.environment == 'es1-att' }}
+    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
