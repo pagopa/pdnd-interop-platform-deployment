@@ -34,6 +34,7 @@ AGREEMENT_OUTBOUND_TOPIC="outbound.dev_agreement.events"
 CATALOG_OUTBOUND_TOPIC="outbound.dev_catalog.events"
 PURPOSE_OUTBOUND_TOPIC="outbound.dev_purpose.events"
 TENANT_OUTBOUND_TOPIC="outbound.dev_tenant.events"
+DELEGATION_OUTBOUND_TOPIC="outbound.dev_delegation.events"
 
 TOKEN_AUDITING_TOPIC="dev_authorization-server.generated-jwt"
 
