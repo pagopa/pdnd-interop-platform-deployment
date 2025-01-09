@@ -303,6 +303,23 @@ EOT
 function createCanaryIngress() {
   local intermediateFileName="./kubernetes/intermediate.canaryIngressTemplate.yaml"
   local compiledFileName="./kubernetes/compiled.canaryIngress.yaml"
+
+  if [[ -z $CANARY_ORIGINAL_SERVICE_WEIGHT || -z $CANARY_NEW_SERVICE_WEIGHT ]]; then
+    echo "ERROR: both canary service weights must be set. (CANARY_ORIGINAL_SERVICE_WEIGHT: $CANARY_ORIGINAL_SERVICE_WEIGHT, CANARY_NEW_SERVICE_WEIGHT: $CANARY_NEW_SERVICE_WEIGHT)"
+    exit 1
+  fi
+
+  if [[ $CANARY_ORIGINAL_SERVICE_WEIGHT -lt 0 || $CANARY_NEW_SERVICE_WEIGHT -lt 0 ]]; then
+    echo "ERROR: both canary service weights must be greater than 0. (CANARY_ORIGINAL_SERVICE_WEIGHT: $CANARY_ORIGINAL_SERVICE_WEIGHT, CANARY_NEW_SERVICE_WEIGHT: $CANARY_NEW_SERVICE_WEIGHT)"
+    exit 1
+  fi
+
+  local canarySum=$((CANARY_ORIGINAL_SERVICE_WEIGHT + CANARY_NEW_SERVICE_WEIGHT))
+
+  if [[ ! $canarySum -eq 100  ]]; then
+    echo "ERROR: canary service weights sum must be 100. (CANARY_ORIGINAL_SERVICE_WEIGHT: $CANARY_ORIGINAL_SERVICE_WEIGHT, CANARY_NEW_SERVICE_WEIGHT: $CANARY_NEW_SERVICE_WEIGHT)"
+    exit 1
+  fi
   
   cp "./kubernetes/commons/ingress/canaryIngressTemplate.yaml" "$intermediateFileName"
 
@@ -325,5 +342,5 @@ function createCanaryIngress() {
 
   envsubst < $intermediateFileName > $compiledFileName
   
-  kubectl apply -f "$compiledFileName"
+  # kubectl apply -f "$compiledFileName"
 }
