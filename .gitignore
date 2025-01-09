@@ -1,4 +1,5 @@
 compiled.*
+intermediate.*
 .metals/
 .vscode/
 *secrets
