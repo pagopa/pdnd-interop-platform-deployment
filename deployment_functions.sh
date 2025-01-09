@@ -325,5 +325,5 @@ function createCanaryIngress() {
 
   envsubst < $intermediateFileName > $compiledFileName
   
-  kubectl apply -f "$compiledFileName"
+  # kubectl apply -f "$compiledFileName"
 }

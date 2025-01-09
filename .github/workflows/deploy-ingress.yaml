@@ -53,19 +53,6 @@ jobs:
             export INGRESS_RULES_HOST="*.refactor.dev.interop.pagopa.it"
             export INGRESS_RULES_ORDER=0
 
-            export CANARY_INGRESS_NAME="interop-be-authorization-server-canary"
-            export CANARY_INGRESS_SCHEME="internal"
-            export CANARY_INGRESS_TARGET_TYPE="ip"
-            export CANARY_ANNOTATION_ACTION_NAME="auth-server-canary"
-
-            export CANARY_ORIGINAL_SERVICE_NAME="interop-be-authorization-server"
-            export CANARY_ORIGINAL_SERVICE_PORT=$BACKEND_SERVICE_PORT
-            export CANARY_ORIGINAL_SERVICE_WEIGHT=90
-            export CANARY_NEW_SERVICE_NAME="interop-be-authorization-server-node"
-            export CANARY_NEW_SERVICE_PORT=$BACKEND_SERVICE_PORT
-            export CANARY_NEW_SERVICE_WEIGHT=10
-            
-            export CANARY_SERVICE_PATH=$AUTHORIZATION_SERVER_APPLICATION_PATH
             export CANARY_INGRESS_RULES_HOST="$INGRESS_RULES_HOST"
             export CANARY_INGRESS_RULES_ORDER="$INGRESS_RULES_ORDER"
 
