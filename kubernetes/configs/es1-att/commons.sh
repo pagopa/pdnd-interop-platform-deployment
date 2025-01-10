@@ -32,6 +32,7 @@ AGREEMENT_OUTBOUND_TOPIC="outbound.att_agreement.events"
 CATALOG_OUTBOUND_TOPIC="outbound.att_catalog.events"
 PURPOSE_OUTBOUND_TOPIC="outbound.att_purpose.events"
 TENANT_OUTBOUND_TOPIC="outbound.att_tenant.events"
+DELEGATION_OUTBOUND_TOPIC="outbound.att_delegation.events"
 
 AWS_REGION="eu-south-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"

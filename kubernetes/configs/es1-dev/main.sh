@@ -44,6 +44,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-dev/compute_agreements_consumer.sh
 . $(pwd)/kubernetes/configs/es1-dev/client_purpose_updater.sh
 . $(pwd)/kubernetes/configs/es1-dev/client_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-dev/delegation_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/delegation_process.sh
 . $(pwd)/kubernetes/configs/es1-dev/delegation_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/datalake_interface_exporter.sh
