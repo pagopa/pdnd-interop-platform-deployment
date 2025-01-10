@@ -19,12 +19,23 @@ REPLICAS=1
 BACKEND_SERVICE_PORT="8088"
 KAFKA_BROKERS="b-1.interopplatformevents.2doelu.c2.kafka.eu-south-1.amazonaws.com:9098,b-2.interopplatformevents.2doelu.c2.kafka.eu-south-1.amazonaws.com:9098,b-3.interopplatformevents.2doelu.c2.kafka.eu-south-1.amazonaws.com:9098"
 
+TOKEN_READMODEL_PLATFORM_STATES_TABLE_NAME="interop-platform-states-dev-refactor"
+TOKEN_READMODEL_TOKEN_STATES_TABLE_NAME="interop-token-generation-states-dev-refactor"
+
 AGREEMENT_TOPIC="event-store.dev-refactor_agreement.events"
 ATTRIBUTE_TOPIC="event-store.dev-refactor_attribute_registry.events"
 AUTHORIZATION_TOPIC="event-store.dev-refactor_authorization.events"
 CATALOG_TOPIC="event-store.dev-refactor_catalog.events"
 PURPOSE_TOPIC="event-store.dev-refactor_purpose.events"
 TENANT_TOPIC="event-store.dev-refactor_tenant.events"
+DELEGATION_TOPIC="event-store.dev-refactor_delegation.events"
+
+AGREEMENT_OUTBOUND_TOPIC="outbound.dev-refactor_agreement.events"
+CATALOG_OUTBOUND_TOPIC="outbound.dev-refactor_catalog.events"
+PURPOSE_OUTBOUND_TOPIC="outbound.dev-refactor_purpose.events"
+TENANT_OUTBOUND_TOPIC="outbound.dev-refactor_tenant.events"
+
+TOKEN_AUDITING_TOPIC="dev-refactor_authorization-server.generated-jwt"
 
 AWS_REGION="eu-south-1"
 PERSISTENCE_QUEUE_NAME="persistence-events-refactor.fifo"
@@ -77,4 +88,6 @@ SMTP_ADDRESS="smtp-mock.dev-refactor.svc.cluster.local"
 SMTP_PORT=5025
 
 AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.dev-refactor.svc.cluster.local:8088/authorization-management/0.0"
+DELEGATION_PROCESS_URL="http://interop-be-delegation-process.dev-refactor.svc.cluster.local:8088"
+
 CLIENT_ASSERTION_JWT_AUDIENCE="auth.refactor.dev.interop.pagopa.it/client-assertion"

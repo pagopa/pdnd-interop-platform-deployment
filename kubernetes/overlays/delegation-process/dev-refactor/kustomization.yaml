@@ -1,0 +1,7 @@
+bases:
+- ../../../base/be-refactor/process-microservice
+resources:
+- configmap.yaml
+patchesStrategicMerge:
+- deployment.yaml
+- ../../../commons/database/be-refactor/db.yaml
