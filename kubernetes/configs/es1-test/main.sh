@@ -25,8 +25,10 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-test/agreement_email_sender.sh
 . $(pwd)/kubernetes/configs/es1-test/agreement_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/agreement_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-test/agreement_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/agreement_process.sh
 . $(pwd)/kubernetes/configs/es1-test/api_gateway.sh
+. $(pwd)/kubernetes/configs/es1-test/authorization_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/authorization_management.sh
 . $(pwd)/kubernetes/configs/es1-test/authorization_process.sh
 . $(pwd)/kubernetes/configs/es1-test/authorization_server.sh
@@ -37,6 +39,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-test/backend_for_frontend.sh
 . $(pwd)/kubernetes/configs/es1-test/catalog_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/catalog_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-test/catalog_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/catalog_process.sh
 . $(pwd)/kubernetes/configs/es1-test/compute_agreements_consumer.sh
 . $(pwd)/kubernetes/configs/es1-test/client_purpose_updater.sh
@@ -47,10 +50,12 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-test/party_registry_proxy.sh
 . $(pwd)/kubernetes/configs/es1-test/purpose_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/purpose_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-test/purpose_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/purpose_process.sh
 . $(pwd)/kubernetes/configs/es1-test/tenant_process.sh
 . $(pwd)/kubernetes/configs/es1-test/tenant_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/tenants-certified-attributes-updater.sh
+. $(pwd)/kubernetes/configs/es1-test/token-generation-readmodel-checker.sh
 . $(pwd)/kubernetes/configs/es1-test/notifier.sh
 . $(pwd)/kubernetes/configs/es1-test/notifier_seeder.sh
 . $(pwd)/kubernetes/configs/es1-test/token_details_persister.sh
