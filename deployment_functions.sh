@@ -244,6 +244,13 @@ function applyKustomizeToDir() {
 function waitForServiceReady() {
   local serviceName=$1
 
+  specReplicas=$(kubectl get deployment "$serviceName" --namespace="$NAMESPACE" -o json | jq -r '.spec.replicas')
+
+  if [[ $specReplicas -eq 0 ]]; then
+    echo "spec replicas == 0, skipping readiness check"
+    exit 0
+  fi
+
   retry=0
   result=0
   maxRetries=10
