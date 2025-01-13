@@ -33,7 +33,7 @@ spec:
     - host: "$CANARY_INGRESS_RULES_HOST"
       http:
         paths:
-          - path: $CANARY_SERVICE_PATH
+          - path: "/$CANARY_SERVICE_PATH"
             pathType: Prefix
             backend:
               service:
