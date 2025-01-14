@@ -5,6 +5,8 @@
 . $(pwd)/kubernetes/configs/es1-dev-refactor/versions.sh
 . $(pwd)/kubernetes/configs/es1-dev-refactor/commons.sh
 
+. $(pwd)/kubernetes/configs/es1-dev-refactor/authorization_server_canary_ingress.sh
+
 # Calculated
 NAMESPACE=$NAMESPACE
 EXTERNAL_APPLICATION_HOST="$UI_SUBDOMAIN.$DOMAIN_NAME"

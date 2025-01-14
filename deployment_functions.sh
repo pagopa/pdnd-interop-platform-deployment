@@ -244,6 +244,13 @@ function applyKustomizeToDir() {
 function waitForServiceReady() {
   local serviceName=$1
 
+  specReplicas=$(kubectl get deployment "$serviceName" --namespace="$NAMESPACE" -o json | jq -r '.spec.replicas')
+
+  if [[ $specReplicas -eq 0 ]]; then
+    echo "spec replicas == 0, skipping readiness check"
+    exit 0
+  fi
+
   retry=0
   result=0
   maxRetries=10
@@ -298,4 +305,49 @@ EOT
   echo "Applying $compiledFileName"
   kubectl apply -f "$compiledFileName"
   echo "Applied $compiledFileName"
+}
+
+function createCanaryIngress() {
+  local intermediateFileName="./kubernetes/intermediate.canaryIngressTemplate.yaml"
+  local compiledFileName="./kubernetes/compiled.canaryIngress.yaml"
+
+  if [[ -z $CANARY_ORIGINAL_SERVICE_WEIGHT || -z $CANARY_NEW_SERVICE_WEIGHT ]]; then
+    echo "ERROR: both canary service weights must be set. (CANARY_ORIGINAL_SERVICE_WEIGHT: $CANARY_ORIGINAL_SERVICE_WEIGHT, CANARY_NEW_SERVICE_WEIGHT: $CANARY_NEW_SERVICE_WEIGHT)"
+    exit 1
+  fi
+
+  if [[ $CANARY_ORIGINAL_SERVICE_WEIGHT -lt 0 || $CANARY_NEW_SERVICE_WEIGHT -lt 0 ]]; then
+    echo "ERROR: both canary service weights must be greater than 0. (CANARY_ORIGINAL_SERVICE_WEIGHT: $CANARY_ORIGINAL_SERVICE_WEIGHT, CANARY_NEW_SERVICE_WEIGHT: $CANARY_NEW_SERVICE_WEIGHT)"
+    exit 1
+  fi
+
+  local canarySum=$((CANARY_ORIGINAL_SERVICE_WEIGHT + CANARY_NEW_SERVICE_WEIGHT))
+
+  if [[ ! $canarySum -eq 100  ]]; then
+    echo "ERROR: canary service weights sum must be 100. (CANARY_ORIGINAL_SERVICE_WEIGHT: $CANARY_ORIGINAL_SERVICE_WEIGHT, CANARY_NEW_SERVICE_WEIGHT: $CANARY_NEW_SERVICE_WEIGHT)"
+    exit 1
+  fi
+  
+  cp "./kubernetes/commons/ingress/canaryIngressTemplate.yaml" "$intermediateFileName"
+
+  if [[ -z "${CANARY_INGRESS_RULES_ORDER:-}" ]]; then
+    awk '!/alb.ingress.kubernetes.io\/group.order/' "$intermediateFileName" > temp.yaml && mv temp.yaml "$intermediateFileName"
+  fi
+  if [[ -z "${CANARY_INGRESS_GROUP_NAME:-}" ]]; then
+    awk '!/alb.ingress.kubernetes.io\/group.name/' "$intermediateFileName" > temp.yaml && mv temp.yaml "$intermediateFileName"
+  fi
+  if [[ -z "${CANARY_INGRESS_SCHEME:-}" ]]; then
+    awk '!/alb.ingress.kubernetes.io\/scheme/' "$intermediateFileName" > temp.yaml && mv temp.yaml "$intermediateFileName"
+  fi
+  if [[ -z "${CANARY_INGRESS_TARGET_TYPE:-}" ]]; then
+    awk '!/alb.ingress.kubernetes.io\/target-type/' "$intermediateFileName" > temp.yaml && mv temp.yaml "$intermediateFileName"
+  fi
+  if [[ -z "${CANARY_INGRESS_RULES_HOST:-}" ]]; then
+    awk '!/host:.*\$INGRESS_RULES_HOST/' "$intermediateFileName" > temp.yaml && mv temp.yaml "$intermediateFileName"
+    sed 's/http:/- http:/g' "$intermediateFileName" > temp.yaml && mv temp.yaml "$intermediateFileName"
+  fi
+
+  envsubst < $intermediateFileName > $compiledFileName
+  
+  kubectl apply -f "$compiledFileName"
 }

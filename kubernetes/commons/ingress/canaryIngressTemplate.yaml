@@ -1,0 +1,42 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: $CANARY_INGRESS_NAME
+  namespace: $NAMESPACE
+  annotations:
+    alb.ingress.kubernetes.io/group.name: $CANARY_INGRESS_GROUP_NAME
+    alb.ingress.kubernetes.io/scheme: $CANARY_INGRESS_SCHEME
+    alb.ingress.kubernetes.io/target-type: $CANARY_INGRESS_TARGET_TYPE
+    alb.ingress.kubernetes.io/group.order: "$CANARY_INGRESS_RULES_ORDER"
+    alb.ingress.kubernetes.io/load-balancer-attributes: "routing.http.preserve_host_header.enabled=true"
+    alb.ingress.kubernetes.io/actions.$CANARY_ANNOTATION_ACTION_NAME: |
+      {
+        "type":"forward",
+        "forwardConfig":{
+          "targetGroups":[
+            {
+              "serviceName": "$CANARY_ORIGINAL_SERVICE_NAME",
+              "servicePort": "$CANARY_ORIGINAL_SERVICE_PORT",
+              "weight": $CANARY_ORIGINAL_SERVICE_WEIGHT
+            },
+            {
+              "serviceName": "$CANARY_NEW_SERVICE_NAME",
+              "servicePort": "$CANARY_NEW_SERVICE_PORT",
+              "weight": $CANARY_NEW_SERVICE_WEIGHT
+            }
+          ]
+        }
+      }
+spec:
+  ingressClassName: alb
+  rules:
+    - host: "$CANARY_INGRESS_RULES_HOST"
+      http:
+        paths:
+          - path: "/$CANARY_SERVICE_PATH"
+            pathType: Prefix
+            backend:
+              service:
+                name: "$CANARY_ANNOTATION_ACTION_NAME"
+                port:
+                  name: use-annotation
