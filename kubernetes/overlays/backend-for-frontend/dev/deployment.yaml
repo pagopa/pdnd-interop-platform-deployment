@@ -236,6 +236,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: SAML_CALLBACK_ERROR_URL
+            - name: SAML_PUBLIC_CERTIFICATE
+              valueFrom:
+                secretKeyRef:
+                  name: support-saml
+                  key: SUPPORT_SAML_PUBLIC_KEY
             - name: PRIVACY_NOTICES_CONTAINER
               valueFrom:
                 configMapKeyRef:
