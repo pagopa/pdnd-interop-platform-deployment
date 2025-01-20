@@ -19,6 +19,9 @@ REPLICAS=1
 BACKEND_SERVICE_PORT="8088"
 KAFKA_BROKERS="b-2.interopplatformevents.9r48hf.c3.kafka.eu-south-1.amazonaws.com:9098,b-1.interopplatformevents.9r48hf.c3.kafka.eu-south-1.amazonaws.com:9098,b-3.interopplatformevents.9r48hf.c3.kafka.eu-south-1.amazonaws.com:9098"
 
+TOKEN_READMODEL_PLATFORM_STATES_TABLE_NAME="interop-platform-states-test"
+TOKEN_READMODEL_TOKEN_STATES_TABLE_NAME="interop-token-generation-states-test"
+
 AGREEMENT_TOPIC="event-store.test_agreement.events"
 ATTRIBUTE_TOPIC="event-store.test_attribute_registry.events"
 AUTHORIZATION_TOPIC="event-store.test_authorization.events"
@@ -30,6 +33,8 @@ AGREEMENT_OUTBOUND_TOPIC="outbound.test_agreement.events"
 CATALOG_OUTBOUND_TOPIC="outbound.test_catalog.events"
 PURPOSE_OUTBOUND_TOPIC="outbound.test_purpose.events"
 TENANT_OUTBOUND_TOPIC="outbound.test_tenant.events"
+
+TOKEN_AUDITING_TOPIC="test_authorization-server.generated-jwt"
 
 AWS_REGION="eu-south-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
