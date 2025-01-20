@@ -114,7 +114,7 @@ jobs:
   deploy_agreement_outbound_writer:
     name: Agreement Outbound Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-test' || inputs.environment == 'es1-att' }}
+    if: ${{ inputs.environment != 'es1-dev-refactor' && inputs.environment != 'es1-qa' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -235,7 +235,7 @@ jobs:
   deploy_catalog_outbound_writer:
     name: Catalog Outbound Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-test' || inputs.environment == 'es1-att' }}
+    if: ${{ inputs.environment != 'es1-dev-refactor' && inputs.environment != 'es1-qa' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -402,7 +402,7 @@ jobs:
   deploy_purpose_outbound_writer:
     name: Purpose Outbound Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-test' || inputs.environment == 'es1-att' }}
+    if: ${{ inputs.environment != 'es1-dev-refactor' && inputs.environment != 'es1-qa' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -463,7 +463,7 @@ jobs:
   deploy_tenant_outbound_writer:
     name: Tenant Outbound Writer
     needs: [deploy_configs]
-    if: inputs.environment == 'es1-dev' || inputs.environment == 'es1-att'
+    if: ${{ inputs.environment != 'es1-dev-refactor' && inputs.environment != 'es1-qa' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
