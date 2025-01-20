@@ -140,6 +140,7 @@ jobs:
           anacSftpHost="$(getSecretValue 'anac-sftp-host')"
           anacSftpUsername="$(getSecretValue 'anac-sftp-username')"
           anacSftpPassword="$(getSecretValue 'anac-sftp-password')"
+          supportSamlPublicKey="$(getSecretValue 'interop-support-saml-x509-public-key')"
 
           createKubeSecret 'anac' 'SFTP_HOST' "$anacSftpHost" 'SFTP_USERNAME' "$anacSftpUsername" 'SFTP_PASSWORD' "$anacSftpPassword"
           createKubeSecret 'selfcare-v2' 'SELFCARE_V2_API_KEY' "$selfcareV2ApiKey" 'SELFCARE_BROKER_CONNECTION_STRING' "$selfcareBrokerConnectionString"
@@ -150,6 +151,7 @@ jobs:
           createKubeSecret 'pn-consumers' 'MAIL_RECIPIENTS' "$pnConsumersMailRecipients"
           createKubeSecret 'onetrust' 'ONETRUST_CLIENT_ID' "$onetrustClientId" 'ONETRUST_CLIENT_SECRET' "$onetrustClientSecret"
           createKubeSecret 'smtp-certified' 'PEC_SMTP_USER' "$smtpPecUsername" 'PEC_SMTP_PASSWORD' "$smtpPecPassword" 'PEC_SMTP_SENDER' "$pecSender"
+          createKubeSecret 'support-saml' 'SUPPORT_SAML_PUBLIC_KEY' "$supportSamlPublicKey"
           
           # be-refactor secrets
           createKubeSecret 'event-store' 'POSTGRES_USR' "$postgresUsername" 'POSTGRES_PSW' "$postgresPassword"
@@ -187,6 +189,7 @@ jobs:
           anacSftpHost="$(getSecretValue 'anac-sftp-host')"
           anacSftpUsername="$(getSecretValue 'anac-sftp-username')"
           anacSftpPassword="$(getSecretValue 'anac-sftp-password')"
+          supportSamlPublicKey="$(getSecretValue 'interop-support-saml-x509-public-key')"
 
           createKubeSecret 'anac' 'SFTP_HOST' "$anacSftpHost" 'SFTP_USERNAME' "$anacSftpUsername" 'SFTP_PASSWORD' "$anacSftpPassword"
           createKubeSecret 'selfcare-v2' 'SELFCARE_V2_API_KEY' "$selfcareV2ApiKey" 'SELFCARE_BROKER_CONNECTION_STRING' "$selfcareBrokerConnectionString"
@@ -199,6 +202,7 @@ jobs:
           createKubeSecret 'pn-consumers' 'MAIL_RECIPIENTS' "$pnConsumersMailRecipients"
           createKubeSecret 'onetrust' 'ONETRUST_CLIENT_ID' "$onetrustClientId" 'ONETRUST_CLIENT_SECRET' "$onetrustClientSecret"
           createKubeSecret 'smtp-certified' 'PEC_SMTP_USER' "$smtpPecUsername" 'PEC_SMTP_PASSWORD' "$smtpPecPassword" 'PEC_SMTP_SENDER' "$pecSender"
+          createKubeSecret 'support-saml' 'SUPPORT_SAML_PUBLIC_KEY' "$supportSamlPublicKey"
 
       - name: Create Notifications K8s Secrets - Prod
         id: create_prod_notification_secrets
