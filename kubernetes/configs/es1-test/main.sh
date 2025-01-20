@@ -5,6 +5,8 @@
 . $(pwd)/kubernetes/configs/es1-test/versions.sh
 . $(pwd)/kubernetes/configs/es1-test/commons.sh
 
+. $(pwd)/kubernetes/configs/es1-test/authorization_server_canary_ingress.sh
+
 # Calculated
 NAMESPACE=$NAMESPACE
 EXTERNAL_APPLICATION_HOST="$UI_SUBDOMAIN.$DOMAIN_NAME"

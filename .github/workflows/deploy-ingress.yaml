@@ -80,7 +80,7 @@ jobs:
 
       - name: Create Ingress (no canary, single namespace)
         id: create_ingress_single_namespace
-        if: ${{ vars.NORM_ENV != 'dev' && vars.NORM_ENV != 'dev-refactor' }}
+        if: ${{ vars.NORM_ENV != 'dev' && vars.NORM_ENV != 'dev-refactor' && vars.NORM_ENV != 'test' }}
         run: |
           set -eo pipefail
           source $CONFIG_FILE
@@ -92,25 +92,25 @@ jobs:
               $BACKEND_FOR_FRONTEND_SERVICE_NAME $BACKEND_FOR_FRONTEND_APPLICATION_PATH $BACKEND_SERVICE_PORT \
               $FRONTEND_SERVICE_NAME $FRONTEND_SERVICE_APPLICATION_PATH $FRONTEND_SERVICE_PORT
 
-      # - name: Create Ingress (auth-server canary, single namespace)
-      #   id: create_ingress_canary
-      #   if: ${{ vars.NORM_ENV == '...' }}
-      #   run: |
-      #     set -eo pipefail
-      #     source $CONFIG_FILE
-      #     source ./deployment_functions.sh
-      #
-      #     export INGRESS_RULES_HOST="*.$DOMAIN_NAME"
-      #     export INGRESS_RULES_ORDER=0 
-      #
-      #     export CANARY_INGRESS_RULES_HOST="$INGRESS_RULES_HOST"
-      #     export CANARY_INGRESS_RULES_ORDER="$INGRESS_RULES_ORDER"
-      #
-      #     createCanaryIngress
-      #
-      #     export INGRESS_RULES_ORDER=1
-      #
-      #     createIngress \
-      #     $API_GATEWAY_SERVICE_NAME $API_GATEWAY_APPLICATION_PATH $BACKEND_SERVICE_PORT \
-      #     $BACKEND_FOR_FRONTEND_SERVICE_NAME $BACKEND_FOR_FRONTEND_APPLICATION_PATH $BACKEND_SERVICE_PORT \
-      #     $FRONTEND_SERVICE_NAME $FRONTEND_SERVICE_APPLICATION_PATH $FRONTEND_SERVICE_PORT
+      - name: Create Ingress (auth-server canary, single namespace)
+        id: create_ingress_canary
+        if: ${{ vars.NORM_ENV == 'test' }}
+        run: |
+          set -eo pipefail
+          source $CONFIG_FILE
+          source ./deployment_functions.sh
+      
+          export INGRESS_RULES_HOST="*.$DOMAIN_NAME"
+          export INGRESS_RULES_ORDER=0 
+      
+          export CANARY_INGRESS_RULES_HOST="$INGRESS_RULES_HOST"
+          export CANARY_INGRESS_RULES_ORDER="$INGRESS_RULES_ORDER"
+      
+          createCanaryIngress
+      
+          export INGRESS_RULES_ORDER=1
+      
+          createIngress \
+          $API_GATEWAY_SERVICE_NAME $API_GATEWAY_APPLICATION_PATH $BACKEND_SERVICE_PORT \
+          $BACKEND_FOR_FRONTEND_SERVICE_NAME $BACKEND_FOR_FRONTEND_APPLICATION_PATH $BACKEND_SERVICE_PORT \
+          $FRONTEND_SERVICE_NAME $FRONTEND_SERVICE_APPLICATION_PATH $FRONTEND_SERVICE_PORT
