@@ -4,3 +4,4 @@ metadata:
   name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 data:
+  AGREEMENTS_TO_SKIP: {{TOKEN_GENERATION_CHECKER_AGREEMENTS_TO_SKIP}}
