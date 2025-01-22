@@ -60,6 +60,11 @@ spec:
                     secretKeyRef:
                       name: documentdb
                       key: READONLY_PSW
+                - name: AGREEMENTS_TO_SKIP
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: AGREEMENTS_TO_SKIP
               resources:
                 requests:
                   cpu: "{{SERVICE_RESOURCE_CPU}}"
