@@ -92,3 +92,6 @@ AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.dev.svc
 DELEGATION_PROCESS_URL="http://interop-be-delegation-process.dev.svc.cluster.local:8088"
 
 CLIENT_ASSERTION_JWT_AUDIENCE="auth.dev.interop.pagopa.it/client-assertion"
+
+FEATURE_FLAG_SIGNALHUB_WHITELIST=true
+SIGNALHUB_WHITELIST=69e2865e-65ab-4e48-a638-2037a9ee2ee7  # PagoPA
