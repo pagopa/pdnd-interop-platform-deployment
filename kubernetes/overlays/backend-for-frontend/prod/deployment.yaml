@@ -271,3 +271,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: CLIENT_ASSERTION_AUDIENCE
+            - name: INTEROP_SELFCARE_PRODUCT_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTEROP_SELFCARE_PRODUCT_NAME
