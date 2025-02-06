@@ -26,6 +26,7 @@ CATALOG_PLATFORMSTATE_WRITER_SERVICE_NAME="interop-be-catalog-platformstate-writ
 CLIENT_PURPOSE_UPDATER_SERVICE_NAME="interop-be-client-purpose-updater"
 CLIENT_READMODEL_WRITER_SERVICE_NAME="interop-be-client-readmodel-writer"
 COMPUTE_AGREEMENTS_CONSUMER_SERVICE_NAME="interop-be-compute-agreements-consumer"
+DELEGATION_ITEMS_ARCHIVER_SERVICE_NAME="interop-be-delegation-items-archiver"
 DELEGATION_OUTBOUND_WRITER_SERVICE_NAME="interop-be-delegation-outbound-writer"
 DELEGATION_PROCESS_SERVICE_NAME="interop-be-delegation-process"
 DELEGATION_READMODEL_WRITER_SERVICE_NAME="interop-be-delegation-readmodel-writer"
