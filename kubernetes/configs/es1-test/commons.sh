@@ -90,6 +90,6 @@ SMTP_PORT=5025
 AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.test.svc.cluster.local:8088/authorization-management/1.0"
 CLIENT_ASSERTION_JWT_AUDIENCE="auth.uat.interop.pagopa.it/client-assertion"
 
-FEATURE_FLAG_SIGNALHUB_WHITELIST_PRODUCER=true
+FEATURE_FLAG_SIGNALHUB_WHITELIST=true
 SIGNALHUB_WHITELIST_PRODUCER=84871fd4-2fd7-46ab-9d22-f6b452f4b3c5 # PagoPA
 SIGNALHUB_WHITELIST_CONSUMER=69e2865e-65ab-4e48-a638-2037a9ee2ee7  # PagoPA
