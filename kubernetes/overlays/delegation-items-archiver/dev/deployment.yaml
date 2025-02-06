@@ -52,10 +52,10 @@ spec:
             - name: AGREEMENT_PROCESS_URL
               valueFrom:
                 configMapKeyRef:
-                  name: common-services-url
+                  name: common-services-urls
                   key: AGREEMENT_PROCESS_URL
             - name: PURPOSE_PROCESS_URL
               valueFrom:
                 configMapKeyRef:
-                  name: common-services-url
+                  name: common-services-urls
                   key: PURPOSE_PROCESS_URL
