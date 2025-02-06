@@ -94,3 +94,7 @@ AGREEMENT_PROCESS_URL="http://interop-be-agreement-process.dev.svc.cluster.local
 PURPOSE_PROCESS_URL="http://interop-be-purpose-process.dev.svc.cluster.local:8088"
 
 CLIENT_ASSERTION_JWT_AUDIENCE="auth.dev.interop.pagopa.it/client-assertion"
+
+FEATURE_FLAG_SIGNALHUB_WHITELIST=true
+SIGNALHUB_WHITELIST_PRODUCER=69e2865e-65ab-4e48-a638-2037a9ee2ee7  # PagoPA
+SIGNALHUB_WHITELIST_CONSUMER="69e2865e-65ab-4e48-a638-2037a9ee2ee7,e79a24cd-8edc-441e-ae8d-e87c3aea0059"  # PagoPA, Comune di Milano
