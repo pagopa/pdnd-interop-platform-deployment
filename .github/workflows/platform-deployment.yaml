@@ -527,7 +527,7 @@ jobs:
   deploy_delegation_items_archiver:
     name: Delegation Items Archiver
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' }}
+    if: ${{ inputs.environment == 'es1-dev' }} || ${{ inputs.environment == 'es1-qa' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml

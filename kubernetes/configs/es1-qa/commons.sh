@@ -89,6 +89,8 @@ SMTP_ADDRESS="smtp-mock.qa.svc.cluster.local"
 SMTP_PORT=5025
 
 AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.qa.svc.cluster.local:8088/authorization-management/1.0"
-DELEGATION_PROCESS_URL="http://interop-be-delegation-process.dev.svc.cluster.local:8088"
+DELEGATION_PROCESS_URL="http://interop-be-delegation-process.qa.svc.cluster.local:8088"
+AGREEMENT_PROCESS_URL="http://interop-be-agreement-process.qa.svc.cluster.local:8088"
+PURPOSE_PROCESS_URL="http://interop-be-purpose-process.qa.svc.cluster.local:8088"
 
 CLIENT_ASSERTION_JWT_AUDIENCE="auth.qa.interop.pagopa.it/client-assertion"
