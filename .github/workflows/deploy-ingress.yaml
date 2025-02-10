@@ -80,7 +80,7 @@ jobs:
 
       - name: Create Ingress (no canary, single namespace)
         id: create_ingress_single_namespace
-        if: ${{ vars.NORM_ENV != 'dev' && vars.NORM_ENV != 'dev-refactor' && vars.NORM_ENV != 'test' }}
+        if: ${{ vars.NORM_ENV != 'dev' && vars.NORM_ENV != 'dev-refactor' && vars.NORM_ENV != 'test' && vars.NORM_ENV != 'prod' }}
         run: |
           set -eo pipefail
           source $CONFIG_FILE
@@ -94,7 +94,7 @@ jobs:
 
       - name: Create Ingress (auth-server canary, single namespace)
         id: create_ingress_canary
-        if: ${{ vars.NORM_ENV == 'test' }}
+        if: ${{ vars.NORM_ENV == 'test' || vars.NORM_ENV == 'prod' }}
         run: |
           set -eo pipefail
           source $CONFIG_FILE

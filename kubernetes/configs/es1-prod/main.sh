@@ -5,6 +5,8 @@
 . $(pwd)/kubernetes/configs/es1-prod/versions.sh
 . $(pwd)/kubernetes/configs/es1-prod/commons.sh
 
+. $(pwd)/kubernetes/configs/es1-prod/authorization_server_canary_ingress.sh
+
 # Calculated
 NAMESPACE=$NAMESPACE
 EXTERNAL_APPLICATION_HOST="$UI_SUBDOMAIN.$DOMAIN_NAME"
@@ -23,8 +25,10 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-prod/agreement_email_sender.sh
 . $(pwd)/kubernetes/configs/es1-prod/agreement_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-prod/agreement_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-prod/agreement_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-prod/agreement_process.sh
 . $(pwd)/kubernetes/configs/es1-prod/api_gateway.sh
+. $(pwd)/kubernetes/configs/es1-prod/authorization_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-prod/authorization_management.sh
 . $(pwd)/kubernetes/configs/es1-prod/authorization_process.sh
 . $(pwd)/kubernetes/configs/es1-prod/authorization_server.sh
@@ -35,6 +39,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-prod/backend_for_frontend.sh
 . $(pwd)/kubernetes/configs/es1-prod/catalog_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-prod/catalog_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-prod/catalog_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-prod/catalog_process.sh
 . $(pwd)/kubernetes/configs/es1-prod/compute_agreements_consumer.sh
 . $(pwd)/kubernetes/configs/es1-prod/client_purpose_updater.sh
@@ -46,10 +51,12 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-prod/purpose_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-prod/purpose_process.sh
 . $(pwd)/kubernetes/configs/es1-prod/purpose_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-prod/purpose_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-prod/tenant_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-prod/tenant_process.sh
 . $(pwd)/kubernetes/configs/es1-prod/tenant_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-prod/tenants-certified-attributes-updater.sh
+. $(pwd)/kubernetes/configs/es1-prod/token-generation-readmodel-checker.sh
 . $(pwd)/kubernetes/configs/es1-prod/notifier.sh
 . $(pwd)/kubernetes/configs/es1-prod/notifier_seeder.sh
 . $(pwd)/kubernetes/configs/es1-prod/token_details_persister.sh
