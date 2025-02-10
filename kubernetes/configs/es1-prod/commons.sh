@@ -19,12 +19,17 @@ REPLICAS=2
 BACKEND_SERVICE_PORT="8088"
 KAFKA_BROKERS="b-2.interopplatformevents.gfkljw.c4.kafka.eu-south-1.amazonaws.com:9098,b-1.interopplatformevents.gfkljw.c4.kafka.eu-south-1.amazonaws.com:9098,b-3.interopplatformevents.gfkljw.c4.kafka.eu-south-1.amazonaws.com:9098"
 
+TOKEN_READMODEL_PLATFORM_STATES_TABLE_NAME="interop-platform-states-prod"
+TOKEN_READMODEL_TOKEN_STATES_TABLE_NAME="interop-token-generation-states-prod"
+
 AGREEMENT_TOPIC="event-store.prod_agreement.events"
 ATTRIBUTE_TOPIC="event-store.prod_attribute_registry.events"
 AUTHORIZATION_TOPIC="event-store.prod_authorization.events"
 CATALOG_TOPIC="event-store.prod_catalog.events"
 PURPOSE_TOPIC="event-store.prod_purpose.events"
 TENANT_TOPIC="event-store.prod_tenant.events"
+
+TOKEN_AUDITING_TOPIC="prod_authorization-server.generated-jwt"
 
 AGREEMENT_OUTBOUND_TOPIC="outbound.prod_agreement.events"
 CATALOG_OUTBOUND_TOPIC="outbound.prod_catalog.events"

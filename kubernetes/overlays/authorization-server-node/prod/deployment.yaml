@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          livenessProbe:
+            httpGet:
+              path: /{{AUTHORIZATION_SERVER_APPLICATION_PATH}}/status
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /{{AUTHORIZATION_SERVER_APPLICATION_PATH}}/status
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          env:
+            - name: PRODUCER_KAFKA_BROKERS
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: KAFKA_BROKERS
+            - name: PRODUCER_KAFKA_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: KAFKA_CLIENT_ID
+            - name: S3_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: AUDIT_FALLBACK_S3_BUCKET
+            - name: TOKEN_AUDITING_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: TOKEN_AUDITING_TOPIC
+            - name: GENERATED_INTEROP_TOKEN_KID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: GENERATED_INTEROP_TOKEN_KID
+            - name: GENERATED_INTEROP_TOKEN_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: GENERATED_INTEROP_TOKEN_ISSUER
+            - name: GENERATED_INTEROP_TOKEN_M2M_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: GENERATED_INTEROP_TOKEN_M2M_AUDIENCE
+            - name: GENERATED_INTEROP_TOKEN_M2M_DURATION_SECONDS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: GENERATED_INTEROP_TOKEN_M2M_DURATION_SECONDS
+            - name: TOKEN_GENERATION_READMODEL_TABLE_NAME_TOKEN_GENERATION
+              valueFrom:
+                configMapKeyRef:
+                  name: common-token-generation-read-model
+                  key: TOKEN_READMODEL_TOKEN_STATES_TABLE_NAME
+            - name: CLIENT_ASSERTION_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: CLIENT_ASSERTION_JWT_AUDIENCE
+            - name: AWS_ROLE_SESSION_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
