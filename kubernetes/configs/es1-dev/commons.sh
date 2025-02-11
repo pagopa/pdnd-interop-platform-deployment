@@ -92,6 +92,8 @@ AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.dev.svc
 DELEGATION_PROCESS_URL="http://interop-be-delegation-process.dev.svc.cluster.local:8088"
 AGREEMENT_PROCESS_URL="http://interop-be-agreement-process.dev.svc.cluster.local:8088"
 PURPOSE_PROCESS_URL="http://interop-be-purpose-process.dev.svc.cluster.local:8088"
+TENANT_PROCESS_URL="http://interop-be-tenant-process.dev.svc.cluster.local:8088"
+ATTRIBUTE_REGISTRY_PROCESS_URL="http://interop-be-attribute-registry-process.dev.svc.cluster.local:8088"
 
 CLIENT_ASSERTION_JWT_AUDIENCE="auth.dev.interop.pagopa.it/client-assertion"
 
