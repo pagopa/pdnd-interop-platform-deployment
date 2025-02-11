@@ -810,6 +810,7 @@ jobs:
   deploy_tenants_certified_attributes_updater:
     name: Tenants Certified Attributes Updater
     needs: [deploy_configs]
+    if: ${{ inputs.environment != 'es1-dev' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml

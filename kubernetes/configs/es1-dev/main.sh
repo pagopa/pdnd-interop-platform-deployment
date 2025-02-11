@@ -58,7 +58,6 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-dev/tenant_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/tenant_process.sh
 . $(pwd)/kubernetes/configs/es1-dev/tenant_readmodel_writer.sh
-. $(pwd)/kubernetes/configs/es1-dev/tenants-certified-attributes-updater.sh
 . $(pwd)/kubernetes/configs/es1-dev/token-generation-readmodel-checker.sh
 . $(pwd)/kubernetes/configs/es1-dev/notifier.sh
 . $(pwd)/kubernetes/configs/es1-dev/notifier_seeder.sh
