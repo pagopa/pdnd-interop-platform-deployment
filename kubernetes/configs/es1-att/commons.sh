@@ -88,3 +88,7 @@ AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.att.svc
 DELEGATION_PROCESS_URL="http://interop-be-delegation-process.att.svc.cluster.local:8088"
 
 CLIENT_ASSERTION_JWT_AUDIENCE="auth.att.interop.pagopa.it/client-assertion"
+
+FEATURE_FLAG_SIGNALHUB_WHITELIST=false
+SIGNALHUB_WHITELIST_PRODUCER=""
+SIGNALHUB_WHITELIST_CONSUMER=""
