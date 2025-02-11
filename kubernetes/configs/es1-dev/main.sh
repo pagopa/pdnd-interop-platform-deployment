@@ -35,7 +35,6 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-dev/authorization_updater.sh
 . $(pwd)/kubernetes/configs/es1-dev/attribute_registry_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/attribute_registry_process.sh
-. $(pwd)/kubernetes/configs/es1-dev/attributes_loader.sh
 . $(pwd)/kubernetes/configs/es1-dev/backend_for_frontend.sh
 . $(pwd)/kubernetes/configs/es1-dev/catalog_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/catalog_readmodel_writer.sh

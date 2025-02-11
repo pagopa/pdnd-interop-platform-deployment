@@ -160,6 +160,7 @@ jobs:
   deploy_attribute_registry_readmodel_writer:
     name: Attribute Registry ReadModel Writer
     needs: [deploy_configs]
+    if: ${{ inputs.environment != 'es1-dev' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
