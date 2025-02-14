@@ -86,5 +86,11 @@ SMTP_PORT=5025
 
 AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.att.svc.cluster.local:8088/authorization-management/1.0"
 DELEGATION_PROCESS_URL="http://interop-be-delegation-process.att.svc.cluster.local:8088"
+AGREEMENT_PROCESS_URL="http://interop-be-agreement-process.att.svc.cluster.local:8088"
+PURPOSE_PROCESS_URL="http://interop-be-purpose-process.att.svc.cluster.local:8088"
 
 CLIENT_ASSERTION_JWT_AUDIENCE="auth.att.interop.pagopa.it/client-assertion"
+
+FEATURE_FLAG_SIGNALHUB_WHITELIST=false
+SIGNALHUB_WHITELIST_PRODUCER=""
+SIGNALHUB_WHITELIST_CONSUMER=""
