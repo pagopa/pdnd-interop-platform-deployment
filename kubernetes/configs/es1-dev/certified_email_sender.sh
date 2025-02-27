@@ -1,6 +1,4 @@
 #!/bin/bash
 
-INTEROP_FE_BASE_URL="selfcare.dev.interop.pagopa.it"
-
 CERTIFIED_EMAIL_SENDER_RESOURCE_CPU="500m"
 CERTIFIED_EMAIL_SENDER_RESOURCE_MEM="1Gi"

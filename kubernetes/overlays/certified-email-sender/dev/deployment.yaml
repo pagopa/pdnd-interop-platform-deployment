@@ -68,3 +68,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PEC_SMTP_SECURE
+            - name: INTEROP_FE_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: INTEROP_FE_BASE_URL
