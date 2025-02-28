@@ -29,6 +29,7 @@ CATALOG_TOPIC="event-store.dev_catalog.events"
 PURPOSE_TOPIC="event-store.dev_purpose.events"
 TENANT_TOPIC="event-store.dev_tenant.events"
 DELEGATION_TOPIC="event-store.dev_delegation.events"
+ESERVICE_TEMPLATE_TOPIC="event-store.dev_eservice_template.events"
 
 AGREEMENT_OUTBOUND_TOPIC="outbound.dev_agreement.events"
 CATALOG_OUTBOUND_TOPIC="outbound.dev_catalog.events"
