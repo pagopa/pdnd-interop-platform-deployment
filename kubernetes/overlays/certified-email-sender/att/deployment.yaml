@@ -68,43 +68,8 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: PEC_SMTP_SECURE
-            - name: SENDER_MAIL
+            - name: INTEROP_FE_BASE_URL
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: SENDER_MAIL
-            - name: SENDER_LABEL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: SENDER_LABEL
-            - name: SMTP_ADDRESS
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: SMTP_ADDRESS
-            - name: SMTP_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: SMTP_PORT
-            - name: SMTP_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: smtp-notifications
-                  key: SMTP_USER
-            - name: SMTP_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: smtp-notifications
-                  key: SMTP_PASSWORD
-            - name: SMTP_SECURE
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: SMTP_SECURE
-            - name: AWS_SES_ENDPOINT
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: AWS_SES_ENDPOINT
+                  key: INTEROP_FE_BASE_URL

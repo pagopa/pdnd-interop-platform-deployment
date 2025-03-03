@@ -28,46 +28,21 @@ spec:
                 configMapKeyRef:
                   name: common-kafka
                   key: AGREEMENT_TOPIC
+            - name: CATALOG_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: CATALOG_TOPIC
+            - name: PURPOSE_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: PURPOSE_TOPIC
             - name: INTEROP_FE_BASE_URL
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: INTEROP_FE_BASE_URL
-            - name: PEC_SENDER_MAIL
-              valueFrom:
-                secretKeyRef:
-                  name: smtp-certified
-                  key: PEC_SMTP_SENDER
-            - name: PEC_SENDER_LABEL
-              valueFrom:
-                secretKeyRef:
-                  name: smtp-certified
-                  key: PEC_SMTP_SENDER
-            - name: PEC_SMTP_ADDRESS
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: PEC_SMTP_ADDRESS
-            - name: PEC_SMTP_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: PEC_SMTP_PORT
-            - name: PEC_SMTP_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: smtp-certified
-                  key: PEC_SMTP_USER
-            - name: PEC_SMTP_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: smtp-certified
-                  key: PEC_SMTP_PASSWORD
-            - name: PEC_SMTP_SECURE
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: PEC_SMTP_SECURE
             - name: SENDER_MAIL
               valueFrom:
                 configMapKeyRef:
