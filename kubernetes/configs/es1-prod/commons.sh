@@ -57,6 +57,7 @@ INTERNAL_JWT_AUDIENCE="interop.pagopa.it/internal"
 RSA_KEYS_IDENTIFIERS="9432c16b-7aae-49df-b9c4-ea61b556652b"
 
 SELFCARE_V2_URL="https://api.selfcare.pagopa.it/external/v2"
+INTEROP_FE_BASE_URL="selfcare.interop.pagopa.it"
 
 INTEROP_SELFCARE_PRODUCT_NAME="prod-interop"
 TENANT_ALLOWED_ORIGINS="IPA,ANAC,IVASS,PDND_INFOCAMERE-SCP"
