@@ -22,7 +22,6 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-att/smtp_mock.sh
 . $(pwd)/kubernetes/configs/es1-att/ses_mock.sh
 
-. $(pwd)/kubernetes/configs/es1-att/agreement_email_sender.sh
 . $(pwd)/kubernetes/configs/es1-att/agreement_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-att/agreement_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-att/agreement_process.sh
@@ -38,6 +37,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-att/catalog_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-att/catalog_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-att/catalog_process.sh
+. $(pwd)/kubernetes/configs/es1-att/certified_email_sender.sh
 . $(pwd)/kubernetes/configs/es1-att/compute_agreements_consumer.sh
 . $(pwd)/kubernetes/configs/es1-att/client_purpose_updater.sh
 . $(pwd)/kubernetes/configs/es1-att/client_readmodel_writer.sh
@@ -56,6 +56,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-att/tenant_process.sh
 . $(pwd)/kubernetes/configs/es1-att/tenant_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-att/tenants-certified-attributes-updater.sh
+. $(pwd)/kubernetes/configs/es1-att/notification_email_sender.sh
 . $(pwd)/kubernetes/configs/es1-att/notifier.sh
 . $(pwd)/kubernetes/configs/es1-att/notifier_seeder.sh
 . $(pwd)/kubernetes/configs/es1-att/token_details_persister.sh

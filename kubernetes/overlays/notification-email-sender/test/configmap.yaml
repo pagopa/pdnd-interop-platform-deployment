@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+data:
+  KAFKA_CLIENT_ID: "{{NAMESPACE}}-pagopa-interop-notification-email-sender"
+  KAFKA_GROUP_ID: "{{NAMESPACE}}-notification-email-sender"
+  
+  AWS_SES_ENDPOINT: "{{SES_ENDPOINT}}"
+
+  SMTP_ADDRESS: "{{SMTP_ADDRESS}}"
+  SMTP_PORT: "{{SMTP_PORT}}"
+  SMTP_SECURE: "{{SMTP_SECURE}}"
+  SENDER_MAIL: "{{NOTIFICATION_SENDER_MAIL}}"
+  SENDER_LABEL: "{{NOTIFICATION_SENDER_LABEL}}"
+
+  INTEROP_FE_BASE_URL: "{{INTEROP_FE_BASE_URL}}"

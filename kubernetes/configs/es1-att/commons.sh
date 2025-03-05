@@ -18,7 +18,7 @@ READ_MODEL_READ_PREFERENCE="secondaryPreferred"
 REPLICAS=1
 BACKEND_SERVICE_PORT="8088"
 
- KAFKA_BROKERS="b-3.interopplatformevents.1e4dzm.c3.kafka.eu-south-1.amazonaws.com:9098,b-1.interopplatformevents.1e4dzm.c3.kafka.eu-south-1.amazonaws.com:9098,b-2.interopplatformevents.1e4dzm.c3.kafka.eu-south-1.amazonaws.com:9098"
+KAFKA_BROKERS="b-3.interopplatformevents.1e4dzm.c3.kafka.eu-south-1.amazonaws.com:9098,b-1.interopplatformevents.1e4dzm.c3.kafka.eu-south-1.amazonaws.com:9098,b-2.interopplatformevents.1e4dzm.c3.kafka.eu-south-1.amazonaws.com:9098"
 
 AGREEMENT_TOPIC="event-store.att_agreement.events"
 ATTRIBUTE_TOPIC="event-store.att_attribute_registry.events"
@@ -55,6 +55,7 @@ INTERNAL_JWT_AUDIENCE="att.interop.pagopa.it/internal"
 RSA_KEYS_IDENTIFIERS="490baa58-8d24-4adf-bfb3-f19a9e505b9a"
 
 SELFCARE_V2_URL="https://api.selfcare.pagopa.it/external/v2"
+INTEROP_FE_BASE_URL="selfcare.att.interop.pagopa.it"
 
 INTEROP_SELFCARE_PRODUCT_NAME="prod-interop-atst"
 TENANT_ALLOWED_ORIGINS="IPA,ANAC,IVASS,INFOCAMERE,SELC,PDND_INFOCAMERE-SCP,PDND_INFOCAMERE-PRV,INFOCAMERE-PT"
@@ -66,7 +67,7 @@ PRIVACY_NOTICES_UPDATER_PRIVACY_POLICY_UUID="0df21ff6-3e8f-4320-af8f-23dea9135d5
 PRIVACY_NOTICES_UPDATER_TERMS_OF_SERVICE_UUID="6bf8412a-41a7-41a0-82dc-26286ce61b1a"
 PRIVACY_NOTICES_CONTAINER="interop-privacy-notices-content-att-es1"
 
-PAGOPA_TENANT_ID="69e2865e-65ab-4e48-a638-2037a9ee2ee7"
+PAGOPA_TENANT_ID="1013dbf7-1124-4daa-8e85-ac9313d5dc61"
 
 REPORT_SENDER_MAIL="noreply@reports.att.interop.pagopa.it"
 REPORT_SENDER_LABEL="noreply-att"
