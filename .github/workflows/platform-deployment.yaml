@@ -794,7 +794,7 @@ jobs:
   deploy_attributes_loader:
     name: Attributes Loader
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'es1-dev' && inputs.environment != 'es1-test' && inputs.environment != 'es1-prod' }}
+    if: ${{ inputs.environment != 'es1-dev' && inputs.environment != 'es1-test' && inputs.environment != 'es1-prod' && inputs.environment != 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
@@ -825,7 +825,7 @@ jobs:
   deploy_tenants_certified_attributes_updater:
     name: Tenants Certified Attributes Updater
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'es1-dev' && inputs.environment != 'es1-test' && inputs.environment != 'es1-prod' }}
+    if: ${{ inputs.environment != 'es1-dev' && inputs.environment != 'es1-test' && inputs.environment != 'es1-prod' && inputs.environment != 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
@@ -886,7 +886,7 @@ jobs:
   deploy_ipa_certified_attributes_importer:
     name: IPA Certified Attributes Importer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-test' || inputs.environment == 'es1-prod' }}
+    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-test' || inputs.environment == 'es1-prod' || inputs.environment == 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
