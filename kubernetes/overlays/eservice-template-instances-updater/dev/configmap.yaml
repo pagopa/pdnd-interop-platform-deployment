@@ -4,8 +4,8 @@ metadata:
   name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 data:
-  KAFKA_CLIENT_ID: "{{NAMESPACE}}-pagopa-interop-eservice-template-updater"
-  KAFKA_GROUP_ID: "{{NAMESPACE}}-eservice-template-updater"
+  KAFKA_CLIENT_ID: "{{NAMESPACE}}-pagopa-interop-eservice-template-instances-updater"
+  KAFKA_GROUP_ID: "{{NAMESPACE}}-eservice-template-instances-updater"
 
   ESERVICE_DOCUMENTS_CONTAINER: "{{CATALOG_PROCESS_STORAGE_CONTAINER}}"
   ESERVICE_DOCUMENTS_PATHS: "{{CATALOG_PROCESS_ESERVICE_DOCUMENTS_PATH}}"
