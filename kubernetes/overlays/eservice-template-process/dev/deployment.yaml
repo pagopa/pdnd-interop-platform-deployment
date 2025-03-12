@@ -28,7 +28,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: ESERVICE_DOCUMENTS_PATH
+                  key: ESERVICE_TEMPLATE_DOCUMENTS_PATH
             - name: PRODUCER_ALLOWED_ORIGINS
               valueFrom:
                 configMapKeyRef:
