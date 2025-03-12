@@ -29,6 +29,7 @@ CATALOG_TOPIC="event-store.dev_catalog.events"
 PURPOSE_TOPIC="event-store.dev_purpose.events"
 TENANT_TOPIC="event-store.dev_tenant.events"
 DELEGATION_TOPIC="event-store.dev_delegation.events"
+ESERVICE_TEMPLATE_TOPIC="event-store.dev_eservice_template.events"
 
 AGREEMENT_OUTBOUND_TOPIC="outbound.dev_agreement.events"
 CATALOG_OUTBOUND_TOPIC="outbound.dev_catalog.events"
@@ -95,6 +96,8 @@ AGREEMENT_PROCESS_URL="http://interop-be-agreement-process.dev.svc.cluster.local
 PURPOSE_PROCESS_URL="http://interop-be-purpose-process.dev.svc.cluster.local:8088"
 TENANT_PROCESS_URL="http://interop-be-tenant-process.dev.svc.cluster.local:8088"
 ATTRIBUTE_REGISTRY_PROCESS_URL="http://interop-be-attribute-registry-process.dev.svc.cluster.local:8088"
+CATALOG_PROCESS_URL="http://interop-be-catalog-process.dev.svc.cluster.local:8088"
+ESERVICE_TEMPLATE_PROCESS_URL="http://interop-be-eservice-template-process.dev.svc.cluster.local:8088"
 
 CLIENT_ASSERTION_JWT_AUDIENCE="auth.dev.interop.pagopa.it/client-assertion"
 
