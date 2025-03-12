@@ -55,7 +55,7 @@ INTERNAL_JWT_DURATION_SECONDS=3600
 UI_JWT_AUDIENCE="refactor.dev.interop.pagopa.it/ui"
 M2M_JWT_AUDIENCE="refactor.dev.interop.pagopa.it/m2m"
 INTERNAL_JWT_AUDIENCE="refactor.dev.interop.pagopa.it/internal"
-RSA_KEYS_IDENTIFIERS="fcd1bab9-ae4d-49ce-9252-262db866e327"
+RSA_KEYS_IDENTIFIERS="41e3a8e9-5982-4a6d-b531-850774bfd961"
 
 SELFCARE_V2_URL="https://api.uat.selfcare.pagopa.it/external/v2"
 

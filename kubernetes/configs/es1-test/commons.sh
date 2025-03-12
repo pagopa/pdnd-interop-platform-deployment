@@ -58,6 +58,7 @@ INTERNAL_JWT_AUDIENCE="uat.interop.pagopa.it/internal"
 RSA_KEYS_IDENTIFIERS="cdb52532-dd94-40ef-824d-9c55b10e6bc9"
 
 SELFCARE_V2_URL="https://api.selfcare.pagopa.it/external/v2"
+INTEROP_FE_BASE_URL="selfcare.uat.interop.pagopa.it"
 
 INTEROP_SELFCARE_PRODUCT_NAME="prod-interop-coll"
 TENANT_ALLOWED_ORIGINS="IPA,ANAC,IVASS,PDND_INFOCAMERE-SCP"
@@ -88,6 +89,12 @@ SMTP_ADDRESS="smtp-mock.test.svc.cluster.local"
 SMTP_PORT=5025
 
 AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.test.svc.cluster.local:8088/authorization-management/1.0"
+DELEGATION_PROCESS_URL="http://interop-be-delegation-process.test.svc.cluster.local:8088"
+AGREEMENT_PROCESS_URL="http://interop-be-agreement-process.test.svc.cluster.local:8088"
+PURPOSE_PROCESS_URL="http://interop-be-purpose-process.test.svc.cluster.local:8088"
+TENANT_PROCESS_URL="http://interop-be-tenant-process.test.svc.cluster.local:8088"
+ATTRIBUTE_REGISTRY_PROCESS_URL="http://interop-be-attribute-registry-process.test.svc.cluster.local:8088"
+
 CLIENT_ASSERTION_JWT_AUDIENCE="auth.uat.interop.pagopa.it/client-assertion"
 
 FEATURE_FLAG_SIGNALHUB_WHITELIST=true

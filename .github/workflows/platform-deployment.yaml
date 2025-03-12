@@ -96,21 +96,6 @@ jobs:
     with:
       environment: ${{ inputs.environment }}
 
-  deploy_agreement_email_sender:
-    name: Agreement Email Sender
-    needs: [deploy_configs]
-    permissions:
-      contents: read
-    uses: ./.github/workflows/deploy-service.yaml
-    secrets: inherit
-    with:
-      environment: ${{ inputs.environment }}
-      kustomize_overlay_path: "overlays/agreement-email-sender/${{ inputs.environment }}"
-      service_name_var_name: AGREEMENT_EMAIL_SENDER_SERVICE_NAME
-      image_version_var_name: AGREEMENT_EMAIL_SENDER_IMAGE_VERSION
-      resource_cpu_var_name: AGREEMENT_EMAIL_SENDER_RESOURCE_CPU
-      resource_mem_var_name: AGREEMENT_EMAIL_SENDER_RESOURCE_MEM
-
   deploy_agreement_outbound_writer:
     name: Agreement Outbound Writer
     needs: [deploy_configs]
@@ -277,6 +262,21 @@ jobs:
       image_version_var_name: CATALOG_PROCESS_IMAGE_VERSION
       resource_cpu_var_name: CATALOG_PROCESS_RESOURCE_CPU
       resource_mem_var_name: CATALOG_PROCESS_RESOURCE_MEM
+  
+  deploy_certified_email_sender:
+    name: Certified Email Sender
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/certified-email-sender/${{ inputs.environment }}"
+      service_name_var_name: CERTIFIED_EMAIL_SENDER_SERVICE_NAME
+      image_version_var_name: CERTIFIED_EMAIL_SENDER_IMAGE_VERSION
+      resource_cpu_var_name: CERTIFIED_EMAIL_SENDER_RESOURCE_CPU
+      resource_mem_var_name: CERTIFIED_EMAIL_SENDER_RESOURCE_MEM
 
   deploy_client_purpose_updater:
     name: Client Purpose Updater
@@ -338,6 +338,21 @@ jobs:
       image_version_var_name: KEY_READMODEL_WRITER_IMAGE_VERSION
       resource_cpu_var_name: KEY_READMODEL_WRITER_RESOURCE_CPU
       resource_mem_var_name: KEY_READMODEL_WRITER_RESOURCE_MEM
+
+  deploy_notification_email_sender:
+    name: Notification Email Sender
+    needs: [deploy_configs]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-service.yaml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.environment }}
+      kustomize_overlay_path: "overlays/notification-email-sender/${{ inputs.environment }}"
+      service_name_var_name: NOTIFICATION_EMAIL_SENDER_SERVICE_NAME
+      image_version_var_name: NOTIFICATION_EMAIL_SENDER_IMAGE_VERSION
+      resource_cpu_var_name: NOTIFICATION_EMAIL_SENDER_RESOURCE_CPU
+      resource_mem_var_name: NOTIFICATION_EMAIL_SENDER_RESOURCE_MEM
 
   deploy_producer_key_readmodel_writer:
     name: Producer Key ReadModel Writer
@@ -827,7 +842,7 @@ jobs:
   deploy_attributes_loader:
     name: Attributes Loader
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'es1-dev' }}
+    if: ${{ inputs.environment != 'es1-dev' && inputs.environment != 'es1-test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
@@ -858,7 +873,7 @@ jobs:
   deploy_tenants_certified_attributes_updater:
     name: Tenants Certified Attributes Updater
     needs: [deploy_configs]
-    if: ${{ inputs.environment != 'es1-dev' }}
+    if: ${{ inputs.environment != 'es1-dev' && inputs.environment != 'es1-test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
@@ -919,7 +934,7 @@ jobs:
   deploy_ipa_certified_attributes_importer:
     name: IPA Certified Attributes Importer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' }}
+    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
@@ -1059,16 +1074,17 @@ jobs:
   delete_runner:
     name: Delete Self-Hosted Runner
     needs: [create_runner, deploy_ingress,
-      deploy_agreement_email_sender,
       deploy_agreement_process, deploy_agreement_readmodel_writer, deploy_agreement_outbound_writer,
       deploy_attribute_registry_process, deploy_attribute_registry_readmodel_writer,
       deploy_authorization_management, deploy_authorization_process, deploy_authorization_updater, deploy_client_readmodel_writer, deploy_key_readmodel_writer, deploy_producer_key_readmodel_writer, deploy_producer_keychain_readmodel_writer, deploy_client_purpose_updater,
       deploy_catalog_process, deploy_catalog_readmodel_writer, deploy_catalog_outbound_writer,
+      deploy_certified_email_sender,
       deploy_compute_agreements_consumer, deploy_party_registry_proxy,
       deploy_purpose_process, deploy_purpose_readmodel_writer, deploy_purpose_outbound_writer,
       deploy_tenant_process, deploy_tenant_readmodel_writer, deploy_tenant_outbound_writer,
       deploy_delegation_process, deploy_delegation_readmodel_writer, deploy_delegation_outbound_writer, deploy_delegation_items_archiver,
       deploy_eservice_template_process, deploy_eservice_template_readmodel_writer, deploy_eservice_template_instances_updater,
+      deploy_notification_email_sender,
       deploy_notifier, deploy_notifier_seeder,
       deploy_catalog_platformstate_writer, deploy_agreement_platformstate_writer, deploy_authorization_platformstate_writer, deploy_purpose_platformstate_writer,
       deploy_attributes_loader, deploy_token_details_persister, deploy_token_details_persister_node,

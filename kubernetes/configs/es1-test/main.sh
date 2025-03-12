@@ -24,7 +24,6 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-test/smtp_mock.sh
 . $(pwd)/kubernetes/configs/es1-test/ses_mock.sh
 
-. $(pwd)/kubernetes/configs/es1-test/agreement_email_sender.sh
 . $(pwd)/kubernetes/configs/es1-test/agreement_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/agreement_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/agreement_platformstate_writer.sh
@@ -37,12 +36,12 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-test/authorization_updater.sh
 . $(pwd)/kubernetes/configs/es1-test/attribute_registry_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/attribute_registry_process.sh
-. $(pwd)/kubernetes/configs/es1-test/attributes_loader.sh
 . $(pwd)/kubernetes/configs/es1-test/backend_for_frontend.sh
 . $(pwd)/kubernetes/configs/es1-test/catalog_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/catalog_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/catalog_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/catalog_process.sh
+. $(pwd)/kubernetes/configs/es1-test/certified_email_sender.sh
 . $(pwd)/kubernetes/configs/es1-test/compute_agreements_consumer.sh
 . $(pwd)/kubernetes/configs/es1-test/client_purpose_updater.sh
 . $(pwd)/kubernetes/configs/es1-test/client_readmodel_writer.sh
@@ -56,14 +55,15 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-test/purpose_process.sh
 . $(pwd)/kubernetes/configs/es1-test/tenant_process.sh
 . $(pwd)/kubernetes/configs/es1-test/tenant_readmodel_writer.sh
-. $(pwd)/kubernetes/configs/es1-test/tenants-certified-attributes-updater.sh
 . $(pwd)/kubernetes/configs/es1-test/token-generation-readmodel-checker.sh
+. $(pwd)/kubernetes/configs/es1-test/notification_email_sender.sh
 . $(pwd)/kubernetes/configs/es1-test/notifier.sh
 . $(pwd)/kubernetes/configs/es1-test/notifier_seeder.sh
 . $(pwd)/kubernetes/configs/es1-test/token_details_persister.sh
 . $(pwd)/kubernetes/configs/es1-test/party_registry_proxy_refresher.sh
 . $(pwd)/kubernetes/configs/es1-test/anac_certified_attributes_importer.sh
 . $(pwd)/kubernetes/configs/es1-test/ivass_certified_attributes_importer.sh
+. $(pwd)/kubernetes/configs/es1-test/ipa_certified_attributes_importer.sh
 . $(pwd)/kubernetes/configs/es1-test/pn_consumers.sh
 . $(pwd)/kubernetes/configs/es1-test/padigitale_report_generator.sh
 . $(pwd)/kubernetes/configs/es1-test/dtd_catalog_exporter.sh
