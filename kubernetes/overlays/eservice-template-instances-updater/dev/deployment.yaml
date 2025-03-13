@@ -39,11 +39,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ESERVICE_DOCUMENTS_CONTAINER
-            - name: ESERVICE_DOCUMENTS_PATHS
+            - name: ESERVICE_DOCUMENTS_PATH
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: ESERVICE_DOCUMENTS_PATHS
+                  key: ESERVICE_DOCUMENTS_PATH
             - name: INTERNAL_JWT_KID
               valueFrom:
                 configMapKeyRef:
