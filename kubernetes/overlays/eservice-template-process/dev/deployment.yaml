@@ -24,6 +24,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: S3_BUCKET
+            - name: ESERVICE_TEMPLATE_DOCUMENTS_CONTAINER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ESERVICE_TEMPLATE_DOCUMENTS_CONTAINER
             - name: ESERVICE_TEMPLATE_DOCUMENTS_PATH
               valueFrom:
                 configMapKeyRef:

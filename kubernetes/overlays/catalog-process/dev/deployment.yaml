@@ -49,3 +49,14 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: SIGNALHUB_WHITELIST_PRODUCER
+            - name: ESERVICE_TEMPLATE_DOCUMENTS_CONTAINER
+              valueFrom:
+                configMapKeyRef:
+                  key: ESERVICE_TEMPLATE_DOCUMENTS_CONTAINER
+                  name: {{SERVICE_NAME}}
+            - name: ESERVICE_TEMPLATE_DOCUMENTS_PATH
+              valueFrom:
+                configMapKeyRef:
+                  key: ESERVICE_TEMPLATE_DOCUMENTS_PATH
+                  name: {{SERVICE_NAME}}
+

@@ -304,5 +304,5 @@ spec:
             - name: ESERVICE_TEMPLATE_PROCESS_URL
               valueFrom:
                   configMapKeyRef:
-                    name: common-services-url
+                    name: common-services-urls
                     key: ESERVICE_TEMPLATE_PROCESS_URL
