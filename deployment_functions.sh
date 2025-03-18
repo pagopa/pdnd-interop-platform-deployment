@@ -279,6 +279,7 @@ function createIngress() {
   --annotation="alb.ingress.kubernetes.io/target-type=ip"
   --annotation="alb.ingress.kubernetes.io/group.name=interop-be"
   --annotation="alb.ingress.kubernetes.io/target-group-attributes=deregistration_delay.timeout_seconds=31"
+  --annotation="alb.ingress.kubernetes.io/healthcheck-interval-seconds=5"
   --annotation="alb.ingress.kubernetes.io/load-balancer-attributes=routing.http.preserve_host_header.enabled=true"
 EOT
 )
