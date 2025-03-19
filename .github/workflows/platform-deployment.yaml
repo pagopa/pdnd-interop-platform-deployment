@@ -558,7 +558,7 @@ jobs:
   deploy_eservice_template_process:
     name: Eservice Template Process
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' }}
+    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-qa' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -574,7 +574,7 @@ jobs:
   deploy_eservice_template_readmodel_writer:
     name: Eservice Template ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' }}
+    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-qa'  }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -590,7 +590,7 @@ jobs:
   deploy_eservice_template_instances_updater:
     name: Eservice Template Instances Updater
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' }}
+    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-qa' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
