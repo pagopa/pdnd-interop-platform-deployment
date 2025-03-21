@@ -2,9 +2,9 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    alb.ingress.kubernetes.io/healthcheck-path: /ui
+    alb.ingress.kubernetes.io/healthcheck-path: /nginx-status
     alb.ingress.kubernetes.io/healthcheck-port: "80"
-    alb.ingress.kubernetes.io/success-codes: '301'
+    alb.ingress.kubernetes.io/success-codes: '200'
   labels:
     prometheus: "true"
   name: {{SERVICE_NAME}}

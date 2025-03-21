@@ -88,6 +88,12 @@ SMTP_ADDRESS="email-smtp.eu-central-1.amazonaws.com"
 SMTP_PORT=465
 
 AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.prod.svc.cluster.local:8088/authorization-management/1.0"
+DELEGATION_PROCESS_URL="http://interop-be-delegation-process.prod.svc.cluster.local:8088"
+AGREEMENT_PROCESS_URL="http://interop-be-agreement-process.prod.svc.cluster.local:8088"
+PURPOSE_PROCESS_URL="http://interop-be-purpose-process.prod.svc.cluster.local:8088"
+TENANT_PROCESS_URL="http://interop-be-tenant-process.prod.svc.cluster.local:8088"
+ATTRIBUTE_REGISTRY_PROCESS_URL="http://interop-be-attribute-registry-process.prod.svc.cluster.local:8088"
+
 CLIENT_ASSERTION_JWT_AUDIENCE="auth.interop.pagopa.it/client-assertion"
 
 FEATURE_FLAG_SIGNALHUB_WHITELIST=true

@@ -32,7 +32,6 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-att/authorization_updater.sh
 . $(pwd)/kubernetes/configs/es1-att/attribute_registry_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-att/attribute_registry_process.sh
-. $(pwd)/kubernetes/configs/es1-att/attributes_loader.sh
 . $(pwd)/kubernetes/configs/es1-att/backend_for_frontend.sh
 . $(pwd)/kubernetes/configs/es1-att/catalog_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-att/catalog_readmodel_writer.sh
@@ -55,7 +54,6 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-att/tenant_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-att/tenant_process.sh
 . $(pwd)/kubernetes/configs/es1-att/tenant_readmodel_writer.sh
-. $(pwd)/kubernetes/configs/es1-att/tenants-certified-attributes-updater.sh
 . $(pwd)/kubernetes/configs/es1-att/notification_email_sender.sh
 . $(pwd)/kubernetes/configs/es1-att/notifier.sh
 . $(pwd)/kubernetes/configs/es1-att/notifier_seeder.sh
@@ -63,6 +61,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-att/party_registry_proxy_refresher.sh
 . $(pwd)/kubernetes/configs/es1-att/anac_certified_attributes_importer.sh
 . $(pwd)/kubernetes/configs/es1-att/ivass_certified_attributes_importer.sh
+. $(pwd)/kubernetes/configs/es1-att/ipa_certified_attributes_importer.sh
 . $(pwd)/kubernetes/configs/es1-att/pn_consumers.sh
 . $(pwd)/kubernetes/configs/es1-att/padigitale_report_generator.sh
 . $(pwd)/kubernetes/configs/es1-att/dtd_catalog_exporter.sh
