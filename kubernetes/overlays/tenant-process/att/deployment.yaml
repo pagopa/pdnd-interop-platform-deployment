@@ -24,3 +24,8 @@ spec:
                 configMapKeyRef:
                   name: common-jwt
                   key: WELL_KNOWN_URLS
+            - name: DELEGATIONS_ALLOWED_ORIGINS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: DELEGATIONS_ALLOWED_ORIGINS
