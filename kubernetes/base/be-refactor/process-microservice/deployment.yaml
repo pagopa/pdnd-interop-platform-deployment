@@ -18,6 +18,7 @@ spec:
         digest: {{IMAGE_DIGEST}} # Used to force deployment on same image version but different content
     spec:
       serviceAccountName: {{SERVICE_NAME}}
+      terminationGracePeriodSeconds: 31
       containers:
         - name: {{SERVICE_NAME}}
           image: "{{REPOSITORY}}/{{SERVICE_ECR_NAME}}:{{IMAGE_VERSION}}"
@@ -45,6 +46,10 @@ spec:
             limits:
               cpu: "{{SERVICE_RESOURCE_CPU}}"
               memory: "{{SERVICE_RESOURCE_MEM}}"
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "sleep 30; exit 0;"]
           env:
             - name: PORT
               value: "{{BACKEND_SERVICE_PORT}}"
