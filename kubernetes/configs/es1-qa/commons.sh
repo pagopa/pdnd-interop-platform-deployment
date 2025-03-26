@@ -29,6 +29,7 @@ CATALOG_TOPIC="event-store.qa_catalog.events"
 PURPOSE_TOPIC="event-store.qa_purpose.events"
 TENANT_TOPIC="event-store.qa_tenant.events"
 DELEGATION_TOPIC="event-store.qa_delegation.events"
+ESERVICE_TEMPLATE_TOPIC="event-store.qa_eservice_template.events"
 
 AGREEMENT_OUTBOUND_TOPIC="outbound.qa_agreement.events"
 CATALOG_OUTBOUND_TOPIC="outbound.qa_catalog.events"
@@ -60,6 +61,10 @@ INTEROP_FE_BASE_URL="selfcare.qa.interop.pagopa.it"
 INTEROP_SELFCARE_PRODUCT_NAME="prod-interop-coll"
 TENANT_ALLOWED_ORIGINS="IPA,ANAC,IVASS,PDND_INFOCAMERE-SCP"
 PRODUCER_ALLOWED_ORIGINS="IPA"
+
+
+ESERVICE_TEMPLATE_PROCESS_STORAGE_CONTAINER="interop-application-documents-qa-es1"
+ESERVICE_TEMPLATE_PROCESS_DOCUMENTS_PATH="eservice-template/docs"
 
 INTERNAL_JWT_ISSUER="qa.interop.pagopa.it"
 INTERNAL_JWT_SUBJECT="qa.interop-m2m"
@@ -93,6 +98,8 @@ AUTHORIZATION_MANAGEMENT_URL="http://interop-be-authorization-management.qa.svc.
 DELEGATION_PROCESS_URL="http://interop-be-delegation-process.qa.svc.cluster.local:8088"
 AGREEMENT_PROCESS_URL="http://interop-be-agreement-process.qa.svc.cluster.local:8088"
 PURPOSE_PROCESS_URL="http://interop-be-purpose-process.qa.svc.cluster.local:8088"
+CATALOG_PROCESS_URL="http://interop-be-catalog-process.qa.svc.cluster.local:8088"
+ESERVICE_TEMPLATE_PROCESS_URL="http://interop-be-eservice-template-process.qa.svc.cluster.local:8088"
 TENANT_PROCESS_URL="http://interop-be-tenant-process.qa.svc.cluster.local:8088"
 ATTRIBUTE_REGISTRY_PROCESS_URL="http://interop-be-attribute-registry-process.qa.svc.cluster.local:8088"
 

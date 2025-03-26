@@ -291,3 +291,18 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: INTEROP_SELFCARE_PRODUCT_NAME
+            - name: ESERVICE_TEMPLATE_DOCUMENTS_CONTAINER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ESERVICE_TEMPLATE_DOCUMENTS_CONTAINER
+            - name: ESERVICE_TEMPLATE_DOCUMENTS_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ESERVICE_TEMPLATE_DOCUMENTS_PATH
+            - name: ESERVICE_TEMPLATE_PROCESS_URL
+              valueFrom:
+                  configMapKeyRef:
+                    name: common-services-urls
+                    key: ESERVICE_TEMPLATE_PROCESS_URL
