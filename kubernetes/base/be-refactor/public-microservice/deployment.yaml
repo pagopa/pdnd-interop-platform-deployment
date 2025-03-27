@@ -105,7 +105,7 @@ spec:
                   name: common-kafka
                   key: KAFKA_BROKERS
             - name: APPLICATION_AUDIT_TOPIC
-              valueFrome:
+              valueFrom:
                 configMapKeyRef:
                   name: common-kafka
                   key: APPLICATION_AUDIT_TOPIC
