@@ -37,6 +37,7 @@ PURPOSE_OUTBOUND_TOPIC="outbound.dev_purpose.events"
 TENANT_OUTBOUND_TOPIC="outbound.dev_tenant.events"
 DELEGATION_OUTBOUND_TOPIC="outbound.dev_delegation.events"
 
+APPLICATION_AUDIT_TOPIC="dev_application.audit"
 TOKEN_AUDITING_TOPIC="dev_authorization-server.generated-jwt"
 
 AWS_REGION="eu-south-1"
