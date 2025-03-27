@@ -43,6 +43,9 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-qa/delegation_items_archiver.sh
 . $(pwd)/kubernetes/configs/es1-qa/delegation_process.sh
 . $(pwd)/kubernetes/configs/es1-qa/delegation_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-qa/eservice_template_process.sh
+. $(pwd)/kubernetes/configs/es1-qa/eservice_template_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-qa/eservice_template_instances_updater.sh
 . $(pwd)/kubernetes/configs/es1-qa/key_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-qa/frontend.sh
 . $(pwd)/kubernetes/configs/es1-qa/party_registry_proxy.sh
