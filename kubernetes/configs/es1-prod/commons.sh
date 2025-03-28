@@ -29,6 +29,7 @@ CATALOG_TOPIC="event-store.prod_catalog.events"
 PURPOSE_TOPIC="event-store.prod_purpose.events"
 TENANT_TOPIC="event-store.prod_tenant.events"
 
+APPLICATION_AUDIT_TOPIC="prod_application.audit"
 TOKEN_AUDITING_TOPIC="prod_authorization-server.generated-jwt"
 
 AGREEMENT_OUTBOUND_TOPIC="outbound.prod_agreement.events"
