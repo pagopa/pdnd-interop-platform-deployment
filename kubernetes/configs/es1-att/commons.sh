@@ -34,6 +34,8 @@ PURPOSE_OUTBOUND_TOPIC="outbound.att_purpose.events"
 TENANT_OUTBOUND_TOPIC="outbound.att_tenant.events"
 DELEGATION_OUTBOUND_TOPIC="outbound.att_delegation.events"
 
+APPLICATION_AUDIT_TOPIC="att_application.audit"
+
 AWS_REGION="eu-south-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
 CERTIFIED_MAIL_QUEUE_NAME="certified-mail.fifo"
