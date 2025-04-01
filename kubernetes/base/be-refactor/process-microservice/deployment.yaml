@@ -84,6 +84,8 @@ spec:
                   key: POSTGRES_PSW
             - name: EVENTSTORE_DB_USE_SSL
               value: "true"
+            - name: KEEP_ALIVE_TIMEOUT_MILLIS
+              value: 61000
             - name: READMODEL_DB_HOST
               valueFrom:
                 configMapKeyRef:
