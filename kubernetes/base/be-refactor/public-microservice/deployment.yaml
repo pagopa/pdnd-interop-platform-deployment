@@ -58,7 +58,7 @@ spec:
             - name: LOG_LEVEL
               value: info
             - name: KEEP_ALIVE_TIMEOUT_MILLIS
-              value: 61000
+              value: "61000"
             - name: RATE_LIMITER_MAX_REQUESTS
               valueFrom:
                 configMapKeyRef:
