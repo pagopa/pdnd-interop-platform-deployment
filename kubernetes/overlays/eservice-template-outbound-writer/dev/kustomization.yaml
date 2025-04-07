@@ -1,6 +1,0 @@
-bases:
-- ../../../base/be-refactor/generic-consumer
-resources:
-- configmap.yaml
-patchesStrategicMerge:
-- deployment.yaml
