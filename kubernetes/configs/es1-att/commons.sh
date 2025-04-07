@@ -20,6 +20,9 @@ BACKEND_SERVICE_PORT="8088"
 
 KAFKA_BROKERS="b-3.interopplatformevents.1e4dzm.c3.kafka.eu-south-1.amazonaws.com:9098,b-1.interopplatformevents.1e4dzm.c3.kafka.eu-south-1.amazonaws.com:9098,b-2.interopplatformevents.1e4dzm.c3.kafka.eu-south-1.amazonaws.com:9098"
 
+TOKEN_READMODEL_PLATFORM_STATES_TABLE_NAME="interop-platform-states-att"
+TOKEN_READMODEL_TOKEN_STATES_TABLE_NAME="interop-token-generation-states-att"
+
 AGREEMENT_TOPIC="event-store.att_agreement.events"
 ATTRIBUTE_TOPIC="event-store.att_attribute_registry.events"
 AUTHORIZATION_TOPIC="event-store.att_authorization.events"
@@ -28,6 +31,8 @@ PURPOSE_TOPIC="event-store.att_purpose.events"
 TENANT_TOPIC="event-store.att_tenant.events"
 DELEGATION_TOPIC="event-store.att_delegation.events"
 ESERVICE_TEMPLATE_TOPIC="event-store.att_eservice_template.events"
+
+TOKEN_AUDITING_TOPIC="att_authorization-server.generated-jwt"
 
 AGREEMENT_OUTBOUND_TOPIC="outbound.att_agreement.events"
 CATALOG_OUTBOUND_TOPIC="outbound.att_catalog.events"

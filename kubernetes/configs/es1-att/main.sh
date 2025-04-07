@@ -5,6 +5,8 @@
 . $(pwd)/kubernetes/configs/es1-att/versions.sh
 . $(pwd)/kubernetes/configs/es1-att/commons.sh
 
+. $(pwd)/kubernetes/configs/es1-att/authorization_server_canary_ingress.sh
+
 # Calculated
 NAMESPACE=$NAMESPACE
 EXTERNAL_APPLICATION_HOST="$UI_SUBDOMAIN.$DOMAIN_NAME"
@@ -24,8 +26,10 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 
 . $(pwd)/kubernetes/configs/es1-att/agreement_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-att/agreement_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-att/agreement_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-att/agreement_process.sh
 . $(pwd)/kubernetes/configs/es1-att/api_gateway.sh
+. $(pwd)/kubernetes/configs/es1-att/authorization_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-att/authorization_management.sh
 . $(pwd)/kubernetes/configs/es1-att/authorization_process.sh
 . $(pwd)/kubernetes/configs/es1-att/authorization_server.sh
@@ -35,6 +39,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-att/backend_for_frontend.sh
 . $(pwd)/kubernetes/configs/es1-att/catalog_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-att/catalog_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-att/catalog_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-att/catalog_process.sh
 . $(pwd)/kubernetes/configs/es1-att/certified_email_sender.sh
 . $(pwd)/kubernetes/configs/es1-att/compute_agreements_consumer.sh
@@ -55,9 +60,11 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-att/purpose_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-att/purpose_process.sh
 . $(pwd)/kubernetes/configs/es1-att/purpose_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-att/purpose_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-att/tenant_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-att/tenant_process.sh
 . $(pwd)/kubernetes/configs/es1-att/tenant_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-att/token-generation-readmodel-checker.sh
 . $(pwd)/kubernetes/configs/es1-att/notification_email_sender.sh
 . $(pwd)/kubernetes/configs/es1-att/notifier.sh
 . $(pwd)/kubernetes/configs/es1-att/notifier_seeder.sh
