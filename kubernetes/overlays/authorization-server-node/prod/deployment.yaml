@@ -4,6 +4,7 @@ metadata:
   name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 spec:
+  replicas: 6
   template:
     spec:
       containers:
