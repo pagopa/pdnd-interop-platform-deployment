@@ -27,12 +27,14 @@ CATALOG_TOPIC="event-store.att_catalog.events"
 PURPOSE_TOPIC="event-store.att_purpose.events"
 TENANT_TOPIC="event-store.att_tenant.events"
 DELEGATION_TOPIC="event-store.att_delegation.events"
+ESERVICE_TEMPLATE_TOPIC="event-store.att_eservice_template.events"
 
 AGREEMENT_OUTBOUND_TOPIC="outbound.att_agreement.events"
 CATALOG_OUTBOUND_TOPIC="outbound.att_catalog.events"
 PURPOSE_OUTBOUND_TOPIC="outbound.att_purpose.events"
 TENANT_OUTBOUND_TOPIC="outbound.att_tenant.events"
 DELEGATION_OUTBOUND_TOPIC="outbound.att_delegation.events"
+ESERVICE_TEMPLATE_OUTBOUND_TOPIC="outbound.att_eservice_template.events"
 
 APPLICATION_AUDIT_TOPIC="att_application.audit"
 
@@ -63,6 +65,9 @@ INTEROP_SELFCARE_PRODUCT_NAME="prod-interop-atst"
 TENANT_ALLOWED_ORIGINS="IPA,ANAC,IVASS,INFOCAMERE,SELC,PDND_INFOCAMERE-SCP,PDND_INFOCAMERE-PRV,INFOCAMERE-PT"
 PRODUCER_ALLOWED_ORIGINS="IPA,ANAC,IVASS,INFOCAMERE,SELC,PDND_INFOCAMERE-SCP,PDND_INFOCAMERE-PRV,INFOCAMERE-PT"
 DELEGATIONS_ALLOWED_ORIGINS="IPA,ANAC,IVASS,INFOCAMERE,SELC,PDND_INFOCAMERE-SCP,PDND_INFOCAMERE-PRV,INFOCAMERE-PT"
+
+ESERVICE_TEMPLATE_PROCESS_STORAGE_CONTAINER="interop-application-documents-att-es1"
+ESERVICE_TEMPLATE_PROCESS_DOCUMENTS_PATH="eservice-template/docs"
 
 PRIVACY_NOTICES_DYNAMO_TABLE_NAME="interop-privacy-notices-att"
 PRIVACY_NOTICES_ACCEPTANCE_DYNAMO_TABLE_NAME="interop-privacy-notices-acceptances-att"
