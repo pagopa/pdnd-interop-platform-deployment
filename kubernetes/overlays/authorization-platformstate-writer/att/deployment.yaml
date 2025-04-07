@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{SERVICE_NAME}}
+          env:
+            - name: KAFKA_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: KAFKA_CLIENT_ID
+            - name: KAFKA_GROUP_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: KAFKA_GROUP_ID
+            - name: AUTHORIZATION_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: AUTHORIZATION_TOPIC
+            - name: TOKEN_GENERATION_READMODEL_TABLE_NAME_PLATFORM
+              valueFrom:
+                configMapKeyRef:
+                  name: common-token-generation-read-model
+                  key: TOKEN_READMODEL_PLATFORM_STATES_TABLE_NAME
+            - name: TOKEN_GENERATION_READMODEL_TABLE_NAME_TOKEN_GENERATION
+              valueFrom:
+                configMapKeyRef:
+                  name: common-token-generation-read-model
+                  key: TOKEN_READMODEL_TOKEN_STATES_TABLE_NAME
+            - name: TOPIC_STARTING_OFFSET
+              value: "earliest"
