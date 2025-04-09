@@ -57,6 +57,8 @@ spec:
               value: "0.0.0.0"
             - name: LOG_LEVEL
               value: info
+            - name: KEEP_ALIVE_TIMEOUT_MILLIS
+              value: "61000"
             - name: RATE_LIMITER_MAX_REQUESTS
               valueFrom:
                 configMapKeyRef:
@@ -81,3 +83,31 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: RATE_LIMITER_TIMEOUT_MILLIS
+            - name: SERVICE_VERSION
+              value: {{IMAGE_VERSION}}
+            - name: POD_NAME
+              valueFrom:             
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NODE_IP
+              valueFrom:             
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: AWS_ROLE_SESSION_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: PRODUCER_KAFKA_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: PRODUCER_KAFKA_BROKERS
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: KAFKA_BROKERS
+            - name: APPLICATION_AUDIT_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: common-kafka
+                  key: APPLICATION_AUDIT_TOPIC

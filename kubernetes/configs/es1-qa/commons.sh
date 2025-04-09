@@ -36,6 +36,7 @@ CATALOG_OUTBOUND_TOPIC="outbound.qa_catalog.events"
 PURPOSE_OUTBOUND_TOPIC="outbound.qa_purpose.events"
 TENANT_OUTBOUND_TOPIC="outbound.qa_tenant.events"
 
+APPLICATION_AUDIT_TOPIC="qa_application.audit"
 TOKEN_AUDITING_TOPIC="qa_authorization-server.generated-jwt"
 
 AWS_REGION="eu-south-1"

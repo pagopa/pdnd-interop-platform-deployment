@@ -4,6 +4,7 @@ metadata:
   name: {{SERVICE_NAME}}
   namespace: {{NAMESPACE}}
 spec:
+  replicas: 6
   template:
     spec:
       containers:
@@ -26,11 +27,6 @@ spec:
                 configMapKeyRef:
                   name: common-kafka
                   key: KAFKA_BROKERS
-            - name: PRODUCER_KAFKA_CLIENT_ID
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: KAFKA_CLIENT_ID
             - name: S3_BUCKET
               valueFrom:
                 configMapKeyRef:
