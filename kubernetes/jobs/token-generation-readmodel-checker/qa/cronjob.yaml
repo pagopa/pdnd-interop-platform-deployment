@@ -1,0 +1,74 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  labels:
+    app: {{SERVICE_NAME}}
+  name: {{SERVICE_NAME}}
+  namespace: {{NAMESPACE}}
+spec:
+  schedule: "0 3 * * *"
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 0
+  jobTemplate:
+    metadata:
+      labels:
+        app: {{SERVICE_NAME}}
+      annotations:
+        digest: {{IMAGE_DIGEST}} # Used to force deployment on same image version but different content
+    spec:
+      template:
+        metadata:
+          labels:
+            app: {{SERVICE_NAME}}
+        spec:
+          restartPolicy: OnFailure
+          serviceAccountName: {{SERVICE_NAME}}
+          containers:
+            - name: {{SERVICE_NAME}}
+              image: {{REPOSITORY}}/{{SERVICE_NAME}}:{{JOB_TOKEN_GENERATION_READMODEL_CHECKER_IMAGE_VERSION}}
+              imagePullPolicy: Always
+              env:
+                - name: NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: LOG_LEVEL
+                  value: info
+                - name: READMODEL_DB_HOST
+                  value: "{{READ_MODEL_DB_HOST}}"
+                - name: READMODEL_DB_PORT
+                  value: "{{READ_MODEL_DB_PORT}}"
+                - name: READMODEL_DB_NAME
+                  value: "{{READ_MODEL_DB_NAME}}"
+                - name: TOKEN_GENERATION_READMODEL_TABLE_NAME_PLATFORM
+                  valueFrom:
+                    configMapKeyRef:
+                      name: common-token-generation-read-model
+                      key: TOKEN_READMODEL_PLATFORM_STATES_TABLE_NAME
+                - name: TOKEN_GENERATION_READMODEL_TABLE_NAME_TOKEN_GENERATION
+                  valueFrom:
+                    configMapKeyRef:
+                      name: common-token-generation-read-model
+                      key: TOKEN_READMODEL_TOKEN_STATES_TABLE_NAME
+                - name: READMODEL_DB_USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: documentdb
+                      key: READONLY_USR
+                - name: READMODEL_DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: documentdb
+                      key: READONLY_PSW
+                - name: AGREEMENTS_TO_SKIP
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{SERVICE_NAME}}
+                      key: AGREEMENTS_TO_SKIP
+              resources:
+                requests:
+                  cpu: "{{SERVICE_RESOURCE_CPU}}"
+                  memory: "{{SERVICE_RESOURCE_MEM}}"
+                limits:
+                  cpu: "{{SERVICE_RESOURCE_CPU}}"
+                  memory: "{{SERVICE_RESOURCE_MEM}}"

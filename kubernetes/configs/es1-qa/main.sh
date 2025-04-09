@@ -5,6 +5,8 @@
 . $(pwd)/kubernetes/configs/es1-qa/versions.sh
 . $(pwd)/kubernetes/configs/es1-qa/commons.sh
 
+. $(pwd)/kubernetes/configs/es1-qa/authorization_server_canary_ingress.sh
+
 # Calculated
 NAMESPACE=$NAMESPACE
 EXTERNAL_APPLICATION_HOST="$UI_SUBDOMAIN.$DOMAIN_NAME"
@@ -54,6 +56,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-qa/purpose_process.sh
 . $(pwd)/kubernetes/configs/es1-qa/tenant_process.sh
 . $(pwd)/kubernetes/configs/es1-qa/tenant_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-qa/token-generation-readmodel-checker.sh
 . $(pwd)/kubernetes/configs/es1-qa/notification_email_sender.sh
 . $(pwd)/kubernetes/configs/es1-qa/notifier.sh
 . $(pwd)/kubernetes/configs/es1-qa/notifier_seeder.sh
