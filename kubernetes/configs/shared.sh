@@ -34,6 +34,7 @@ DATALAKE_INTERFACE_EXPORTER_SERVICE_NAME="interop-be-datalake-interface-exporter
 ESERVICE_TEMPLATE_PROCESS_SERVICE_NAME="interop-be-eservice-template-process"
 ESERVICE_TEMPLATE_READMODEL_WRITER_SERVICE_NAME="interop-be-eservice-template-readmodel-writer"
 ESERVICE_TEMPLATE_INSTANCES_UPDATER_SERVICE_NAME="interop-be-eservice-template-instances-updater"
+ESERVICE_TEMPLATE_OUTBOUND_WRITER_SERVICE_NAME="interop-be-eservice-template-outbound-writer"
 KEY_READMODEL_WRITER_SERVICE_NAME="interop-be-key-readmodel-writer"
 PARTY_REGISTRY_PROXY_SERVICE_NAME="interop-be-party-registry-proxy"
 PRODUCER_KEY_READMODEL_WRITER_SERVICE_NAME="interop-be-producer-key-readmodel-writer"
