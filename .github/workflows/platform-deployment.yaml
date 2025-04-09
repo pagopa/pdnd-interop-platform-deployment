@@ -651,7 +651,6 @@ jobs:
   deploy_authorization_server_node:
     name: Authorization Server Node
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-qa' || inputs.environment == 'es1-test' || inputs.environment == 'es1-prod' || inputs.environment == 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -667,7 +666,6 @@ jobs:
   deploy_catalog_platformstate_writer:
     name: Catalog Platform State Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-qa' || inputs.environment == 'es1-test' || inputs.environment == 'es1-prod' || inputs.environment == 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -683,7 +681,6 @@ jobs:
   deploy_agreement_platformstate_writer:
     name: Agreement Platform State Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-qa' || inputs.environment == 'es1-test' || inputs.environment == 'es1-prod' || inputs.environment == 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -699,7 +696,6 @@ jobs:
   deploy_authorization_platformstate_writer:
     name: Authorization Platform State Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-qa' || inputs.environment == 'es1-test' || inputs.environment == 'es1-prod' || inputs.environment == 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -715,7 +711,6 @@ jobs:
   deploy_purpose_platformstate_writer:
     name: Purpose Platform State Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-qa' || inputs.environment == 'es1-test' || inputs.environment == 'es1-prod' || inputs.environment == 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -810,7 +805,6 @@ jobs:
   deploy_token_details_persister_node:
     name: Token Details Persister Node
     needs: [deploy_configs]
-    if: inputs.environment == 'es1-dev' || inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-qa' || inputs.environment == 'es1-test' || inputs.environment == 'es1-prod' || inputs.environment == 'es1-att'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -826,7 +820,6 @@ jobs:
   deploy_token_generation_readmodel_checker:
     name: Token Generation Read Model Checker
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-test' || inputs.environment == 'es1-prod' || inputs.environment == 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
