@@ -30,6 +30,7 @@ CATALOG_TOPIC="event-store.att_catalog.events"
 PURPOSE_TOPIC="event-store.att_purpose.events"
 TENANT_TOPIC="event-store.att_tenant.events"
 DELEGATION_TOPIC="event-store.att_delegation.events"
+ESERVICE_TEMPLATE_TOPIC="event-store.att_eservice_template.events"
 
 TOKEN_AUDITING_TOPIC="att_authorization-server.generated-jwt"
 
@@ -38,6 +39,7 @@ CATALOG_OUTBOUND_TOPIC="outbound.att_catalog.events"
 PURPOSE_OUTBOUND_TOPIC="outbound.att_purpose.events"
 TENANT_OUTBOUND_TOPIC="outbound.att_tenant.events"
 DELEGATION_OUTBOUND_TOPIC="outbound.att_delegation.events"
+ESERVICE_TEMPLATE_OUTBOUND_TOPIC="outbound.att_eservice_template.events"
 
 APPLICATION_AUDIT_TOPIC="att_application.audit"
 
@@ -65,9 +67,13 @@ SELFCARE_V2_URL="https://api.selfcare.pagopa.it/external/v2"
 INTEROP_FE_BASE_URL="selfcare.att.interop.pagopa.it"
 
 INTEROP_SELFCARE_PRODUCT_NAME="prod-interop-atst"
-TENANT_ALLOWED_ORIGINS="IPA,ANAC,IVASS,INFOCAMERE,SELC,SELC-PT,PDND_INFOCAMERE-SCP,PDND_INFOCAMERE-PRV,INFOCAMERE-PT"
-PRODUCER_ALLOWED_ORIGINS="IPA,ANAC,IVASS,INFOCAMERE,SELC,SELC-PT,PDND_INFOCAMERE-SCP,PDND_INFOCAMERE-PRV,INFOCAMERE-PT"
-DELEGATIONS_ALLOWED_ORIGINS="IPA,ANAC,IVASS,INFOCAMERE,SELC,SELC-PT,PDND_INFOCAMERE-SCP,PDND_INFOCAMERE-PRV,INFOCAMERE-PT"
+
+TENANT_ALLOWED_ORIGINS="IPA,ANAC,IVASS,INFOCAMERE,SELC,SELC-PT,PDND_INFOCAMERE-SCP,PDND_INFOCAMERE-PRV,PDND_INFOCAMERE-PT,INFOCAMERE-PT"
+PRODUCER_ALLOWED_ORIGINS="IPA,ANAC,IVASS,INFOCAMERE,SELC,SELC-PT,PDND_INFOCAMERE-SCP,PDND_INFOCAMERE-PRV,PDND_INFOCAMERE-PT,INFOCAMERE-PT"
+DELEGATIONS_ALLOWED_ORIGINS="IPA,ANAC,IVASS,INFOCAMERE,SELC,SELC-PT,PDND_INFOCAMERE-SCP,PDND_INFOCAMERE-PRV,PDND_INFOCAMERE-PT,INFOCAMERE-PT"
+
+ESERVICE_TEMPLATE_PROCESS_STORAGE_CONTAINER="interop-application-documents-att-es1"
+ESERVICE_TEMPLATE_PROCESS_DOCUMENTS_PATH="eservice-template/docs"
 
 PRIVACY_NOTICES_DYNAMO_TABLE_NAME="interop-privacy-notices-att"
 PRIVACY_NOTICES_ACCEPTANCE_DYNAMO_TABLE_NAME="interop-privacy-notices-acceptances-att"
@@ -99,6 +105,8 @@ AGREEMENT_PROCESS_URL="http://interop-be-agreement-process.att.svc.cluster.local
 PURPOSE_PROCESS_URL="http://interop-be-purpose-process.att.svc.cluster.local:8088"
 TENANT_PROCESS_URL="http://interop-be-tenant-process.att.svc.cluster.local:8088"
 ATTRIBUTE_REGISTRY_PROCESS_URL="http://interop-be-attribute-registry-process.att.svc.cluster.local:8088"
+CATALOG_PROCESS_URL="http://interop-be-catalog-process.att.svc.cluster.local:8088"
+ESERVICE_TEMPLATE_PROCESS_URL="http://interop-be-eservice-template-process.att.svc.cluster.local:8088"
 
 CLIENT_ASSERTION_JWT_AUDIENCE="auth.att.interop.pagopa.it/client-assertion"
 
