@@ -104,6 +104,7 @@ AGREEMENT_PROCESS_URL="http://interop-be-agreement-process.att.svc.cluster.local
 PURPOSE_PROCESS_URL="http://interop-be-purpose-process.att.svc.cluster.local:8088"
 TENANT_PROCESS_URL="http://interop-be-tenant-process.att.svc.cluster.local:8088"
 ATTRIBUTE_REGISTRY_PROCESS_URL="http://interop-be-attribute-registry-process.att.svc.cluster.local:8088"
+ESERVICE_TEMPLATE_PROCESS_URL="http://interop-be-eservice-template-process.att.svc.cluster.local:8088"
 
 CLIENT_ASSERTION_JWT_AUDIENCE="auth.att.interop.pagopa.it/client-assertion"
 
