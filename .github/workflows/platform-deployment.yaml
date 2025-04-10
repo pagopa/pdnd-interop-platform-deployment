@@ -1024,8 +1024,7 @@ jobs:
     name: SES mock
     needs: [deploy_configs]
     if: |
-        inputs.environment != 'att' && inputs.environment != 'es1-att'
-        && inputs.environment != 'prod' && inputs.environment != 'es1-prod'
+        inputs.environment != 'prod' && inputs.environment != 'es1-prod'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-ses-mock.yaml
