@@ -18,6 +18,11 @@ spec:
         digest: {{IMAGE_DIGEST}} # Used to force deployment on same image version but different content
     spec:
       serviceAccountName: {{SERVICE_NAME}}
+      strategy:
+        type: "RollingUpdate"
+        rollingUpdate:
+          maxSurge: "25%"
+          maxUnavailable: "0%"
       terminationGracePeriodSeconds: 31
       containers:
         - name: {{SERVICE_NAME}}
