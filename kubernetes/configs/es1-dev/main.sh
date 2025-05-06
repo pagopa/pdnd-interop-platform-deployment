@@ -31,6 +31,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-dev/authorization_management.sh
 . $(pwd)/kubernetes/configs/es1-dev/authorization_process.sh
 . $(pwd)/kubernetes/configs/es1-dev/authorization_server.sh
+. $(pwd)/kubernetes/configs/es1-dev/authorization_server_canary_ingress.sh
 . $(pwd)/kubernetes/configs/es1-dev/authorization_updater.sh
 . $(pwd)/kubernetes/configs/es1-dev/attribute_registry_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-dev/attribute_registry_process.sh
