@@ -49,3 +49,8 @@ spec:
                 configMapKeyRef:
                   key: ESERVICE_TEMPLATE_DOCUMENTS_PATH
                   name: {{SERVICE_NAME}}
+            - name: FEATURE_FLAG_AGREEMENT_APPROVAL_POLICY_UPDATE
+              valueFrom:
+                configMapKeyRef:
+                  key: FEATURE_FLAG_AGREEMENT_APPROVAL_POLICY_UPDATE
+                  name: {{SERVICE_NAME}}
