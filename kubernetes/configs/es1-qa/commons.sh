@@ -105,3 +105,5 @@ TENANT_PROCESS_URL="http://interop-be-tenant-process.qa.svc.cluster.local:8088"
 ATTRIBUTE_REGISTRY_PROCESS_URL="http://interop-be-attribute-registry-process.qa.svc.cluster.local:8088"
 
 CLIENT_ASSERTION_JWT_AUDIENCE="auth.qa.interop.pagopa.it/client-assertion"
+
+FEATURE_FLAG_AGREEMENT_APPROVAL_POLICY_UPDATE=true
