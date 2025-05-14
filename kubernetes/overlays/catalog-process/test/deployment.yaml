@@ -39,6 +39,11 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ACCEPTED_AUDIENCES
+            - name: FEATURE_FLAG_AGREEMENT_APPROVAL_POLICY_UPDATE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: FEATURE_FLAG_AGREEMENT_APPROVAL_POLICY_UPDATE
             - name: FEATURE_FLAG_SIGNALHUB_WHITELIST
               valueFrom:
                 configMapKeyRef:
