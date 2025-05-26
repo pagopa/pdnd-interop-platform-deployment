@@ -44,13 +44,3 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: FEATURE_FLAG_AGREEMENT_APPROVAL_POLICY_UPDATE
-            - name: FEATURE_FLAG_SIGNALHUB_WHITELIST
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: FEATURE_FLAG_SIGNALHUB_WHITELIST
-            - name: SIGNALHUB_WHITELIST_PRODUCER
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: SIGNALHUB_WHITELIST_PRODUCER
