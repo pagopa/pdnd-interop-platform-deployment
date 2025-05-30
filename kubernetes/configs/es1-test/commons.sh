@@ -28,11 +28,13 @@ AUTHORIZATION_TOPIC="event-store.test_authorization.events"
 CATALOG_TOPIC="event-store.test_catalog.events"
 PURPOSE_TOPIC="event-store.test_purpose.events"
 TENANT_TOPIC="event-store.test_tenant.events"
+DELEGATION_TOPIC="event-store.test_delegation.events"
 
 AGREEMENT_OUTBOUND_TOPIC="outbound.test_agreement.events"
 CATALOG_OUTBOUND_TOPIC="outbound.test_catalog.events"
 PURPOSE_OUTBOUND_TOPIC="outbound.test_purpose.events"
 TENANT_OUTBOUND_TOPIC="outbound.test_tenant.events"
+DELEGATION_OUTBOUND_TOPIC="outbound.test_delegation.events"
 
 APPLICATION_AUDIT_TOPIC="test_application.audit"
 TOKEN_AUDITING_TOPIC="test_authorization-server.generated-jwt"
