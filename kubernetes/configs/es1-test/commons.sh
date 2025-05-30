@@ -29,12 +29,14 @@ CATALOG_TOPIC="event-store.test_catalog.events"
 PURPOSE_TOPIC="event-store.test_purpose.events"
 TENANT_TOPIC="event-store.test_tenant.events"
 DELEGATION_TOPIC="event-store.test_delegation.events"
+ESERVICE_TEMPLATE_TOPIC="event-store.test_eservice_template.events"
 
 AGREEMENT_OUTBOUND_TOPIC="outbound.test_agreement.events"
 CATALOG_OUTBOUND_TOPIC="outbound.test_catalog.events"
 PURPOSE_OUTBOUND_TOPIC="outbound.test_purpose.events"
 TENANT_OUTBOUND_TOPIC="outbound.test_tenant.events"
 DELEGATION_OUTBOUND_TOPIC="outbound.test_delegation.events"
+ESERVICE_TEMPLATE_OUTBOUND_TOPIC="outbound.test_eservice_template.events"
 
 APPLICATION_AUDIT_TOPIC="test_application.audit"
 TOKEN_AUDITING_TOPIC="test_authorization-server.generated-jwt"
@@ -67,6 +69,9 @@ INTEROP_SELFCARE_PRODUCT_NAME="prod-interop-coll"
 TENANT_ALLOWED_ORIGINS="IPA,ANAC,IVASS,PDND_INFOCAMERE-SCP"
 PRODUCER_ALLOWED_ORIGINS="IPA"
 
+ESERVICE_TEMPLATE_PROCESS_STORAGE_CONTAINER="interop-application-documents-test-es1"
+ESERVICE_TEMPLATE_PROCESS_DOCUMENTS_PATH="eservice-template/docs"
+
 PRIVACY_NOTICES_DYNAMO_TABLE_NAME="interop-privacy-notices-test"
 PRIVACY_NOTICES_ACCEPTANCE_DYNAMO_TABLE_NAME="interop-privacy-notices-acceptances-test"
 PRIVACY_NOTICES_UPDATER_PRIVACY_POLICY_UUID="0df21ff6-3e8f-4320-af8f-23dea9135d57"
@@ -97,6 +102,8 @@ AGREEMENT_PROCESS_URL="http://interop-be-agreement-process.test.svc.cluster.loca
 PURPOSE_PROCESS_URL="http://interop-be-purpose-process.test.svc.cluster.local:8088"
 TENANT_PROCESS_URL="http://interop-be-tenant-process.test.svc.cluster.local:8088"
 ATTRIBUTE_REGISTRY_PROCESS_URL="http://interop-be-attribute-registry-process.test.svc.cluster.local:8088"
+CATALOG_PROCESS_URL="http://interop-be-catalog-process.test.svc.cluster.local:8088"
+ESERVICE_TEMPLATE_PROCESS_URL="http://interop-be-eservice-template-process.test.svc.cluster.local:8088"
 
 CLIENT_ASSERTION_JWT_AUDIENCE="auth.uat.interop.pagopa.it/client-assertion"
 

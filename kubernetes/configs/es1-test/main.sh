@@ -50,6 +50,10 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-test/delegation_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/delegation_process.sh
 . $(pwd)/kubernetes/configs/es1-test/delegation_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-test/eservice_template_process.sh
+. $(pwd)/kubernetes/configs/es1-test/eservice_template_readmodel_writer.sh
+. $(pwd)/kubernetes/configs/es1-test/eservice_template_instances_updater.sh
+. $(pwd)/kubernetes/configs/es1-test/eservice_template_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/key_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/frontend.sh
 . $(pwd)/kubernetes/configs/es1-test/party_registry_proxy.sh
