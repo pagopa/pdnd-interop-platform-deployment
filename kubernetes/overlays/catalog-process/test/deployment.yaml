@@ -39,18 +39,18 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ACCEPTED_AUDIENCES
+            - name: ESERVICE_TEMPLATE_DOCUMENTS_CONTAINER
+              valueFrom:
+                configMapKeyRef:
+                  key: ESERVICE_TEMPLATE_DOCUMENTS_CONTAINER
+                  name: {{SERVICE_NAME}}
+            - name: ESERVICE_TEMPLATE_DOCUMENTS_PATH
+              valueFrom:
+                configMapKeyRef:
+                  key: ESERVICE_TEMPLATE_DOCUMENTS_PATH
+                  name: {{SERVICE_NAME}}
             - name: FEATURE_FLAG_AGREEMENT_APPROVAL_POLICY_UPDATE
               valueFrom:
                 configMapKeyRef:
-                  name: {{SERVICE_NAME}}
                   key: FEATURE_FLAG_AGREEMENT_APPROVAL_POLICY_UPDATE
-            - name: READMODEL_SQL_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: password
-                  name: platform-data-catalog-process-user
-            - name: READMODEL_SQL_DB_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  key: username
-                  name: platform-data-catalog-process-user
+                  name: {{SERVICE_NAME}}
