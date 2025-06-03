@@ -153,7 +153,7 @@ spec:
                   name: common-sqs
                   key: APPLICATION_AUDIT_FALLBACK_SQS_URL
             - name: FEATURE_FLAG_APPLICATION_AUDIT_STRICT
-              value: {{FEATURE_FLAG_APPLICATION_AUDIT_STRICT}}
+              value: "{{FEATURE_FLAG_APPLICATION_AUDIT_STRICT}}"
             - name: READMODEL_SQL_DB_HOST
               valueFrom:
                 configMapKeyRef:
