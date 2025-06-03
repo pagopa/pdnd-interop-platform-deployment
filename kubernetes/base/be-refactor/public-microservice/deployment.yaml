@@ -111,3 +111,10 @@ spec:
                 configMapKeyRef:
                   name: common-kafka
                   key: APPLICATION_AUDIT_TOPIC
+            - name: APPLICATION_AUDIT_FALLBACK_SQS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: common-sqs
+                  key: APPLICATION_AUDIT_FALLBACK_SQS_URL
+            - name: FEATURE_FLAG_APPLICATION_AUDIT_STRICT
+              value: {{FEATURE_FLAG_APPLICATION_AUDIT_STRICT}}
