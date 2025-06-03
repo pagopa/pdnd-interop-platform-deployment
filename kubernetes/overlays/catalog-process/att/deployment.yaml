@@ -54,13 +54,3 @@ spec:
                 configMapKeyRef:
                   key: FEATURE_FLAG_AGREEMENT_APPROVAL_POLICY_UPDATE
                   name: {{SERVICE_NAME}}
-            - name: READMODEL_SQL_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: password
-                  name: platform-data-catalog-process-user
-            - name: READMODEL_SQL_DB_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  key: username
-                  name: platform-data-catalog-process-user

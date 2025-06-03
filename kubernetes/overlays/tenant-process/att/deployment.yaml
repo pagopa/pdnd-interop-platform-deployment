@@ -24,13 +24,3 @@ spec:
                 configMapKeyRef:
                   name: common-jwt
                   key: WELL_KNOWN_URLS
-            - name: READMODEL_SQL_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: password
-                  name: platform-data-tenant-process-user
-            - name: READMODEL_SQL_DB_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  key: username
-                  name: platform-data-tenant-process-user
