@@ -147,6 +147,11 @@ spec:
                 configMapKeyRef:
                   name: common-feature-flags
                   key: FEATURE_FLAG_ADMIN_CLIENT
+            - name: APPLICATION_AUDIT_FALLBACK_SQS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: common-sqs
+                  key: APPLICATION_AUDIT_FALLBACK_SQS_URL
+            - name: FEATURE_FLAG_APPLICATION_AUDIT_STRICT
+              value: {{FEATURE_FLAG_APPLICATION_AUDIT_STRICT}}
 
-  FEATURE_FLAG_CLIENT_ASSERTION_STRICT_CLAIMS_VALIDATION: "true"
-  FEATURE_FLAG_IMPROVED_PRODUCER_VERIFICATION_CLAIMS: "true"
