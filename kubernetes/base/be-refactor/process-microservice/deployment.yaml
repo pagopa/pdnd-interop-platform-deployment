@@ -137,3 +137,16 @@ spec:
                 configMapKeyRef:
                   name: common-kafka
                   key: APPLICATION_AUDIT_TOPIC
+            - name: FEATURE_FLAG_SQL
+              valueFrom:
+                configMapKeyRef:
+                  name: common-feature-flags
+                  key: FEATURE_FLAG_SQL
+            - name: FEATURE_FLAG_ADMIN_CLIENT
+              valueFrom:
+                configMapKeyRef:
+                  name: common-feature-flags
+                  key: FEATURE_FLAG_ADMIN_CLIENT
+
+  FEATURE_FLAG_CLIENT_ASSERTION_STRICT_CLAIMS_VALIDATION: "true"
+  FEATURE_FLAG_IMPROVED_PRODUCER_VERIFICATION_CLAIMS: "true"
