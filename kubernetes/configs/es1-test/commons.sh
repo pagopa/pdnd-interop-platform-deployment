@@ -40,6 +40,8 @@ ESERVICE_TEMPLATE_OUTBOUND_TOPIC="outbound.test_eservice_template.events"
 
 APPLICATION_AUDIT_TOPIC="test_application.audit"
 TOKEN_AUDITING_TOPIC="test_authorization-server.generated-jwt"
+APPLICATION_AUDIT_FALLBACK_SQS_URL="https://sqs.eu-south-1.amazonaws.com/895646477129/interop-analytics-application-audit-fallback-test"
+FEATURE_FLAG_APPLICATION_AUDIT_STRICT="false"
 
 AWS_REGION="eu-south-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
