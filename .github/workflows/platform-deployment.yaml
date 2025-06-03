@@ -667,7 +667,7 @@ jobs:
   deploy_authorization_server_node:
     name: Authorization Server Node
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-att' || inputs.environment == 'es1-prod' }}
+    if: ${{ inputs.environment == 'es1-prod' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml

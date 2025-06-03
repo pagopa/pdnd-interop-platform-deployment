@@ -24,8 +24,13 @@ spec:
                 configMapKeyRef:
                   name: common-jwt
                   key: WELL_KNOWN_URLS
-            - name: DELEGATIONS_ALLOWED_ORIGINS
+            - name: READMODEL_SQL_DB_PASSWORD
               valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: DELEGATIONS_ALLOWED_ORIGINS
+                secretKeyRef:
+                  key: password
+                  name: platform-data-tenant-process-user
+            - name: READMODEL_SQL_DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: platform-data-tenant-process-user
