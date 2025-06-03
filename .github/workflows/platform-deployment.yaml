@@ -1040,7 +1040,7 @@ jobs:
       deploy_api_gateway, deploy_authorization_server
       ]
     if: |
-      inputs.environment == 'es1-att' && inputs.environment == 'es1-prod'
+      inputs.environment == 'es1-prod'
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-ingress.yaml
