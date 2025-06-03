@@ -49,13 +49,13 @@ spec:
                 configMapKeyRef:
                   name: common-selfcare
                   key: SELFCARE_V2_URL
-        - name: READMODEL_SQL_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              key: password
-              name: platform-data-agreement-process-user
-        - name: READMODEL_SQL_DB_USERNAME
-          valueFrom:
-            secretKeyRef:
-              key: username
-              name: platform-data-agreement-process-user
+            - name: READMODEL_SQL_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: platform-data-agreement-process-user
+            - name: READMODEL_SQL_DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: platform-data-agreement-process-user
