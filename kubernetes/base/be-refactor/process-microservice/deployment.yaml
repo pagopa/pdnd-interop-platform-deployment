@@ -229,14 +229,3 @@ spec:
             configMapKeyRef:
               key: DB_USE_SSL
               name: common-read-model-sql
-        - name: READMODEL_SQL_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              key: password
-              name: platform-data-agreement-process-user
-        - name: READMODEL_SQL_DB_USERNAME
-          valueFrom:
-            secretKeyRef:
-              key: username
-              name: platform-data-agreement-process-user
-

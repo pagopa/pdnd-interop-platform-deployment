@@ -34,3 +34,13 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: S3_BUCKET
+        - name: READMODEL_SQL_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: platform-data-purpose-process-user
+        - name: READMODEL_SQL_DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: username
+              name: platform-data-purpose-process-user

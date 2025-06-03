@@ -44,3 +44,13 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: MAX_KEYS_PER_PRODUCER_KEYCHAIN
+        - name: READMODEL_SQL_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: platform-data-authorization-process-user
+        - name: READMODEL_SQL_DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: username
+              name: platform-data-authorization-process-user

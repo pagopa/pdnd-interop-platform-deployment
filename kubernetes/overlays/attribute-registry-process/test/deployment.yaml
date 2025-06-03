@@ -29,3 +29,13 @@ spec:
               configMapKeyRef:
                 name: {{SERVICE_NAME}}
                 key: ACCEPTED_AUDIENCES
+        - name: READMODEL_SQL_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: platform-data-attribute-registry-process-user
+        - name: READMODEL_SQL_DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: username
+              name: platform-data-attribute-registry-process-user
