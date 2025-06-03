@@ -106,3 +106,88 @@ spec:
                 configMapKeyRef:
                   name: common-read-model
                   key: READMODEL_DB_PORT
+        - name: READMODEL_SQL_DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: DB_HOST_RO
+              name: common-read-model-sql
+        - name: READMODEL_SQL_DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              key: DB_NAME
+              name: common-read-model-sql
+        - name: READMODEL_SQL_DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: DB_PORT
+              name: common-read-model-sql
+        - name: READMODEL_SQL_DB_SCHEMA_AGREEMENT
+          valueFrom:
+            configMapKeyRef:
+              key: DB_SCHEMA_AGREEMENT
+              name: common-read-model-sql
+        - name: READMODEL_SQL_DB_SCHEMA_ATTRIBUTE
+          valueFrom:
+            configMapKeyRef:
+              key: DB_SCHEMA_ATTRIBUTE
+              name: common-read-model-sql
+        - name: READMODEL_SQL_DB_SCHEMA_CATALOG
+          valueFrom:
+            configMapKeyRef:
+              key: DB_SCHEMA_CATALOG
+              name: common-read-model-sql
+        - name: READMODEL_SQL_DB_SCHEMA_CLIENT
+          valueFrom:
+            configMapKeyRef:
+              key: DB_SCHEMA_CLIENT
+              name: common-read-model-sql
+        - name: READMODEL_SQL_DB_SCHEMA_CLIENT_JWK_KEY
+          valueFrom:
+            configMapKeyRef:
+              key: DB_SCHEMA_CLIENT_JWK_KEY
+              name: common-read-model-sql
+        - name: READMODEL_SQL_DB_SCHEMA_DELEGATION
+          valueFrom:
+            configMapKeyRef:
+              key: DB_SCHEMA_DELEGATION
+              name: common-read-model-sql
+        - name: READMODEL_SQL_DB_SCHEMA_ESERVICE_TEMPLATE
+          valueFrom:
+            configMapKeyRef:
+              key: DB_SCHEMA_ESERVICE_TEMPLATE
+              name: common-read-model-sql
+        - name: READMODEL_SQL_DB_SCHEMA_PRODUCER_JWK_KEY
+          valueFrom:
+            configMapKeyRef:
+              key: DB_SCHEMA_PRODUCER_JWK_KEY
+              name: common-read-model-sql
+        - name: READMODEL_SQL_DB_SCHEMA_PRODUCER_KEYCHAIN
+          valueFrom:
+            configMapKeyRef:
+              key: DB_SCHEMA_PRODUCER_KEYCHAIN
+              name: common-read-model-sql
+        - name: READMODEL_SQL_DB_SCHEMA_PURPOSE
+          valueFrom:
+            configMapKeyRef:
+              key: DB_SCHEMA_PURPOSE
+              name: common-read-model-sql
+        - name: READMODEL_SQL_DB_SCHEMA_TENANT
+          valueFrom:
+            configMapKeyRef:
+              key: DB_SCHEMA_TENANT
+              name: common-read-model-sql
+        - name: READMODEL_SQL_DB_USE_SSL
+          valueFrom:
+            configMapKeyRef:
+              key: DB_USE_SSL
+              name: common-read-model-sql
+        - name: READMODEL_SQL_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: platform-data-readonly-user
+        - name: READMODEL_SQL_DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: username
+              name: platform-data-readonly-user
