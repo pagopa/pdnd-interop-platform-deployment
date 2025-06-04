@@ -42,6 +42,8 @@ DELEGATION_OUTBOUND_TOPIC="outbound.att_delegation.events"
 ESERVICE_TEMPLATE_OUTBOUND_TOPIC="outbound.att_eservice_template.events"
 
 APPLICATION_AUDIT_TOPIC="att_application.audit"
+APPLICATION_AUDIT_FALLBACK_SQS_URL="https://sqs.eu-south-1.amazonaws.com/533267098416/interop-analytics-application-audit-fallback-att"
+FEATURE_FLAG_APPLICATION_AUDIT_STRICT="false"
 
 AWS_REGION="eu-south-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
@@ -112,5 +114,9 @@ CLIENT_ASSERTION_JWT_AUDIENCE="auth.att.interop.pagopa.it/client-assertion"
 
 FEATURE_FLAG_SIGNALHUB_WHITELIST=false
 FEATURE_FLAG_AGREEMENT_APPROVAL_POLICY_UPDATE=true
+FEATURE_FLAG_ADMIN_CLIENT=true
 SIGNALHUB_WHITELIST_PRODUCER=""
 SIGNALHUB_WHITELIST_CONSUMER=""
+
+API_GATEWAY_V1_INTERFACE_URL="https://selfcare.att.interop.pagopa.it/m2m/v1-interface-specification.yaml"
+API_GATEWAY_V2_INTERFACE_URL="https://selfcare.att.interop.pagopa.it/m2m/v2-interface-specification.yaml"

@@ -29,11 +29,6 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: S3_BUCKET
-            - name: DELEGATIONS_ALLOWED_ORIGINS
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: DELEGATIONS_ALLOWED_ORIGINS
             - name: DELEGATION_DOCUMENT_PATH
               valueFrom:
                 configMapKeyRef:

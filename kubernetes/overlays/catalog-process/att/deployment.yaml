@@ -52,5 +52,5 @@ spec:
             - name: FEATURE_FLAG_AGREEMENT_APPROVAL_POLICY_UPDATE
               valueFrom:
                 configMapKeyRef:
-                  name: {{SERVICE_NAME}}
                   key: FEATURE_FLAG_AGREEMENT_APPROVAL_POLICY_UPDATE
+                  name: {{SERVICE_NAME}}
