@@ -61,6 +61,7 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-test/purpose_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/purpose_platformstate_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/purpose_process.sh
+. $(pwd)/kubernetes/configs/es1-test/tenant_outbound_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/tenant_process.sh
 . $(pwd)/kubernetes/configs/es1-test/tenant_readmodel_writer.sh
 . $(pwd)/kubernetes/configs/es1-test/token-generation-readmodel-checker.sh
