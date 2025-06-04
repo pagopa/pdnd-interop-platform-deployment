@@ -42,6 +42,8 @@ DELEGATION_OUTBOUND_TOPIC="outbound.att_delegation.events"
 ESERVICE_TEMPLATE_OUTBOUND_TOPIC="outbound.att_eservice_template.events"
 
 APPLICATION_AUDIT_TOPIC="att_application.audit"
+APPLICATION_AUDIT_FALLBACK_SQS_URL="https://sqs.eu-south-1.amazonaws.com/533267098416/interop-analytics-application-audit-fallback-att"
+FEATURE_FLAG_APPLICATION_AUDIT_STRICT="false"
 
 AWS_REGION="eu-south-1"
 PERSISTENCE_QUEUE_NAME="persistence-events.fifo"
