@@ -114,3 +114,6 @@ FEATURE_FLAG_AGREEMENT_APPROVAL_POLICY_UPDATE=true
 FEATURE_FLAG_ADMIN_CLIENT=true
 SIGNALHUB_WHITELIST_PRODUCER=""
 SIGNALHUB_WHITELIST_CONSUMER=""
+
+API_GATEWAY_V1_INTERFACE_URL="https://selfcare.uat.interop.pagopa.it/m2m/v1-interface-specification.yaml"
+API_GATEWAY_V2_INTERFACE_URL="https://selfcare.uat.interop.pagopa.it/m2m/v2-interface-specification.yaml"
