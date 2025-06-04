@@ -9,11 +9,6 @@ spec:
       containers:
         - name: {{SERVICE_NAME}}
           env:
-            - name: ACCEPTED_AUDIENCES
-              valueFrom:
-                configMapKeyRef:
-                  name: {{SERVICE_NAME}}
-                  key: ACCEPTED_AUDIENCES
             - name: EVENTSTORE_DB_SCHEMA
               valueFrom:
                 configMapKeyRef:
@@ -24,13 +19,28 @@ spec:
                 configMapKeyRef:
                   name: common-jwt
                   key: WELL_KNOWN_URLS
+            - name: ACCEPTED_AUDIENCES
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ACCEPTED_AUDIENCES
+            - name: S3_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: S3_BUCKET
+            - name: DELEGATION_DOCUMENT_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: DELEGATION_DOCUMENT_PATH
             - name: READMODEL_SQL_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: password
-                  name: platform-data-tenant-process-user
+                  name: platform-data-delegation-process-user
             - name: READMODEL_SQL_DB_USERNAME
               valueFrom:
                 secretKeyRef:
                   key: username
-                  name: platform-data-tenant-process-user
+                  name: platform-data-delegation-process-user

@@ -494,7 +494,7 @@ jobs:
   deploy_delegation_outbound_writer:
     name: Delegation Outbound Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-att' }}
+    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-att' || inputs.environment == 'es1-test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -510,7 +510,7 @@ jobs:
   deploy_delegation_process:
     name: Delegation Process
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-qa' || inputs.environment == 'es1-att' }}
+    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-qa' || inputs.environment == 'es1-att' || inputs.environment == 'es1-test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -526,7 +526,7 @@ jobs:
   deploy_delegation_readmodel_writer:
     name: Delegation ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-qa' || inputs.environment == 'es1-att' }}
+    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-dev-refactor' || inputs.environment == 'es1-qa' || inputs.environment == 'es1-att' || inputs.environment == 'es1-test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -542,7 +542,7 @@ jobs:
   deploy_delegation_items_archiver:
     name: Delegation Items Archiver
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' }} || ${{ inputs.environment == 'es1-qa' }} || ${{ inputs.environment == 'es1-att' }}
+    if: ${{ inputs.environment == 'es1-dev'|| inputs.environment == 'es1-qa' || inputs.environment == 'es1-att' || inputs.environment == 'es1-test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -558,7 +558,7 @@ jobs:
   deploy_eservice_template_process:
     name: Eservice Template Process
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-qa' || inputs.environment == 'es1-att' }}
+    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-qa' || inputs.environment == 'es1-att' || inputs.environment == 'es1-test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -574,7 +574,7 @@ jobs:
   deploy_eservice_template_readmodel_writer:
     name: Eservice Template ReadModel Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-qa' || inputs.environment == 'es1-att'   }}
+    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-qa' || inputs.environment == 'es1-att' || inputs.environment == 'es1-test'   }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -590,7 +590,7 @@ jobs:
   deploy_eservice_template_instances_updater:
     name: Eservice Template Instances Updater
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-qa' || inputs.environment == 'es1-att'  }}
+    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-qa' || inputs.environment == 'es1-att' || inputs.environment == 'es1-test'  }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -606,7 +606,7 @@ jobs:
   deploy_eservice_template_outbound_writer:
     name: EService Template Outbound Writer
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-att' }}
+    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-att' || inputs.environment == 'es1-test' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -667,6 +667,7 @@ jobs:
   deploy_authorization_server_node:
     name: Authorization Server Node
     needs: [deploy_configs]
+    if: ${{ inputs.environment == 'es1-att' || inputs.environment == 'es1-prod' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml

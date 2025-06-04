@@ -70,3 +70,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+            - name: FEATURE_FLAG_CLIENT_ASSERTION_STRICT_CLAIMS_VALIDATION
+              valueFrom:
+                configMapKeyRef:
+                  name: common-feature-flags
+                  key: FEATURE_FLAG_CLIENT_ASSERTION_STRICT_CLAIMS_VALIDATION
+            - name: FEATURE_FLAG_IMPROVED_PRODUCER_VERIFICATION_CLAIMS
+              valueFrom:
+                configMapKeyRef:
+                  name: common-feature-flags
+                  key: FEATURE_FLAG_IMPROVED_PRODUCER_VERIFICATION_CLAIMS

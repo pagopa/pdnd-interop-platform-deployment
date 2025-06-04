@@ -24,11 +24,16 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: S3_BUCKET
-            - name: ESERVICE_DOCUMENTS_PATH
+            - name: ESERVICE_TEMPLATE_DOCUMENTS_CONTAINER
               valueFrom:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
-                  key: ESERVICE_DOCUMENTS_PATH
+                  key: ESERVICE_TEMPLATE_DOCUMENTS_CONTAINER
+            - name: ESERVICE_TEMPLATE_DOCUMENTS_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{SERVICE_NAME}}
+                  key: ESERVICE_TEMPLATE_DOCUMENTS_PATH
             - name: PRODUCER_ALLOWED_ORIGINS
               valueFrom:
                 configMapKeyRef:
@@ -39,28 +44,23 @@ spec:
                 configMapKeyRef:
                   name: {{SERVICE_NAME}}
                   key: ACCEPTED_AUDIENCES
-            - name: ESERVICE_TEMPLATE_DOCUMENTS_CONTAINER
+            - name: FEATURE_FLAG_SIGNALHUB_WHITELIST
               valueFrom:
                 configMapKeyRef:
-                  key: ESERVICE_TEMPLATE_DOCUMENTS_CONTAINER
                   name: {{SERVICE_NAME}}
-            - name: ESERVICE_TEMPLATE_DOCUMENTS_PATH
+                  key: FEATURE_FLAG_SIGNALHUB_WHITELIST
+            - name: SIGNALHUB_WHITELIST_PRODUCER
               valueFrom:
                 configMapKeyRef:
-                  key: ESERVICE_TEMPLATE_DOCUMENTS_PATH
                   name: {{SERVICE_NAME}}
-            - name: FEATURE_FLAG_AGREEMENT_APPROVAL_POLICY_UPDATE
-              valueFrom:
-                configMapKeyRef:
-                  key: FEATURE_FLAG_AGREEMENT_APPROVAL_POLICY_UPDATE
-                  name: {{SERVICE_NAME}}
+                  key: SIGNALHUB_WHITELIST_PRODUCER
             - name: READMODEL_SQL_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: password
-                  name: platform-data-catalog-process-user
+                  name: platform-data-eservice-template-process-user
             - name: READMODEL_SQL_DB_USERNAME
               valueFrom:
                 secretKeyRef:
                   key: username
-                  name: platform-data-catalog-process-user
+                  name: platform-data-eservice-template-process-user
