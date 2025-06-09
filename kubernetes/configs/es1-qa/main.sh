@@ -66,7 +66,6 @@ NOTIFIER_INTERFACE_VERSION=$(shortVersion $NOTIFIER_IMAGE_VERSION)
 . $(pwd)/kubernetes/configs/es1-qa/ivass_certified_attributes_importer.sh
 . $(pwd)/kubernetes/configs/es1-qa/ipa_certified_attributes_importer.sh
 . $(pwd)/kubernetes/configs/es1-qa/pn_consumers.sh
-. $(pwd)/kubernetes/configs/es1-qa/padigitale_report_generator.sh
 . $(pwd)/kubernetes/configs/es1-qa/dtd_catalog_exporter.sh
 . $(pwd)/kubernetes/configs/es1-qa/one_trust_notices.sh
 . $(pwd)/kubernetes/configs/es1-qa/selfcare_onboarding_consumer.sh
