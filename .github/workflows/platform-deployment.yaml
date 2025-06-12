@@ -342,6 +342,7 @@ jobs:
   deploy_notification_email_sender:
     name: Notification Email Sender
     needs: [deploy_configs]
+    if: ${{ inputs.environment == 'es1-att' || inputs.environment == 'es1-prod' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -542,7 +543,7 @@ jobs:
   deploy_delegation_items_archiver:
     name: Delegation Items Archiver
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev'|| inputs.environment == 'es1-qa' || inputs.environment == 'es1-att' || inputs.environment == 'es1-test' }}
+    if: ${{ inputs.environment == 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -590,7 +591,7 @@ jobs:
   deploy_eservice_template_instances_updater:
     name: Eservice Template Instances Updater
     needs: [deploy_configs]
-    if: ${{ inputs.environment == 'es1-dev' || inputs.environment == 'es1-qa' || inputs.environment == 'es1-att' || inputs.environment == 'es1-test'  }}
+    if: ${{ inputs.environment == 'es1-att' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -773,6 +774,7 @@ jobs:
   deploy_eservice_descriptors_archiver:
     name: EService Descriptors Archiver
     needs: [deploy_configs]
+    if: ${{ inputs.environment == 'es1-att' || inputs.environment == 'es1-prod'}}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-service.yaml
@@ -837,6 +839,7 @@ jobs:
   deploy_token_generation_readmodel_checker:
     name: Token Generation Read Model Checker
     needs: [deploy_configs]
+    if: ${{ inputs.environment == 'es1-att' || inputs.environment == 'es1-prod' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
@@ -881,6 +884,7 @@ jobs:
   deploy_anac_certified_attributes_importer:
     name: ANAC Certified Attributes Importer
     needs: [deploy_configs]
+    if: ${{ inputs.environment == 'es1-att' || inputs.environment == 'es1-prod' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
@@ -896,6 +900,7 @@ jobs:
   deploy_ivass_certified_attributes_importer:
     name: IVASS Certified Attributes Importer
     needs: [deploy_configs]
+    if: ${{ inputs.environment == 'es1-att' || inputs.environment == 'es1-prod' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
@@ -912,6 +917,7 @@ jobs:
   deploy_ipa_certified_attributes_importer:
     name: IPA Certified Attributes Importer
     needs: [deploy_configs]
+    if: ${{ inputs.environment == 'es1-att' || inputs.environment == 'es1-prod' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
@@ -927,6 +933,7 @@ jobs:
   deploy_pn_consumers:
     name: PN Consumers
     needs: [deploy_configs]
+    if: ${{ inputs.environment == 'es1-att' || inputs.environment == 'es1-prod' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
@@ -942,6 +949,7 @@ jobs:
   deploy_dtd_catalog_exporter:
     name: DTD catalog exporter
     needs: [deploy_configs]
+    if: ${{ inputs.environment == 'es1-att' || inputs.environment == 'es1-prod' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
@@ -972,6 +980,7 @@ jobs:
   deploy_datalake_data_export:
     name: Datalake data export
     needs: [deploy_configs]
+    if: ${{ inputs.environment == 'es1-att' || inputs.environment == 'es1-prod' }}
     permissions:
       contents: read
     uses: ./.github/workflows/deploy-cronjob.yaml
