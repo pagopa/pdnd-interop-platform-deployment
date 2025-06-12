@@ -306,3 +306,8 @@ spec:
                   configMapKeyRef:
                     name: common-services-urls
                     key: ESERVICE_TEMPLATE_PROCESS_URL
+            - name: FEATURE_FLAG_CLIENT_ASSERTION_STRICT_CLAIMS_VALIDATION
+              valueFrom:
+                configMapKeyRef:
+                  name: common-feature-flags
+                  key: FEATURE_FLAG_CLIENT_ASSERTION_STRICT_CLAIMS_VALIDATION
