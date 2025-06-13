@@ -110,7 +110,7 @@ jobs:
 
       - name: Create K8s Secrets
         id: create_secrets
-        if: ${{ vars.NORM_ENV != 'dev-refactor' }}
+        if: ${{ vars.NORM_ENV == 'es1-att' || vars.NORM_ENV == 'es1-prod' }}
         run: |
           set -eo pipefail
           source $CONFIG_FILE
@@ -219,7 +219,7 @@ jobs:
       
       - name: Create Notification K8s Secrets - No Prod
         id: create_no_prod_notification_secrets
-        if: ${{ vars.NORM_ENV != 'prod' }}
+        if: ${{ vars.NORM_ENV == 'es1-att' }}
         run: |
           set -eo pipefail
           source $CONFIG_FILE
